@@ -1,15 +1,15 @@
 import axios from 'axios';
 
+const LOCAL = 'https://k1ec344612739a.user-app.krampoline.com/api';
+const Prod = '/api';
+const API_URL = import.meta.env.MODE === 'development' ? LOCAL : Prod;
+
 const instance = axios.create({
-  baseURL: '/api',
-  timeout: 1000,
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+  // withCredentials: true,
 });
 
-const getTest = async (props: any) => {
-  return await instance.get(`/test`);
-};
-
-export { instance, getTest };
+export { instance };
