@@ -40,7 +40,7 @@ export const Home = () => {
         <div>Hello 해남해녀 배포 테스트 !</div>
         <div>
           <button
-            className="flex h-12 w-12 items-center justify-center rounded-md bg-blue-500 px-4 py-2 font-medium text-white"
+            className="flex w-fit items-center justify-center rounded-md bg-blue-500 px-4 py-2 font-medium text-white"
             onClick={handleApiOnclick}
           >
             API TEST
