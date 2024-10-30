@@ -3,6 +3,21 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontSize: {
+        h1: ['38px', '57px'], // .h1
+        h2: ['32px', '48px'], // .h2
+        h3: ['24px', '36px'], // .h3
+        h4: ['20px', '30px'], // .h4
+        h5: ['18px', '27px'], // .h5
+        h6: ['16px', '24px'], // .h6
+        'subtitle-1': ['14px', '22px'], // .subtitle-1
+        'subtitle-2': ['12px', '18px'], // .subtitle-2
+        'paragraph-lg': ['16px', '24px'], // .paragraph-lg
+        paragraph: ['14px', '22px'], // .paragraph
+        'paragraph-sm': ['12px', '18px'], // .paragraph-sm
+        caption: ['12px', '18px'], // .caption
+        code: ['14px', '22px'], // <code>
+      },
       colors: {
         gray: {
           '000': '#FFFFFF', // $gray-000
@@ -138,6 +153,20 @@ export default {
           800: '#984A06', // $orange-800
           900: '#7A3C05', // $orange-900
         },
+      },
+      boxShadow: {
+        sm: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.2)', // $shadow-sm
+        DEFAULT: '0 0.125rem 0.625rem rgba(0, 0, 0, 0.2)', // $shadow
+        lg: '0 0.25rem 1rem rgba(0, 0, 0, 0.2)', // $shadow-lg
+        xl: '0 1rem 2rem rgba(0, 0, 0, 0.2)', // $shadow-xl
+      },
+      spacing: {
+        '0': '0', // $spacer-0
+        xs: '0.25rem', // $spacer-xs
+        sm: '0.5rem', // $spacer-sm
+        md: '1rem', // $spacer-md
+        lg: '1.5rem', // $spacer-lg
+        xl: '3rem', // $spacer-xl
       },
     },
   },
