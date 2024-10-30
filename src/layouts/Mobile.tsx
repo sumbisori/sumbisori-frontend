@@ -6,7 +6,7 @@ interface Props {
 
 export default function Mobile({ children }: Props) {
   return (
-    <section className="m-auto flex h-screen w-full max-w-[393px] flex-col justify-center bg-slate-50">
+    <section className="m-auto flex h-screen w-full max-w-[393px] flex-col overflow-auto bg-slate-50">
       {children}
     </section>
   );
