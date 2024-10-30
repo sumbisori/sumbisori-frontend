@@ -49,7 +49,7 @@ export const Home = () => {
   return (
     <main>
       <div>안녕하세요 해남 해녀입니다</div>
-      <header className="App-header">
+      <header>
         <div>Hello 해남해녀 배포 테스트!</div>
 
         <div>
@@ -93,8 +93,8 @@ export const Home = () => {
         </div>
         <div className="flex">
           <div>
-            <div className="bg-gray-000 size-10"></div>
-            <div className="bg-gray-050 size-10"></div>
+            <div className="size-10 bg-gray-000"></div>
+            <div className="size-10 bg-gray-050"></div>
             <div className="size-10 bg-gray-100"></div>
             <div className="size-10 bg-gray-200"></div>
             <div className="size-10 bg-gray-300"></div>
@@ -106,8 +106,7 @@ export const Home = () => {
             <div className="size-10 bg-gray-900"></div>
           </div>
           <div>
-            <div className="bg-red-000 size-10"></div>
-            <div className="bg-red-050 size-10"></div>
+            <div className="size-10 bg-red-050"></div>
             <div className="size-10 bg-red-100"></div>
             <div className="size-10 bg-red-200"></div>
             <div className="size-10 bg-red-300"></div>
@@ -119,8 +118,7 @@ export const Home = () => {
             <div className="size-10 bg-red-900"></div>
           </div>
           <div>
-            <div className="bg-cyan-000 size-10"></div>
-            <div className="bg-cyan-050 size-10"></div>
+            <div className="size-10 bg-cyan-050"></div>
             <div className="size-10 bg-cyan-100"></div>
             <div className="size-10 bg-cyan-200"></div>
             <div className="size-10 bg-cyan-300"></div>
@@ -132,8 +130,7 @@ export const Home = () => {
             <div className="size-10 bg-cyan-900"></div>
           </div>
           <div>
-            <div className="bg-pink-000 size-10"></div>
-            <div className="bg-pink-050 size-10"></div>
+            <div className="size-10 bg-pink-050"></div>
             <div className="size-10 bg-pink-100"></div>
             <div className="size-10 bg-pink-200"></div>
             <div className="size-10 bg-pink-300"></div>
@@ -145,8 +142,7 @@ export const Home = () => {
             <div className="size-10 bg-pink-900"></div>
           </div>
           <div>
-            <div className="bg-green-000 size-10"></div>
-            <div className="bg-green-050 size-10"></div>
+            <div className="size-10 bg-green-050"></div>
             <div className="size-10 bg-green-100"></div>
             <div className="size-10 bg-green-200"></div>
             <div className="size-10 bg-green-300"></div>
@@ -158,21 +154,19 @@ export const Home = () => {
             <div className="size-10 bg-green-900"></div>
           </div>
           <div>
-            <div className="bg-grape-000 size-10"></div>
-            <div className="bg-grape-050 size-10"></div>
-            <div className="bg-grape-100 size-10"></div>
-            <div className="bg-grape-200 size-10"></div>
-            <div className="bg-grape-300 size-10"></div>
-            <div className="bg-grape-400 size-10"></div>
-            <div className="bg-grape-500 size-10"></div>
-            <div className="bg-grape-600 size-10"></div>
-            <div className="bg-grape-700 size-10"></div>
-            <div className="bg-grape-800 size-10"></div>
-            <div className="bg-grape-900 size-10"></div>
+            <div className="size-10 bg-grape-050"></div>
+            <div className="size-10 bg-grape-100"></div>
+            <div className="size-10 bg-grape-200"></div>
+            <div className="size-10 bg-grape-300"></div>
+            <div className="size-10 bg-grape-400"></div>
+            <div className="size-10 bg-grape-500"></div>
+            <div className="size-10 bg-grape-600"></div>
+            <div className="size-10 bg-grape-700"></div>
+            <div className="size-10 bg-grape-800"></div>
+            <div className="size-10 bg-grape-900"></div>
           </div>
           <div>
-            <div className="bg-lime-000 size-10"></div>
-            <div className="bg-lime-050 size-10"></div>
+            <div className="size-10 bg-lime-050"></div>
             <div className="size-10 bg-lime-100"></div>
             <div className="size-10 bg-lime-200"></div>
             <div className="size-10 bg-lime-300"></div>
