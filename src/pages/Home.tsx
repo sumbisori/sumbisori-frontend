@@ -4,6 +4,7 @@ import { instance } from '../api/instance';
 export const Home = () => {
   const [apiTest, setApiTest] = useState(false);
   const [dbTest, setDbTest] = useState(false);
+  const [apiConnect, setApiConnect] = useState('');
 
   const handleApiOnclick = async () => {
     try {
@@ -23,6 +24,15 @@ export const Home = () => {
     }
   };
 
+  const handleApiConnect = async () => {
+    try {
+      const res = await instance.get('/connect');
+      setApiConnect(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <main>
       안녕하세요 해남 해녀입니다
@@ -35,6 +45,10 @@ export const Home = () => {
         <div>
           <button onClick={handleDbOnClick}>DB TEST</button>
           <div>{dbTest ? 'CONNECT' : 'NOT YET'}</div>
+        </div>
+        <div>
+          <button onClick={handleApiConnect}>API CONNECT</button>
+          <div>{apiConnect}</div>
         </div>
       </header>
     </main>
