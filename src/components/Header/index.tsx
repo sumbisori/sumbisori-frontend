@@ -3,15 +3,20 @@ import { useNavigate } from 'react-router-dom';
 interface Props {
   type?: 'dark' | 'light';
   caption?: string;
+  absolute: boolean;
 }
 
-export const Header = ({ type = 'light', caption }: Props) => {
+export const Header = ({ type = 'light', caption, absolute }: Props) => {
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate('/');
   };
   return (
-    <nav className="flex w-[393px] justify-between p-[18px]">
+    <nav
+      className={`flex w-[393px] justify-between p-[18px] ${
+        absolute ? 'absolute' : 'relative'
+      }`}
+    >
       <div className="flex items-center">
         <img
           src={

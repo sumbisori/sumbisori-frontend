@@ -13,31 +13,37 @@ export default function Mobile() {
   ): {
     type: 'light' | 'dark';
     caption: string | undefined;
+    absolute: boolean;
   } => {
     if (pathname === '/')
       return {
         type: 'light',
         caption: undefined,
+        absolute: true,
       };
     if (pathname === '/reservation')
       return {
         type: 'dark',
         caption: undefined,
+        absolute: false,
       };
     if (pathname.includes('/reservation-create'))
       return {
         type: 'dark',
         caption: '예약',
+        absolute: false,
       };
     if (pathname === '/dictionary')
       return {
         type: 'dark',
         caption: '물질도감',
+        absolute: false,
       };
 
     return {
       type: 'light',
       caption: undefined,
+      absolute: false,
     };
   };
 
@@ -46,7 +52,11 @@ export default function Mobile() {
   return (
     <Background>
       <motion.section className="relative m-auto flex h-full w-[393px] flex-col bg-gray-000 pb-[60.99px]">
-        <Header type={headerType.type} caption={headerType.caption} />
+        <Header
+          type={headerType.type}
+          caption={headerType.caption}
+          absolute={headerType.absolute}
+        />
         <div className="hide-scroll flex-1 overflow-auto">
           <Outlet />
         </div>
