@@ -81,7 +81,7 @@ export const ReservationCreate = () => {
             <input
               name="personName"
               type="text"
-              value={form.personName}
+              defaultValue={form.personName}
               onChange={(e) =>
                 setForm({
                   ...form,
@@ -98,7 +98,7 @@ export const ReservationCreate = () => {
             <input
               name="phone"
               type="text"
-              value={form.phone}
+              defaultValue={form.phone}
               onChange={(e) =>
                 setForm({
                   ...form,
@@ -138,7 +138,7 @@ export const ReservationCreate = () => {
             <div className="flex items-center gap-2">
               <input
                 name="peopleCount"
-                value={form.peopleCount || ''}
+                defaultValue={form.peopleCount || ''}
                 onChange={(e) =>
                   setForm({
                     ...form,
