@@ -39,7 +39,7 @@ export const Reservation = () => {
   );
 
   return (
-    <div className="relative size-full bg-blue-100">
+    <div className="size-full bg-blue-100">
       <div className="flex size-full items-center justify-center">
         <img src="/icons/jeju_map.svg" alt="Map" className="size-full" />
         {haenyeoPlaces &&

@@ -25,7 +25,7 @@ export default function Mobile() {
       return {
         type: 'dark',
         caption: undefined,
-        absolute: false,
+        absolute: true,
       };
     if (pathname.includes('/reservation-create'))
       return {
@@ -37,6 +37,13 @@ export default function Mobile() {
       return {
         type: 'dark',
         caption: '물질도감',
+        absolute: false,
+      };
+
+    if (pathname === '/my-page')
+      return {
+        type: 'dark',
+        caption: '마이',
         absolute: false,
       };
 

@@ -5,6 +5,7 @@ import Mobile from '../layouts/Mobile';
 import { Reservation } from '../pages/Reservation';
 import { ReservationCreate } from '../pages/ReservationCreate';
 import { Dictionary } from '../pages/Dictionary';
+import { MyPage } from '../pages/MyPage';
 
 export const Router = () => {
   return (
@@ -18,6 +19,7 @@ export const Router = () => {
           element={<ReservationCreate />}
         />
         <Route path="/dictionary" element={<Dictionary />} />
+        <Route path="/my-page" element={<MyPage />} />
       </Route>
     </Routes>
   );

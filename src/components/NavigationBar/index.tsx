@@ -8,7 +8,7 @@ export const NavigationBar = () => {
       <NavIcon label="홈" onClick={() => navigate('/')} />
       <NavIcon label="예약" onClick={() => navigate('/reservation')} />
       <NavIcon label="도감" onClick={() => navigate('/dictionary')} />
-      <NavIcon label="마이" onClick={() => navigate('/my')} />
+      <NavIcon label="마이" onClick={() => navigate('/my-page')} />
     </nav>
   );
 };

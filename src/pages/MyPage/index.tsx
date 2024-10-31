@@ -1,17 +1,12 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../store'; // RootState는 Redux store 타입
-import { Background } from '../../layouts/Background';
+import { MyPageContent } from '../../components/MyPageContent';
+import { Profile } from '../../components/Profile';
 
-export const Dictionary = () => {
+export const MyPage = () => {
   return (
-    <Background>
-      <div className="flex size-full flex-col">
-        <div className="h-24 bg-gray-600"></div>
-        <div className="size-full bg-white p-4">
-          <div className="grid grid-cols-3 gap-4 overflow-auto rounded-lg border border-orange-200 p-4"></div>
-        </div>
-      </div>
-    </Background>
+    <div className="flex flex-col">
+      <Profile profileName="김해녀" seafoodCount={10} />
+      <div className="h-[5px] w-full bg-[#F7F7FA]"></div>
+      <MyPageContent />
+    </div>
   );
 };
