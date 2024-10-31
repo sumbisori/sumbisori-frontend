@@ -5,3 +5,12 @@
 html {
   font-family: 'Pretendard';
 }
+
+.main-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.main-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

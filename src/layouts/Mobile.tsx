@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { FullPageLogo } from '../components/FullPageLogo';
+import { NavigationBar } from '../components/NavigationBar';
 
 interface Props {
   children: ReactNode;
@@ -8,11 +9,12 @@ interface Props {
 
 export default function Mobile({ children }: Props) {
   return (
-    <motion.main {...animationSettings} className="h-screen w-full bg-blue-500">
+    <motion.main {...animationSettings} className="h-screen w-full bg-blue-400">
       {/* 왼쪽 하단에 로고이미지 추가 */}
       <FullPageLogo />
-      <motion.section className="m-auto flex size-full max-w-[393px] flex-col overflow-auto bg-slate-50">
-        {children}
+      <motion.section className="relative m-auto flex h-full w-[393px] flex-col bg-slate-50 pb-[60.99px]">
+        <div className="main-scroll flex-1 overflow-auto">{children}</div>
+        <NavigationBar />
       </motion.section>
     </motion.main>
   );
