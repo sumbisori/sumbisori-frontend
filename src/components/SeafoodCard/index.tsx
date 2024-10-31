@@ -6,17 +6,19 @@ interface Props {
 }
 
 export const SeafoodCard = (props: Props) => {
-  const suffix = props.counts > 0 ? '-color' : '-black';
   return (
     <div
       className="cursor-pointer transition-opacity duration-300 ease-in-out hover:opacity-70"
       onClick={props.onClick}
     >
       <div
-        className="relative size-[100px] bg-cover bg-center bg-no-repeat"
+        className={
+          'relative size-[100px] border border-orange-300 bg-orange-100 bg-cover bg-center bg-no-repeat' +
+          (props.counts > 0 ? '' : ' grayscale')
+        }
         style={{
           backgroundImage:
-            'url(/images/SeafoodCard/' + props.seafoodName + suffix + '.svg)',
+            'url(/images/Seafoods/' + props.seafoodName + '.svg)',
         }}
       >
         {props.counts > 0 && (
