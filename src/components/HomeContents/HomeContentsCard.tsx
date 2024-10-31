@@ -1,15 +1,19 @@
 import { ReactNode } from 'react';
 
 interface Props {
-  cardContent?: ReactNode;
+  cardContent: ReactNode;
   label: string;
 }
 
 export const HomeContentsCard = ({ cardContent, label }: Props) => {
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="h-[72px] w-[110px] bg-slate-500"></div>
-      <p>{label}</p>
+      <div className="flex h-[72px] w-[110px] items-center justify-center">
+        {cardContent}
+      </div>
+      <p className="flex w-[80px] justify-center bg-gray-050 text-[12px]">
+        {label}
+      </p>
     </div>
   );
 };
