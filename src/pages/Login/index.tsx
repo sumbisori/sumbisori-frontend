@@ -19,13 +19,19 @@ export const Login = () => {
 
   return (
     <Background>
-      <section className="relative m-auto flex h-full w-[393px] flex-col bg-gray-000">
-        <div>안녕하세요 로그인 페이지입니다</div>
-        {/* {!isAuthenticated ? (
-          <KakaoLogin href="https://kauth.kakao.com/oauth/authorize?client_id=your_client_id&redirect_uri=your_redirect_uri&response_type=code" />
-        ) : (
-          <div>로그인 성공! 환영합니다!</div>
-        )} */}
+      <section className="relative m-auto flex size-full w-[393px] flex-col items-center justify-center bg-gray-000">
+        <div
+          className="h-[213px] w-[78px] bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: 'url(/icons/sumbisori_logo_vertical.svg)',
+          }}
+        />
+        <div
+          className="size-[256px] bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: 'url(/icons/character_dive_before.svg)',
+          }}
+        />
       </section>
     </Background>
   );

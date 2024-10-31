@@ -21,7 +21,7 @@ export const Home = () => {
         devicePixelRatio={4}
         style={{
           width: 393,
-          height: 325,
+          height: 410,
           borderBottomLeftRadius: 20,
           borderBottomRightRadius: 20,
         }}
