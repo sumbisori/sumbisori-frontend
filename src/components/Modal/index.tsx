@@ -19,13 +19,6 @@ export function Modal({ id, title: label, children }: Props) {
     }
   };
 
-  const modalAnimation = {
-    initial: { y: '100%', opacity: 0 },
-    animate: { y: 0, opacity: 1 },
-    exit: { y: '100%', opacity: 0 },
-    transition: { type: 'spring', stiffness: 300, damping: 30 },
-  };
-
   return (
     <AnimatePresence>
       {openModals[id] && (
@@ -55,3 +48,10 @@ export function Modal({ id, title: label, children }: Props) {
     </AnimatePresence>
   );
 }
+
+const modalAnimation = {
+  initial: { y: '100%', opacity: 0 },
+  animate: { y: 0, opacity: 1 },
+  exit: { y: '100%', opacity: 0 },
+  transition: { type: 'spring', stiffness: 300, damping: 30 },
+};

@@ -3,6 +3,7 @@ import { getTest, getConnect, getDb } from '../api/home';
 import { useState } from 'react';
 import { useModalContext } from '../contexts/ModalContext';
 import { Modal } from '../components/Modal';
+import { Button } from '../components/Button';
 
 export const Home = () => {
   const [apiTest, setApiTest] = useState(false);
@@ -57,27 +58,20 @@ export const Home = () => {
     <main>
       <div>안녕하세요 해남 해녀입니다</div>
       <header>
-        <div>Hello 해남해녀 배포 테스트!</div>
+        <div className="bg-blue-600 text-h3 text-orange-400">
+          Hello 해남해녀 배포 테스트!
+        </div>
+        <div className="m-xs"></div>
 
         <div>
-          <button
-            className="flex w-fit items-center justify-center rounded-md bg-blue-500 px-4 py-2 font-medium text-white"
-            onClick={handleModal}
-          >
-            Modal TEST
-          </button>
+          <Button onClick={handleModal}>Modal TEST</Button>
           <Modal id="test-modal" title="Modal Test">
             <div>Modal Content</div>
           </Modal>
         </div>
 
         <div>
-          <button
-            className="flex w-fit items-center justify-center rounded-md bg-blue-500 px-4 py-2 font-medium text-white"
-            onClick={handleApiTest}
-          >
-            API TEST
-          </button>
+          <Button onClick={handleApiTest}>API TEST</Button>
 
           <div>
             {getTestMutation.isPending ? 'Testing...' : apiTest}
@@ -86,12 +80,7 @@ export const Home = () => {
         </div>
 
         <div>
-          <button
-            className="flex w-fit items-center justify-center rounded-md bg-blue-500 px-4 py-2 font-medium text-white"
-            onClick={handleDbTest}
-          >
-            DB TEST
-          </button>
+          <Button onClick={handleDbTest}>DB TEST</Button>
           <div>
             {getDbMutation.isPending ? 'Testing...' : apiDB}
             {getDbMutation.isError ? 'Failed to connect' : ''}
@@ -99,12 +88,7 @@ export const Home = () => {
         </div>
 
         <div>
-          <button
-            className="flex w-fit items-center justify-center rounded-md bg-blue-500 px-4 py-2 font-medium text-white"
-            onClick={handleApiConnect}
-          >
-            API CONNECT
-          </button>
+          <Button onClick={handleApiConnect}>API CONNECT</Button>
           <div>
             {getConnectMutation.isPending ? 'Testing...' : apiConnect}
             {getConnectMutation.isError ? 'Failed to connect' : ''}
