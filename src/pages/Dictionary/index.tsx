@@ -40,6 +40,7 @@ export const Dictionary = () => {
               isNew={false}
               seafoodName={seafood.englishName}
               counts={seafood.count}
+              name={seafood.name}
               onClick={() => handleSeafoodClick(seafood)}
             />
           ))}
