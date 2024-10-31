@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LocationPin } from './LocationPin';
 import { Modal } from '../../components/Modal';
 import { useModalContext } from '../../contexts/ModalContext';
 import { ReservationInfo } from '../../components/ReservationInfo/ReservationInfo';
 import { useNavigate } from 'react-router-dom';
 import { LargeButton } from '../../components/LargeButton';
-import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '../../query-keys';
 import {
   ReservationHaenyeoPlace,
@@ -16,11 +15,21 @@ export const Reservation = () => {
   const [selectedPin, setSelectedPin] = useState<string | null>(null);
   const { openModal } = useModalContext();
   const navigate = useNavigate();
+  const [haenyeoPlaces, setHaenyeoPlaces] = useState<ReservationHaenyeoPlace[]>(
+    [],
+  );
+  const fetchHaenyeoPlaces = async () => {
+    try {
+      const response = await getReservationHaenyeoPlaces();
+      setHaenyeoPlaces(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  const { data: haenyeoPlaces } = useQuery<ReservationHaenyeoPlace[]>({
-    queryKey: [queryKeys.haenyeoPlace],
-    queryFn: getReservationHaenyeoPlaces,
-  });
+  useEffect(() => {
+    fetchHaenyeoPlaces();
+  }, []);
 
   // 핀 클릭 핸들러
   const handlePinClick = (pinId: string) => {
@@ -34,7 +43,7 @@ export const Reservation = () => {
     }
   };
 
-  const selectedPlace = haenyeoPlaces?.find(
+  const selectedPlace = haenyeoPlaces.find(
     (place) => place.value === selectedPin,
   );
 
@@ -42,15 +51,14 @@ export const Reservation = () => {
     <div className="size-full bg-blue-100">
       <div className="flex size-full items-center justify-center">
         <img src="/icons/jeju_map.svg" alt="Map" className="size-full" />
-        {haenyeoPlaces &&
-          haenyeoPlaces.map((place) => (
-            <LocationPin
-              key={place.value}
-              x={place.x}
-              y={place.y}
-              onClick={() => handlePinClick(place.value)}
-            />
-          ))}
+        {haenyeoPlaces.map((place) => (
+          <LocationPin
+            key={place.value}
+            x={place.x}
+            y={place.y}
+            onClick={() => handlePinClick(place.value)}
+          />
+        ))}
       </div>
 
       {/* 하단 팝업 */}

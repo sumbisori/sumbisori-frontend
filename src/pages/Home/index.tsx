@@ -58,7 +58,7 @@ export const Home = () => {
         />
       </div>
 
-      <HomeContents />
+      <HomeContents seafoods={seafoods} />
     </div>
   );
 };

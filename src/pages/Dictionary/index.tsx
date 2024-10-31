@@ -53,7 +53,7 @@ export const Dictionary = () => {
               style={{
                 backgroundImage:
                   'url(/images/SeafoodCard/' +
-                  selectedSeafood.name +
+                  selectedSeafood.englishName +
                   suffix +
                   '.svg)',
               }}

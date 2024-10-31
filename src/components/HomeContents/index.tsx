@@ -1,8 +1,13 @@
+import { DictionarySeafood } from '../../api/dictionary';
 import { GrayButton } from '../Button/GrayButton';
 import { HomeContentsCard } from './HomeContentsCard';
 import { HomeLocation } from './HomeLocation';
 
-export const HomeContents = () => {
+interface Props {
+  seafoods: DictionarySeafood[];
+}
+
+export const HomeContents = ({ seafoods }: Props) => {
   return (
     <div>
       <div className="flex flex-col gap-3 p-4">
@@ -12,7 +17,9 @@ export const HomeContents = () => {
             label="물질도감"
             cardContent={
               <div className="text-[24px] font-bold">
-                <span>4</span>
+                <span>
+                  {seafoods.filter((seafood) => seafood.count > 0).length}
+                </span>
                 <span className="text-gray-500">/18</span>
               </div>
             }
