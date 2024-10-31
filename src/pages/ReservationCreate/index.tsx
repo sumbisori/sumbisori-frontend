@@ -25,7 +25,7 @@ export const ReservationCreate = () => {
     personName: '',
     selectedAvailableDate: '',
     selectedTime: '',
-    peopleCount: 0,
+    peopleCount: '',
     phone: '',
   });
 
@@ -74,28 +74,37 @@ export const ReservationCreate = () => {
       <div className="h-[5px] w-full bg-[#F7F7FA]"></div>
       <div className="flex h-full flex-col justify-between gap-[12px] p-[18px]">
         <div>
-          <Input
-            id="name"
-            inputLabel="예약자명"
-            value={form.personName}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                personName: e.target.value,
-              })
-            }
-          />
-          <Input
-            id="phone"
-            inputLabel="전화번호"
-            value={form.phone}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                phone: e.target.value,
-              })
-            }
-          />
+          <div className="flex flex-col gap-[10px]">
+            <label className="block text-[14px] font-semibold text-gray-900">
+              예약자명
+            </label>
+            <input
+              value={form.personName}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  personName: e.target.value,
+                })
+              }
+              className="h-[40px] w-full rounded-md border border-gray-050 bg-gray-100 px-4 text-[14px] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
+            />
+          </div>
+          <div className="flex flex-col gap-[10px]">
+            <label className="block text-[14px] font-semibold text-gray-900">
+              전화번호
+            </label>
+            <input
+              value={form.phone}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  phone: e.target.value,
+                })
+              }
+              className="h-[40px] w-full rounded-md border border-gray-050 bg-gray-100 px-4 text-[14px] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
+            />
+          </div>
+
           <OptionsInput
             inputLabel="날짜"
             options={haenyeoPlace?.availableDate || []}
@@ -118,17 +127,29 @@ export const ReservationCreate = () => {
               })
             }
           />
-          <NumberInput
-            id="peopleCount"
-            inputLabel="인원"
-            value={form.peopleCount}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                peopleCount: Number(e.target.value),
-              })
-            }
-          />
+          <div className="flex flex-col gap-[10px]">
+            <label className="block text-[14px] font-semibold text-gray-900">
+              인원
+            </label>
+            <div className="flex items-center gap-2">
+              <input
+                type="number"
+                min={1}
+                max={20}
+                value={form.peopleCount || ''}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    peopleCount:
+                      e.target.value === '' ? '' : Number(e.target.value),
+                  })
+                }
+                className="h-[40px] w-[80px] rounded-md border border-gray-050 bg-gray-100 px-4 text-[14px] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
+              />
+
+              <p className="text-[14px]">명</p>
+            </div>
+          </div>
         </div>
         <div className="mt-[50px]">
           <LargeButton
@@ -137,7 +158,7 @@ export const ReservationCreate = () => {
               !form.personName.trim() ||
               !form.selectedAvailableDate ||
               !form.selectedTime ||
-              form.peopleCount <= 0
+              (typeof form.peopleCount === 'number' && form.peopleCount <= 0)
             }
           >
             예약하기

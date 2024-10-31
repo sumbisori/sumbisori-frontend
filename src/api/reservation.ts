@@ -17,7 +17,7 @@ export interface PostReservation {
   personName: string;
   selectedAvailableDate: string;
   selectedTime: string;
-  peopleCount: number;
+  peopleCount: string | number;
   phone: string;
 }
 
