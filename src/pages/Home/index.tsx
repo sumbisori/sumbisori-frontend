@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
-import { getTest, getConnect, getDb } from '../api/home';
+import { getTest, getConnect, getDb } from '../../api/home';
 import { useState } from 'react';
-import { useModalContext } from '../contexts/ModalContext';
-import { Modal } from '../components/Modal';
-import { Button } from '../components/Button';
+import { useModalContext } from '../../contexts/ModalContext';
+import { Modal } from '../../components/Modal';
+import { Button } from '../../components/Button';
 
 export const Home = () => {
   const [apiTest, setApiTest] = useState(false);
