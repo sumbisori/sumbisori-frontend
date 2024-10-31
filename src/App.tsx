@@ -1,16 +1,14 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Router } from './routes';
 import Mobile from './layouts/Mobile';
-
-const queryClient = new QueryClient();
+import { Providers } from './contexts';
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <Providers>
       <Mobile>
         <Router />
       </Mobile>
-    </QueryClientProvider>
+    </Providers>
   );
 }
 

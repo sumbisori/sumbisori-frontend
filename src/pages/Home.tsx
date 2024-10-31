@@ -1,11 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
 import { getTest, getConnect, getDb } from '../api/home';
 import { useState } from 'react';
+import { useModalContext } from '../contexts/ModalContext';
+import { Modal } from '../components/Modal';
 
 export const Home = () => {
   const [apiTest, setApiTest] = useState(false);
   const [apiDB, setApiDB] = useState(false);
   const [apiConnect, setApiConnect] = useState('');
+  const { openModal } = useModalContext();
   // API 데이터 로딩 및 에러 상태 관리
   const getTestMutation = useMutation({
     mutationFn: getTest,
@@ -46,11 +49,27 @@ export const Home = () => {
     getConnectMutation.mutate();
   };
 
+  const handleModal = () => {
+    openModal('test-modal');
+  };
+
   return (
     <main>
       <div>안녕하세요 해남 해녀입니다</div>
       <header>
         <div>Hello 해남해녀 배포 테스트!</div>
+
+        <div>
+          <button
+            className="flex w-fit items-center justify-center rounded-md bg-blue-500 px-4 py-2 font-medium text-white"
+            onClick={handleModal}
+          >
+            Modal TEST
+          </button>
+          <Modal id="test-modal" title="Modal Test">
+            <div>Modal Content</div>
+          </Modal>
+        </div>
 
         <div>
           <button
