@@ -8,6 +8,7 @@ import { Dictionary } from '../pages/Dictionary';
 import { MyPage } from '../pages/MyPage';
 import { MyPageReservation } from '../pages/MyPageReservation';
 import { DictionaryRegistration } from '../pages/DictionaryRegistration';
+import { DictionaryConfirm } from '../pages/DictionaryConfirm';
 
 export const Router = () => {
   return (
@@ -25,6 +26,10 @@ export const Router = () => {
         <Route
           path="/dictionary/registration"
           element={<DictionaryRegistration />}
+        />
+        <Route
+          path="/dictionary/confirm/:seafood/:koreanName"
+          element={<DictionaryConfirm />}
         />
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/my-page/reservation" element={<MyPageReservation />} />

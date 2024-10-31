@@ -42,7 +42,13 @@ export const DictionaryRegistration = () => {
   const handleSubmit = async () => {
     try {
       await postSeafood(form);
-      navigate('/dictionary');
+      const selectedEnglish = seafoods.find((seafood) => {
+        return seafood.value === form.seafood;
+      })?.englishName;
+      const selectedKorean = seafoods.find((seafood) => {
+        return seafood.value === form.seafood;
+      })?.name;
+      navigate(`/dictionary/confirm/${selectedEnglish}/${selectedKorean}`);
     } catch (error) {
       console.error(error);
     }
@@ -99,6 +105,8 @@ export const DictionaryRegistration = () => {
                 { value: 1, name: '1개' },
                 { value: 2, name: '2개' },
                 { value: 3, name: '3개' },
+                { value: 4, name: '4개' },
+                { value: 5, name: '5개' },
               ]}
               onChange={(value) => setForm({ ...form, count: Number(value) })}
             />
