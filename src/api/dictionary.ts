@@ -1,7 +1,7 @@
 import { secureInstance } from './instance';
 
 export interface DictionarySeafood {
-  englishName: number;
+  englishName: string;
   name: string;
   description: string;
   insDt: string;

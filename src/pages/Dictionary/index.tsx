@@ -38,7 +38,7 @@ export const Dictionary = () => {
             <SeafoodCard
               key={seafood.englishName}
               isNew={false}
-              seafoodName={seafood.name}
+              seafoodName={seafood.englishName}
               counts={seafood.count}
               onClick={() => handleSeafoodClick(seafood)}
             />
