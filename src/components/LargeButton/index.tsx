@@ -5,7 +5,11 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 export const LargeButton = ({ children, ...props }: Props) => {
   return (
     <button
-      className="w-full rounded-md bg-[#007AFF] py-2 text-[16px] text-white"
+      className={
+        props.disabled
+          ? 'w-full cursor-not-allowed rounded-md bg-gray-400 py-2 text-[16px] text-white'
+          : 'w-full rounded-md bg-[#007AFF] py-2 text-[16px] text-white'
+      }
       {...props}
     >
       {children}

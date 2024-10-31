@@ -14,7 +14,7 @@ export const Router = () => {
         <Route path="/" element={<Home />} />
         <Route path="/reservation" element={<Reservation />} />
         <Route
-          path="/reservation-create/:pinId"
+          path="/reservation-create/:placeValue"
           element={<ReservationCreate />}
         />
         <Route path="/dictionary" element={<Dictionary />} />

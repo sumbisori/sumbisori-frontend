@@ -3,4 +3,5 @@ export const queryKeys = {
   db: 'db',
   connect: 'connect',
   haenyeoPlace: 'haenyeo-place',
+  haenyeoPlaceOption: 'haenyeo-place-option',
 };

@@ -12,4 +12,12 @@ const instance = axios.create({
   // withCredentials: true,
 });
 
-export { instance };
+const secureInstance = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+});
+
+export { instance, secureInstance };

@@ -11,7 +11,10 @@ export const Input = ({ inputLabel, ...props }: Props) => {
       >
         {inputLabel}
       </label>
-      <input className="h-[40px] w-full rounded-md border border-gray-050 bg-gray-100 px-4 text-[14px] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"></input>
+      <input
+        {...props}
+        className="h-[40px] w-full rounded-md border border-gray-050 bg-gray-100 px-4 text-[14px] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
+      ></input>
     </div>
   );
 };

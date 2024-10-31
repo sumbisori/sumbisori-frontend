@@ -11,8 +11,8 @@ export default function Mobile() {
   const getHeaderType = (pathname: string) => {
     if (pathname === '/') return 'light';
     if (pathname === '/reservation') return 'dark';
-    if (/^\/reservation-create(\/\d+)?$/.test(pathname)) return 'reservation';
-    return 'light'; // default type if no match is found
+    if (pathname.includes('/reservation-create')) return 'reservation';
+    return 'light';
   };
 
   const headerType = getHeaderType(location.pathname);

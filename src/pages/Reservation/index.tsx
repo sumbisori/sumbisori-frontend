@@ -7,32 +7,19 @@ import { useNavigate } from 'react-router-dom';
 import { LargeButton } from '../../components/LargeButton';
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '../../query-keys';
-import { getReservationHaenyeoPlace } from '../../api/reservation';
-
-interface ReservationHaenyeoPlace {
-  value: string;
-  name: string;
-  address: string;
-  price: number;
-  desc: string;
-  imageUrl: string;
-  availableDate: string[];
-  x: number;
-  y: number;
-}
+import {
+  ReservationHaenyeoPlace,
+  getReservationHaenyeoPlaces,
+} from '../../api/reservation';
 
 export const Reservation = () => {
   const [selectedPin, setSelectedPin] = useState<string | null>(null);
   const { openModal } = useModalContext();
   const navigate = useNavigate();
 
-  const {
-    data: haenyeoPlace,
-    isLoading,
-    isError,
-  } = useQuery<ReservationHaenyeoPlace[]>({
+  const { data: haenyeoPlaces } = useQuery<ReservationHaenyeoPlace[]>({
     queryKey: [queryKeys.haenyeoPlace],
-    queryFn: getReservationHaenyeoPlace,
+    queryFn: getReservationHaenyeoPlaces,
   });
 
   // 핀 클릭 핸들러
@@ -47,7 +34,7 @@ export const Reservation = () => {
     }
   };
 
-  const selectedPlace = haenyeoPlace?.find(
+  const selectedPlace = haenyeoPlaces?.find(
     (place) => place.value === selectedPin,
   );
 
@@ -55,8 +42,8 @@ export const Reservation = () => {
     <div className="relative size-full bg-blue-100">
       <div className="flex size-full items-center justify-center">
         <img src="/icons/jeju_map.svg" alt="Map" className="size-full" />
-        {haenyeoPlace &&
-          haenyeoPlace.map((place) => (
+        {haenyeoPlaces &&
+          haenyeoPlaces.map((place) => (
             <LocationPin
               key={place.value}
               x={place.x}
