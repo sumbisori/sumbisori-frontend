@@ -30,7 +30,7 @@ export const MyPageContent = () => {
         설정
       </MyPageButton>
       <AlertBox id="not-yet">
-        <div className="flex size-full flex-col items-center justify-center text-lg font-bold text-gray-900">
+        <div className="flex size-full flex-col items-center justify-center text-center text-lg font-bold text-gray-900">
           <img src="/images/haenyeo.png"></img>
           아직 준비 중인 서비스입니다. 조금만 기다려주세요!
         </div>

@@ -66,6 +66,13 @@ export default function Mobile() {
         absolute: false,
       };
 
+    if (pathname === '/dictionary/registration')
+      return {
+        type: 'dark',
+        caption: '도감 등록',
+        absolute: false,
+      };
+
     return {
       type: 'light',
       caption: undefined,

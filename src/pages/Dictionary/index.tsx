@@ -50,17 +50,23 @@ export const Dictionary = () => {
         <AlertBox id={`seafood-${selectedSeafood.name}`}>
           <div className="flex h-full flex-col justify-between">
             <div
-              className="relative size-[150px] self-center bg-cover bg-center bg-no-repeat"
+              className={` ${selectedSeafood.count > 0 ? '' : 'grayscale'} relative size-[150px] self-center bg-cover bg-center bg-no-repeat`}
               style={{
                 backgroundImage:
-                  'url(/images/SeafoodCard/' +
+                  'url(/images/Seafoods/' +
                   selectedSeafood.englishName +
-                  suffix +
                   '.svg)',
               }}
             />
-            <div className="min-h-[80px] border-y-2 py-3 text-center text-[16px]">
-              {selectedSeafood.count > 0 ? selectedSeafood.description : '???'}
+            <div
+              className={`${selectedSeafood.count > 0 ? 'border-orange-200' : 'border-gray-200'} w-full rounded-lg border py-[2px] text-center text-[18px] font-bold`}
+            >
+              {selectedSeafood.name}
+            </div>
+            <div className="min-h-[80px] border-b-2 py-3 text-center text-[15px]">
+              {selectedSeafood.count > 0
+                ? selectedSeafood.description
+                : '아직 수집하지 못했어요'}
             </div>
             <div className="text-center text-sm">
               채취시기 | {selectedSeafood.insDt ? selectedSeafood.insDt : '-'}

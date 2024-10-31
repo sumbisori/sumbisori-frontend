@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { TimeLabel } from '../TimeLabel/TimeLabel';
 
 interface Props {
@@ -17,6 +18,7 @@ export const MyPageReservationCard = ({
   people,
   status,
 }: Props) => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col p-[18px]">
       <div className="flex gap-2">
@@ -36,9 +38,15 @@ export const MyPageReservationCard = ({
         </div>
       )}
       {status === 'END' && (
-        <div className="grid-cols-2">
+        <div className="flex items-center gap-2 py-2">
           <MyPageButton>리뷰 작성</MyPageButton>
-          <MyPageButton>도감 등록</MyPageButton>
+          <MyPageButton
+            onClick={() => {
+              navigate('/dictionary/registration');
+            }}
+          >
+            도감 등록
+          </MyPageButton>
         </div>
       )}
     </div>

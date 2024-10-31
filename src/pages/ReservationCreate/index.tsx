@@ -145,13 +145,13 @@ export const ReservationCreate = () => {
         </div>
       </div>
       <AlertBox id="reservationSuccess">
-        <div className="flex size-full flex-col items-center justify-center text-lg font-bold text-gray-900">
+        <div className="flex size-full flex-col items-center justify-center text-center text-lg font-bold text-gray-900">
           <img src="/images/haenyeo.png"></img>
           예약이 완료되었습니다!
         </div>
       </AlertBox>
       <AlertBox id="reservationFail">
-        <div className="flex size-full flex-col items-center justify-center text-lg font-bold text-gray-900">
+        <div className="flex size-full flex-col items-center justify-center text-center text-lg font-bold text-gray-900">
           <img src="/images/haenyeo.png"></img>
           예약이 실패했습니다!
         </div>
