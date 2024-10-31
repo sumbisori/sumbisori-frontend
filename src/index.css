@@ -6,11 +6,11 @@ html {
   font-family: 'Pretendard';
 }
 
-.main-scroll::-webkit-scrollbar {
+.hide-scroll::-webkit-scrollbar {
   display: none;
 }
 
-.main-scroll {
+.hide-scroll {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }

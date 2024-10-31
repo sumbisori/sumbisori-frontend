@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Login } from '../pages/Login';
 import Mobile from '../layouts/Mobile';
 import { Reservation } from '../pages/Reservation';
+import { ReservationCreate } from '../pages/ReservationCreate';
 
 export const Router = () => {
   return (
@@ -11,6 +12,10 @@ export const Router = () => {
       <Route element={<Mobile />}>
         <Route path="/" element={<Home />} />
         <Route path="/reservation" element={<Reservation />} />
+        <Route
+          path="/reservation-create/:pinId"
+          element={<ReservationCreate />}
+        />
       </Route>
     </Routes>
   );

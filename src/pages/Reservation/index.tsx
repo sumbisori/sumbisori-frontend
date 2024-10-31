@@ -3,10 +3,13 @@ import { LocationPin } from './LocationPin';
 import { Modal } from '../../components/Modal';
 import { useModalContext } from '../../contexts/ModalContext';
 import { ReservationInfo } from '../../components/ReservationInfo/ReservationInfo';
+import { useNavigate } from 'react-router-dom';
+import { LargeButton } from '../../components/LargeButton';
 
 export const Reservation = () => {
   const [selectedPin, setSelectedPin] = useState<string | null>(null);
   const { openModal } = useModalContext();
+  const navigate = useNavigate();
 
   // 지도에 표시할 핀 위치 좌표
   const pinPositions = [
@@ -21,6 +24,10 @@ export const Reservation = () => {
   const handlePinClick = (pinId: string) => {
     setSelectedPin(pinId);
     openModal(`reservation-${pinId}`);
+  };
+
+  const handleNavigate = () => {
+    navigate(`/reservation-create/${selectedPin}`);
   };
 
   return (
@@ -55,11 +62,8 @@ export const Reservation = () => {
             </div>
           </div>
 
-          {/* 예약하기 버튼 */}
           <div className="shrink-0">
-            <button className="w-full rounded-md bg-blue-500 py-2 font-semibold text-white">
-              예약하기
-            </button>
+            <LargeButton onClick={handleNavigate}>예약</LargeButton>
           </div>
         </div>
       </Modal>

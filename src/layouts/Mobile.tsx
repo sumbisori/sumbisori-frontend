@@ -7,16 +7,21 @@ import { Background } from './Background';
 
 export default function Mobile() {
   const location = useLocation();
-  const headerType: { [key: string]: 'light' | 'dark' } = {
-    '/': 'light',
-    '/reservation': 'dark',
+
+  const getHeaderType = (pathname: string) => {
+    if (pathname === '/') return 'light';
+    if (pathname === '/reservation') return 'dark';
+    if (/^\/reservation-create(\/\d+)?$/.test(pathname)) return 'reservation';
+    return 'light'; // default type if no match is found
   };
+
+  const headerType = getHeaderType(location.pathname);
+
   return (
     <Background>
-      {/* 왼쪽 하단에 로고이미지 추가 */}
       <motion.section className="relative m-auto flex h-full w-[393px] flex-col bg-gray-000 pb-[60.99px]">
-        <Header type={headerType[location.pathname]} />
-        <div className="main-scroll flex-1 overflow-auto">
+        <Header type={headerType} />
+        <div className="hide-scroll flex-1 overflow-auto">
           <Outlet />
         </div>
         <NavigationBar />
