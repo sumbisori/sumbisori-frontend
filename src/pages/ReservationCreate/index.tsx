@@ -79,6 +79,8 @@ export const ReservationCreate = () => {
               예약자명
             </label>
             <input
+              name="personName"
+              type="text"
               value={form.personName}
               onChange={(e) =>
                 setForm({
@@ -94,6 +96,8 @@ export const ReservationCreate = () => {
               전화번호
             </label>
             <input
+              name="phone"
+              type="text"
               value={form.phone}
               onChange={(e) =>
                 setForm({
@@ -133,9 +137,7 @@ export const ReservationCreate = () => {
             </label>
             <div className="flex items-center gap-2">
               <input
-                type="number"
-                min={1}
-                max={20}
+                name="peopleCount"
                 value={form.peopleCount || ''}
                 onChange={(e) =>
                   setForm({
