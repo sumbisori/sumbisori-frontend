@@ -5,9 +5,9 @@ import { HomeContents } from '../../components/HomeContents';
 export const Home = () => {
   const { unityProvider, sendMessage } = useUnityContext({
     loaderUrl: 'Build/build.loader.js',
-    dataUrl: 'Build/build.data.br',
-    frameworkUrl: 'Build/build.framework.js.br',
-    codeUrl: 'Build/build.wasm.br',
+    dataUrl: 'Build/build.data.unityweb',
+    frameworkUrl: 'Build/build.framework.js.unityweb',
+    codeUrl: 'Build/build.wasm.unityweb',
   });
 
   function handleClickButton() {
