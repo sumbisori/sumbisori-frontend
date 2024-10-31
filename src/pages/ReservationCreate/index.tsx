@@ -20,15 +20,28 @@ export const ReservationCreate = () => {
   const { openModal, closeModal } = useModalContext();
   const [haenyeoPlace, setHaenyeoPlace] =
     useState<ReservationHaenyeoPlace | null>(null);
-  const [form, setForm] = useState<PostReservation>({
-    place: params.placeValue || '',
-    personName: '',
-    selectedAvailableDate: '',
-    selectedTime: '',
-    peopleCount: '',
-    phone: '',
-  });
-
+  // const [form, setForm] = useState<PostReservation>({
+  //   place: params.placeValue || '',
+  //   personName: '',
+  //   selectedAvailableDate: '',
+  //   selectedTime: '',
+  //   peopleCount: '',
+  //   phone: '',
+  // });
+  const [place, setPlace] = useState(params.placeValue || '');
+  const [personName, setPersonName] = useState('');
+  const [selectedAvailableDate, setSelectedAvailableDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
+  const [peopleCount, setPeopleCount] = useState('');
+  const [phone, setPhone] = useState('');
+  const form: PostReservation = {
+    place,
+    personName,
+    selectedAvailableDate,
+    selectedTime,
+    peopleCount,
+    phone,
+  };
   const handleReservation = async () => {
     try {
       await postReservation(form);
@@ -75,35 +88,32 @@ export const ReservationCreate = () => {
       <div className="flex h-full flex-col justify-between gap-[12px] p-[18px]">
         <div>
           <div className="flex flex-col gap-[10px]">
-            <label className="block text-[14px] font-semibold text-gray-900">
+            <div className="block text-[14px] font-semibold text-gray-900">
               예약자명
-            </label>
+            </div>
             <input
               name="personName"
               type="text"
-              defaultValue={form.personName}
-              onChange={(e) =>
-                setForm({
-                  ...form,
-                  personName: e.target.value,
-                })
-              }
+              value={form.personName}
+              onChange={(e) => setPersonName(e.target.value)}
               className="h-[40px] w-full rounded-md border border-gray-050 bg-gray-100 px-4 text-[14px] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
             />
           </div>
           <div className="flex flex-col gap-[10px]">
-            <label className="block text-[14px] font-semibold text-gray-900">
+            <div className="block text-[14px] font-semibold text-gray-900">
               전화번호
-            </label>
+            </div>
             <input
               name="phone"
               type="text"
-              defaultValue={form.phone}
+              value={form.phone}
               onChange={(e) =>
-                setForm({
-                  ...form,
-                  phone: e.target.value,
-                })
+                setPhone(
+                  e.target.value
+                    .replace(/[^0-9]/g, '')
+                    .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')
+                    .replace('--', '-'),
+                )
               }
               className="h-[40px] w-full rounded-md border border-gray-050 bg-gray-100 px-4 text-[14px] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
             />
@@ -113,39 +123,23 @@ export const ReservationCreate = () => {
             inputLabel="날짜"
             options={haenyeoPlace?.availableDate || []}
             value={form.selectedAvailableDate}
-            onSelectOption={(option) =>
-              setForm({
-                ...form,
-                selectedAvailableDate: option,
-              })
-            }
+            onSelectOption={(option) => setSelectedAvailableDate(option)}
           />
           <OptionsInput
             inputLabel="날짜"
             options={['오전 09:00', '오후 12:00', '오후 03:00']}
             value={form.selectedTime}
-            onSelectOption={(option) =>
-              setForm({
-                ...form,
-                selectedTime: option,
-              })
-            }
+            onSelectOption={(option) => setSelectedTime(option)}
           />
           <div className="flex flex-col gap-[10px]">
-            <label className="block text-[14px] font-semibold text-gray-900">
+            <div className="block text-[14px] font-semibold text-gray-900">
               인원
-            </label>
+            </div>
             <div className="flex items-center gap-2">
               <input
                 name="peopleCount"
-                defaultValue={form.peopleCount || ''}
-                onChange={(e) =>
-                  setForm({
-                    ...form,
-                    peopleCount:
-                      e.target.value === '' ? '' : Number(e.target.value),
-                  })
-                }
+                value={form.peopleCount || ''}
+                onChange={(e) => setPeopleCount(e.target.value)}
                 className="h-[40px] w-[80px] rounded-md border border-gray-050 bg-gray-100 px-4 text-[14px] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
               />
 
