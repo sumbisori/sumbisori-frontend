@@ -1,20 +1,21 @@
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
-  type?: 'dark' | 'light' | 'reservation';
+  type?: 'dark' | 'light';
+  caption?: string;
 }
 
-export const Header = ({ type = 'light' }: Props) => {
+export const Header = ({ type = 'light', caption }: Props) => {
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate('/');
   };
   return (
-    <nav className="absolute inset-x-0 top-0 z-10 flex w-[393px] justify-between p-[18px]">
+    <nav className="flex w-[393px] justify-between p-[18px]">
       <div className="flex items-center">
         <img
           src={
-            type === 'dark' || type === 'reservation'
+            type === 'dark'
               ? '/icons/sumbisori_logo_width_black.svg'
               : '/icons/sumbisori_logo_width_white.svg'
           }
@@ -22,10 +23,10 @@ export const Header = ({ type = 'light' }: Props) => {
           className="cursor-pointer"
           onClick={handleNavigate}
         />
-        {type === 'reservation' && (
+        {caption && (
           <div className="ml-2 flex items-center gap-2">
             <img src={'/icons/contour.svg'} alt="contour" />
-            <p className="text-[22px] font-bold text-gray-900">예약</p>
+            <p className="text-[22px] font-bold text-gray-900">{caption}</p>
           </div>
         )}
       </div>
@@ -33,7 +34,7 @@ export const Header = ({ type = 'light' }: Props) => {
       <div className="flex items-center">
         <img
           src={
-            type === 'dark' || type === 'reservation'
+            type === 'dark'
               ? '/icons/Icon_bell_black.svg'
               : '/icons/Icon_bell_white.svg'
           }

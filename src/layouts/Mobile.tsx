@@ -8,11 +8,37 @@ import { Background } from './Background';
 export default function Mobile() {
   const location = useLocation();
 
-  const getHeaderType = (pathname: string) => {
-    if (pathname === '/') return 'light';
-    if (pathname === '/reservation') return 'dark';
-    if (pathname.includes('/reservation-create')) return 'reservation';
-    return 'light';
+  const getHeaderType = (
+    pathname: string,
+  ): {
+    type: 'light' | 'dark';
+    caption: string | undefined;
+  } => {
+    if (pathname === '/')
+      return {
+        type: 'light',
+        caption: undefined,
+      };
+    if (pathname === '/reservation')
+      return {
+        type: 'dark',
+        caption: undefined,
+      };
+    if (pathname.includes('/reservation-create'))
+      return {
+        type: 'dark',
+        caption: '예약',
+      };
+    if (pathname === '/dictionary')
+      return {
+        type: 'dark',
+        caption: '물질도감',
+      };
+
+    return {
+      type: 'light',
+      caption: undefined,
+    };
   };
 
   const headerType = getHeaderType(location.pathname);
@@ -20,7 +46,7 @@ export default function Mobile() {
   return (
     <Background>
       <motion.section className="relative m-auto flex h-full w-[393px] flex-col bg-gray-000 pb-[60.99px]">
-        <Header type={headerType} />
+        <Header type={headerType.type} caption={headerType.caption} />
         <div className="hide-scroll flex-1 overflow-auto">
           <Outlet />
         </div>

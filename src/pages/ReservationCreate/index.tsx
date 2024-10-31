@@ -65,7 +65,7 @@ export const ReservationCreate = () => {
   });
 
   return (
-    <div className="mt-[60px]">
+    <div>
       <div className="p-[18px]">
         {haenyeoPlace && (
           <ReservationInfo
