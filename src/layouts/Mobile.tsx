@@ -2,11 +2,23 @@ import { motion } from 'framer-motion';
 
 import { NavigationBar } from '../components/NavigationBar';
 import { Header } from '../components/Header';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Background } from './Background';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { useEffect } from 'react';
 
 export default function Mobile() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.user.isAuthenticated,
+  );
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [isAuthenticated]);
 
   const getHeaderType = (
     pathname: string,

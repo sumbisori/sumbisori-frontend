@@ -1,19 +1,32 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store'; // RootState는 Redux store 타입
 import { KakaoLogin } from '../../components/KakaoLogin';
-import { login, setUserInfo } from '../../store/modules/user';
 import { Background } from '../../layouts/Background';
+import { login } from '../../api/login';
+import { setUserId } from '../../store/modules/user';
+import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const isAuthenticated = useSelector(
     (state: RootState) => state.user.isAuthenticated,
   );
 
+  const handleLogin = async () => {
+    try {
+      const response = await login('testNickname', 'testPassword');
+      dispatch(setUserId({ userId: response.userId }));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     if (isAuthenticated) {
-      console.log('User is logged in!');
+      navigate('/');
     }
   }, [isAuthenticated]);
 
@@ -32,7 +45,7 @@ export const Login = () => {
             backgroundImage: 'url(/icons/character_dive_before.svg)',
           }}
         />
-        <KakaoLogin href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=0e2d82ca1274d3c102b162df9ef18a8f&scope=account_email%20profile_nickname%20profile_image&state=bFIJLRcNEfP2pLZzTjgolGhjoEW6Vz2mgjicjVJ5nd8%3D&redirect_uri=https://k1ec344612739a.user-app.krampoline.com/api/login/oauth2/code/kakao" />
+        <KakaoLogin onClick={handleLogin} />
       </section>
     </Background>
   );

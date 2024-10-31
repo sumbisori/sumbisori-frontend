@@ -36,7 +36,7 @@ const getReservationHaenyeoPlace = async (
 };
 
 const postReservation = async (data: PostReservation) => {
-  const res = await secureInstance.post(`/reservation`, data);
+  const res = await secureInstance.post(`/reservation/create`, data);
   return res.data;
 };
 

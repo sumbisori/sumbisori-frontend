@@ -1,13 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UserInfo {
-  profileImage: string;
-  nickname: string;
+  userId: string;
 }
 
 const initialState = {
-  profileImage: '',
-  nickname: '',
+  userId: '',
   isAuthenticated: false,
 };
 
@@ -15,22 +13,13 @@ export const user = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    login: (state) => {
+    setUserId: (state, action: PayloadAction<UserInfo>) => {
+      const { userId } = action.payload;
       state.isAuthenticated = true;
-    },
-    logout: (state) => {
-      state.profileImage = '';
-      state.nickname = '';
-      state.isAuthenticated = false;
-    },
-    setUserInfo: (state, action: PayloadAction<UserInfo>) => {
-      const { profileImage, nickname } = action.payload;
-      state.profileImage = profileImage;
-      state.nickname = nickname;
-      state.isAuthenticated = true;
+      state.userId = userId;
     },
   },
 });
 
-export const { setUserInfo, login, logout } = user.actions;
+export const { setUserId } = user.actions;
 export default user.reducer;
