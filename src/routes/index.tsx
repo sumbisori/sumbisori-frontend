@@ -7,6 +7,7 @@ import { ReservationCreate } from '../pages/ReservationCreate';
 import { Dictionary } from '../pages/Dictionary';
 import { MyPage } from '../pages/MyPage';
 import { MyPageReservation } from '../pages/MyPageReservation';
+import { DictionaryRegistration } from '../pages/DictionaryRegistration';
 
 export const Router = () => {
   return (
@@ -20,6 +21,10 @@ export const Router = () => {
           element={<ReservationCreate />}
         />
         <Route path="/dictionary" element={<Dictionary />} />
+        <Route
+          path="/dictionary/registration"
+          element={<DictionaryRegistration />}
+        />
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/my-page/reservation" element={<MyPageReservation />} />
       </Route>
