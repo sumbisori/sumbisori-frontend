@@ -49,7 +49,7 @@ export const Reservation = () => {
   return (
     <div className="size-full bg-blue-100">
       <div className="flex size-full items-center justify-center">
-        <img src="/icons/jeju_map.svg" alt="Map" className="size-full" />
+        <img src="/icons/jeju_map.svg" alt="Map" className="w-[330px]" />
         {haenyeoPlaces.map((place) => (
           <LocationPin
             key={place.value}
