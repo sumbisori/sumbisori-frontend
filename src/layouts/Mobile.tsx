@@ -47,6 +47,13 @@ export default function Mobile() {
         absolute: false,
       };
 
+    if (pathname === '/my-page/reservation')
+      return {
+        type: 'dark',
+        caption: '예약정보 조회',
+        absolute: false,
+      };
+
     return {
       type: 'light',
       caption: undefined,
