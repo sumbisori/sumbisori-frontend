@@ -2,8 +2,11 @@ import { Unity, useUnityContext } from 'react-unity-webgl';
 import { NavigationBar } from '../../components/NavigationBar';
 import { HomeContents } from '../../components/HomeContents';
 import { Fragment } from 'react/jsx-runtime';
+import { DictionarySeafood, getSeafoodMy } from '../../api/dictionary';
+import { useEffect, useState } from 'react';
 
 export const Home = () => {
+  const [seafoods, setSeafoods] = useState<DictionarySeafood[]>([]);
   const { unityProvider, sendMessage, loadingProgression } = useUnityContext({
     loaderUrl: 'Build/build.loader.js',
     dataUrl: 'Build/build.data.unityweb',
@@ -11,40 +14,25 @@ export const Home = () => {
     codeUrl: 'Build/build.wasm.unityweb',
   });
 
-  function handleClickButton() {
-    sendMessage('Init Manager', 'Init', 'BlueFin3');
-  }
-
-  const list = [
-    {
-      englishName: 'Murex',
-      name: '뿔소라',
-      desc: '뿔소라설명',
-      insDt: '뿔소라날짜',
-      count: 3,
-    },
-    {
-      englishName: 'Vinyl',
-      name: '비닐',
-      desc: '비닐설명',
-      insDt: '비닐날짜',
-      count: 2,
-    },
-    {
-      englishName: 'SeaCucumber',
-      name: '해삼',
-      desc: '해삼설명',
-      insDt: '해삼날짜',
-      count: 4,
-    },
-  ];
+  const fetchSeafoods = async () => {
+    try {
+      const response = await getSeafoodMy();
+      setSeafoods(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   function onLoadEnd() {
-    list.forEach((element) => {
+    seafoods.forEach((element) => {
       sendMessage('Init Manager', 'Init', element.englishName + element.count);
     });
     return '';
   }
+
+  useEffect(() => {
+    fetchSeafoods();
+  }, []);
 
   return (
     <div className="h-[410px] w-[393px]">

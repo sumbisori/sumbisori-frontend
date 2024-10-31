@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import { SeafoodCard } from '../../components/SeafoodCard';
 import { AlertBox } from '../../components/AlertBox';
-import { DictionarySeafood, getDictionarySeafood } from '../../api/dictionary';
+import { DictionarySeafood, getSeafoodMy } from '../../api/dictionary';
+import { useModalContext } from '../../contexts/ModalContext';
 
 export const Dictionary = () => {
+  const { openModal } = useModalContext();
   const [seafoods, setSeafoods] = useState<DictionarySeafood[]>([]);
   const [selectedSeafood, setSelectedSeafood] =
     useState<DictionarySeafood | null>(null);
   const fetchSeafoods = async () => {
     try {
-      const response = await getDictionarySeafood();
+      const response = await getSeafoodMy();
       setSeafoods(response);
     } catch (error) {
       console.error(error);
@@ -18,11 +20,15 @@ export const Dictionary = () => {
 
   const handleSeafoodClick = (seafood: DictionarySeafood) => {
     setSelectedSeafood(seafood);
+    openModal(`seafood-${seafood.name}`);
   };
 
   useEffect(() => {
     fetchSeafoods();
   }, []);
+
+  const suffix =
+    selectedSeafood && selectedSeafood?.count > 0 ? '-color' : '-black';
 
   return (
     <div className="overflow-hidden">
@@ -41,16 +47,23 @@ export const Dictionary = () => {
       </div>
       {selectedSeafood && (
         <AlertBox id={`seafood-${selectedSeafood.name}`}>
-          <div className="flex flex-col gap-3">
+          <div className="flex h-full flex-col justify-between">
             <div
-              className="relative size-[100px] bg-cover bg-center bg-no-repeat"
+              className="relative size-[150px] self-center bg-cover bg-center bg-no-repeat"
               style={{
                 backgroundImage:
-                  'url(/imaghes/SeafoodCard/' + selectedSeafood.name + '.svg)',
+                  'url(/images/SeafoodCard/' +
+                  selectedSeafood.name +
+                  suffix +
+                  '.svg)',
               }}
             />
-            <div className="text-sm">{selectedSeafood.desc}</div>
-            <div className="text-sm">채취시기 | {selectedSeafood.insDt}</div>
+            <div className="min-h-[80px] border-y-2 py-3 text-center text-[16px]">
+              {selectedSeafood.count > 0 ? selectedSeafood.description : '???'}
+            </div>
+            <div className="text-center text-sm">
+              채취시기 | {selectedSeafood.insDt ? selectedSeafood.insDt : '-'}
+            </div>
           </div>
         </AlertBox>
       )}

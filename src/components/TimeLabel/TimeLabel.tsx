@@ -12,9 +12,9 @@ export const TimeLabel = ({
     <button
       className={`${
         isSelected
-          ? 'border border-[#007AFF] bg-[#007AFF] text-white'
+          ? 'border border-[#007AFF] bg-[#ebf5ff] text-[#007AFF]'
           : 'border border-[#gray-200] bg-gray-000 text-[#B1B1B1]'
-      } w-fit cursor-pointer rounded-md px-2 py-1 text-[16px] transition-colors duration-200 ease-in-out hover:bg-[#0059FF] hover:text-white`}
+      } w-fit cursor-pointer rounded-md px-2 py-1 text-[16px] transition-colors duration-200 ease-in-out hover:border-[#007AFF] hover:bg-[#ebf5ff] hover:text-[#007AFF]`}
       {...props}
     >
       {children}
