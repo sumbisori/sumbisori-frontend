@@ -1,22 +1,27 @@
 import { ReactNode } from 'react';
 
-interface Props {
-  icon?: ReactNode;
+interface Props extends React.HTMLAttributes<HTMLButtonElement> {
+  icon: ReactNode;
   label: string;
-  onClick?: () => void;
+  isActive?: boolean;
 }
 
-export const NavIcon = ({ icon, label, onClick }: Props) => {
+export const NavIcon = ({ icon, label, isActive = false, ...props }: Props) => {
   return (
-    <div
-      className="group flex cursor-pointer flex-col items-center justify-center"
-      onClick={onClick}
+    <button
+      className="group flex cursor-pointer flex-col items-center justify-center pb-[10px]"
+      {...props}
     >
-      {/* icon 자리 */}
-      <div className="size-[36px] bg-gray-300" />
-      <p className="flex w-[36px] justify-center text-[12px] text-gray-500 transition-colors duration-300 ease-in-out group-hover:text-[#007AFF]">
+      {/* Icon with conditional active styling */}
+      <div className={isActive ? 'text-[#ffffff]' : 'text-gray-500'}>
+        {icon}
+      </div>
+      {/* Label with conditional active styling */}
+      <p
+        className={`flex w-[36px] justify-center text-[12px] transition-colors duration-300 ease-in-out ${isActive ? 'text-[#ffffff]' : 'text-gray-500'} group-hover:text-[#ffffff]`}
+      >
         {label}
       </p>
-    </div>
+    </button>
   );
 };

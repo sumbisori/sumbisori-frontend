@@ -9,7 +9,7 @@ interface Props {
 export const Header = ({ type = 'light', caption, absolute }: Props) => {
   const navigate = useNavigate();
   const handleNavigate = () => {
-    navigate('/');
+    navigate('/home');
   };
   return (
     <nav

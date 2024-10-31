@@ -27,7 +27,7 @@ export default function Mobile() {
     caption: string | undefined;
     absolute: boolean;
   } => {
-    if (pathname === '/')
+    if (pathname === '/home')
       return {
         type: 'light',
         caption: undefined,

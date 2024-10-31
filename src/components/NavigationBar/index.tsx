@@ -1,14 +1,42 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { NavIcon } from './NavIcon';
+import { useState } from 'react';
 
 export const NavigationBar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const [hovered, setHovered] = useState<string | null>(null);
+
+  const navItems = [
+    { label: '홈', path: '/home', icon: 'nav_icon1' },
+    { label: '예약', path: '/reservation', icon: 'nav_icon2' },
+    { label: '도감', path: '/dictionary', icon: 'nav_icon3' },
+    { label: '마이', path: '/my-page', icon: 'nav_icon4' },
+  ];
+
   return (
     <nav className="absolute inset-x-0 bottom-0 z-10 flex w-[393px] justify-between bg-gray-800 px-[24px] pt-[7px] text-white">
-      <NavIcon label="홈" onClick={() => navigate('/')} />
-      <NavIcon label="예약" onClick={() => navigate('/reservation')} />
-      <NavIcon label="도감" onClick={() => navigate('/dictionary')} />
-      <NavIcon label="마이" onClick={() => navigate('/my-page')} />
+      {navItems.map((item, index) => (
+        <NavIcon
+          key={index}
+          label={item.label}
+          onClick={() => navigate(item.path)}
+          onMouseEnter={() => setHovered(item.path)}
+          onMouseLeave={() => setHovered(null)}
+          isActive={location.pathname.startsWith(item.path)}
+          icon={
+            <img
+              src={`/icons/nav/${item.icon}${
+                location.pathname.startsWith(item.path) || hovered === item.path
+                  ? '_active.svg'
+                  : '_inactive.svg'
+              }`}
+              alt={item.label}
+            />
+          }
+        />
+      ))}
     </nav>
   );
 };

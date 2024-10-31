@@ -5,7 +5,6 @@ import { useModalContext } from '../../contexts/ModalContext';
 import { ReservationInfo } from '../../components/ReservationInfo/ReservationInfo';
 import { useNavigate } from 'react-router-dom';
 import { LargeButton } from '../../components/LargeButton';
-import { queryKeys } from '../../query-keys';
 import {
   ReservationHaenyeoPlace,
   getReservationHaenyeoPlaces,

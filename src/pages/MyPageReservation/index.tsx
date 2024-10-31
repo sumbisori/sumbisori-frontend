@@ -46,12 +46,8 @@ export const MyPageReservation = () => {
         <SwitchReservationStatus
           status={status}
           onStatusChange={setStatus}
-          pendingCount={
-            status === 'PENDING'
-              ? reservationCounts.pendingCount
-              : reservationCounts.endCount
-          }
-          endCount={0}
+          pendingCount={reservationCounts.pendingCount}
+          endCount={reservationCounts.endCount}
         />
       </div>
       {reservations.length === 0 && (
@@ -60,14 +56,20 @@ export const MyPageReservation = () => {
           예약정보가 없습니다
         </div>
       )}
-      {/* {reservations.map((reservation) => (
-        <MyPageReservationCard key={reservation.id} 
-          imageSrc={reservation.}
-        />
-      ))} */}
+      <div className="flex flex-col overflow-auto">
+        {reservations.map((reservation) => (
+          <MyPageReservationCard
+            key={reservation.id}
+            imageSrc={reservation.imageUrl}
+            title={reservation.name}
+            address={reservation.address}
+            fullDate={reservation.reservationDate}
+            people={reservation.peopleCount}
+            status={reservation.status}
+          />
+        ))}
+      </div>
       <div className="h-[5px] w-full bg-[#F7F7FA]"></div>
-
-      {/* <MyPageReservationCard /> */}
     </div>
   );
 };

@@ -34,7 +34,7 @@ export const ReservationCreate = () => {
       await postReservation(form);
       openModal('reservationSuccess');
       setTimeout(() => {
-        navigate('/');
+        navigate('/home');
         closeModal();
       }, 1000);
     } catch (error) {

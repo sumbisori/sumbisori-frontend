@@ -1,5 +1,5 @@
 import { Home } from '../pages/Home';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { Login } from '../pages/Login';
 import Mobile from '../layouts/Mobile';
 import { Reservation } from '../pages/Reservation';
@@ -14,7 +14,8 @@ export const Router = () => {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route element={<Mobile />}>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/reservation" element={<Reservation />} />
         <Route
           path="/reservation-create/:placeValue"
