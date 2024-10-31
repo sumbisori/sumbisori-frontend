@@ -1,8 +1,10 @@
 import { HomeContentsCard } from './HomeContentsCard';
+import { HomeLocation } from './HomeLocation';
 
 export const HomeContents = () => {
   return (
-    <div className="flex flex-col gap-5 p-4">
+    <div className="flex flex-col gap-3 p-4">
+      <HomeLocation />
       <div className="grid w-full grid-cols-3 gap-4">
         <HomeContentsCard
           label="물질도감"
@@ -16,7 +18,7 @@ export const HomeContents = () => {
         <HomeContentsCard
           label="물때"
           cardContent={
-            <div className="flex items-center">
+            <div className="flex items-center gap-[5px]">
               <img src="/icons/sea_scale.svg" />
               <span className="text-[18px] font-semibold">밀물</span>
             </div>
@@ -25,8 +27,8 @@ export const HomeContents = () => {
         <HomeContentsCard
           label="날씨"
           cardContent={
-            <div className="flex items-center">
-              <img src="/icons/sea_scale.svg" />
+            <div className="flex items-center gap-[5px]">
+              <img src="/icons/weather.svg" />
               <span className="text-[21px] font-semibold">22°</span>
             </div>
           }

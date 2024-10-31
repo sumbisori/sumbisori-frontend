@@ -11,7 +11,7 @@ export const HomeContentsCard = ({ cardContent, label }: Props) => {
       <div className="flex h-[72px] w-[110px] items-center justify-center">
         {cardContent}
       </div>
-      <p className="flex w-[80px] justify-center bg-gray-050 text-[12px]">
+      <p className="flex w-[80px] justify-center bg-gray-100 text-[12px]">
         {label}
       </p>
     </div>

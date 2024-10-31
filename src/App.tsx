@@ -5,9 +5,7 @@ import { Providers } from './contexts';
 function App() {
   return (
     <Providers>
-      <Mobile>
-        <Router />
-      </Mobile>
+      <Router />
     </Providers>
   );
 }
