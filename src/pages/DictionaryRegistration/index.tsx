@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Background } from '../../layouts/Background';
 import { Button } from '../../components/Button';
-import Example from '../../components/SingleSelectList';
-import SingleDropdown from '../../components/SingleSelectList';
+import SingleDropdown, { Item } from '../../components/SingleSelectList';
 import {
   DictionarySeafoodAll,
   getSeafoodAll,
@@ -10,11 +9,14 @@ import {
 
 export const DictionaryRegistration = () => {
   const [seafoods, setSeafoods] = useState<DictionarySeafoodAll[]>([]);
+  const [objItems, setObjItems] = useState<Item[]>([]);
 
   async function fetchSeafoods() {
     try {
       const res = await getSeafoodAll();
       setSeafoods(res);
+      console.log(res);
+      setObjItems(makeObjType(res));
     } catch (error) {
       console.error(error);
     }
@@ -23,6 +25,18 @@ export const DictionaryRegistration = () => {
   useEffect(() => {
     fetchSeafoods();
   }, []);
+
+  function makeObjType(sf: DictionarySeafoodAll[]): Item[] {
+    const ret: Item[] = [];
+
+    sf.forEach((v: DictionarySeafoodAll, index: number) => {
+      console.log(v);
+      ret.push({ id: index, name: v.name });
+    });
+    console.log(ret);
+
+    return ret;
+  }
 
   return (
     <>
@@ -40,11 +54,7 @@ export const DictionaryRegistration = () => {
           <div className="w-[125px]">
             <SingleDropdown
               label="채취물 종류"
-              items={[
-                { id: 0, name: '성게' },
-                { id: 1, name: '전복' },
-                { id: 2, name: '뿔소라' },
-              ]}
+              items={objItems}
             ></SingleDropdown>
           </div>
           <div className="w-[69px]">

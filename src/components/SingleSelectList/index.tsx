@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-interface Item {
+export interface Item {
   id: number;
   name: string;
 }

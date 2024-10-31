@@ -3,7 +3,7 @@ import { secureInstance } from './instance';
 export interface DictionarySeafoodAll {
   value: string;
   name: string;
-  englishdName: string;
+  englishName: string;
   description: string;
 }
 
