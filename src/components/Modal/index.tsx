@@ -2,15 +2,14 @@ import { ReactNode, MouseEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ModalPortal from './ModalPortal';
 import { useModalContext } from '../../contexts/ModalContext';
-import { Button } from '../Button';
 
 interface Props {
   id: string;
-  title?: string;
   children: ReactNode;
+  size?: 'sm' | 'md' | 'lg'; // New size prop with default as 'md'
 }
 
-export function Modal({ id, title: label, children }: Props) {
+export function Modal({ id, children, size = 'md' }: Props) {
   const { openModals, closeModal } = useModalContext();
   const handleBackgroundClick = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -18,6 +17,10 @@ export function Modal({ id, title: label, children }: Props) {
       closeModal();
     }
   };
+
+  // Adjust modal height based on size prop
+  const modalHeight =
+    size === 'sm' ? 'h-[350px]' : size === 'lg' ? 'h-full' : 'h-2/3';
 
   return (
     <AnimatePresence>
@@ -29,18 +32,11 @@ export function Modal({ id, title: label, children }: Props) {
           >
             <motion.div
               {...modalAnimation}
-              className="flex h-2/3 w-[393px] flex-col justify-between rounded-t-lg bg-gray-050 shadow-lg"
+              className={`flex ${modalHeight} w-[393px] flex-col justify-between rounded-t-lg bg-gray-050 shadow-lg`}
             >
-              <div className="flex w-full items-center p-4 text-lg font-bold">
-                <span>{label}</span>
+              <div className="h-full overflow-auto px-4 pb-4 pt-6">
+                {children}
               </div>
-              <div className="overflow-auto p-4">{children}</div>
-              <Button
-                className="bg-blue-300 py-3 font-bold text-white"
-                onClick={() => closeModal()}
-              >
-                닫기
-              </Button>
             </motion.div>
           </div>
         </ModalPortal>
