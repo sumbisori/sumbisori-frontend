@@ -15,9 +15,9 @@ export const OptionsInput = ({
 }: Props) => {
   return (
     <div className="flex flex-col gap-[9px]">
-      <label className="block text-[14px] font-semibold text-gray-900">
+      <div className="block text-[14px] font-semibold text-gray-900">
         {inputLabel}
-      </label>
+      </div>
       <div className="hide-scroll flex gap-[10px] overflow-x-auto">
         {options.map((option) => (
           <div key={option} className="shrink-0 py-1">

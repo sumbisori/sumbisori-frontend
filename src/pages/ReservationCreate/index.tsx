@@ -34,16 +34,17 @@ export const ReservationCreate = () => {
   const [selectedTime, setSelectedTime] = useState('');
   const [peopleCount, setPeopleCount] = useState('');
   const [phone, setPhone] = useState('');
-  const form: PostReservation = {
-    place,
-    personName,
-    selectedAvailableDate,
-    selectedTime,
-    peopleCount,
-    phone,
-  };
+
   const handleReservation = async () => {
     try {
+      const form: PostReservation = {
+        place,
+        personName,
+        selectedAvailableDate,
+        selectedTime,
+        peopleCount,
+        phone,
+      };
       await postReservation(form);
       openModal('reservationSuccess');
       setTimeout(() => {
@@ -93,8 +94,8 @@ export const ReservationCreate = () => {
             </div>
             <input
               name="personName"
-              type="text"
-              value={form.personName}
+              value={personName}
+              autoComplete="off"
               onChange={(e) => setPersonName(e.target.value)}
               className="h-[40px] w-full rounded-md border border-gray-050 bg-gray-100 px-4 text-[14px] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
             />
@@ -105,8 +106,8 @@ export const ReservationCreate = () => {
             </div>
             <input
               name="phone"
-              type="text"
-              value={form.phone}
+              autoComplete="off"
+              value={phone}
               onChange={(e) =>
                 setPhone(
                   e.target.value
@@ -122,13 +123,13 @@ export const ReservationCreate = () => {
           <OptionsInput
             inputLabel="날짜"
             options={haenyeoPlace?.availableDate || []}
-            value={form.selectedAvailableDate}
+            value={selectedAvailableDate}
             onSelectOption={(option) => setSelectedAvailableDate(option)}
           />
           <OptionsInput
-            inputLabel="날짜"
+            inputLabel="시간"
             options={['오전 09:00', '오후 12:00', '오후 03:00']}
-            value={form.selectedTime}
+            value={selectedTime}
             onSelectOption={(option) => setSelectedTime(option)}
           />
           <div className="flex flex-col gap-[10px]">
@@ -138,7 +139,9 @@ export const ReservationCreate = () => {
             <div className="flex items-center gap-2">
               <input
                 name="peopleCount"
-                value={form.peopleCount || ''}
+                type="number"
+                value={peopleCount || ''}
+                autoComplete="off"
                 onChange={(e) => setPeopleCount(e.target.value)}
                 className="h-[40px] w-[80px] rounded-md border border-gray-050 bg-gray-100 px-4 text-[14px] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
               />
@@ -151,10 +154,10 @@ export const ReservationCreate = () => {
           <LargeButton
             onClick={handleReservation}
             disabled={
-              !form.personName.trim() ||
-              !form.selectedAvailableDate ||
-              !form.selectedTime ||
-              (typeof form.peopleCount === 'number' && form.peopleCount <= 0)
+              !personName.trim() ||
+              !selectedAvailableDate ||
+              !selectedTime ||
+              (typeof peopleCount === 'number' && peopleCount <= 0)
             }
           >
             예약하기
