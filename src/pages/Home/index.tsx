@@ -24,6 +24,7 @@ export const Home = () => {
       <Unity
         unityProvider={unityProvider}
         style={{ width: 393, height: 852 }}
+        devicePixelRatio={4}
       />
       <button onClick={handleClickButton}></button>
     </div>
