@@ -14,7 +14,7 @@ export const Header = ({ type = 'light', caption, absolute }: Props) => {
   return (
     <nav
       className={`flex w-[393px] justify-between p-[18px] ${
-        absolute ? 'absolute' : 'relative'
+        absolute ? 'absolute left-0 top-0 z-10' : 'relative'
       }`}
     >
       <div className="flex items-center">

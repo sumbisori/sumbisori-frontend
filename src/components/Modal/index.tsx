@@ -6,11 +6,12 @@ import { useModalContext } from '../../contexts/ModalContext';
 interface Props {
   id: string;
   children: ReactNode;
-  size?: 'sm' | 'md' | 'lg'; // New size prop with default as 'md'
+  size?: 'sm' | 'md' | 'lg';
 }
 
 export function Modal({ id, children, size = 'md' }: Props) {
   const { openModals, closeModal } = useModalContext();
+
   const handleBackgroundClick = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     if (e.target === e.currentTarget) {
@@ -18,7 +19,6 @@ export function Modal({ id, children, size = 'md' }: Props) {
     }
   };
 
-  // Adjust modal height based on size prop
   const modalHeight =
     size === 'sm' ? 'h-[350px]' : size === 'lg' ? 'h-full' : 'h-2/3';
 
@@ -32,8 +32,16 @@ export function Modal({ id, children, size = 'md' }: Props) {
           >
             <motion.div
               {...modalAnimation}
+              drag="y"
+              dragConstraints={{ top: 0, bottom: 200 }}
+              onDragEnd={(e, info) => {
+                if (info.offset.y > 100 && info.velocity.y > 0) {
+                  closeModal();
+                }
+              }}
               className={`flex ${modalHeight} w-[393px] flex-col justify-between rounded-t-lg bg-gray-050 shadow-lg`}
             >
+              <div className="mt-4 h-[2px] w-2/3 cursor-pointer self-center bg-gray-600" />
               <div className="h-full overflow-auto px-4 pb-4 pt-6">
                 {children}
               </div>
