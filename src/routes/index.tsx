@@ -11,7 +11,6 @@ import { DictionaryRegistration } from '../pages/DictionaryRegistration';
 import { DictionaryConfirm } from '../pages/DictionaryConfirm';
 
 export const Router = () => {
-  console.log(import.meta.env.PROD);
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
