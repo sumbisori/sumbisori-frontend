@@ -1,9 +1,7 @@
 import axios from 'axios';
 import { store } from '../store';
 
-const LOCAL = 'https://k1ec344612739a.user-app.krampoline.com/api';
-const Prod = '/api';
-const API_URL = import.meta.env.MODE === 'development' ? LOCAL : Prod;
+const API_URL = 'https://k1ec344612739a.user-app.krampoline.com/api';
 
 const instance = axios.create({
   baseURL: API_URL,
