@@ -1,6 +1,4 @@
 import { ReservationInfo } from '../../components/ReservationInfo/ReservationInfo';
-import { Input } from '../../components/Input';
-import { NumberInput } from '../../components/NumberInput';
 import { OptionsInput } from '../../components/OptionsInput';
 import { useEffect, useState } from 'react';
 import { LargeButton } from '../../components/LargeButton';
@@ -20,15 +18,7 @@ export const ReservationCreate = () => {
   const { openModal, closeModal } = useModalContext();
   const [haenyeoPlace, setHaenyeoPlace] =
     useState<ReservationHaenyeoPlace | null>(null);
-  // const [form, setForm] = useState<PostReservation>({
-  //   place: params.placeValue || '',
-  //   personName: '',
-  //   selectedAvailableDate: '',
-  //   selectedTime: '',
-  //   peopleCount: '',
-  //   phone: '',
-  // });
-  const [place, setPlace] = useState(params.placeValue || '');
+  const [placeId, setPlaceId] = useState(params.placeValue || '');
   const [personName, setPersonName] = useState('');
   const [selectedAvailableDate, setSelectedAvailableDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
@@ -38,7 +28,7 @@ export const ReservationCreate = () => {
   const handleReservation = async () => {
     try {
       const form: PostReservation = {
-        place,
+        placeId,
         personName,
         selectedAvailableDate,
         selectedTime,

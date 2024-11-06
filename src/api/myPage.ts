@@ -23,18 +23,18 @@ export interface MyPageReservationType {
 }
 
 export const getUserInfo = async (): Promise<UserInfo> => {
-  const response = await secureInstance.get('/my-page/my-info');
+  const response = await secureInstance.get('/users');
   return response.data;
 };
 
 export const getReservationList = async (
   status: 'PENDING' | 'END',
 ): Promise<MyPageReservationType[]> => {
-  const response = await secureInstance.get(`/reservation/my?status=${status}`);
+  const response = await secureInstance.get(`/reservations?status=${status}`);
   return response.data;
 };
 
 export const getReservationCount = async (): Promise<ReservationCount> => {
-  const response = await secureInstance.get('/reservation/my/counts');
+  const response = await secureInstance.get('/reservations/count');
   return response.data;
 };

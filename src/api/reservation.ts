@@ -1,19 +1,30 @@
 import { instance, secureInstance } from './instance';
 
+export interface ReservationHaenyeoPlaces {
+  placeId: string;
+  name: string;
+  address: string;
+  price: number;
+  desc: string;
+  imageUrl: string;
+  latitude: number;
+  longitude: number;
+}
+
 export interface ReservationHaenyeoPlace {
-  value: string;
+  placeId: string;
   name: string;
   address: string;
   price: number;
   desc: string;
   imageUrl: string;
   availableDate: string[];
-  x: number;
-  y: number;
+  latitude: number;
+  longitude: number;
 }
 
 export interface PostReservation {
-  place: string;
+  placeId: string;
   personName: string;
   selectedAvailableDate: string;
   selectedTime: string;
@@ -22,21 +33,21 @@ export interface PostReservation {
 }
 
 const getReservationHaenyeoPlaces = async (): Promise<
-  ReservationHaenyeoPlace[]
+  ReservationHaenyeoPlaces[]
 > => {
-  const response = await instance.get(`/reservation/haenyeo-place`);
+  const response = await instance.get(`/places`);
   return response.data;
 };
 
 const getReservationHaenyeoPlace = async (
-  value: string,
+  placeId: string,
 ): Promise<ReservationHaenyeoPlace> => {
-  const response = await instance.get(`/reservation/haenyeo-place/${value}`);
+  const response = await instance.get(`/places/${placeId}`);
   return response.data;
 };
 
 const postReservation = async (data: PostReservation) => {
-  const res = await secureInstance.post(`/reservation/create`, data);
+  const res = await secureInstance.post(`/reservations`, data);
   return res.data;
 };
 

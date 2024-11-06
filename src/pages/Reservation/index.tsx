@@ -6,7 +6,7 @@ import { ReservationInfo } from '../../components/ReservationInfo/ReservationInf
 import { useNavigate } from 'react-router-dom';
 import { LargeButton } from '../../components/LargeButton';
 import {
-  ReservationHaenyeoPlace,
+  ReservationHaenyeoPlaces,
   getReservationHaenyeoPlaces,
 } from '../../api/reservation';
 
@@ -14,9 +14,9 @@ export const Reservation = () => {
   const [selectedPin, setSelectedPin] = useState<string | null>(null);
   const { openModal } = useModalContext();
   const navigate = useNavigate();
-  const [haenyeoPlaces, setHaenyeoPlaces] = useState<ReservationHaenyeoPlace[]>(
-    [],
-  );
+  const [haenyeoPlaces, setHaenyeoPlaces] = useState<
+    ReservationHaenyeoPlaces[]
+  >([]);
   const fetchHaenyeoPlaces = async () => {
     try {
       const response = await getReservationHaenyeoPlaces();
@@ -43,7 +43,7 @@ export const Reservation = () => {
   };
 
   const selectedPlace = haenyeoPlaces.find(
-    (place) => place.value === selectedPin,
+    (place) => place.placeId === selectedPin,
   );
 
   return (
@@ -52,10 +52,10 @@ export const Reservation = () => {
         <img src="/icons/jeju_map.svg" alt="Map" className="w-[330px]" />
         {haenyeoPlaces.map((place) => (
           <LocationPin
-            key={place.value}
-            x={place.x}
-            y={place.y}
-            onClick={() => handlePinClick(place.value)}
+            key={place.placeId}
+            x={place.latitude}
+            y={place.longitude}
+            onClick={() => handlePinClick(place.placeId)}
           />
         ))}
       </div>
