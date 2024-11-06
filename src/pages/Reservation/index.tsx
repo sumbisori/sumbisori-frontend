@@ -9,6 +9,7 @@ import {
   ReservationHaenyeoPlaces,
   getReservationHaenyeoPlaces,
 } from '../../api/reservation';
+import { KakaoMap } from './KakaoMap';
 
 export const Reservation = () => {
   const [selectedPin, setSelectedPin] = useState<string | null>(null);
@@ -49,15 +50,7 @@ export const Reservation = () => {
   return (
     <div className="size-full bg-blue-100">
       <div className="flex size-full items-center justify-center">
-        <img src="/icons/jeju_map.svg" alt="Map" className="w-[330px]" />
-        {haenyeoPlaces.map((place) => (
-          <LocationPin
-            key={place.placeId}
-            x={place.latitude}
-            y={place.longitude}
-            onClick={() => handlePinClick(place.placeId)}
-          />
-        ))}
+        <KakaoMap places={haenyeoPlaces} onPinClick={handlePinClick} />
       </div>
 
       {/* 하단 팝업 */}
