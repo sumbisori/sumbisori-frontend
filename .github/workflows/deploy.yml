@@ -11,8 +11,13 @@ jobs:
       - name: Checkout source code. # 레포지토리 체크아웃
         uses: actions/checkout@main
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
       - name: Cache node modules # node modules 캐싱
-        uses: actions/cache@v1
+        uses: uses: actions/cache@v3
         with:
           path: node_modules # 프로젝트의 node_modules가 있는 경로로 설정
           key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
