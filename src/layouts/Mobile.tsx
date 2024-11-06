@@ -14,11 +14,11 @@ export default function Mobile() {
   const isAuthenticated = useSelector(
     (state: RootState) => state.user.isAuthenticated,
   );
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login');
-    }
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     navigate('/login');
+  //   }
+  // }, [isAuthenticated]);
 
   const getHeaderType = (
     pathname: string,
