@@ -3,6 +3,7 @@ import { secureInstance } from './instance';
 export interface UserInfo {
   nickname: string;
   count: number;
+  profileImageUrl: string;
 }
 
 export interface ReservationCount {

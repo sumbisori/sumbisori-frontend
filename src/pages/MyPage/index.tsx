@@ -7,6 +7,8 @@ export const MyPage = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>({
     nickname: '',
     count: 0,
+    profileImageUrl:
+      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
   });
 
   const fetchUserInfo = async () => {
@@ -24,7 +26,7 @@ export const MyPage = () => {
 
   return (
     <div className="flex flex-col">
-      <Profile profileName={userInfo.nickname} seafoodCount={userInfo.count} />
+      <Profile userInfo={userInfo} />
       <div className="h-[5px] w-full bg-[#F7F7FA]"></div>
       <MyPageContent />
     </div>
