@@ -25,4 +25,5 @@ jobs:
           aws s3 cp \
             --recursive \
             --region ap-northeast-2 \
+            --cache-control "no-cache" \
             dist s3://sumbisori-bucket
