@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import SingleDropdown from '../../components/SingleSelectList';
+import { Dropdown } from '../../components/Dropdown';
 import {
   PostSeafood,
   SeafoodAll,
-  getSeafoodAll,
+  getSeafoodTypes,
   postSeafood,
 } from '../../api/dictionaryRegistration';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +12,7 @@ export const DictionaryRegistration = () => {
   const navigate = useNavigate();
   const [seafoods, setSeafoods] = useState<SeafoodAll[]>([]);
   const [form, setForm] = useState<PostSeafood>({
-    seafood: '',
+    seafoodId: null,
     count: 0,
   });
   const [imagePreview, setImagePreview] = useState<string | null>(null); // 이미지 미리보기 상태 추가
@@ -20,7 +20,7 @@ export const DictionaryRegistration = () => {
 
   async function fetchSeafoods() {
     try {
-      const res = await getSeafoodAll();
+      const res = await getSeafoodTypes();
       setSeafoods(res);
     } catch (error) {
       console.error(error);
@@ -43,19 +43,24 @@ export const DictionaryRegistration = () => {
     try {
       await postSeafood(form);
       const selectedEnglish = seafoods.find((seafood) => {
-        return seafood.value === form.seafood;
+        return seafood.seafoodId === form.seafoodId;
       })?.englishName;
       const selectedKorean = seafoods.find((seafood) => {
-        return seafood.value === form.seafood;
-      })?.name;
+        return seafood.seafoodId === form.seafoodId;
+      })?.koreanName;
       navigate(`/dictionary/confirm/${selectedEnglish}/${selectedKorean}`);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const submitButtonDisabled = !form.seafood || !form.count || !imageFile;
-
+  const submitButtonDisabled = !form.seafoodId || !form.count || !imageFile;
+  console.log(
+    seafoods.map((seafood) => ({
+      value: seafood.seafoodId,
+      displayName: seafood.koreanName,
+    })) || [],
+  );
   return (
     <>
       <div className="flex size-full flex-col items-center justify-center bg-white">
@@ -87,30 +92,31 @@ export const DictionaryRegistration = () => {
           />
         </div>
 
-        <div className="mb-12 flex w-[201px] flex-row justify-between">
-          <div className="w-[125px]">
-            <SingleDropdown
-              value={form.seafood}
-              items={seafoods}
-              onChange={(value) =>
-                setForm({ ...form, seafood: value.toString() })
-              }
-            />
-          </div>
-          <div className="w-[69px]">
-            <SingleDropdown
-              value={form.count}
-              items={[
-                { value: 0, name: '0개' },
-                { value: 1, name: '1개' },
-                { value: 2, name: '2개' },
-                { value: 3, name: '3개' },
-                { value: 4, name: '4개' },
-                { value: 5, name: '5개' },
-              ]}
-              onChange={(value) => setForm({ ...form, count: Number(value) })}
-            />
-          </div>
+        <div className="mb-12 flex justify-between gap-5">
+          <Dropdown
+            value={form.seafoodId}
+            items={
+              seafoods.map((seafood) => ({
+                value: seafood.seafoodId,
+                displayName: seafood.koreanName,
+              })) || []
+            }
+            onChange={(value) => setForm({ ...form, seafoodId: value })}
+          />
+
+          <Dropdown
+            value={form.count}
+            items={[
+              { value: 0, displayName: '0개' },
+              { value: 1, displayName: '1개' },
+              { value: 2, displayName: '2개' },
+              { value: 3, displayName: '3개' },
+              { value: 4, displayName: '4개' },
+              { value: 5, displayName: '5개' },
+            ]}
+            onChange={(value) => setForm({ ...form, count: Number(value) })}
+            placeholder="개수"
+          />
         </div>
         <button
           onClick={handleSubmit}

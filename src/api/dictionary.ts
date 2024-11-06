@@ -1,14 +1,15 @@
 import { secureInstance } from './instance';
 
 export interface DictionarySeafood {
+  seafoodId: number;
+  koreanName: string;
   englishName: string;
-  name: string;
   description: string;
   insDt: string;
   count: number;
 }
 
-export const getSeafoodMy = async (): Promise<DictionarySeafood[]> => {
-  const response = await secureInstance.get('/seafoods/my');
+export const getSeafoods = async (): Promise<DictionarySeafood[]> => {
+  const response = await secureInstance.get('/seafoods');
   return response.data;
 };

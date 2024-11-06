@@ -1,12 +1,10 @@
 import { Unity, useUnityContext } from 'react-unity-webgl';
-import { NavigationBar } from '../../components/NavigationBar';
 import { HomeContents } from '../../components/HomeContents';
-import { Fragment } from 'react/jsx-runtime';
-import { DictionarySeafood, getSeafoodMy } from '../../api/dictionary';
 import { useEffect, useState } from 'react';
+import { SeafoodCollected, getSeafoodCollected } from '../../api/home';
 
 export const Home = () => {
-  const [seafoods, setSeafoods] = useState<DictionarySeafood[]>([]);
+  const [seafoods, setSeafoods] = useState<SeafoodCollected[]>([]);
   const { unityProvider, sendMessage, loadingProgression } = useUnityContext({
     loaderUrl: 'Build/build.loader.js',
     dataUrl: 'Build/build.data.unityweb',
@@ -16,7 +14,7 @@ export const Home = () => {
 
   const fetchSeafoods = async () => {
     try {
-      const response = await getSeafoodMy();
+      const response = await getSeafoodCollected();
       setSeafoods(response);
     } catch (error) {
       console.error(error);
@@ -24,11 +22,13 @@ export const Home = () => {
   };
 
   function onLoadEnd() {
-    seafoods.forEach((element) => {
-      sendMessage('Init Manager', 'Init', element.englishName + element.count);
+    seafoods.forEach((seafood) => {
+      sendMessage('Init Manager', 'Init', seafood.englishName + seafood.count);
     });
     return '';
   }
+
+  console.log(seafoods);
 
   useEffect(() => {
     fetchSeafoods();

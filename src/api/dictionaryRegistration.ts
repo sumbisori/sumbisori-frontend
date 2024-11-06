@@ -1,19 +1,19 @@
 import { secureInstance } from './instance';
 
 export interface SeafoodAll {
-  value: string | number;
-  name: string;
+  seafoodId: number;
+  koreanName: string;
   englishName?: string;
   description?: string;
 }
 
 export interface PostSeafood {
-  seafood: string;
+  seafoodId: number | null;
   count: number;
 }
 
-export const getSeafoodAll = async (): Promise<SeafoodAll[]> => {
-  const response = await secureInstance.get('/seafoods');
+export const getSeafoodTypes = async (): Promise<SeafoodAll[]> => {
+  const response = await secureInstance.get('/seafoods/types');
   return response.data;
 };
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SeafoodCard } from '../../components/SeafoodCard';
 import { AlertBox } from '../../components/AlertBox';
-import { DictionarySeafood, getSeafoodMy } from '../../api/dictionary';
+import { DictionarySeafood, getSeafoods } from '../../api/dictionary';
 import { useModalContext } from '../../contexts/ModalContext';
 
 export const Dictionary = () => {
@@ -11,7 +11,7 @@ export const Dictionary = () => {
     useState<DictionarySeafood | null>(null);
   const fetchSeafoods = async () => {
     try {
-      const response = await getSeafoodMy();
+      const response = await getSeafoods();
       setSeafoods(response);
     } catch (error) {
       console.error(error);
@@ -20,15 +20,12 @@ export const Dictionary = () => {
 
   const handleSeafoodClick = (seafood: DictionarySeafood) => {
     setSelectedSeafood(seafood);
-    openModal(`seafood-${seafood.name}`);
+    openModal(`seafood-${seafood.koreanName}`);
   };
 
   useEffect(() => {
     fetchSeafoods();
   }, []);
-
-  const suffix =
-    selectedSeafood && selectedSeafood?.count > 0 ? '-color' : '-black';
 
   return (
     <div className="overflow-hidden">
@@ -36,18 +33,18 @@ export const Dictionary = () => {
         <div className="mt-4 grid grid-cols-3 justify-center gap-3 rounded-lg border border-orange-200 bg-white p-3">
           {seafoods.map((seafood) => (
             <SeafoodCard
-              key={seafood.englishName}
+              key={seafood.seafoodId}
               isNew={false}
               seafoodName={seafood.englishName}
               counts={seafood.count}
-              name={seafood.name}
+              name={seafood.koreanName}
               onClick={() => handleSeafoodClick(seafood)}
             />
           ))}
         </div>
       </div>
       {selectedSeafood && (
-        <AlertBox id={`seafood-${selectedSeafood.name}`}>
+        <AlertBox id={`seafood-${selectedSeafood.koreanName}`}>
           <div className="flex h-full flex-col justify-between">
             <div
               className={` ${selectedSeafood.count > 0 ? '' : 'grayscale'} relative size-[150px] self-center bg-cover bg-center bg-no-repeat`}
@@ -61,7 +58,7 @@ export const Dictionary = () => {
             <div
               className={`${selectedSeafood.count > 0 ? 'border-orange-200' : 'border-gray-200'} w-full rounded-lg border py-[2px] text-center text-[18px] font-bold`}
             >
-              {selectedSeafood.name}
+              {selectedSeafood.koreanName}
             </div>
             <div className="min-h-[80px] border-b-2 py-3 text-center text-[15px]">
               {selectedSeafood.count > 0

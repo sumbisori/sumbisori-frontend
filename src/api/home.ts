@@ -1,15 +1,13 @@
-import { instance } from './instance';
+import { secureInstance } from './instance';
 
-const getTest = async (): Promise<boolean> => {
-  return await instance.get(`/test`);
+export interface SeafoodCollected {
+  seafoodId: number;
+  koreanName: string;
+  englishName: string;
+  count: number;
+}
+
+export const getSeafoodCollected = async (): Promise<SeafoodCollected[]> => {
+  const response = await secureInstance.get('/seafoods/collected');
+  return response.data;
 };
-
-const getDb = async (): Promise<boolean> => {
-  return await instance.get(`/db`);
-};
-
-const getConnect = async (): Promise<string> => {
-  return await instance.get(`/connect`);
-};
-
-export { getTest, getDb, getConnect };

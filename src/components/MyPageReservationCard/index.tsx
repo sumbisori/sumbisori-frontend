@@ -27,7 +27,7 @@ export const MyPageReservationCard = ({
           <p className="text-[20px] font-semibold tracking-tight">{title}</p>
           <p className="text-[12px]">{address}</p>
           <p className="text-[16px] font-bold">
-            {fullDate}·{people}명
+            {fullDate} · {people}명
           </p>
         </div>
       </div>

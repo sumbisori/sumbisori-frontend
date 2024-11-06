@@ -1,10 +1,10 @@
-import { DictionarySeafood } from '../../api/dictionary';
+import { SeafoodCollected } from '../../api/home';
 import { GrayButton } from '../Button/GrayButton';
 import { HomeContentsCard } from './HomeContentsCard';
 import { HomeLocation } from './HomeLocation';
 
 interface Props {
-  seafoods: DictionarySeafood[];
+  seafoods: SeafoodCollected[];
 }
 
 export const HomeContents = ({ seafoods }: Props) => {
