@@ -8,27 +8,27 @@ import { setUserId } from '../../store/modules/user';
 import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  // const dispatch = useDispatch();
 
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.user.isAuthenticated,
-  );
+  // const isAuthenticated = useSelector(
+  //   (state: RootState) => state.user.isAuthenticated,
+  // );
 
-  const handleLogin = async () => {
-    try {
-      const response = await login('김구름', '1234');
-      dispatch(setUserId({ userId: response.userId }));
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleLogin = async () => {
+  //   try {
+  //     const response = await login('김구름', '1234');
+  //     dispatch(setUserId({ userId: response.userId }));
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/home');
-    }
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     navigate('/home');
+  //   }
+  // }, [isAuthenticated]);
 
   return (
     <Background>
@@ -45,7 +45,7 @@ export const Login = () => {
             backgroundImage: 'url(/icons/character_dive_before.svg)',
           }}
         />
-        <KakaoLogin onClick={handleLogin} />
+        <KakaoLogin />
       </section>
     </Background>
   );

@@ -8,7 +8,6 @@ const instance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  // withCredentials: true,
 });
 
 const secureInstance = axios.create({
@@ -16,6 +15,7 @@ const secureInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
 secureInstance.interceptors.request.use(

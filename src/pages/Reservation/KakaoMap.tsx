@@ -20,7 +20,7 @@ export const KakaoMap = ({ places, onPinClick }: KakaoMapProps) => {
         33.37310402515643,
         126.54168511624414,
       ),
-      level: 10,
+      level: 11,
     };
 
     const map = new window.kakao.maps.Map(container as HTMLElement, options);
