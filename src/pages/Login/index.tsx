@@ -18,7 +18,7 @@ export const Login = () => {
   const handleLogin = async () => {
     try {
       const response = await login('김구름', '1234');
-      dispatch(setUserId({ userId: response }));
+      dispatch(setUserId({ userId: response.userId }));
     } catch (error) {
       console.error(error);
     }

@@ -1,11 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UserInfo {
-  userId: string;
+  userId: number;
 }
 
-const initialState = {
-  userId: '',
+export interface UserState {
+  userId: number | null;
+  isAuthenticated: boolean;
+}
+
+const initialState: UserState = {
+  userId: null,
   isAuthenticated: false,
 };
 
