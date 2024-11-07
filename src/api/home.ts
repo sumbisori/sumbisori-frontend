@@ -21,7 +21,7 @@ export const getJejuWaterTemperature = async (
   time: string;
 }> => {
   const response = await axios.get(
-    `http://www.khoa.go.kr/api/oceangrid/tideObsTemp/search.do?ServiceKey=${import.meta.env.VITE_SEA_KEY}==&ObsCode=${locationCode}&Date=${today}&ResultType=json`,
+    `https://www.khoa.go.kr/api/oceangrid/tideObsTemp/search.do?ServiceKey=${import.meta.env.VITE_SEA_KEY}==&ObsCode=${locationCode}&Date=${today}&ResultType=json`,
   );
   return {
     temp: response.data.result.data[response.data.result.data.length - 1]
@@ -39,7 +39,7 @@ export const getJejuWaterHeight = async (
   time: string;
 }> => {
   const response = await axios.get(
-    `http://www.khoa.go.kr/api/oceangrid/tideObsPreTab/search.do?ServiceKey=${import.meta.env.VITE_SEA_KEY}==&ObsCode=${locationCode}&Date=${today}&ResultType=json`,
+    `https://www.khoa.go.kr/api/oceangrid/tideObsPreTab/search.do?ServiceKey=${import.meta.env.VITE_SEA_KEY}==&ObsCode=${locationCode}&Date=${today}&ResultType=json`,
   );
 
   const currentTime = new Date();
