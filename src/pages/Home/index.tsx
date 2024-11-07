@@ -5,6 +5,7 @@ import { SeafoodCollected, getSeafoodCollected } from '../../api/home';
 
 export const Home = () => {
   const [seafoods, setSeafoods] = useState<SeafoodCollected[]>([]);
+
   const { unityProvider, sendMessage, loadingProgression } = useUnityContext({
     loaderUrl: 'Build/build.loader.js',
     dataUrl: 'Build/build.data.unityweb',

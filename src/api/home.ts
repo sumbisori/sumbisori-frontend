@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { secureInstance } from './instance';
 
 export interface SeafoodCollected {
@@ -10,4 +11,52 @@ export interface SeafoodCollected {
 export const getSeafoodCollected = async (): Promise<SeafoodCollected[]> => {
   const response = await secureInstance.get('/seafoods/collected');
   return response.data;
+};
+
+export const getJejuWaterTemperature = async (
+  today: string,
+  locationCode: string,
+): Promise<{
+  temp: string;
+  time: string;
+}> => {
+  const response = await axios.get(
+    `http://www.khoa.go.kr/api/oceangrid/tideObsTemp/search.do?ServiceKey=${import.meta.env.VITE_SEA_KEY}==&ObsCode=${locationCode}&Date=${today}&ResultType=json`,
+  );
+  return {
+    temp: response.data.result.data[response.data.result.data.length - 1]
+      .water_temp,
+    time: response.data.result.data[response.data.result.data.length - 1]
+      .record_time,
+  };
+};
+
+export const getJejuWaterHeight = async (
+  today: string,
+  locationCode: string,
+): Promise<{
+  height: string;
+  time: string;
+}> => {
+  const response = await axios.get(
+    `http://www.khoa.go.kr/api/oceangrid/tideObsPreTab/search.do?ServiceKey=${import.meta.env.VITE_SEA_KEY}==&ObsCode=${locationCode}&Date=${today}&ResultType=json`,
+  );
+
+  const currentTime = new Date();
+  const data = response.data.result.data;
+
+  // Find the closest time by comparing differences
+  const closest = data.reduce((prev: any, curr: any) => {
+    const prevTime = new Date(prev.tph_time);
+    const currTime = new Date(curr.tph_time);
+    return Math.abs(currTime.getTime() - currentTime.getTime()) <
+      Math.abs(prevTime.getTime() - currentTime.getTime())
+      ? curr
+      : prev;
+  });
+
+  return {
+    height: closest.hl_code,
+    time: closest.tph_time,
+  };
 };

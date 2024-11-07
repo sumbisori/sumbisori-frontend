@@ -15,7 +15,7 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
-    "types": ["vite/client", "kakao.maps.d.ts"]
+    "types": ["vite/client"]
   },
   "include": [
     "src",
