@@ -55,12 +55,7 @@ export const DictionaryRegistration = () => {
   };
 
   const submitButtonDisabled = !form.seafoodId || !form.count || !imageFile;
-  console.log(
-    seafoods.map((seafood) => ({
-      value: seafood.seafoodId,
-      displayName: seafood.koreanName,
-    })) || [],
-  );
+
   return (
     <>
       <div className="flex size-full flex-col items-center justify-center bg-white">

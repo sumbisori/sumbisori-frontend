@@ -6,14 +6,38 @@ import {
 } from '../../api/myPage';
 import { SwitchReservationStatus } from '../../components/SwitchReservationStatus';
 import { MyPageReservationCard } from '../../components/MyPageReservationCard';
+import { useNavigate } from 'react-router-dom';
+import { cancelReservation, completeReservation } from '../../api/reservation';
 
 export const MyPageReservation = () => {
+  const navigate = useNavigate();
   const [status, setStatus] = useState<'PENDING' | 'END'>('PENDING');
   const [reservations, setReservations] = useState<MyPageReservationType[]>([]);
   const [reservationCounts, setReservationCounts] = useState({
     pendingCount: 0,
     endCount: 0,
   });
+
+  const handleComplete = async (reservationId: number) => {
+    try {
+      await completeReservation(reservationId);
+      fetchReservations();
+      fetchReservationCounts();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleCancel = async (reservationId: number) => {
+    try {
+      await cancelReservation(reservationId);
+      fetchReservations();
+      fetchReservationCounts();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const fetchReservations = async () => {
     try {
       const response = await getReservationList(status);
@@ -60,12 +84,18 @@ export const MyPageReservation = () => {
         {reservations.map((reservation) => (
           <MyPageReservationCard
             key={reservation.id}
+            reservationId={reservation.id}
             imageSrc={reservation.imageUrl}
             title={reservation.name}
             address={reservation.address}
             fullDate={reservation.reservationDate}
             people={reservation.peopleCount}
             status={reservation.status}
+            onRegister={() => {
+              navigate('/dictionary/registration');
+            }}
+            onComplete={handleComplete}
+            onCancel={handleCancel}
           />
         ))}
       </div>

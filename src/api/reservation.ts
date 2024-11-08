@@ -51,8 +51,22 @@ const postReservation = async (data: PostReservation) => {
   return res.data;
 };
 
+const completeReservation = async (reservationId: number) => {
+  const res = await secureInstance.post(
+    `/reservations/${reservationId}/complete`,
+  );
+  return res.data;
+};
+
+const cancelReservation = async (reservationId: number) => {
+  const res = await secureInstance.delete(`/reservations/${reservationId}`);
+  return res.data;
+};
+
 export {
   getReservationHaenyeoPlaces,
   getReservationHaenyeoPlace,
   postReservation,
+  completeReservation,
+  cancelReservation,
 };

@@ -11,7 +11,7 @@ export const ReservationInfo = ({ imageSrc, title, address, price }: Props) => {
       <img src={imageSrc} alt="img" className="size-[72px] rounded-lg" />
       <div className="flex h-[72px] flex-col">
         <p className="text-[20px] font-semibold tracking-tight">{title}</p>
-        <p className="text-[10px]">{address}</p>
+        <p className="truncate text-[10px]">{address}</p>
         <p className="text-[17px] font-bold">{price.toLocaleString()}원</p>
       </div>
     </div>
