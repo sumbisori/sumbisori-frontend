@@ -65,7 +65,7 @@ export const Reservation = () => {
             />
             <div className="flex grow flex-col gap-2">
               <p className="text-[16px] font-bold">체험 상세정보</p>
-              <div className="grow overflow-auto rounded-md bg-gray-200 p-2 text-[14px]">
+              <div className="h-40 grow overflow-auto whitespace-pre-line rounded-md bg-gray-200 p-2 text-[14px]">
                 {selectedPlace.desc}
               </div>
             </div>

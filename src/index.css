@@ -14,3 +14,17 @@ html {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4a90e2;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #e0e0e0;
+}
