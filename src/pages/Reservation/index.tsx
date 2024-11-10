@@ -10,8 +10,10 @@ import {
   getReservationHaenyeoPlaces,
 } from '../../api/reservation';
 import { KakaoMap } from './KakaoMap';
+import { useErrorHandler } from '../../hooks/useErrorHandler';
 
 export const Reservation = () => {
+  const { handleError } = useErrorHandler();
   const [selectedPin, setSelectedPin] = useState<string | null>(null);
   const { openModal } = useModalContext();
   const navigate = useNavigate();
