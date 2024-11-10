@@ -11,9 +11,11 @@ import {
 import { useNavigate, useParams } from 'react-router-dom';
 import { useModalContext } from '../../contexts/ModalContext';
 import { AlertBox } from '../../components/AlertBox';
+import { useErrorHandler } from '../../hooks/useErrorHandler';
 
 export const ReservationCreate = () => {
   const params = useParams();
+  const { handleError } = useErrorHandler();
   const navigate = useNavigate();
   const { openModal, closeModal } = useModalContext();
   const [haenyeoPlace, setHaenyeoPlace] =
@@ -55,7 +57,7 @@ export const ReservationCreate = () => {
       const data = await getReservationHaenyeoPlace(params.placeValue);
       setHaenyeoPlace(data);
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   };
 
@@ -64,8 +66,8 @@ export const ReservationCreate = () => {
   }, [params.placeValue]);
 
   return (
-    <div>
-      <div className="p-[18px]">
+    <div className="flex h-full flex-col">
+      <div className="flex h-1/5 items-center p-[18px]">
         {haenyeoPlace && (
           <ReservationInfo
             imageSrc={haenyeoPlace.imageUrl}
@@ -76,8 +78,8 @@ export const ReservationCreate = () => {
         )}
       </div>
       <div className="h-[5px] w-full bg-[#F7F7FA]"></div>
-      <div className="flex h-full flex-col justify-between gap-[12px] p-[18px]">
-        <div>
+      <div className="flex h-4/5 flex-col justify-between gap-[12px] p-[18px]">
+        <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-[10px]">
             <div className="block text-[14px] font-semibold text-gray-900">
               예약자명
@@ -140,19 +142,17 @@ export const ReservationCreate = () => {
             </div>
           </div>
         </div>
-        <div className="mt-[50px]">
-          <LargeButton
-            onClick={handleReservation}
-            disabled={
-              !personName.trim() ||
-              !selectedAvailableDate ||
-              !selectedTime ||
-              (typeof peopleCount === 'number' && peopleCount <= 0)
-            }
-          >
-            예약하기
-          </LargeButton>
-        </div>
+        <LargeButton
+          onClick={handleReservation}
+          disabled={
+            !personName.trim() ||
+            !selectedAvailableDate ||
+            !selectedTime ||
+            (typeof peopleCount === 'number' && peopleCount <= 0)
+          }
+        >
+          예약하기
+        </LargeButton>
       </div>
       <AlertBox id="reservationSuccess">
         <div className="flex size-full flex-col items-center justify-center text-center text-lg font-bold text-gray-900">
@@ -162,7 +162,7 @@ export const ReservationCreate = () => {
       </AlertBox>
       <AlertBox id="reservationFail">
         <div className="flex size-full flex-col items-center justify-center text-center text-lg font-bold text-gray-900">
-          <img src="/images/haenyeo.png"></img>
+          <img src="/images/haenyeo_sad.png"></img>
           예약이 실패했습니다!
         </div>
       </AlertBox>

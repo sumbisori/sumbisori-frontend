@@ -23,7 +23,7 @@ export const Reservation = () => {
       const response = await getReservationHaenyeoPlaces();
       setHaenyeoPlaces(response);
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   };
 

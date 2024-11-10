@@ -3,9 +3,11 @@ import { SeafoodCard } from '../../components/SeafoodCard';
 import { AlertBox } from '../../components/AlertBox';
 import { DictionarySeafood, getSeafoods } from '../../api/dictionary';
 import { useModalContext } from '../../contexts/ModalContext';
+import { useErrorHandler } from '../../hooks/useErrorHandler';
 
 export const Dictionary = () => {
   const { openModal } = useModalContext();
+  const { handleError } = useErrorHandler();
   const [seafoods, setSeafoods] = useState<DictionarySeafood[]>([]);
   const [selectedSeafood, setSelectedSeafood] =
     useState<DictionarySeafood | null>(null);
@@ -14,7 +16,7 @@ export const Dictionary = () => {
       const response = await getSeafoods();
       setSeafoods(response);
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   };
 
@@ -66,7 +68,10 @@ export const Dictionary = () => {
                 : '아직 수집하지 못했어요'}
             </div>
             <div className="text-center text-sm">
-              채취시기 | {selectedSeafood.insDt ? selectedSeafood.insDt : '-'}
+              채취시기 |{' '}
+              {selectedSeafood.insDt
+                ? selectedSeafood.insDt
+                : '아직 잡지 못했어요'}
             </div>
           </div>
         </AlertBox>

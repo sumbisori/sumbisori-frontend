@@ -7,9 +7,12 @@ import {
   postSeafood,
 } from '../../api/dictionaryRegistration';
 import { useNavigate } from 'react-router-dom';
+import { useErrorHandler } from '../../hooks/useErrorHandler';
 
 export const DictionaryRegistration = () => {
   const navigate = useNavigate();
+  const { handleError } = useErrorHandler();
+
   const [seafoods, setSeafoods] = useState<SeafoodAll[]>([]);
   const [form, setForm] = useState<PostSeafood>({
     seafoodId: null,
@@ -23,7 +26,7 @@ export const DictionaryRegistration = () => {
       const res = await getSeafoodTypes();
       setSeafoods(res);
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   }
 
@@ -50,7 +53,7 @@ export const DictionaryRegistration = () => {
       })?.koreanName;
       navigate(`/dictionary/confirm/${selectedEnglish}/${selectedKorean}`);
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   };
 
@@ -62,7 +65,7 @@ export const DictionaryRegistration = () => {
         <div className="mb-4 text-[22px] font-bold">사진을 등록해주세요</div>
 
         {/* 이미지 미리보기 및 파일 입력 */}
-        <div className="mb-4 flex size-[201px] items-center justify-center rounded-lg bg-gray-300">
+        <div className="mb-4 flex size-[250px] items-center justify-center rounded-lg bg-gray-300">
           {imagePreview ? (
             <img
               src={imagePreview}
@@ -90,12 +93,14 @@ export const DictionaryRegistration = () => {
         <div className="mb-12 flex justify-between gap-5">
           <Dropdown
             value={form.seafoodId}
+            className="w-[145px]"
             items={
               seafoods.map((seafood) => ({
                 value: seafood.seafoodId,
                 displayName: seafood.koreanName,
               })) || []
             }
+            placeholder="채취물 종류"
             onChange={(value) => setForm({ ...form, seafoodId: value })}
           />
 

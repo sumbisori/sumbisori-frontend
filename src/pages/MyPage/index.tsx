@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react';
 import { MyPageContent } from '../../components/MyPageContent';
 import { Profile } from '../../components/Profile';
 import { UserInfo, getUserInfo } from '../../api/myPage';
+import { useErrorHandler } from '../../hooks/useErrorHandler';
 
 export const MyPage = () => {
+  const { handleError } = useErrorHandler();
+
   const [userInfo, setUserInfo] = useState<UserInfo>({
     nickname: '',
     count: 0,
@@ -16,7 +19,7 @@ export const MyPage = () => {
       const response = await getUserInfo();
       setUserInfo(response);
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   };
 

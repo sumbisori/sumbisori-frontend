@@ -7,12 +7,14 @@ import {
 import { GrayButton } from '../Button/GrayButton';
 import { HomeContentsCard } from './HomeContentsCard';
 import { HomeLocation } from './HomeLocation';
+import { useErrorHandler } from '../../hooks/useErrorHandler';
 
 interface Props {
   seafoods: SeafoodCollected[];
 }
 
 export const HomeContents = ({ seafoods }: Props) => {
+  const { handleError } = useErrorHandler();
   const [selectedLocation, setSelectedLocation] = useState<{
     code: string;
     name: string;
@@ -43,7 +45,7 @@ export const HomeContents = ({ seafoods }: Props) => {
       );
       setWaterTemperature(response);
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   };
 
@@ -53,7 +55,7 @@ export const HomeContents = ({ seafoods }: Props) => {
       const response = await getJejuWaterHeight(today, selectedLocation.code);
       setWaterHeight(response);
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   };
 

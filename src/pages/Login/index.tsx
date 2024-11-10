@@ -20,7 +20,7 @@ export const Login = () => {
   //     const response = await login('김구름', '1234');
   //     dispatch(setUserId({ userId: response.userId }));
   //   } catch (error) {
-  //     console.error(error);
+  //     handleError(error);
   //   }
   // };
 

@@ -3,6 +3,9 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Pretendard', 'ui-sans-serif', 'system-ui'],
+      },
       fontSize: {
         h1: ['38px', '57px'], // .h1
         h2: ['32px', '48px'], // .h2

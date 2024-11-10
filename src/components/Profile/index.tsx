@@ -10,7 +10,7 @@ export const Profile = ({ userInfo }: Props) => {
       <img
         src={userInfo.profileImageUrl}
         alt="profile"
-        className="size-[60px] rounded-full"
+        className="size-[72px] rounded-full border-2 border-gray-500"
       />
       <div className="flex flex-col items-start self-center">
         <div className="text-[20px] font-semibold">{userInfo.nickname} 님</div>

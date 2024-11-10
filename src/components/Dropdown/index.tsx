@@ -10,6 +10,7 @@ interface DropdownProps {
   items: DropdownItem[];
   onChange: (value: number) => void;
   placeholder?: string;
+  className?: string;
 }
 
 export const Dropdown = ({
@@ -17,13 +18,14 @@ export const Dropdown = ({
   items,
   onChange,
   placeholder,
+  className,
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const selectedItem = items.find((item) => item.value === value);
 
   return (
-    <div className="relative w-24">
+    <div className={`relative ${className}`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="h-10 w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-left shadow-sm focus:outline-none"
@@ -33,7 +35,7 @@ export const Dropdown = ({
         ) : (
           <span className="text-gray-400">{placeholder}</span>
         )}
-        <span className="float-right">
+        <span className="float-right ml-2">
           <svg
             className={`size-4 transition-transform ${
               isOpen ? 'rotate-180' : 'rotate-0'

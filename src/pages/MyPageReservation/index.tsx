@@ -8,8 +8,11 @@ import { SwitchReservationStatus } from '../../components/SwitchReservationStatu
 import { MyPageReservationCard } from '../../components/MyPageReservationCard';
 import { useNavigate } from 'react-router-dom';
 import { cancelReservation, completeReservation } from '../../api/reservation';
+import { useErrorHandler } from '../../hooks/useErrorHandler';
 
 export const MyPageReservation = () => {
+  const { handleError } = useErrorHandler();
+
   const navigate = useNavigate();
   const [status, setStatus] = useState<'PENDING' | 'END'>('PENDING');
   const [reservations, setReservations] = useState<MyPageReservationType[]>([]);
@@ -24,7 +27,7 @@ export const MyPageReservation = () => {
       fetchReservations();
       fetchReservationCounts();
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   };
 
@@ -34,7 +37,7 @@ export const MyPageReservation = () => {
       fetchReservations();
       fetchReservationCounts();
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   };
 
@@ -43,7 +46,7 @@ export const MyPageReservation = () => {
       const response = await getReservationList(status);
       setReservations(response);
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   };
 
@@ -52,7 +55,7 @@ export const MyPageReservation = () => {
       const response = await getReservationCount();
       setReservationCounts(response);
     } catch (error) {
-      console.error(error);
+      handleError(error);
     }
   };
 
@@ -76,8 +79,8 @@ export const MyPageReservation = () => {
       </div>
       {reservations.length === 0 && (
         <div className="flex h-[400px] w-full flex-col items-center justify-center text-lg font-bold text-gray-900">
-          <img src="/images/haenyeo.png"></img>
-          예약정보가 없습니다
+          예약 정보가 없습니다
+          <img src="/images/haenyeo_sad.png"></img>
         </div>
       )}
       <div className="flex flex-col overflow-auto">
