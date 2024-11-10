@@ -97,7 +97,7 @@ export default function Mobile() {
           caption={headerType.caption}
           absolute={headerType.absolute}
         />
-        <div className="hide-scroll flex-1 overflow-auto">
+        <div className="flex-1 overflow-auto">
           <Outlet />
         </div>
         <NavigationBar />

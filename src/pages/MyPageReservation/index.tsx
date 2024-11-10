@@ -68,7 +68,7 @@ export const MyPageReservation = () => {
   }, []);
 
   return (
-    <div>
+    <div className="flex h-full flex-col overflow-hidden">
       <div className="flex w-full justify-center">
         <SwitchReservationStatus
           status={status}
@@ -77,6 +77,7 @@ export const MyPageReservation = () => {
           endCount={reservationCounts.endCount}
         />
       </div>
+
       {reservations.length === 0 && (
         <div className="flex h-[400px] w-full flex-col items-center justify-center text-lg font-bold text-gray-900">
           예약 정보가 없습니다

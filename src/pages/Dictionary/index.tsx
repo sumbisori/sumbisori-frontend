@@ -63,9 +63,7 @@ export const Dictionary = () => {
               {selectedSeafood.koreanName}
             </div>
             <div className="min-h-[80px] border-b-2 py-3 text-center text-[15px]">
-              {selectedSeafood.count > 0
-                ? selectedSeafood.description
-                : '아직 수집하지 못했어요'}
+              {selectedSeafood.count > 0 ? selectedSeafood.description : '???'}
             </div>
             <div className="text-center text-sm">
               채취시기 |{' '}

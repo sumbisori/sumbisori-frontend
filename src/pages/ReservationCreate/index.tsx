@@ -67,7 +67,7 @@ export const ReservationCreate = () => {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex h-1/5 items-center p-[18px]">
+      <div className="flex items-center p-[18px]">
         {haenyeoPlace && (
           <ReservationInfo
             imageSrc={haenyeoPlace.imageUrl}
@@ -78,9 +78,9 @@ export const ReservationCreate = () => {
         )}
       </div>
       <div className="h-[5px] w-full bg-[#F7F7FA]"></div>
-      <div className="flex h-4/5 flex-col justify-between gap-[12px] p-[18px]">
-        <div className="flex flex-col gap-3">
-          <div className="flex flex-col gap-[10px]">
+      <div className="flex grow flex-col justify-between gap-[12px] p-[18px]">
+        <div className="flex flex-col gap-[16px]">
+          <div className="flex flex-col gap-[18px]">
             <div className="block text-[14px] font-semibold text-gray-900">
               예약자명
             </div>
@@ -92,7 +92,7 @@ export const ReservationCreate = () => {
               className="h-[40px] w-full rounded-md border border-gray-050 bg-gray-100 px-4 text-[14px] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
             />
           </div>
-          <div className="flex flex-col gap-[10px]">
+          <div className="flex flex-col gap-[18px]">
             <div className="block text-[14px] font-semibold text-gray-900">
               전화번호
             </div>
@@ -124,7 +124,7 @@ export const ReservationCreate = () => {
             value={selectedTime}
             onSelectOption={(option) => setSelectedTime(option)}
           />
-          <div className="flex flex-col gap-[10px]">
+          <div className="flex flex-col gap-[18px]">
             <div className="block text-[14px] font-semibold text-gray-900">
               인원
             </div>

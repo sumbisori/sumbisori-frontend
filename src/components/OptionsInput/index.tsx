@@ -14,7 +14,7 @@ export const OptionsInput = ({
   onSelectOption,
 }: Props) => {
   return (
-    <div className="flex flex-col gap-[9px]">
+    <div className="flex flex-col gap-[15px]">
       <div className="block text-[14px] font-semibold text-gray-900">
         {inputLabel}
       </div>
