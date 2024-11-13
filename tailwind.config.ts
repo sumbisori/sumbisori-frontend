@@ -140,7 +140,7 @@ export default {
           400: '#74AAFB', // $blue-400
           500: '#5094FA', // $blue-500
           600: '#317EF2', // $blue-600
-          700: '#1D6CE0', // $blue-700
+          700: '#1D6CE0', // $blue-700 primary
           800: '#1959B8', // $blue-800
           900: '#1A4B93', // $blue-900
         },
@@ -156,6 +156,8 @@ export default {
           800: '#984A06', // $orange-800
           900: '#7A3C05', // $orange-900
         },
+        primary: '#1D6CE0', // $primary
+        secondary: '#FAA55C', // $secondary
       },
       boxShadow: {
         DEFAULT: '0 0.125rem 0.625rem rgba(0, 0, 0, 0.2)', // $shadow
