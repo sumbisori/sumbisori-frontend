@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { store } from '../store';
 
-const API_URL = 'https://k1ec344612739a.user-app.krampoline.com/api';
+const API_URL = 'https://api.sumbisori.site/api';
 
 const instance = axios.create({
   baseURL: API_URL,
