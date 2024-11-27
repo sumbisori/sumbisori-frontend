@@ -28,15 +28,13 @@ export const useAquarium = (
       engine: engine, // 물리 엔진 연결
       canvas: canvasRef.current!, // 렌더링할 Canvas 지정
       options: {
-        width: 393, // Canvas 너비
-        height: 410, // Canvas 높이
         background: '/images/home_background.png', // 배경 이미지 설정
         wireframes: false, // 디버그용 와이어프레임 비활성화
       },
     });
 
     // 2. 해산물 물체 생성
-    const spriteScale = 0.6; // 해산물 이미지 스케일 조정
+    const spriteScale = 1; // 해산물 이미지 스케일 조정
     seafoods.forEach((seafood) => {
       const seafoodImage = new Image(); // 해산물 이미지를 로드
       seafoodImage.src = `/images/Seafoods/${seafood.englishName}.svg`;
@@ -45,8 +43,8 @@ export const useAquarium = (
         for (let i = 0; i < seafood.count; i++) {
           // count만큼 해산물 물체 생성
           const body = Bodies.circle(
-            Math.random() * 300 + 50, // X 좌표: 랜덤 초기 위치
-            Math.random() * 200 + 50, // Y 좌표: 랜덤 초기 위치
+            Math.random() * 700 + 50, // X 좌표: 랜덤 초기 위치 (50 ~ 750)
+            Math.random() * 500 + 50, // Y 좌표: 랜덤 초기 위치 (50 ~ 550)
             30, // 물체의 반지름
             {
               restitution: 0.3, // 바운스 효과 설정
@@ -66,17 +64,19 @@ export const useAquarium = (
     });
 
     // 3. 다이버 물체 생성 및 애니메이션
+    // 3. 다이버 물체 생성 및 애니메이션
     const diverImage = new Image(); // 다이버 이미지를 로드
     diverImage.src = '/images/diver.svg';
 
     diverImage.onload = () => {
-      const diverBody = Bodies.rectangle(200, 200, 50, 100, {
+      const diverBody = Bodies.rectangle(400, 300, 50, 100, {
+        // 중앙에서 시작
         isStatic: false, // 움직임 가능
         render: {
           sprite: {
             texture: diverImage.src, // 다이버 이미지 적용
-            xScale: 1, // X축 스케일
-            yScale: 1, // Y축 스케일
+            xScale: 1.7, // X축 스케일
+            yScale: 1.4, // Y축 스케일
           },
         },
         collisionFilter: {
@@ -91,8 +91,8 @@ export const useAquarium = (
 
       // 매 프레임마다 다이버의 위치를 업데이트
       Events.on(engine, 'beforeUpdate', () => {
-        const minY = 200; // 최소 Y 위치
-        const maxY = 205; // 최대 Y 위치
+        const minY = 300; // 최소 Y 위치 (애니메이션 범위 상한)
+        const maxY = 305; // 최대 Y 위치 (애니메이션 범위 하한)
 
         // 다이버의 Y 위치에 따라 방향 전환
         if (diverBody.position.y >= maxY) {
@@ -127,73 +127,52 @@ export const useAquarium = (
     // 5. 벽 생성
     World.add(engine.world, [
       // 투명한 상, 좌, 우 벽
-      Bodies.rectangle(200, 0, 400, 20, {
+      Bodies.rectangle(400, 0, 800, 20, {
+        // 상단 벽
         isStatic: true,
-        render: {
-          visible: false,
-        },
+        render: { visible: false },
       }),
-      Bodies.rectangle(10, 200, 20, 400, {
+      Bodies.rectangle(0, 300, 20, 600, {
+        // 왼쪽 벽
         isStatic: true,
-        render: {
-          visible: false,
-        },
+        render: { visible: false },
       }),
-      Bodies.rectangle(390, 200, 20, 400, {
+      Bodies.rectangle(800, 300, 20, 600, {
+        // 오른쪽 벽
         isStatic: true,
-        render: {
-          visible: false,
-        },
+        render: { visible: false },
       }),
 
       // 박스를 사용하여 울퉁불퉁한 바닥 구성
-      Bodies.polygon(50, 350, 100, 80, {
+      Bodies.polygon(100, 550, 100, 150, {
+        // 바닥에 큰 구조물
         isStatic: true,
-        render: {
-          visible: false,
-        },
+        render: { visible: false },
       }),
-      Bodies.polygon(150, 380, 50, 50, {
+      Bodies.polygon(250, 580, 70, 120, {
+        // 중간 크기
         isStatic: true,
-        render: {
-          visible: false,
-        },
+        render: { visible: false },
       }),
-      Bodies.polygon(230, 380, 40, 40, {
+      Bodies.polygon(400, 580, 50, 80, {
+        // 작은 구조물
         isStatic: true,
-        render: {
-          visible: false,
-        },
+        render: { visible: false },
       }),
-      Bodies.polygon(300, 400, 40, 40, {
+      Bodies.polygon(550, 570, 70, 80, {
+        // 중간 크기
         isStatic: true,
-        render: {
-          visible: false,
-        },
+        render: { visible: false },
       }),
-      Bodies.polygon(350, 350, 40, 40, {
+      Bodies.polygon(700, 550, 100, 120, {
+        // 바닥에 큰 구조물
         isStatic: true,
-        render: {
-          visible: false,
-        },
+        render: { visible: false },
       }),
-      Bodies.polygon(400, 300, 50, 50, {
+      Bodies.rectangle(400, 590, 800, 20, {
+        // 바닥
         isStatic: true,
-        render: {
-          visible: false,
-        },
-      }),
-      Bodies.polygon(400, 400, 70, 70, {
-        isStatic: true,
-        render: {
-          visible: false,
-        },
-      }),
-      Bodies.rectangle(200, 410, 400, 20, {
-        isStatic: true,
-        render: {
-          visible: false,
-        },
+        render: { visible: false },
       }),
     ]);
 

@@ -14,10 +14,7 @@ export const Aquarium = ({ seafoods }: AquariumProps) => {
 
   return (
     <div ref={containerRef}>
-      <canvas
-        ref={canvasRef}
-        className="h-[410px] w-[393px] rounded-b-2xl bg-[url('/images/home_background.png')]"
-      />
+      <canvas ref={canvasRef} className="h-[410px] w-[393px] rounded-b-2xl" />
     </div>
   );
 };
