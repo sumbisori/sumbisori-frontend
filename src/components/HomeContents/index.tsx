@@ -11,6 +11,7 @@ import { HomeContentsCard } from './HomeContentsCard';
 import { HomeLocation } from './HomeLocation';
 import { useErrorHandler } from '../../hooks/useErrorHandler';
 import { HomeYoutubeList } from '../HomeYoutubeList';
+import { motion } from 'framer-motion';
 
 interface Props {
   seafoods: SeafoodCollected[];
@@ -18,6 +19,7 @@ interface Props {
 
 export const HomeContents = ({ seafoods }: Props) => {
   const { handleError } = useErrorHandler();
+  const [rotationCount, setRotationCount] = useState(0);
 
   const [youtubeVideos, setYoutubeVideos] = useState<YoutubeVideoType[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<{
@@ -151,7 +153,20 @@ export const HomeContents = ({ seafoods }: Props) => {
       <div className="flex flex-col gap-3 p-5">
         <div className="flex flex-col gap-3">
           <div>
-            <div className="pb-3 text-[17px] font-semibold">관련 영상</div>
+            <div className="flex items-center justify-between pb-3 text-[17px] font-semibold">
+              관련 영상
+              <motion.img
+                src="/icons/refresh.svg"
+                alt="More"
+                className="size-5 cursor-pointer"
+                animate={{ rotate: rotationCount * 360 }} // 누적된 회전 각도
+                transition={{ duration: 0.5, ease: 'easeInOut' }}
+                onClick={() => {
+                  setRotationCount((prev) => prev + 1); // 회전 각도 증가
+                  fetchYoutubeContents();
+                }}
+              />
+            </div>
             <HomeYoutubeList videos={youtubeVideos} />
           </div>
         </div>
