@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import {
   SeafoodCollected,
+  YoutubeVideoType,
   getJejuWaterHeight,
   getJejuWaterTemperature,
+  getYoutubeContents,
 } from '../../api/home';
 import { GrayButton } from '../Button/GrayButton';
 import { HomeContentsCard } from './HomeContentsCard';
 import { HomeLocation } from './HomeLocation';
 import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { HomeYoutubeList } from '../HomeYoutubeList';
 
 interface Props {
   seafoods: SeafoodCollected[];
@@ -15,6 +18,8 @@ interface Props {
 
 export const HomeContents = ({ seafoods }: Props) => {
   const { handleError } = useErrorHandler();
+
+  const [youtubeVideos, setYoutubeVideos] = useState<YoutubeVideoType[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<{
     code: string;
     name: string;
@@ -35,6 +40,15 @@ export const HomeContents = ({ seafoods }: Props) => {
     height: '로딩중',
     time: '2024-11-07 00:00:00',
   });
+
+  const fetchYoutubeContents = async () => {
+    try {
+      const response = await getYoutubeContents();
+      setYoutubeVideos(response);
+    } catch (error) {
+      handleError(error);
+    }
+  };
 
   const fetchWaterTemperature = async () => {
     try {
@@ -71,6 +85,10 @@ export const HomeContents = ({ seafoods }: Props) => {
     fetchWaterTemperature();
     fetchWaterHeight();
   }, [selectedLocation.code]);
+
+  useEffect(() => {
+    fetchYoutubeContents();
+  }, []);
 
   return (
     <div>
@@ -133,11 +151,8 @@ export const HomeContents = ({ seafoods }: Props) => {
       <div className="flex flex-col gap-3 p-5">
         <div className="flex flex-col gap-3">
           <div>
-            <div className="pb-3 text-[17px] font-semibold">관련정보</div>
-            <div className="flex flex-col gap-3">
-              <GrayButton>해녀체험 안전가이드</GrayButton>
-              <GrayButton>해녀의 역사 및 문화 소개</GrayButton>
-            </div>
+            <div className="pb-3 text-[17px] font-semibold">관련 영상</div>
+            <HomeYoutubeList videos={youtubeVideos} />
           </div>
         </div>
       </div>

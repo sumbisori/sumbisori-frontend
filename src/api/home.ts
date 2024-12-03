@@ -8,8 +8,20 @@ export interface SeafoodCollected {
   count: number;
 }
 
+export interface YoutubeVideoType {
+  videoId: string;
+  title: string;
+  thumbnailUrl: string;
+  publishTime: string;
+}
+
 export const getSeafoodCollected = async (): Promise<SeafoodCollected[]> => {
   const response = await secureInstance.get('/seafoods/collected');
+  return response.data;
+};
+
+export const getYoutubeContents = async (): Promise<YoutubeVideoType[]> => {
+  const response = await secureInstance.get('/contents/youtube');
   return response.data;
 };
 
@@ -45,7 +57,6 @@ export const getJejuWaterHeight = async (
   const currentTime = new Date();
   const data = response.data.result.data;
 
-  // Find the closest time by comparing differences
   const closest = data.reduce((prev: any, curr: any) => {
     const prevTime = new Date(prev.tph_time);
     const currTime = new Date(curr.tph_time);
