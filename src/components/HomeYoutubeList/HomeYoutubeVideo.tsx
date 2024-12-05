@@ -12,14 +12,15 @@ export const HomeYoutubeVideo = ({
       onClose();
     }
   };
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
       onClick={handleOverlayClick}
     >
-      <div className="relative">
+      <div className="relative w-full max-w-[37.5rem]">
         <iframe
-          className="h-[50vh] w-[393px] rounded-md"
+          className="h-[50vh] w-full min-w-80 rounded-md"
           src={`https://www.youtube.com/embed/${selectedVideoId}?autoplay=1`}
           allow="autoplay; encrypted-media"
           allowFullScreen
@@ -29,7 +30,7 @@ export const HomeYoutubeVideo = ({
           src="icons/back.svg"
           alt="Close"
           onClick={onClose}
-          className="absolute -top-10 left-0 size-8 cursor-pointer"
+          className="absolute -top-12 left-0 size-8 cursor-pointer"
         />
       </div>
     </div>

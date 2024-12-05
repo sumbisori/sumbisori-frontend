@@ -47,5 +47,10 @@ export const KakaoMap = ({ places, onPinClick }: KakaoMapProps) => {
     window.kakao.maps.load(() => initMap());
   }, [places]);
 
-  return <div id="map" style={{ width: '393px', height: '100%' }}></div>;
+  return (
+    <div
+      id="map"
+      className="z-10 h-[calc(100vh-4.438rem)] w-full min-w-80 max-w-[37.5rem]"
+    />
+  );
 };

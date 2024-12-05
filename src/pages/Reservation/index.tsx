@@ -50,8 +50,8 @@ export const Reservation = () => {
   );
 
   return (
-    <div className="size-full bg-blue-100">
-      <div className="flex size-full items-center justify-center">
+    <>
+      <div className="h-full items-center justify-center">
         <KakaoMap places={haenyeoPlaces} onPinClick={handlePinClick} />
       </div>
 
@@ -78,6 +78,6 @@ export const Reservation = () => {
           </div>
         </Modal>
       )}
-    </div>
+    </>
   );
 };

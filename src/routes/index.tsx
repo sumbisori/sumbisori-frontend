@@ -1,7 +1,7 @@
 import { Home } from '../pages/Home';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { Login } from '../pages/Login';
-import Mobile from '../layouts/Mobile';
+import MainLayout from '../layouts/MainLayout';
 import { Reservation } from '../pages/Reservation';
 import { ReservationCreate } from '../pages/ReservationCreate';
 import { Dictionary } from '../pages/Dictionary';
@@ -9,14 +9,14 @@ import { MyPage } from '../pages/MyPage';
 import { MyPageReservation } from '../pages/MyPageReservation';
 import { DictionaryRegistration } from '../pages/DictionaryRegistration';
 import { DictionaryConfirm } from '../pages/DictionaryConfirm';
-import { Background } from '../layouts/Background';
+import { MobileLayout } from '../layouts/MobileLayout';
 
 export const Router = () => {
   return (
     <Routes>
-      <Route element={<Background />}>
+      <Route element={<MobileLayout />}>
         <Route path="/login" element={<Login />} />
-        <Route element={<Mobile />}>
+        <Route element={<MainLayout />}>
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
           <Route path="/reservation" element={<Reservation />} />

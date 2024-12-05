@@ -1,13 +1,10 @@
-import { motion } from 'framer-motion';
-
 import { NavigationBar } from '../components/NavigationBar';
 import { Header } from '../components/Header';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
-import { useEffect } from 'react';
 
-export default function Mobile() {
+export default function MainLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const isAuthenticated = useSelector(
@@ -89,7 +86,7 @@ export default function Mobile() {
   const headerType = getHeaderType(location.pathname);
 
   return (
-    <div className="relative pb-[4.438rem]">
+    <div className="flex flex-1 flex-col">
       <Header
         type={headerType.type}
         caption={headerType.caption}

@@ -30,9 +30,9 @@ export const Dictionary = () => {
   }, []);
 
   return (
-    <div className="overflow-hidden">
-      <div className="hide-scroll overflow-auto px-[18px] pb-[18px]">
-        <div className="mt-4 grid grid-cols-3 justify-center gap-3 rounded-lg border border-orange-200 bg-white p-3">
+    <div>
+      <div className="p-[18px]">
+        <div className="grid grid-cols-3 gap-3 rounded-lg border border-orange-200 bg-white p-3">
           {seafoods.map((seafood) => (
             <SeafoodCard
               key={seafood.seafoodId}
@@ -49,7 +49,7 @@ export const Dictionary = () => {
         <AlertBox id={`seafood-${selectedSeafood.koreanName}`}>
           <div className="flex h-full flex-col justify-between">
             <div
-              className={` ${selectedSeafood.count > 0 ? '' : 'grayscale'} relative size-[150px] self-center bg-cover bg-center bg-no-repeat`}
+              className={` ${selectedSeafood.count > 0 ? '' : 'grayscale'} relative self-center bg-cover bg-center bg-no-repeat`}
               style={{
                 backgroundImage:
                   'url(/images/Seafoods/' +
