@@ -11,8 +11,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
       manifest: {
-        name: 'Sumbisori',
-        short_name: 'Sumbisori',
+        name: '숨비소리',
+        short_name: '숨비소리',
         theme_color: '#ffffff',
         lang: 'ko',
         icons: [
