@@ -22,11 +22,8 @@ export const Home = () => {
   }, []);
 
   return (
-    <div className="h-[410px] w-[393px]">
-      <div className="relative">
-        <Aquarium seafoods={seafoods} />
-      </div>
-
+    <div>
+      <Aquarium seafoods={seafoods} />
       <HomeContents seafoods={seafoods} />
     </div>
   );

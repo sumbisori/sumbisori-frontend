@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { NavigationBar } from '../components/NavigationBar';
 import { Header } from '../components/Header';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Background } from './Background';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { useEffect } from 'react';
@@ -90,18 +89,14 @@ export default function Mobile() {
   const headerType = getHeaderType(location.pathname);
 
   return (
-    <Background>
-      <motion.section className="relative m-auto flex h-full w-[393px] flex-col bg-gray-000 pb-[60.99px]">
-        <Header
-          type={headerType.type}
-          caption={headerType.caption}
-          absolute={headerType.absolute}
-        />
-        <div className="flex-1 overflow-auto">
-          <Outlet />
-        </div>
-        <NavigationBar />
-      </motion.section>
-    </Background>
+    <div className="relative pb-[4.438rem]">
+      <Header
+        type={headerType.type}
+        caption={headerType.caption}
+        absolute={headerType.absolute}
+      />
+      <Outlet />
+      <NavigationBar />
+    </div>
   );
 }
