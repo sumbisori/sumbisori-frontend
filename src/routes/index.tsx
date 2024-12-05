@@ -10,33 +10,40 @@ import { MyPageReservation } from '../pages/MyPageReservation';
 import { DictionaryRegistration } from '../pages/DictionaryRegistration';
 import { DictionaryConfirm } from '../pages/DictionaryConfirm';
 import { MobileLayout } from '../layouts/MobileLayout';
+import ScrollToTop from './ScrollToTop';
 
 export const Router = () => {
   return (
-    <Routes>
-      <Route element={<MobileLayout />}>
-        <Route path="/login" element={<Login />} />
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<Navigate to="/home" />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/reservation" element={<Reservation />} />
-          <Route
-            path="/reservation-create/:placeValue"
-            element={<ReservationCreate />}
-          />
-          <Route path="/dictionary" element={<Dictionary />} />
-          <Route
-            path="/dictionary/registration"
-            element={<DictionaryRegistration />}
-          />
-          <Route
-            path="/dictionary/confirm/:seafood/:koreanName"
-            element={<DictionaryConfirm />}
-          />
-          <Route path="/my-page" element={<MyPage />} />
-          <Route path="/my-page/reservation" element={<MyPageReservation />} />
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route element={<MobileLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<Navigate to="/home" />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/reservation" element={<Reservation />} />
+            <Route
+              path="/reservation-create/:placeValue"
+              element={<ReservationCreate />}
+            />
+            <Route path="/dictionary" element={<Dictionary />} />
+            <Route
+              path="/dictionary/registration"
+              element={<DictionaryRegistration />}
+            />
+            <Route
+              path="/dictionary/confirm/:seafood/:koreanName"
+              element={<DictionaryConfirm />}
+            />
+            <Route path="/my-page" element={<MyPage />} />
+            <Route
+              path="/my-page/reservation"
+              element={<MyPageReservation />}
+            />
+          </Route>
         </Route>
-      </Route>
-    </Routes>
+      </Routes>
+    </>
   );
 };
