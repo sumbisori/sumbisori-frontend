@@ -16,27 +16,30 @@ export const NavigationBar = () => {
   ];
 
   return (
-    <nav className="absolute inset-x-0 bottom-0 z-10 flex w-[393px] justify-between bg-gray-800 px-[24px] pt-[7px] text-white">
-      {navItems.map((item, index) => (
-        <NavIcon
-          key={index}
-          label={item.label}
-          onClick={() => navigate(item.path)}
-          onMouseEnter={() => setHovered(item.path)}
-          onMouseLeave={() => setHovered(null)}
-          isActive={location.pathname.startsWith(item.path)}
-          icon={
-            <img
-              src={`/icons/nav/${item.icon}${
-                location.pathname.startsWith(item.path) || hovered === item.path
-                  ? '_active.svg'
-                  : '_inactive.svg'
-              }`}
-              alt={item.label}
-            />
-          }
-        />
-      ))}
+    <nav className="z-20">
+      <div className="fixed inset-x-0 bottom-0 m-auto flex h-[4.438rem] w-full min-w-[320px] max-w-[600px] justify-between bg-gray-800 px-[24px] pt-[7px] text-white">
+        {navItems.map((item, index) => (
+          <NavIcon
+            key={index}
+            label={item.label}
+            onClick={() => navigate(item.path)}
+            onMouseEnter={() => setHovered(item.path)}
+            onMouseLeave={() => setHovered(null)}
+            isActive={location.pathname.startsWith(item.path)}
+            icon={
+              <img
+                src={`/icons/nav/${item.icon}${
+                  location.pathname.startsWith(item.path) ||
+                  hovered === item.path
+                    ? '_active.svg'
+                    : '_inactive.svg'
+                }`}
+                alt={item.label}
+              />
+            }
+          />
+        ))}
+      </div>
     </nav>
   );
 };

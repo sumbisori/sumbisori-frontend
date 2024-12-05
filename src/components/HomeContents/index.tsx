@@ -6,7 +6,6 @@ import {
   getJejuWaterTemperature,
   getYoutubeContents,
 } from '../../api/home';
-import { GrayButton } from '../Button/GrayButton';
 import { HomeContentsCard } from './HomeContentsCard';
 import { HomeLocation } from './HomeLocation';
 import { useErrorHandler } from '../../hooks/useErrorHandler';

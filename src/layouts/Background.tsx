@@ -1,15 +1,17 @@
 import { motion } from 'framer-motion';
 import { FullPageLogo } from '../components/FullPageLogo';
+import { Outlet } from 'react-router-dom';
 
-interface Props {
-  children: React.ReactNode;
-}
-
-export const Background = ({ children }: Props) => {
+export const Background = () => {
   return (
-    <motion.main {...animationSettings} className="h-screen w-full bg-blue-400">
+    <motion.main
+      {...animationSettings}
+      className="size-full overflow-auto bg-blue-400"
+    >
       <FullPageLogo />
-      {children}
+      <section className="m-auto flex min-h-full w-full min-w-[320px] max-w-[600px] flex-col bg-gray-000">
+        <Outlet />
+      </section>
     </motion.main>
   );
 };

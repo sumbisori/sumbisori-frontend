@@ -12,9 +12,9 @@ export const Header = ({ type = 'light', caption, absolute }: Props) => {
     navigate('/home');
   };
   return (
-    <nav
-      className={`flex w-[393px] justify-between p-[18px] ${
-        absolute ? 'absolute left-0 top-0 z-10' : 'relative'
+    <header
+      className={`flex w-full min-w-[320px] max-w-[600px] justify-between p-[18px] ${
+        absolute ? 'absolute inset-x-0 top-0 z-20 m-auto' : 'relative'
       }`}
     >
       <div className="flex items-center">
@@ -47,6 +47,6 @@ export const Header = ({ type = 'light', caption, absolute }: Props) => {
           className="cursor-pointer"
         />
       </div>
-    </nav>
+    </header>
   );
 };
