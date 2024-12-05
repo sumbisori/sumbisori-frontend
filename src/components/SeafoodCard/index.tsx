@@ -8,11 +8,9 @@ interface Props {
 
 export const SeafoodCard = (props: Props) => {
   return (
-    <div
-      className="cursor-pointer transition-opacity duration-300 ease-in-out hover:opacity-70"
-      onClick={props.onClick}
-    >
+    <div className="flex w-full justify-center">
       <div
+        onClick={props.onClick}
         className={
           'relative size-[100px] border border-orange-300 bg-orange-100 bg-cover bg-center bg-no-repeat' +
           (props.counts > 0 ? '' : ' grayscale')

@@ -13,9 +13,13 @@ export const Header = ({ type = 'light', caption, absolute }: Props) => {
   };
   return (
     <header
-      className={`flex w-full min-w-[320px] max-w-[600px] justify-between p-[18px] ${
+      className={`flex w-full min-w-80 max-w-[37.5rem] justify-between p-[18px] ${
         absolute ? 'absolute inset-x-0 top-0 z-20 m-auto' : 'relative'
       }`}
+      style={{
+        textAlign: 'center', // 텍스트 정렬
+        lineHeight: 'normal', // 텍스트의 줄 간격을 고정
+      }}
     >
       <div className="flex items-center">
         <img

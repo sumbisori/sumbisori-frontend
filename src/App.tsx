@@ -1,5 +1,5 @@
 import { Router } from './routes';
-import Mobile from './layouts/Mobile';
+import MainLayout from './layouts/MainLayout';
 import { Providers } from './contexts';
 
 function App() {

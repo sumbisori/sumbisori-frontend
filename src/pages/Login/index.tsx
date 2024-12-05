@@ -2,7 +2,7 @@ import { KakaoLogin } from '../../components/KakaoLogin';
 
 export const Login = () => {
   return (
-    <section className="flex h-screen flex-col items-center justify-center">
+    <div className="flex h-screen flex-col items-center justify-center">
       <div
         className="h-[213px] w-[78px] bg-cover bg-center bg-no-repeat"
         style={{
@@ -16,6 +16,6 @@ export const Login = () => {
         }}
       />
       <KakaoLogin />
-    </section>
+    </div>
   );
 };
