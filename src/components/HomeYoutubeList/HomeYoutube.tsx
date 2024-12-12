@@ -1,4 +1,5 @@
 import { YoutubeVideoType } from '../../api/home';
+import { formatViewCount } from '../../util/formatViewCount';
 import { formatYoutubeDate } from '../../util/formatYoutubeDate';
 import { truncateTitle } from '../../util/truncateTitle';
 import { HomeYoutubeVideoIframe } from './HomeYoutubeVideoIframe';
@@ -56,17 +57,21 @@ export const HomeYoutube = ({
             )}
           </div>
         </div>
-        <div>
+        <div className="flex flex-col gap-[0.1rem]">
           <h5
             className="cursor-pointer text-sm leading-tight text-blue-700 hover:underline"
             onClick={() => onSelectToPlay(video)}
           >
             {truncateTitle(video.title, 60)}
           </h5>
-          <p className="text-xs text-gray-600">
-            Youtube<span>•</span>
-            {formatYoutubeDate(video.publishTime)}
-          </p>
+          <div className="text-xs text-gray-600">{video.channelTitle}</div>
+          <div className="flex flex-nowrap gap-[0.1rem] text-xs text-gray-600">
+            <p>Youtube</p>
+            <p>•</p>
+            <p>{formatYoutubeDate(video.publishTime)}</p>
+            <p>•</p>
+            <p>조회수 {formatViewCount(video.viewCount)}</p>
+          </div>
         </div>
       </div>
 
