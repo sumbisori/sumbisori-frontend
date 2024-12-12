@@ -11,7 +11,7 @@ export const MyPageContent = () => {
     await getKakaoLogout();
   };
   return (
-    <div className="p-[18px]">
+    <div className="p-[1.125rem]">
       <MyPageButton
         icon="reservation_list"
         onClick={() => {

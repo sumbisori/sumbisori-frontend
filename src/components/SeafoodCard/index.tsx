@@ -12,7 +12,7 @@ export const SeafoodCard = (props: Props) => {
       <div
         onClick={props.onClick}
         className={
-          'relative size-[100px] border border-orange-300 bg-orange-100 bg-cover bg-center bg-no-repeat' +
+          'relative size-[6.25rem] border border-orange-300 bg-orange-100 bg-cover bg-center bg-no-repeat' +
           (props.counts > 0 ? '' : ' grayscale')
         }
         style={{
@@ -24,14 +24,14 @@ export const SeafoodCard = (props: Props) => {
           {props.name}
         </div>
         {props.counts > 0 && (
-          <div className="absolute left-1 top-1 rounded-xl bg-orange-200 px-2 text-[10px] text-orange-700 hover:bg-orange-300 hover:text-orange-800">
+          <div className="absolute left-1 top-1 rounded-xl bg-orange-200 px-2 text-[0.625rem] text-orange-700 hover:bg-orange-300 hover:text-orange-800">
             {props.counts}개
           </div>
         )}
         <div
           className={
             props.isNew
-              ? 'relative left-[82px] top-[10px] size-[8px] rounded-full bg-red-500'
+              ? 'relative left-[5.125rem] top-2.5 size-2 rounded-full bg-red-500'
               : ''
           }
         ></div>

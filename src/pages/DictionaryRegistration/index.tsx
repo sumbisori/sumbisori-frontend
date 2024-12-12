@@ -62,10 +62,12 @@ export const DictionaryRegistration = () => {
   return (
     <>
       <div className="flex size-full flex-col items-center justify-center bg-white">
-        <div className="mb-4 text-[22px] font-bold">사진을 등록해주세요</div>
+        <div className="mb-4 text-[1.375rem] font-bold">
+          사진을 등록해주세요
+        </div>
 
         {/* 이미지 미리보기 및 파일 입력 */}
-        <div className="mb-4 flex size-[250px] items-center justify-center rounded-lg bg-gray-300">
+        <div className="mb-4 flex size-[15.625rem] items-center justify-center rounded-lg bg-gray-300">
           {imagePreview ? (
             <img
               src={imagePreview}
@@ -74,7 +76,7 @@ export const DictionaryRegistration = () => {
             />
           ) : (
             <div
-              className="size-[36px] bg-cover bg-center bg-no-repeat"
+              className="size-9 bg-cover bg-center bg-no-repeat"
               style={{
                 backgroundImage: 'url(/icons/Image_Icon.svg)',
               }}
@@ -93,7 +95,7 @@ export const DictionaryRegistration = () => {
         <div className="mb-12 flex justify-between gap-5">
           <Dropdown
             value={form.seafoodId}
-            className="w-[145px]"
+            className="w-[12.813rem]"
             items={
               seafoods.map((seafood) => ({
                 value: seafood.seafoodId,
@@ -121,7 +123,7 @@ export const DictionaryRegistration = () => {
         <button
           onClick={handleSubmit}
           disabled={submitButtonDisabled}
-          className="w-[201px] cursor-pointer rounded-md border border-[#gray-200] bg-gray-000 px-2 py-1 text-[16px] text-[#B1B1B1] transition-colors duration-200 ease-in-out hover:border-[#007AFF] hover:bg-[#ebf5ff] hover:text-[#007AFF]"
+          className="w-[12.563rem] cursor-pointer rounded-md border border-[#gray-200] bg-gray-000 px-2 py-1 text-[1rem] text-[#B1B1B1] transition-colors duration-200 ease-in-out hover:border-[#007AFF] hover:bg-[#ebf5ff] hover:text-[#007AFF]"
         >
           등록하기
         </button>

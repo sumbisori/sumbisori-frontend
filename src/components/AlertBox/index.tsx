@@ -28,7 +28,7 @@ export function AlertBox({ id, children }: Props) {
           >
             <motion.div
               {...modalAnimation}
-              className="relative h-[341px] w-[300px] rounded-lg bg-gray-050 p-6 shadow-lg"
+              className="relative size-80 rounded-lg bg-gray-050 p-6 shadow-lg"
             >
               <button
                 onClick={closeModal}

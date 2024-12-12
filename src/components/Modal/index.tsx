@@ -20,7 +20,7 @@ export function Modal({ id, children, size = 'md' }: Props) {
   };
 
   const modalHeight =
-    size === 'sm' ? 'h-[350px]' : size === 'lg' ? 'h-full' : 'h-2/3';
+    size === 'sm' ? 'h-[21.875rem]' : size === 'lg' ? 'h-full' : 'h-2/3';
 
   return (
     <AnimatePresence>
@@ -41,7 +41,7 @@ export function Modal({ id, children, size = 'md' }: Props) {
               }}
               className={`flex ${modalHeight} w-full min-w-80 max-w-[37.5rem] flex-col justify-between rounded-t-lg bg-gray-050 shadow-lg`}
             >
-              <div className="mt-4 h-[2px] w-2/3 cursor-pointer self-center bg-gray-600" />
+              <div className="mt-4 h-0.5 w-2/3 cursor-pointer self-center bg-gray-600" />
               <div className="h-full overflow-auto px-4 pb-4 pt-6">
                 {children}
               </div>

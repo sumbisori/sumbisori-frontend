@@ -79,7 +79,7 @@ export const MyPageReservation = () => {
       </div>
 
       {reservations.length === 0 && (
-        <div className="flex h-[400px] w-full flex-col items-center justify-center text-lg font-bold text-gray-900">
+        <div className="flex h-[25rem] w-full flex-col items-center justify-center text-lg font-bold text-gray-900">
           예약 정보가 없습니다
           <img src="/images/haenyeo_sad.png"></img>
         </div>
@@ -103,7 +103,7 @@ export const MyPageReservation = () => {
           />
         ))}
       </div>
-      <div className="h-[5px] w-full bg-[#F7F7FA]"></div>
+      <div className="h-[0.313rem] w-full bg-[#F7F7FA]"></div>
     </div>
   );
 };

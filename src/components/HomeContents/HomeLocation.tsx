@@ -34,7 +34,7 @@ export const HomeLocation = ({
     <div className="flex items-center justify-between">
       <div className="flex gap-1">
         <img src="/icons/location.svg" alt="location icon" />
-        <p className="text-[16px]">{selectedLocation.name}</p>
+        <p className="text-[1rem]">{selectedLocation.name}</p>
       </div>
       <div>
         <HomeChangeButton onClick={() => setShowDropdown(!showDropdown)} />
@@ -44,7 +44,7 @@ export const HomeLocation = ({
               {locations.map((loc) => (
                 <li
                   key={loc.code}
-                  className="cursor-pointer p-2 text-[14px] hover:bg-gray-200"
+                  className="cursor-pointer p-2 text-[0.875rem] hover:bg-gray-200"
                   onClick={() => handleLocationChange(loc)}
                 >
                   {loc.name}

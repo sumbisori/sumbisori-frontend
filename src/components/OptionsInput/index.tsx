@@ -14,11 +14,11 @@ export const OptionsInput = ({
   onSelectOption,
 }: Props) => {
   return (
-    <div className="flex flex-col gap-[15px]">
-      <div className="block text-[14px] font-semibold text-gray-900">
+    <div className="flex flex-col gap-[0.938rem]">
+      <div className="block text-[0.875rem] font-semibold text-gray-900">
         {inputLabel}
       </div>
-      <div className="hide-scroll flex gap-[10px] overflow-x-auto">
+      <div className="hide-scroll flex gap-2.5 overflow-x-auto">
         {options.map((option) => (
           <div key={option} className="shrink-0 py-1">
             <TimeLabel
