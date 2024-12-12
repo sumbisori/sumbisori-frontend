@@ -11,6 +11,7 @@ import { HomeLocation } from './HomeLocation';
 import { useErrorHandler } from '../../hooks/useErrorHandler';
 import { HomeYoutubeList } from '../HomeYoutubeList';
 import { motion } from 'framer-motion';
+import { HomeYoutubeVideoIframe } from '../HomeYoutubeList/HomeYoutubeVideoIframe';
 
 interface Props {
   seafoods: SeafoodCollected[];
@@ -153,7 +154,7 @@ export const HomeContents = ({ seafoods }: Props) => {
         <div className="flex flex-col gap-3">
           <div>
             <div className="flex items-center justify-between pb-3 text-[17px] font-semibold">
-              관련 영상
+              해녀 TV
               <motion.img
                 src="/icons/refresh.svg"
                 alt="More"
@@ -170,6 +171,24 @@ export const HomeContents = ({ seafoods }: Props) => {
           </div>
         </div>
       </div>
+
+      <div className="h-[5px] bg-gray-050"></div>
+      <div className="flex flex-col gap-3 p-5">
+        <div className="flex flex-col gap-3">
+          <div>
+            <div className="flex items-center pb-3 text-[17px] font-semibold">
+              실시간 바다
+            </div>
+            <HomeYoutubeVideoIframe
+              src={`https://www.youtube.com/embed/yoa08FUE768?autoplay=1&mute=1`}
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="h-[5px] bg-gray-050"></div>
     </div>
   );
 };
