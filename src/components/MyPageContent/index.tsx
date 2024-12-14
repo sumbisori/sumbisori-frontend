@@ -2,13 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import { MyPageButton } from '../MyPageButton';
 import { AlertBox } from '../AlertBox';
 import { useModalContext } from '../../contexts/ModalContext';
-import { getKakaoLogout } from '../../api/myPage';
+import { API_URL } from '../../api/instance';
 
 export const MyPageContent = () => {
   const { openModal } = useModalContext();
   const navigate = useNavigate();
   const handleLogout = async () => {
-    await getKakaoLogout();
+    window.location.href = `${API_URL}/oauth2/authorization/kakao/logout`;
   };
   return (
     <div className="p-[1.125rem]">

@@ -39,7 +39,3 @@ export const getReservationCount = async (): Promise<ReservationCount> => {
   const response = await secureInstance.get('/reservations/count');
   return response.data;
 };
-
-export const getKakaoLogout = async () => {
-  await secureInstance.get('/oauth2/authorization/kakao/logout');
-};
