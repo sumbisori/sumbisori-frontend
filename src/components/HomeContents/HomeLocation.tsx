@@ -39,7 +39,7 @@ export const HomeLocation = ({
       <div>
         <HomeChangeButton onClick={() => setShowDropdown(!showDropdown)} />
         {showDropdown && (
-          <div className="absolute rounded border bg-white shadow">
+          <div className="absolute z-10 rounded border bg-white shadow">
             <ul>
               {locations.map((loc) => (
                 <li
