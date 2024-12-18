@@ -305,11 +305,18 @@ export const useAquarium = (
         }
       });
     });
-
     // 4. 유저 인터랙션
     const Mouse = Matter.Mouse;
     const MouseConstraint = Matter.MouseConstraint;
     const mouse = Mouse.create(render.canvas);
+
+    // pixelRatio에 맞추어 마우스 좌표를 스케일링
+    Mouse.setScale(mouse, { x: 1 / pixelRatio, y: 1 / pixelRatio });
+
+    // 컨테이너 위치 기준으로 마우스 오프셋 설정
+    const rect = container.getBoundingClientRect();
+    Mouse.setOffset(mouse, { x: rect.left, y: rect.top });
+
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse,
       constraint: { stiffness: 0.2, render: { visible: false } },
