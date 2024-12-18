@@ -16,6 +16,7 @@ export const useAquarium = (
     const World = Matter.World;
     const Bodies = Matter.Bodies;
     const Events = Matter.Events;
+    const pixelRatio = window.devicePixelRatio || 1;
 
     const engine = Engine.create();
     engine.gravity.x = 0;
@@ -33,6 +34,7 @@ export const useAquarium = (
         height: height,
         wireframes: false,
         background: `${IMAGE_PATHS.AQUARIUM}/Background-01.png`,
+        pixelRatio: pixelRatio,
       },
     });
 
