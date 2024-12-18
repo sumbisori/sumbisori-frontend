@@ -1,25 +1,19 @@
-import React, { useState } from 'react';
 import { HomeYoutube } from './HomeYoutube';
-import { HomeYoutubeVideoIframe } from './HomeYoutubeVideoIframe';
 import { YoutubeVideoType } from '../../api/home';
 
 interface HomeYoutubeListProps {
   videos: YoutubeVideoType[];
+  selectedVideo: YoutubeVideoType | null;
+  onSelectToPlay: (video: YoutubeVideoType) => void;
+  onSelectToClose: () => void;
 }
 
-export const HomeYoutubeList = ({ videos }: HomeYoutubeListProps) => {
-  const [selectedVideo, setSelectedVideo] = useState<YoutubeVideoType | null>(
-    null,
-  );
-
-  const handlePlay = (video: YoutubeVideoType) => {
-    setSelectedVideo(video);
-  };
-
-  const handleClose = () => {
-    setSelectedVideo(null);
-  };
-
+export const HomeYoutubeList = ({
+  videos,
+  selectedVideo,
+  onSelectToPlay,
+  onSelectToClose,
+}: HomeYoutubeListProps) => {
   return (
     <div>
       {/* 영상 리스트 */}
@@ -30,8 +24,10 @@ export const HomeYoutubeList = ({ videos }: HomeYoutubeListProps) => {
               key={video.videoId}
               video={video}
               selectedVideoId={selectedVideo?.videoId || null}
-              onSelectToPlay={(video: YoutubeVideoType) => handlePlay(video)}
-              onSelectToClose={handleClose}
+              onSelectToPlay={(video: YoutubeVideoType) =>
+                onSelectToPlay(video)
+              }
+              onSelectToClose={onSelectToClose}
             />
           ))}
         </ul>

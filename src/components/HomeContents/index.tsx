@@ -20,8 +20,11 @@ interface Props {
 export const HomeContents = ({ seafoods }: Props) => {
   const { handleError } = useErrorHandler();
   const [rotationCount, setRotationCount] = useState(0);
-
   const [youtubeVideos, setYoutubeVideos] = useState<YoutubeVideoType[]>([]);
+  const [selectedVideo, setSelectedVideo] = useState<YoutubeVideoType | null>(
+    null,
+  );
+
   const [selectedLocation, setSelectedLocation] = useState<{
     code: string;
     name: string;
@@ -43,10 +46,19 @@ export const HomeContents = ({ seafoods }: Props) => {
     time: '2024-11-07 00:00:00',
   });
 
+  const handlePlay = (video: YoutubeVideoType) => {
+    setSelectedVideo(video);
+  };
+
+  const handleClose = () => {
+    setSelectedVideo(null);
+  };
+
   const fetchYoutubeContents = async () => {
     try {
       const response = await getYoutubeContents();
       setYoutubeVideos(response);
+      setSelectedVideo(null);
     } catch (error) {
       handleError(error);
     }
@@ -163,11 +175,17 @@ export const HomeContents = ({ seafoods }: Props) => {
                 transition={{ duration: 0.5, ease: 'easeInOut' }}
                 onClick={() => {
                   setRotationCount((prev) => prev + 1); // 회전 각도 증가
+
                   fetchYoutubeContents();
                 }}
               />
             </div>
-            <HomeYoutubeList videos={youtubeVideos} />
+            <HomeYoutubeList
+              videos={youtubeVideos}
+              selectedVideo={selectedVideo}
+              onSelectToPlay={handlePlay}
+              onSelectToClose={handleClose}
+            />
           </div>
         </div>
       </div>
