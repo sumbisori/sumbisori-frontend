@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { SeafoodCollected } from '../../api/home';
 import { useAquarium } from '../../hooks/useAquarium';
+import { IMAGE_PATHS } from '../../constant';
 
 interface AquariumProps {
   seafoods: SeafoodCollected[];
@@ -13,8 +14,11 @@ export const Aquarium = ({ seafoods }: AquariumProps) => {
   useAquarium(containerRef, canvasRef, seafoods);
 
   return (
-    <div ref={containerRef}>
-      <canvas ref={canvasRef} className="h-[25.625rem] w-full rounded-b-2xl" />
+    <div
+      ref={containerRef}
+      className="relative h-[25.625rem] w-full rounded-b-2xl"
+    >
+      <canvas ref={canvasRef} className="size-full" />
     </div>
   );
 };
