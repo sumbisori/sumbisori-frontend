@@ -9,7 +9,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 export const NavIcon = ({ icon, label, isActive = false, ...props }: Props) => {
   return (
     <button
-      className="group flex cursor-pointer flex-col items-center justify-center pb-[10px]"
+      className="group flex cursor-pointer flex-col items-center justify-center pb-2.5"
       {...props}
     >
       {/* Icon with conditional active styling */}
@@ -18,7 +18,7 @@ export const NavIcon = ({ icon, label, isActive = false, ...props }: Props) => {
       </div>
       {/* Label with conditional active styling */}
       <p
-        className={`flex w-[36px] justify-center text-[12px] transition-colors duration-300 ease-in-out ${isActive ? 'text-[#ffffff]' : 'text-gray-500'} group-hover:text-[#ffffff]`}
+        className={`flex w-9 justify-center text-[0.75rem] transition-colors duration-300 ease-in-out ${isActive ? 'text-[#ffffff]' : 'text-gray-500'} group-hover:text-[#ffffff]`}
       >
         {label}
       </p>

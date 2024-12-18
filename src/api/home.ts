@@ -13,6 +13,8 @@ export interface YoutubeVideoType {
   title: string;
   thumbnailUrl: string;
   publishTime: string;
+  channelTitle: string;
+  viewCount: number;
 }
 
 export const getSeafoodCollected = async (): Promise<SeafoodCollected[]> => {

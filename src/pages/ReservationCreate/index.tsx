@@ -67,7 +67,7 @@ export const ReservationCreate = () => {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex items-center p-[18px]">
+      <div className="flex items-center p-[1.125rem]">
         {haenyeoPlace && (
           <ReservationInfo
             imageSrc={haenyeoPlace.imageUrl}
@@ -77,11 +77,11 @@ export const ReservationCreate = () => {
           />
         )}
       </div>
-      <div className="h-[5px] w-full bg-[#F7F7FA]"></div>
-      <div className="flex grow flex-col justify-between gap-[12px] p-[18px]">
-        <div className="flex flex-col gap-[16px]">
-          <div className="flex flex-col gap-[18px]">
-            <div className="block text-[14px] font-semibold text-gray-900">
+      <div className="h-[0.313rem] w-full bg-[#F7F7FA]"></div>
+      <div className="flex grow flex-col justify-between gap-3 p-[1.125rem]">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-[1.125rem]">
+            <div className="block text-[0.875rem] font-semibold text-gray-900">
               예약자명
             </div>
             <input
@@ -89,11 +89,11 @@ export const ReservationCreate = () => {
               value={personName}
               autoComplete="off"
               onChange={(e) => setPersonName(e.target.value)}
-              className="h-[40px] w-full rounded-md border border-gray-050 bg-gray-100 px-4 text-[14px] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
+              className="h-10 w-full rounded-md border border-gray-050 bg-gray-100 px-4 text-[0.875rem] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
             />
           </div>
-          <div className="flex flex-col gap-[18px]">
-            <div className="block text-[14px] font-semibold text-gray-900">
+          <div className="flex flex-col gap-[1.125rem]">
+            <div className="block text-[0.875rem] font-semibold text-gray-900">
               전화번호
             </div>
             <input
@@ -108,7 +108,7 @@ export const ReservationCreate = () => {
                     .replace('--', '-'),
                 )
               }
-              className="h-[40px] w-full rounded-md border border-gray-050 bg-gray-100 px-4 text-[14px] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
+              className="h-10 w-full rounded-md border border-gray-050 bg-gray-100 px-4 text-[0.875rem] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
             />
           </div>
 
@@ -124,8 +124,8 @@ export const ReservationCreate = () => {
             value={selectedTime}
             onSelectOption={(option) => setSelectedTime(option)}
           />
-          <div className="flex flex-col gap-[18px]">
-            <div className="block text-[14px] font-semibold text-gray-900">
+          <div className="flex flex-col gap-[1.125rem]">
+            <div className="block text-[0.875rem] font-semibold text-gray-900">
               인원
             </div>
             <div className="flex items-center gap-2">
@@ -135,10 +135,10 @@ export const ReservationCreate = () => {
                 value={peopleCount || ''}
                 autoComplete="off"
                 onChange={(e) => setPeopleCount(e.target.value)}
-                className="h-[40px] w-[80px] rounded-md border border-gray-050 bg-gray-100 px-4 text-[14px] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
+                className="h-10 w-20 rounded-md border border-gray-050 bg-gray-100 px-4 text-[0.875rem] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
               />
 
-              <p className="text-[14px]">명</p>
+              <p className="text-[0.875rem]">명</p>
             </div>
           </div>
         </div>

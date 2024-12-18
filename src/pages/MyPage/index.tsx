@@ -30,7 +30,7 @@ export const MyPage = () => {
   return (
     <div className="flex flex-col">
       <Profile userInfo={userInfo} />
-      <div className="h-[5px] w-full bg-[#F7F7FA]"></div>
+      <div className="h-[0.313rem] w-full bg-[#F7F7FA]"></div>
       <MyPageContent />
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { HomeYoutube } from './HomeYoutubeThumbnail';
-import { HomeYoutubeVideo } from './HomeYoutubeVideo';
+import { HomeYoutube } from './HomeYoutube';
+import { HomeYoutubeVideoIframe } from './HomeYoutubeVideoIframe';
 import { YoutubeVideoType } from '../../api/home';
 
 interface HomeYoutubeListProps {
@@ -24,30 +24,24 @@ export const HomeYoutubeList = ({ videos }: HomeYoutubeListProps) => {
     <div>
       {/* 영상 리스트 */}
       {videos.length > 0 && (
-        <div className="flex flex-col gap-3">
+        <ul className="flex flex-col gap-3">
           {videos.map((video) => (
             <HomeYoutube
               key={video.videoId}
               video={video}
+              selectedVideoId={selectedVideo?.videoId || null}
               onSelectToPlay={(video: YoutubeVideoType) => handlePlay(video)}
+              onSelectToClose={handleClose}
             />
           ))}
-        </div>
+        </ul>
       )}
 
       {videos.length === 0 && (
-        <div className="flex h-[400px] w-full flex-col items-center justify-center text-lg font-bold text-gray-900">
+        <div className="flex h-[25rem] w-full flex-col items-center justify-center text-lg font-bold text-gray-900">
           관련 영상이 없습니다.
           <img src="/images/haenyeo_sad.png"></img>
         </div>
-      )}
-
-      {/* iframe 팝업 */}
-      {selectedVideo && (
-        <HomeYoutubeVideo
-          selectedVideoId={selectedVideo.videoId}
-          onClose={handleClose}
-        />
       )}
     </div>
   );

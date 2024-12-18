@@ -13,7 +13,7 @@ export const Header = ({ type = 'light', caption, absolute }: Props) => {
   };
   return (
     <header
-      className={`flex w-full min-w-80 max-w-[37.5rem] justify-between p-[18px] ${
+      className={`flex w-full min-w-80 max-w-[37.5rem] justify-between p-[1.125rem] ${
         absolute ? 'absolute inset-x-0 top-0 z-20 m-auto' : 'relative'
       }`}
       style={{
@@ -35,7 +35,7 @@ export const Header = ({ type = 'light', caption, absolute }: Props) => {
         {caption && (
           <div className="ml-2 flex items-center gap-2">
             <img src={'/icons/contour.svg'} alt="contour" />
-            <p className="text-[22px] font-bold text-gray-900">{caption}</p>
+            <p className="text-[1.375rem] font-bold text-gray-900">{caption}</p>
           </div>
         )}
       </div>

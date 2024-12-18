@@ -7,9 +7,9 @@ export const HomeChangeButton = ({ ...props }: HomeChangeButtonProps) => {
   return (
     <button
       {...props}
-      className="flex h-[22px] items-center justify-center gap-[2px] rounded-s-sm border border-gray-400 px-[10px]"
+      className="flex h-[1.375rem] items-center justify-center gap-0.5 rounded-s-sm border border-gray-400 px-2.5"
     >
-      <p className="text-[12px]">변경</p>
+      <p className="text-[0.75rem]">변경</p>
       <img src="/icons/arrow_right.svg" />
     </button>
   );

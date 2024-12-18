@@ -11,6 +11,7 @@ import { HomeLocation } from './HomeLocation';
 import { useErrorHandler } from '../../hooks/useErrorHandler';
 import { HomeYoutubeList } from '../HomeYoutubeList';
 import { motion } from 'framer-motion';
+import { HomeYoutubeVideoIframe } from '../HomeYoutubeList/HomeYoutubeVideoIframe';
 
 interface Props {
   seafoods: SeafoodCollected[];
@@ -102,7 +103,7 @@ export const HomeContents = ({ seafoods }: Props) => {
           <HomeContentsCard
             label="물질도감"
             cardContent={
-              <div className="text-[24px] font-bold">
+              <div className="text-[1.5rem] font-bold">
                 <span>
                   {seafoods.filter((seafood) => seafood.count > 0).length}
                 </span>
@@ -114,14 +115,14 @@ export const HomeContents = ({ seafoods }: Props) => {
             label="물때"
             cardContent={
               <div className="flex flex-col justify-center">
-                <div className="flex items-center gap-[5px]">
+                <div className="flex items-center gap-[0.313rem]">
                   <img src="/icons/sea_scale.svg" />
 
-                  <div className="text-[18px] font-semibold">
+                  <div className="text-[1.125rem] font-semibold">
                     {waterHeight.height}
                   </div>
                 </div>
-                <div className="flex w-full justify-center text-[8px]">
+                <div className="flex w-full justify-center text-[0.5rem]">
                   <span>{convertToTodayTime(waterHeight.time)}</span>
                   <span className="text-gray-500"> 기준</span>
                 </div>
@@ -132,13 +133,13 @@ export const HomeContents = ({ seafoods }: Props) => {
             label="수온"
             cardContent={
               <div className="flex flex-col justify-center">
-                <div className="flex items-center gap-[5px]">
+                <div className="flex items-center gap-[0.313rem]">
                   <img src="/icons/weather.svg" />
-                  <div className="text-[21px] font-semibold">
+                  <div className="text-[1.313rem] font-semibold">
                     {waterTemperature.temp}°
                   </div>
                 </div>
-                <div className="flex w-full justify-center text-[8px]">
+                <div className="flex w-full justify-center text-[0.5rem]">
                   <span>{convertToTodayTime(waterTemperature.time)}</span>
                   <span className="text-gray-500"> 기준</span>
                 </div>
@@ -147,13 +148,13 @@ export const HomeContents = ({ seafoods }: Props) => {
           />
         </div>
       </div>
-      <div className="h-[5px] bg-gray-050"></div>
+      <div className="h-[0.313rem] bg-gray-050"></div>
 
       <div className="flex flex-col gap-3 p-5">
         <div className="flex flex-col gap-3">
           <div>
-            <div className="flex items-center justify-between pb-3 text-[17px] font-semibold">
-              관련 영상
+            <div className="flex items-center justify-between pb-3 text-[1.063rem] font-semibold">
+              해녀 TV
               <motion.img
                 src="/icons/refresh.svg"
                 alt="More"
@@ -170,6 +171,24 @@ export const HomeContents = ({ seafoods }: Props) => {
           </div>
         </div>
       </div>
+
+      <div className="h-[0.313rem] bg-gray-050"></div>
+      <div className="flex flex-col gap-3 p-5">
+        <div className="flex flex-col gap-3">
+          <div>
+            <div className="flex items-center pb-3 text-[1.063rem] font-semibold">
+              실시간 바다
+            </div>
+            <HomeYoutubeVideoIframe
+              src={`https://www.youtube.com/embed/yoa08FUE768?autoplay=1&mute=1`}
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="h-[0.313rem] bg-gray-050"></div>
     </div>
   );
 };

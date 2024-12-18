@@ -17,7 +17,7 @@ export const NavigationBar = () => {
 
   return (
     <nav className="z-20">
-      <div className="fixed inset-x-0 bottom-0 m-auto flex h-[4.438rem] w-full min-w-80 max-w-[37.5rem] justify-between bg-gray-800 px-[24px] pt-[7px] text-white">
+      <div className="fixed inset-x-0 bottom-0 m-auto flex h-[4.438rem] w-full min-w-80 max-w-[37.5rem] justify-between bg-gray-800 px-6 pt-[0.438rem] text-white">
         {navItems.map((item, index) => (
           <NavIcon
             key={index}

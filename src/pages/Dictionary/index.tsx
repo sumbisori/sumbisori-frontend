@@ -31,7 +31,7 @@ export const Dictionary = () => {
 
   return (
     <div>
-      <div className="p-[18px]">
+      <div className="p-[1.125rem]">
         <div className="grid grid-cols-3 gap-3 rounded-lg border border-orange-200 bg-white p-3">
           {seafoods.map((seafood) => (
             <SeafoodCard
@@ -58,11 +58,11 @@ export const Dictionary = () => {
               }}
             />
             <div
-              className={`${selectedSeafood.count > 0 ? 'border-orange-200' : 'border-gray-200'} w-full rounded-lg border py-[2px] text-center text-[18px] font-bold`}
+              className={`${selectedSeafood.count > 0 ? 'border-orange-200' : 'border-gray-200'} w-full rounded-lg border py-0.5 text-center text-[1.125rem] font-bold`}
             >
               {selectedSeafood.koreanName}
             </div>
-            <div className="min-h-[80px] border-b-2 py-3 text-center text-[15px]">
+            <div className="min-h-20 border-b-2 py-3 text-center text-[0.938rem]">
               {selectedSeafood.count > 0 ? selectedSeafood.description : '???'}
             </div>
             <div className="text-center text-sm">
