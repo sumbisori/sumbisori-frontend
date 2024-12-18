@@ -1,4 +1,4 @@
 export const IMAGE_PATHS = {
-  AQUARIUM: '/images/Aquarium/',
-  SEAFOOD: '/images/Seafoods/',
+  AQUARIUM: '/images/Aquarium',
+  SEAFOOD: '/images/Seafoods',
 };
