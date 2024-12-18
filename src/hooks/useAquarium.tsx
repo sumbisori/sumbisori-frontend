@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
 import Matter from 'matter-js';
 import { SeafoodCollected } from '../api/home';
-
-const AQUARIUM_IMAGE_PATH = '/images/Aquarium/';
-const SEAFOOD_IMAGE_PATH = '/images/Seafoods/';
+import { IMAGE_PATHS } from '../constant';
 
 export const useAquarium = (
   containerRef: React.RefObject<HTMLDivElement>,
@@ -11,13 +9,12 @@ export const useAquarium = (
   seafoods: SeafoodCollected[],
 ) => {
   useEffect(() => {
+    // 1. 엔진 및 렌더 초기화
     const Engine = Matter.Engine;
     const Render = Matter.Render;
     const Runner = Matter.Runner;
     const World = Matter.World;
     const Bodies = Matter.Bodies;
-    const Mouse = Matter.Mouse;
-    const MouseConstraint = Matter.MouseConstraint;
     const Events = Matter.Events;
 
     const engine = Engine.create();
@@ -35,72 +32,169 @@ export const useAquarium = (
         width: width,
         height: height,
         wireframes: false,
-        background: `${AQUARIUM_IMAGE_PATH}/Background-01.png`,
+        background: `${IMAGE_PATHS.AQUARIUM}/Background-01.png`,
       },
     });
 
-    // 초기 벽 생성
+    // 벽 생성
     let topWall = Bodies.rectangle(width / 2, 0, width, 20, {
       isStatic: true,
+      render: { visible: false },
     });
     let leftWall = Bodies.rectangle(0, height / 2, 20, height, {
       isStatic: true,
+      render: { visible: false },
     });
     let rightWall = Bodies.rectangle(width, height / 2, 20, height, {
       isStatic: true,
+      render: { visible: false },
     });
     let bottomWall = Bodies.rectangle(width / 2, height, width, 20, {
       isStatic: true,
+      render: { visible: false },
     });
 
     World.add(engine.world, [topWall, leftWall, rightWall, bottomWall]);
 
-    const updateSize = () => {
-      // 윈도우 리사이즈 시 컨테이너 크기를 재계산
-      const { width: newWidth, height: newHeight } =
-        container.getBoundingClientRect();
+    // 2. 도메인 오브젝트 추가
 
-      // 렌더 사이즈 업데이트
-      // @ts-expect-error MatterJS types are incomplete
-      Matter.Render.setSize(render, newWidth, newHeight);
+    // 배경 레이어 추가
+    const addBackgroundLayers = (
+      engine: Matter.Engine,
+      width: number,
+      height: number,
+      texturePaths: {
+        path: string;
+        originalHeight: number;
+        position?: 'bottom' | 'middle';
+      }[],
+    ) => {
+      const backgrounds: Matter.Body[] = [];
 
-      // 벽 위치 재조정
-      Matter.Body.setPosition(topWall, { x: newWidth / 2, y: 0 });
-      Matter.Body.setPosition(leftWall, { x: 0, y: newHeight / 2 });
-      Matter.Body.setPosition(rightWall, { x: newWidth, y: newHeight / 2 });
-      Matter.Body.setPosition(bottomWall, { x: newWidth / 2, y: newHeight });
+      texturePaths.forEach((texture) => {
+        const backgroundImage = new Image();
+        backgroundImage.src = texture.path;
 
-      // 벽 크기도 변해야 한다면, remove 후 다시 add하거나 Body.scale 사용 가능
-      // width/height 변화를 반영하기 위해 벽을 다시 생성해보는 방법:
-      World.remove(engine.world, topWall);
-      World.remove(engine.world, leftWall);
-      World.remove(engine.world, rightWall);
-      World.remove(engine.world, bottomWall);
+        backgroundImage.onload = () => {
+          // 비율 유지하면서 높이 계산
+          const backgroundWidth = width; // 컨테이너의 너비와 동일
+          const scale = backgroundWidth / backgroundImage.width;
+          const backgroundHeight = texture.originalHeight * scale;
 
-      topWall = Bodies.rectangle(newWidth / 2, 0, newWidth, 20, {
-        isStatic: true,
+          // Y 좌표 설정 (position에 따라 다르게 설정)
+          let y;
+          if (texture.position === 'middle') {
+            y = height / 2; // 화면의 중간
+          } else {
+            y = height - backgroundHeight / 2; // 기본값: 화면 하단
+          }
+
+          // X 좌표는 중앙에 고정
+          const x = backgroundWidth / 2;
+
+          // 충돌하지 않는 Body 생성
+          const backgroundBody = Matter.Bodies.rectangle(
+            x,
+            y,
+            backgroundWidth,
+            backgroundHeight,
+            {
+              isStatic: true,
+              render: {
+                sprite: {
+                  texture: texture.path, // 이미지 경로
+                  xScale: scale,
+                  yScale: scale,
+                },
+              },
+              collisionFilter: {
+                group: -1, // 그룹 분리
+                mask: 0x0000, // 충돌 비활성화
+              },
+            },
+          );
+
+          // 물리 세계에 추가
+          Matter.World.add(engine.world, backgroundBody);
+          backgrounds.push(backgroundBody);
+        };
       });
-      leftWall = Bodies.rectangle(0, newHeight / 2, 20, newHeight, {
-        isStatic: true,
-      });
-      rightWall = Bodies.rectangle(newWidth, newHeight / 2, 20, newHeight, {
-        isStatic: true,
-      });
-      bottomWall = Bodies.rectangle(newWidth / 2, newHeight, newWidth, 20, {
-        isStatic: true,
-      });
 
-      World.add(engine.world, [topWall, leftWall, rightWall, bottomWall]);
-
-      width = newWidth;
-      height = newHeight;
+      return backgrounds;
     };
 
-    window.addEventListener('resize', updateSize);
+    // 돌 추가
+    const addRocks = (engine: Matter.Engine, width: number, height: number) => {
+      const rockImages = [
+        {
+          src: `${IMAGE_PATHS.AQUARIUM}/rock-01.png`,
+          originalWidth: 1234,
+          originalHeight: 918,
+        },
 
+        {
+          src: `${IMAGE_PATHS.AQUARIUM}/rock-03.png`,
+          originalWidth: 1729,
+          originalHeight: 517,
+        },
+        {
+          src: `${IMAGE_PATHS.AQUARIUM}/rock-02.png`,
+          originalWidth: 1342,
+          originalHeight: 883,
+        },
+      ];
+
+      // 최대 돌의 개수를 5개로 제한
+      const maxRocks = 5;
+      const rockCount = Math.min(maxRocks, Math.floor(width / 100)); // 최소 크기 100px로 조정
+
+      const rocks: Matter.Body[] = [];
+
+      for (let i = 0; i < rockCount; i++) {
+        const rock = rockImages[i % rockImages.length]; // 이미지 반복 사용
+        const rockImage = new Image();
+        rockImage.src = rock.src;
+
+        rockImage.onload = () => {
+          // 각 돌의 너비는 컨테이너 너비를 돌 개수로 나눈 값
+          const rockWidth = width / rockCount;
+          const scale = rockWidth / rock.originalWidth + 0.05; // 비율 유지
+          const rockHeight = rock.originalHeight * scale - 10;
+
+          // 돌의 x 좌표는 왼쪽부터 순차적으로 배치
+          const x = rockWidth * i + rockWidth / 2; // 돌의 중심 위치
+          const y = height - rockHeight / 2; // 바닥에 배치
+
+          const rockBody = Matter.Bodies.rectangle(
+            x,
+            y,
+            rockWidth,
+            rockHeight,
+            {
+              isStatic: true,
+              restitution: 0.5,
+              render: {
+                sprite: {
+                  texture: rock.src,
+                  xScale: scale,
+                  yScale: scale,
+                },
+              },
+            },
+          );
+
+          rocks.push(rockBody);
+          Matter.World.add(engine.world, rockBody);
+        };
+      }
+
+      return rocks;
+    };
+
+    // 바다생물 추가
     seafoods.forEach((seafood) => {
       const seafoodImage = new Image();
-      seafoodImage.src = `${SEAFOOD_IMAGE_PATH}${seafood.englishName}.svg`;
+      seafoodImage.src = `${IMAGE_PATHS.SEAFOOD}${seafood.englishName}.svg`;
 
       seafoodImage.onload = () => {
         for (let i = 0; i < seafood.count; i++) {
@@ -112,11 +206,7 @@ export const useAquarium = (
               restitution: 0.3,
               friction: 0.1,
               render: {
-                sprite: {
-                  texture: seafoodImage.src,
-                  xScale: 0.6,
-                  yScale: 0.6,
-                },
+                sprite: { texture: seafoodImage.src, xScale: 0.6, yScale: 0.6 },
               },
             },
           );
@@ -125,58 +215,86 @@ export const useAquarium = (
       };
     });
 
-    const diverImage = new Image();
-    diverImage.src = `${AQUARIUM_IMAGE_PATH}/sumbi.png`;
+    // 다이버 추가 함수
+    const addDiver = (
+      engine: Matter.Engine,
+      width: number,
+      height: number,
+      texturePath: string,
+    ) => {
+      const diverImage = new Image();
+      diverImage.src = texturePath;
 
-    diverImage.onload = () => {
-      const diverBody = Bodies.rectangle(width / 2, height / 2, 50, 100, {
-        isStatic: false,
-        render: {
-          sprite: {
-            texture: diverImage.src,
-            xScale: 0.2,
-            yScale: 0.2,
+      diverImage.onload = () => {
+        const diverBody = Matter.Bodies.rectangle(
+          width / 2,
+          height / 2,
+          50,
+          100,
+          {
+            isStatic: false,
+            render: {
+              sprite: { texture: diverImage.src, xScale: 0.2, yScale: 0.2 },
+            },
+            collisionFilter: { category: 0x0002, mask: 0x0000 },
           },
-        },
-        collisionFilter: {
-          category: 0x0002,
-          mask: 0x0000,
-        },
-      });
+        );
 
-      World.add(engine.world, diverBody);
+        Matter.World.add(engine.world, diverBody);
 
-      let direction = 1;
-      Events.on(engine, 'beforeUpdate', () => {
+        // 수직 방향 움직임 설정
+        let direction = 1;
         const minY = height / 2;
         const maxY = height / 2 + 5;
 
-        if (diverBody.position.y >= maxY) {
-          direction = -1;
-        } else if (diverBody.position.y <= minY) {
-          direction = 1;
-        }
+        Matter.Events.on(engine, 'beforeUpdate', () => {
+          if (diverBody.position.y >= maxY) {
+            direction = -1;
+          } else if (diverBody.position.y <= minY) {
+            direction = 1;
+          }
 
-        Matter.Body.applyForce(diverBody, diverBody.position, {
-          x: 0,
-          y: direction * 0.0008,
+          Matter.Body.applyForce(diverBody, diverBody.position, {
+            x: 0,
+            y: direction * 0.0008,
+          });
         });
-      });
+      };
     };
 
-    const mouse = Mouse.create(render.canvas);
-    const mouseConstraint = MouseConstraint.create(engine, {
-      mouse: mouse,
-      constraint: {
-        stiffness: 0.2,
-        render: { visible: false },
-      },
-      collisionFilter: {
-        mask: 0x0001,
-      },
-    });
+    // 3. 동작 제어 (윈도우 리사이즈, 속도 제한)
+    const updateSize = () => {
+      const { width: newWidth, height: newHeight } =
+        container.getBoundingClientRect();
 
-    World.add(engine.world, mouseConstraint);
+      // @ts-expect-error MatterJS 타입이 잘못되어 있어서 발생하는 에러
+      Matter.Render.setSize(render, newWidth, newHeight);
+
+      World.remove(engine.world, [topWall, leftWall, rightWall, bottomWall]);
+
+      topWall = Bodies.rectangle(newWidth / 2, 0, newWidth, 20, {
+        isStatic: true,
+        render: { visible: false },
+      });
+      leftWall = Bodies.rectangle(0, newHeight / 2, 20, newHeight, {
+        isStatic: true,
+        render: { visible: false },
+      });
+      rightWall = Bodies.rectangle(newWidth, newHeight / 2, 20, newHeight, {
+        isStatic: true,
+        render: { visible: false },
+      });
+      bottomWall = Bodies.rectangle(newWidth / 2, newHeight, newWidth, 20, {
+        isStatic: true,
+        render: { visible: false },
+      });
+
+      World.add(engine.world, [topWall, leftWall, rightWall, bottomWall]);
+      width = newWidth;
+      height = newHeight;
+    };
+
+    window.addEventListener('resize', updateSize);
 
     const bodies = engine.world.bodies;
     Events.on(engine, 'afterUpdate', () => {
@@ -196,15 +314,49 @@ export const useAquarium = (
       });
     });
 
+    // 4. 유저 인터랙션
+    const Mouse = Matter.Mouse;
+    const MouseConstraint = Matter.MouseConstraint;
+    const mouse = Mouse.create(render.canvas);
+    const mouseConstraint = MouseConstraint.create(engine, {
+      mouse,
+      constraint: { stiffness: 0.2, render: { visible: false } },
+      collisionFilter: { mask: 0x0001 },
+    });
+
+    World.add(engine.world, mouseConstraint);
+
+    // 5. 정리 및 리소스 해제
     const runner = Runner.create();
     Runner.run(runner, engine);
     Render.run(render);
+    addBackgroundLayers(engine, width, height, [
+      {
+        path: `${IMAGE_PATHS.AQUARIUM}/Background-04.png`,
+        originalHeight: 600, // 임의 높이 (예시)
+        position: 'middle', // 중간에 위치
+      },
+      {
+        path: `${IMAGE_PATHS.AQUARIUM}/Background-02.png`,
+        originalHeight: 745,
+        position: 'bottom', // 기본값: 하단
+      },
+      {
+        path: `${IMAGE_PATHS.AQUARIUM}/Background-03.png`,
+        originalHeight: 799,
+        position: 'bottom', // 기본값: 하단
+      },
+    ]);
+
+    addRocks(engine, width, height);
+    addDiver(engine, width, height, `${IMAGE_PATHS.AQUARIUM}/sumbi.png`);
 
     return () => {
       window.removeEventListener('resize', updateSize);
       Render.stop(render);
       Runner.stop(runner);
       Engine.clear(engine);
+      World.clear(engine.world, true);
     };
   }, [containerRef, canvasRef, seafoods]);
 };
