@@ -309,9 +309,7 @@ export const useAquarium = (
     const Mouse = Matter.Mouse;
     const MouseConstraint = Matter.MouseConstraint;
     const mouse = Mouse.create(render.canvas);
-
-    // pixelRatio에 맞추어 마우스 좌표를 스케일링
-    Mouse.setScale(mouse, { x: 1 / pixelRatio, y: 1 / pixelRatio });
+    mouse.pixelRatio = pixelRatio;
 
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse,
