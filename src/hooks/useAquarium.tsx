@@ -124,26 +124,16 @@ export const useAquarium = (
     };
 
     // 돌 추가
-    const addRocks = (engine: Matter.Engine, width: number, height: number) => {
-      const rockImages = [
-        {
-          src: `${IMAGE_PATHS.AQUARIUM}/rock-01.png`,
-          originalWidth: 1234,
-          originalHeight: 918,
-        },
-
-        {
-          src: `${IMAGE_PATHS.AQUARIUM}/rock-03.png`,
-          originalWidth: 1729,
-          originalHeight: 517,
-        },
-        {
-          src: `${IMAGE_PATHS.AQUARIUM}/rock-02.png`,
-          originalWidth: 1342,
-          originalHeight: 883,
-        },
-      ];
-
+    const addRocks = (
+      engine: Matter.Engine,
+      width: number,
+      height: number,
+      texturePaths: {
+        src: string;
+        originalWidth: number;
+        originalHeight: number;
+      }[],
+    ) => {
       // 최대 돌의 개수를 5개로 제한
       const maxRocks = 5;
       const rockCount = Math.min(maxRocks, Math.floor(width / 100)); // 최소 크기 100px로 조정
@@ -151,7 +141,7 @@ export const useAquarium = (
       const rocks: Matter.Body[] = [];
 
       for (let i = 0; i < rockCount; i++) {
-        const rock = rockImages[i % rockImages.length]; // 이미지 반복 사용
+        const rock = texturePaths[i % texturePaths.length]; // 이미지 반복 사용
         const rockImage = new Image();
         rockImage.src = rock.src;
 
@@ -194,7 +184,7 @@ export const useAquarium = (
     // 바다생물 추가
     seafoods.forEach((seafood) => {
       const seafoodImage = new Image();
-      seafoodImage.src = `${IMAGE_PATHS.SEAFOOD}${seafood.englishName}.svg`;
+      seafoodImage.src = `${IMAGE_PATHS.SEAFOOD}/${seafood.englishName}.svg`;
 
       seafoodImage.onload = () => {
         for (let i = 0; i < seafood.count; i++) {
@@ -348,7 +338,24 @@ export const useAquarium = (
       },
     ]);
 
-    addRocks(engine, width, height);
+    addRocks(engine, width, height, [
+      {
+        src: `${IMAGE_PATHS.AQUARIUM}/rock-01.png`,
+        originalWidth: 1234,
+        originalHeight: 918,
+      },
+
+      {
+        src: `${IMAGE_PATHS.AQUARIUM}/rock-03.png`,
+        originalWidth: 1729,
+        originalHeight: 517,
+      },
+      {
+        src: `${IMAGE_PATHS.AQUARIUM}/rock-02.png`,
+        originalWidth: 1342,
+        originalHeight: 883,
+      },
+    ]);
     addDiver(engine, width, height, `${IMAGE_PATHS.AQUARIUM}/sumbi.png`);
 
     return () => {
