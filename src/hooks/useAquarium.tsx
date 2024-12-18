@@ -184,28 +184,39 @@ export const useAquarium = (
     };
 
     // 바다생물 추가
-    seafoods.forEach((seafood) => {
-      const seafoodImage = new Image();
-      seafoodImage.src = `${IMAGE_PATHS.SEAFOOD}/${seafood.englishName}.svg`;
+    const addSeafoods = (
+      engine: Matter.Engine,
+      width: number,
+      height: number,
+      seafoods: SeafoodCollected[],
+    ) => {
+      seafoods.forEach((seafood) => {
+        const seafoodImage = new Image();
+        seafoodImage.src = `${IMAGE_PATHS.SEAFOOD}/${seafood.englishName}.svg`;
 
-      seafoodImage.onload = () => {
-        for (let i = 0; i < seafood.count; i++) {
-          const body = Bodies.circle(
-            Math.random() * (width - 100) + 50,
-            Math.random() * (height - 100) + 50,
-            30,
-            {
-              restitution: 0.3,
-              friction: 0.1,
-              render: {
-                sprite: { texture: seafoodImage.src, xScale: 0.6, yScale: 0.6 },
+        seafoodImage.onload = () => {
+          for (let i = 0; i < seafood.count; i++) {
+            const body = Matter.Bodies.circle(
+              Math.random() * (width - 100) + 50,
+              Math.random() * (height - 100) + 50,
+              30,
+              {
+                restitution: 0.3,
+                friction: 0.1,
+                render: {
+                  sprite: {
+                    texture: seafoodImage.src,
+                    xScale: 0.6,
+                    yScale: 0.6,
+                  },
+                },
               },
-            },
-          );
-          World.add(engine.world, body);
-        }
-      };
-    });
+            );
+            Matter.World.add(engine.world, body);
+          }
+        };
+      });
+    };
 
     // 다이버 추가 함수
     const addDiver = (
@@ -360,6 +371,7 @@ export const useAquarium = (
       },
     ]);
     addDiver(engine, width, height, `${IMAGE_PATHS.AQUARIUM}/sumbi.png`);
+    addSeafoods(engine, width, height, seafoods);
 
     return () => {
       window.removeEventListener('resize', updateSize);
