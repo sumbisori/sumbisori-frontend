@@ -130,11 +130,7 @@ export const useAquarium = (
       engine: Matter.Engine,
       width: number,
       height: number,
-      texturePaths: {
-        src: string;
-        originalWidth: number;
-        originalHeight: number;
-      }[],
+      texturePaths: { src: string }[],
     ) => {
       // 최대 돌의 개수를 5개로 제한
       const maxRocks = 5;
@@ -148,10 +144,14 @@ export const useAquarium = (
         rockImage.src = rock.src;
 
         rockImage.onload = () => {
+          // 이미지의 원본 크기를 가져옴
+          const originalWidth = rockImage.naturalWidth;
+          const originalHeight = rockImage.naturalHeight;
+
           // 각 돌의 너비는 컨테이너 너비를 돌 개수로 나눈 값
           const rockWidth = width / rockCount;
-          const scale = rockWidth / rock.originalWidth + 0.05; // 비율 유지
-          const rockHeight = rock.originalHeight * scale - 10;
+          const scale = rockWidth / originalWidth + 0.05; // 비율 유지
+          const rockHeight = originalHeight * scale - 10;
 
           // 돌의 x 좌표는 왼쪽부터 순차적으로 배치
           const x = rockWidth * i + rockWidth / 2; // 돌의 중심 위치
@@ -353,22 +353,9 @@ export const useAquarium = (
     ]);
 
     addRocks(engine, width, height, [
-      {
-        src: `${IMAGE_PATHS.AQUARIUM}/rock-01.png`,
-        originalWidth: 1234,
-        originalHeight: 918,
-      },
-
-      {
-        src: `${IMAGE_PATHS.AQUARIUM}/rock-03.png`,
-        originalWidth: 1729,
-        originalHeight: 517,
-      },
-      {
-        src: `${IMAGE_PATHS.AQUARIUM}/rock-02.png`,
-        originalWidth: 1342,
-        originalHeight: 883,
-      },
+      { src: `${IMAGE_PATHS.AQUARIUM}/rock-01.png` },
+      { src: `${IMAGE_PATHS.AQUARIUM}/rock-03.png` },
+      { src: `${IMAGE_PATHS.AQUARIUM}/rock-02.png` },
     ]);
     addDiver(engine, width, height, `${IMAGE_PATHS.AQUARIUM}/sumbi.png`);
     addSeafoods(engine, width, height, seafoods);

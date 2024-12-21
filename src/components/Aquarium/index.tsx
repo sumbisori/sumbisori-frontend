@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { SeafoodCollected } from '../../api/home';
 import { useAquarium } from '../../hooks/useAquarium';
-import { IMAGE_PATHS } from '../../constant';
 
 interface AquariumProps {
   seafoods: SeafoodCollected[];
