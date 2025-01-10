@@ -98,7 +98,7 @@ export const HomeContents = ({ seafoods }: Props) => {
   }, []);
 
   return (
-    <div className="bg-gray-surface flex flex-col gap-3 p-4">
+    <div className="flex flex-col gap-3 bg-gray-surface p-4">
       <HomeLocation
         location={selectedLocation}
         onSelectedLocation={(location) => setSelectedLocation(location)}
