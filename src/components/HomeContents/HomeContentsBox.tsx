@@ -14,12 +14,12 @@ export const HomeContentsBox = ({
   contentClassName,
 }: HomeContentsBoxProps) => {
   return (
-    <div className="rounded-[1.25rem] bg-white p-5">
-      <div className="mb-6 flex items-center justify-between">
+    <div className="rounded-[1.25rem] bg-white">
+      <div className="flex items-center justify-between p-5">
         <h2 className="text-[1.25rem] font-bold leading-6">{title}</h2>
         {icon}
       </div>
-      <div className={`${contentClassName}`}>{content}</div>
+      <div className={`${contentClassName} px-5 pb-5`}>{content}</div>
     </div>
   );
 };
