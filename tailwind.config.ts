@@ -35,6 +35,9 @@ export default {
           800: '#3E404C', // $gray-800
           900: '#2B2D36', // $gray-900
           950: '#252730', // $gray-950
+          surface: '#F1F1F3', // $gray-layout
+          card: '#F7F6F9', // $gray-card
+          'card-border': '#F2F2F4', // $gray-card-border
         },
         red: {
           '050': '#FEF1F1', // $red-050
