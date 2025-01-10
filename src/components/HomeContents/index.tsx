@@ -5,9 +5,9 @@ import {
   getJejuWaterHeight,
   getJejuWaterTemperature,
   getYoutubeContents,
-} from '../../api/home';
+} from '@/api/home';
 import { HomeLocation } from './HomeLocation';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
 import { HomeYoutubeList } from '../HomeYoutubeList';
 import { motion } from 'framer-motion';
 import { HomeYoutubeVideoIframe } from '../HomeYoutubeList/HomeYoutubeVideoIframe';

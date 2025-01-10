@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Dropdown } from '../../components/Dropdown';
+import { Dropdown } from '@/components/Dropdown';
 import {
   PostSeafood,
   SeafoodAll,
   getSeafoodTypes,
   postSeafood,
-} from '../../api/dictionaryRegistration';
+} from '@/api/dictionaryRegistration';
 import { useNavigate } from 'react-router-dom';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
 
 export const DictionaryRegistration = () => {
   const navigate = useNavigate();

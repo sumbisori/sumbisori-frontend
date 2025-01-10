@@ -1,7 +1,7 @@
-import { HomeContents } from '../../components/HomeContents';
+import { HomeContents } from '@/components/HomeContents';
 import { useEffect, useState } from 'react';
-import { SeafoodCollected, getSeafoodCollected } from '../../api/home';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { SeafoodCollected, getSeafoodCollected } from '@/api/home';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
 import { Aquarium } from '@/components/Aquarium';
 
 export const Home = () => {

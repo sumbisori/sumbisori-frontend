@@ -3,12 +3,12 @@ import {
   MyPageReservationType,
   getReservationCount,
   getReservationList,
-} from '../../api/myPage';
-import { SwitchReservationStatus } from '../../components/SwitchReservationStatus';
-import { MyPageReservationCard } from '../../components/MyPageReservationCard';
+} from '@/api/myPage';
+import { SwitchReservationStatus } from '@/components/SwitchReservationStatus';
+import { MyPageReservationCard } from '@/components/MyPageReservationCard';
 import { useNavigate } from 'react-router-dom';
-import { cancelReservation, completeReservation } from '../../api/reservation';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { cancelReservation, completeReservation } from '@/api/reservation';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
 
 export const MyPageReservation = () => {
   const { handleError } = useErrorHandler();

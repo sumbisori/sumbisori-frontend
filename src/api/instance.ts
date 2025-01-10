@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { store } from '../store';
+import { store } from '@/store';
 
 export const API_URL = 'https://api.sumbisori.site/api';
 

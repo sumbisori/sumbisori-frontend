@@ -1,17 +1,17 @@
-import { ReservationInfo } from '../../components/ReservationInfo/ReservationInfo';
-import { OptionsInput } from '../../components/OptionsInput';
+import { ReservationInfo } from '@/components/ReservationInfo/ReservationInfo';
+import { OptionsInput } from '@/components/OptionsInput';
 import { useEffect, useState } from 'react';
-import { LargeButton } from '../../components/LargeButton';
+import { LargeButton } from '@/components/LargeButton';
 import {
   PostReservation,
   ReservationHaenyeoPlace,
   getReservationHaenyeoPlace,
   postReservation,
-} from '../../api/reservation';
+} from '@/api/reservation';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useModalContext } from '../../contexts/ModalContext';
-import { AlertBox } from '../../components/AlertBox';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { useModalContext } from '@/contexts/ModalContext';
+import { AlertBox } from '@/components/AlertBox';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
 
 export const ReservationCreate = () => {
   const params = useParams();

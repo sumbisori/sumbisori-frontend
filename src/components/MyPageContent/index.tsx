@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { MyPageButton } from '../MyPageButton';
 import { AlertBox } from '../AlertBox';
-import { useModalContext } from '../../contexts/ModalContext';
-import { API_URL } from '../../api/instance';
+import { useModalContext } from '@/contexts/ModalContext';
+import { API_URL } from '@/api/instance';
 import ReservationListIcon from '@/assets/icons/my_page/reservation_list.svg?react';
 import ReviewListIcon from '@/assets/icons/my_page/review_list.svg?react';
 import SettingIcon from '@/assets/icons/my_page/setting.svg?react';

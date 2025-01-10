@@ -1,6 +1,6 @@
 import { useRef } from 'react';
-import { SeafoodCollected } from '../../api/home';
-import { useAquarium } from '../../hooks/useAquarium';
+import { SeafoodCollected } from '@/api/home';
+import { useAquarium } from '@/hooks/useAquarium';
 
 interface AquariumProps {
   seafoods: SeafoodCollected[];

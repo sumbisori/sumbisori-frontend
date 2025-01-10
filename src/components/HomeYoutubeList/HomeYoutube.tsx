@@ -1,7 +1,7 @@
-import { YoutubeVideoType } from '../../api/home';
-import { formatViewCount } from '../../util/formatViewCount';
-import { formatYoutubeDate } from '../../util/formatYoutubeDate';
-import { truncateTitle } from '../../util/truncateTitle';
+import { YoutubeVideoType } from '@/api/home';
+import { formatViewCount } from '@/util/formatViewCount';
+import { formatYoutubeDate } from '@/util/formatYoutubeDate';
+import { truncateTitle } from '@/util/truncateTitle';
 import { HomeYoutubeVideoIframe } from './HomeYoutubeVideoIframe';
 import PlayIcon from '@/assets/icons/play.svg?react';
 import CloseIcon from '@/assets/icons/close.svg?react';

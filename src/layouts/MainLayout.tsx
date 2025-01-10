@@ -1,8 +1,8 @@
-import { NavigationBar } from '../components/NavigationBar';
-import { Header } from '../components/Header';
+import { NavigationBar } from '@/components/NavigationBar';
+import { Header } from '@/components/Header';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store';
+import { RootState } from '@/store';
 
 export default function MainLayout() {
   const location = useLocation();

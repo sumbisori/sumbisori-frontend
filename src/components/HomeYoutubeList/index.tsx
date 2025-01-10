@@ -1,5 +1,5 @@
 import { HomeYoutube } from './HomeYoutube';
-import { YoutubeVideoType } from '../../api/home';
+import { YoutubeVideoType } from '@/api/home';
 
 interface HomeYoutubeListProps {
   videos: YoutubeVideoType[];

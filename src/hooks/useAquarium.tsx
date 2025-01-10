@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Matter from 'matter-js';
-import { SeafoodCollected } from '../api/home';
-import { IMAGE_PATHS } from '../constant';
+import { SeafoodCollected } from '@/api/home';
+import { IMAGE_PATHS } from '@/constant';
 
 export const useAquarium = (
   containerRef: React.RefObject<HTMLDivElement>,

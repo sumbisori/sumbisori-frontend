@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { LargeButton } from '../../components/LargeButton';
+import { LargeButton } from '@/components/LargeButton';
 import ArrowRight2 from '@/assets/icons/arrow-right2.svg?react';
 
 export const DictionaryConfirm = () => {

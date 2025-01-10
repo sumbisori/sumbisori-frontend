@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { SeafoodCard } from '../../components/SeafoodCard';
-import { AlertBox } from '../../components/AlertBox';
-import { DictionarySeafood, getSeafoods } from '../../api/dictionary';
-import { useModalContext } from '../../contexts/ModalContext';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { SeafoodCard } from '@/components/SeafoodCard';
+import { AlertBox } from '@/components/AlertBox';
+import { DictionarySeafood, getSeafoods } from '@/api/dictionary';
+import { useModalContext } from '@/contexts/ModalContext';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
 
 export const Dictionary = () => {
   const { openModal } = useModalContext();
