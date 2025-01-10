@@ -1,4 +1,9 @@
 import { useNavigate } from 'react-router-dom';
+import LogoBlackIcon from '@/assets/icons/sumbisori_logo_width_black.svg?react';
+import LogoWhiteIcon from '@/assets/icons/sumbisori_logo_width_white.svg?react';
+import BellBlackIcon from '@/assets/icons/Icon_bell_black.svg?react';
+import BellWhiteIcon from '@/assets/icons/Icon_bell_white.svg?react';
+import ContourIcon from '@/assets/icons/contour.svg?react';
 
 interface Props {
   type?: 'dark' | 'light';
@@ -22,34 +27,25 @@ export const Header = ({ type = 'light', caption, absolute }: Props) => {
       }}
     >
       <div className="flex items-center">
-        <img
-          src={
-            type === 'dark'
-              ? '/icons/sumbisori_logo_width_black.svg'
-              : '/icons/sumbisori_logo_width_white.svg'
-          }
-          alt="Logo"
-          className="cursor-pointer"
-          onClick={handleNavigate}
-        />
+        {type === 'dark' ? (
+          <LogoBlackIcon className="cursor-pointer" onClick={handleNavigate} />
+        ) : (
+          <LogoWhiteIcon className="cursor-pointer" onClick={handleNavigate} />
+        )}
         {caption && (
           <div className="ml-2 flex items-center gap-2">
-            <img src={'/icons/contour.svg'} alt="contour" />
+            <ContourIcon />
             <p className="text-[1.375rem] font-bold text-gray-900">{caption}</p>
           </div>
         )}
       </div>
 
       <div className="flex items-center">
-        <img
-          src={
-            type === 'dark'
-              ? '/icons/Icon_bell_black.svg'
-              : '/icons/Icon_bell_white.svg'
-          }
-          alt="Menu"
-          className="cursor-pointer"
-        />
+        {type === 'dark' ? (
+          <BellBlackIcon className="cursor-pointer" />
+        ) : (
+          <BellWhiteIcon className="cursor-pointer" />
+        )}
       </div>
     </header>
   );

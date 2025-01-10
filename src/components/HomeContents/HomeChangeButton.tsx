@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes } from 'react';
+import ArrowRight from '@/assets/icons/arrow_right.svg?react';
 
 interface HomeChangeButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {}
@@ -10,7 +11,7 @@ export const HomeChangeButton = ({ ...props }: HomeChangeButtonProps) => {
       className="flex h-[1.375rem] items-center justify-center gap-0.5 rounded-s-sm border border-gray-400 px-2.5"
     >
       <p className="text-[0.75rem]">변경</p>
-      <img src="/icons/arrow_right.svg" />
+      <ArrowRight />
     </button>
   );
 };

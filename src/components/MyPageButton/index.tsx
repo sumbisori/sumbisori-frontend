@@ -1,6 +1,8 @@
+import { ReactNode } from 'react';
+import RightBracketIcon from '@/assets/icons/right-bracket.svg?react';
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  icon: string;
+  icon: ReactNode;
 }
 
 export const MyPageButton = ({ children, icon, ...props }: Props) => {
@@ -10,10 +12,10 @@ export const MyPageButton = ({ children, icon, ...props }: Props) => {
       {...props}
     >
       <div className="flex gap-4">
-        <img src={`/icons/my_page/${icon}.svg`} />
+        {icon}
         {children}
       </div>
-      <img src="/icons/right-bracket.svg" />
+      <RightBracketIcon />
     </button>
   );
 };

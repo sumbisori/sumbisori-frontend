@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { HomeChangeButton } from './HomeChangeButton';
+import LocationIcon from '@/assets/icons/location.svg?react';
 
 interface HomeLocationProps {
   location: {
@@ -33,7 +34,7 @@ export const HomeLocation = ({
   return (
     <div className="flex items-center justify-between">
       <div className="flex gap-1">
-        <img src="/icons/location.svg" alt="location icon" />
+        <LocationIcon />
         <p className="text-[1rem]">{selectedLocation.name}</p>
       </div>
       <div>

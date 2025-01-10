@@ -13,6 +13,7 @@ import { motion } from 'framer-motion';
 import { HomeYoutubeVideoIframe } from '../HomeYoutubeList/HomeYoutubeVideoIframe';
 import { HomeContentsBox } from './HomeContentsBox';
 import { HomeContentsWeather } from './HomeWeather';
+import RefreshIcon from '@/assets/icons/refresh.svg?react';
 
 interface Props {
   seafoods: SeafoodCollected[];
@@ -117,7 +118,7 @@ export const HomeContents = ({ seafoods }: Props) => {
         title="숨비 TV"
         icon={
           <motion.img
-            src="/icons/refresh.svg"
+            src="/src/assets/icons/refresh.svg"
             alt="More"
             className="size-5 cursor-pointer"
             animate={{ rotate: rotationCount * 360 }} // 누적된 회전 각도

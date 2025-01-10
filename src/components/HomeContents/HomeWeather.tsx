@@ -1,6 +1,8 @@
 import { SeafoodCollected } from '../../api/home';
 import { convertToTodayTime } from '../../util/convertToTodayTime';
 import { HomeContentsCard } from './HomeContentsCard';
+import SeaScaleIcon from '@/assets/icons/sea_scale.svg?react';
+import WeatherIcon from '@/assets/icons/weather.svg?react';
 
 interface Props {
   seafoods: SeafoodCollected[];
@@ -31,7 +33,7 @@ export const HomeContentsWeather = ({
         cardContent={
           <div className="flex flex-col justify-center">
             <div className="flex items-center gap-[0.313rem]">
-              <img src="/icons/sea_scale.svg" />
+              <SeaScaleIcon />
 
               <div className="text-[1.125rem] font-semibold">
                 {waterHeight.height}
@@ -49,7 +51,7 @@ export const HomeContentsWeather = ({
         cardContent={
           <div className="flex flex-col justify-center">
             <div className="flex items-center gap-[0.313rem]">
-              <img src="/icons/weather.svg" />
+              <WeatherIcon />
               <div className="text-[1.313rem] font-semibold">
                 {waterTemperature.temp}°
               </div>

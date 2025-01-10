@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { LargeButton } from '../../components/LargeButton';
+import ArrowRight2 from '@/assets/icons/arrow-right2.svg?react';
 
 export const DictionaryConfirm = () => {
   const params = useParams();
@@ -10,7 +11,8 @@ export const DictionaryConfirm = () => {
         <div
           className={`relative size-[9.375rem] self-center bg-cover bg-center bg-no-repeat`}
           style={{
-            backgroundImage: 'url(/images/Seafoods/' + params.seafood + '.svg)',
+            backgroundImage:
+              'url(/src/assets/images/Seafoods/' + params.seafood + '.svg)',
           }}
         />
         <div className="flex flex-col gap-3 text-center">
@@ -24,7 +26,8 @@ export const DictionaryConfirm = () => {
         </div>
         <div className="mt-20 w-[12.5rem]">
           <LargeButton onClick={() => navigate('/dictionary')}>
-            물질도감 보러가기<img src="/icons/arrow-right2.svg"></img>
+            물질도감 보러가기
+            <ArrowRight2 />
           </LargeButton>
         </div>
       </div>

@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
-import { LocationPin } from './LocationPin';
-import { Modal } from '../../components/Modal';
-import { useModalContext } from '../../contexts/ModalContext';
-import { ReservationInfo } from '../../components/ReservationInfo/ReservationInfo';
+import { Modal } from '@/components/Modal';
+import { useModalContext } from '@/contexts/ModalContext';
+import { ReservationInfo } from '@/components/ReservationInfo/ReservationInfo';
 import { useNavigate } from 'react-router-dom';
-import { LargeButton } from '../../components/LargeButton';
+import { LargeButton } from '@/components/LargeButton';
 import {
   ReservationHaenyeoPlaces,
   getReservationHaenyeoPlaces,
-} from '../../api/reservation';
+} from '@/api/reservation';
 import { KakaoMap } from './KakaoMap';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
 
 export const Reservation = () => {
   const { handleError } = useErrorHandler();

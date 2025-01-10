@@ -78,7 +78,7 @@ export const DictionaryRegistration = () => {
             <div
               className="size-9 bg-cover bg-center bg-no-repeat"
               style={{
-                backgroundImage: 'url(/icons/Image_Icon.svg)',
+                backgroundImage: 'url(/src/assets/icons/Image_Icon.svg)',
               }}
             ></div>
           )}

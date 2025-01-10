@@ -49,10 +49,10 @@ export const Dictionary = () => {
         <AlertBox id={`seafood-${selectedSeafood.koreanName}`}>
           <div className="flex h-full flex-col justify-between">
             <div
-              className={` ${selectedSeafood.count > 0 ? '' : 'grayscale'} relative self-center bg-cover bg-center bg-no-repeat`}
+              className={` ${selectedSeafood.count > 0 ? '' : 'grayscale'} relative size-[9.375rem] self-center bg-cover bg-center bg-no-repeat`}
               style={{
                 backgroundImage:
-                  'url(/images/Seafoods/' +
+                  'url(/src/assets/images/Seafoods/' +
                   selectedSeafood.englishName +
                   '.svg)',
               }}

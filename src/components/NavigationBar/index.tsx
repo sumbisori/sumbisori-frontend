@@ -1,6 +1,14 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { NavIcon } from './NavIcon';
 import { useState } from 'react';
+import NavIcon1Active from '@/assets/icons/nav/nav_icon1_active.svg?react';
+import NavIcon1Inactive from '@/assets/icons/nav/nav_icon1_inactive.svg?react';
+import NavIcon2Active from '@/assets/icons/nav/nav_icon2_active.svg?react';
+import NavIcon2Inactive from '@/assets/icons/nav/nav_icon2_inactive.svg?react';
+import NavIcon3Active from '@/assets/icons/nav/nav_icon3_active.svg?react';
+import NavIcon3Inactive from '@/assets/icons/nav/nav_icon3_inactive.svg?react';
+import NavIcon4Active from '@/assets/icons/nav/nav_icon4_active.svg?react';
+import NavIcon4Inactive from '@/assets/icons/nav/nav_icon4_inactive.svg?react';
 
 export const NavigationBar = () => {
   const navigate = useNavigate();
@@ -9,10 +17,30 @@ export const NavigationBar = () => {
   const [hovered, setHovered] = useState<string | null>(null);
 
   const navItems = [
-    { label: '홈', path: '/home', icon: 'nav_icon1' },
-    { label: '예약', path: '/reservation', icon: 'nav_icon2' },
-    { label: '도감', path: '/dictionary', icon: 'nav_icon3' },
-    { label: '마이', path: '/my-page', icon: 'nav_icon4' },
+    {
+      label: '홈',
+      path: '/home',
+      activeIcon: <NavIcon1Active />,
+      inactiveIcon: <NavIcon1Inactive />,
+    },
+    {
+      label: '예약',
+      path: '/reservation',
+      activeIcon: <NavIcon2Active />,
+      inactiveIcon: <NavIcon2Inactive />,
+    },
+    {
+      label: '도감',
+      path: '/dictionary',
+      activeIcon: <NavIcon3Active />,
+      inactiveIcon: <NavIcon3Inactive />,
+    },
+    {
+      label: '마이',
+      path: '/my-page',
+      activeIcon: <NavIcon4Active />,
+      inactiveIcon: <NavIcon4Inactive />,
+    },
   ];
 
   return (
@@ -27,15 +55,9 @@ export const NavigationBar = () => {
             onMouseLeave={() => setHovered(null)}
             isActive={location.pathname.startsWith(item.path)}
             icon={
-              <img
-                src={`/icons/nav/${item.icon}${
-                  location.pathname.startsWith(item.path) ||
-                  hovered === item.path
-                    ? '_active.svg'
-                    : '_inactive.svg'
-                }`}
-                alt={item.label}
-              />
+              location.pathname.startsWith(item.path) || hovered === item.path
+                ? item.activeIcon
+                : item.inactiveIcon
             }
           />
         ))}

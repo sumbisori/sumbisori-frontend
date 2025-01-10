@@ -6,7 +6,7 @@
 //       className="block h-[2.813rem] w-[18.75rem] bg-cover bg-center bg-no-repeat"
 //       {...props}
 //       style={{
-//         backgroundImage: 'url(/images/kakao-login.png)',
+//         backgroundImage: 'url(/src/assets/images/kakao-login.png)',
 //       }}
 //     />
 //   );
@@ -21,7 +21,7 @@ export const KakaoLogin = ({ ...props }: Props) => {
       className="block h-[2.813rem] w-[18.75rem] bg-cover bg-center bg-no-repeat"
       {...props}
       style={{
-        backgroundImage: 'url(/images/kakao-login.svg)',
+        backgroundImage: 'url(/src/assets/images/kakao-login.svg)',
       }}
     />
   );
