@@ -22,6 +22,7 @@ export default {
         code: ['14px', '22px'], // <code>
       },
       colors: {
+        'charcoal-gray': '#525152',
         gray: {
           '000': '#FFFFFF', // $gray-000
           '050': '#F7F7FA', // $gray-050

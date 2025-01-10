@@ -35,7 +35,7 @@ export const HomeLocation = ({
     <div className="flex items-center justify-between">
       <div className="flex gap-1">
         <LocationIcon />
-        <p className="text-[1rem]">{selectedLocation.name}</p>
+        <p className="text-[1rem] font-medium">{selectedLocation.name}</p>
       </div>
       <div>
         <HomeChangeButton onClick={() => setShowDropdown(!showDropdown)} />
