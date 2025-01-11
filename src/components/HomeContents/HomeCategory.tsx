@@ -12,9 +12,9 @@ export const HomeCategoryBar = ({ onCategoryChange, value }: Props) => {
   const categories: { label: string; code: HomeCategoryLabel }[] = useMemo(
     () => [
       { label: '홈', code: 'home' },
-      { label: '트레이닝', code: 'training' },
-      { label: 'TV', code: 'tv' },
-      { label: '바다', code: 'sea' },
+      { label: '해녀 Training', code: 'training' },
+      { label: '숨비 TV', code: 'tv' },
+      { label: '실시간 바다', code: 'sea' },
     ],
     [],
   );
