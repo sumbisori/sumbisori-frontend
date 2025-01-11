@@ -1,5 +1,6 @@
 import { ReservationHaenyeoPlaces } from '@/api/reservation';
 import { useEffect, useRef } from 'react';
+import MyLocationIcon from '@/icons/my-location.svg?react';
 
 interface NaverMapProps {
   places: ReservationHaenyeoPlaces[];
@@ -8,18 +9,24 @@ interface NaverMapProps {
 
 export const NaverMap = ({ places, onPinClick }: NaverMapProps) => {
   const naverMapInstance = useRef<any>(null);
-  const markersRef = useRef<any[]>([]); // 마커를 저장할 레퍼런스
+  const markersRef = useRef<any[]>([]); // Stores the markers
 
   const Naver = window.naver;
   const NaverMaps = window.naver.maps;
 
   const customIconUrl = '/src/assets/icons/sumbi_map.svg';
 
+  const initialPosition = useRef(
+    new NaverMaps.LatLng(33.37310402515643, 126.54168511624414),
+  ).current;
+
+  const initialZoom = useRef(9).current;
+
   const initMap = () => {
     const container = document.getElementById('map');
     const mapOptions = {
-      center: new NaverMaps.LatLng(33.37310402515643, 126.54168511624414),
-      zoom: 9,
+      center: initialPosition,
+      zoom: initialZoom,
     };
 
     const map = new NaverMaps.Map(container as HTMLElement, mapOptions);
@@ -52,6 +59,15 @@ export const NaverMap = ({ places, onPinClick }: NaverMapProps) => {
     });
   };
 
+  const handleRecenter = () => {
+    if (naverMapInstance.current) {
+      naverMapInstance.current.setCenter(initialPosition);
+      naverMapInstance.current.setZoom(initialZoom);
+    } else {
+      console.error('Naver Maps API가 로드되지 않았습니다.');
+    }
+  };
+
   useEffect(() => {
     if (!Naver || !NaverMaps) {
       console.error('Naver Maps API가 로드되지 않았습니다.');
@@ -66,6 +82,7 @@ export const NaverMap = ({ places, onPinClick }: NaverMapProps) => {
       }
     };
   }, []);
+
   useEffect(() => {
     if (naverMapInstance.current) {
       addMarkers();
@@ -73,9 +90,15 @@ export const NaverMap = ({ places, onPinClick }: NaverMapProps) => {
   }, [places]);
 
   return (
-    <div
-      id="map"
-      className="z-10 h-[calc(100vh-4.438rem)] w-full min-w-80 max-w-[37.5rem]"
-    />
+    <div className="relative h-layout-height w-full">
+      <div id="map" className="z-10 size-full min-w-80 max-w-[37.5rem]" />
+      <button
+        onClick={handleRecenter}
+        className="absolute bottom-4 left-4 z-20 cursor-pointer rounded-full bg-white p-2 shadow-md hover:bg-gray-100"
+        aria-label="Re-center Map"
+      >
+        <MyLocationIcon className="size-6" />
+      </button>
+    </div>
   );
 };
