@@ -90,8 +90,11 @@ export const NaverMap = ({ places, onPinClick }: NaverMapProps) => {
   }, [places]);
 
   return (
-    <div className="relative h-layout-height w-full">
-      <div id="map" className="z-10 size-full min-w-80 max-w-[37.5rem]" />
+    <div className="h-layout-nav-height relative w-full">
+      <div
+        id="map"
+        className="z-10 size-full min-w-full-layout max-w-full-layout"
+      />
       <button
         onClick={handleRecenter}
         className="absolute bottom-4 left-4 z-20 cursor-pointer rounded-full bg-white p-2 shadow-md hover:bg-gray-100"

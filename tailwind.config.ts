@@ -176,11 +176,17 @@ export default {
         md: '1rem', // $spacer-md
         lg: '1.5rem', // $spacer-lg
         xl: '3rem', // $spacer-xl
-        'layout-height': 'calc(100vh - 4.438rem)', // $layout-height
+        'layout-nav-height': 'calc(100vh - 4.438rem)', // $layout-nav-height
         'nav-height': '4.438rem', // $nav-height
       },
       aspectRatio: {
         '3/2': '3 / 2',
+      },
+      minWidth: {
+        'full-layout': '20rem',
+      },
+      maxWidth: {
+        'full-layout': '37.5rem',
       },
     },
   },
