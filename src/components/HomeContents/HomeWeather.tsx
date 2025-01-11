@@ -1,8 +1,8 @@
 import { SeafoodCollected } from '@/api/home';
 import { convertToTodayTime } from '@/util/convertToTodayTime';
 import { HomeContentsCard } from './HomeContentsCard';
-import SeaScaleIcon from '@/assets/icons/sea_scale.svg?react';
-import WeatherIcon from '@/assets/icons/weather.svg?react';
+import SeaScaleIcon from '@/icons/sea_scale.svg?react';
+import WeatherIcon from '@/icons/weather.svg?react';
 
 interface Props {
   seafoods: SeafoodCollected[];

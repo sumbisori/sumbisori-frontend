@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import LogoBlackIcon from '@/assets/icons/sumbisori_logo_width_black.svg?react';
-import LogoWhiteIcon from '@/assets/icons/sumbisori_logo_width_white.svg?react';
-import BellBlackIcon from '@/assets/icons/Icon_bell_black.svg?react';
-import BellWhiteIcon from '@/assets/icons/Icon_bell_white.svg?react';
-import ContourIcon from '@/assets/icons/contour.svg?react';
+import LogoBlackIcon from '@/icons/sumbisori_logo_width_black.svg?react';
+import LogoWhiteIcon from '@/icons/sumbisori_logo_width_white.svg?react';
+import BellBlackIcon from '@/icons/Icon_bell_black.svg?react';
+import BellWhiteIcon from '@/icons/Icon_bell_white.svg?react';
+import ContourIcon from '@/icons/contour.svg?react';
 
 interface Props {
   type?: 'dark' | 'light';

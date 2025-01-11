@@ -1,6 +1,6 @@
 import { KakaoLogin } from '@/components/KakaoLogin';
-import SumbisoriLogoVerticalIcon from '@/assets/icons/sumbisori_logo_vertical.svg?react';
-import CharacterDiveBeforeIcon from '@/assets/icons/character_dive_before.svg?react';
+import SumbisoriLogoVerticalIcon from '@/icons/sumbisori_logo_vertical.svg?react';
+import CharacterDiveBeforeIcon from '@/icons/character_dive_before.svg?react';
 
 export const Login = () => {
   return (

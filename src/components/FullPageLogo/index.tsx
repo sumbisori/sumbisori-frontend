@@ -1,4 +1,4 @@
-import LogoWhite from '@/assets/icons/sumbisori_logo_width_white.svg?react';
+import LogoWhite from '@/icons/sumbisori_logo_width_white.svg?react';
 
 export const FullPageLogo = () => {
   return (

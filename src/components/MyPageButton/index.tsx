@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import RightBracketIcon from '@/assets/icons/right-bracket.svg?react';
+import RightBracketIcon from '@/icons/right-bracket.svg?react';
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   icon: ReactNode;

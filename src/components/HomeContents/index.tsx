@@ -13,7 +13,7 @@ import { motion } from 'framer-motion';
 import { HomeYoutubeVideoIframe } from '../HomeYoutubeList/HomeYoutubeVideoIframe';
 import { HomeContentsBox } from './HomeContentsBox';
 import { HomeContentsWeather } from './HomeWeather';
-import RefreshIcon from '@/assets/icons/refresh.svg?react';
+import RefreshIcon from '@/icons/refresh.svg?react';
 
 interface Props {
   seafoods: SeafoodCollected[];
@@ -117,17 +117,16 @@ export const HomeContents = ({ seafoods }: Props) => {
       <HomeContentsBox
         title="숨비 TV"
         icon={
-          <motion.img
-            src="/src/assets/icons/refresh.svg"
-            alt="More"
-            className="size-5 cursor-pointer"
-            animate={{ rotate: rotationCount * 360 }} // 누적된 회전 각도
+          <motion.button
+            animate={{ rotate: rotationCount * 360 }}
             transition={{ duration: 0.5, ease: 'easeInOut' }}
             onClick={() => {
-              setRotationCount((prev) => prev + 1); // 회전 각도 증가
+              setRotationCount((prev) => prev + 1);
               fetchYoutubeContents();
             }}
-          />
+          >
+            <RefreshIcon className="size-5 cursor-pointer" />
+          </motion.button>
         }
         content={
           <HomeYoutubeList

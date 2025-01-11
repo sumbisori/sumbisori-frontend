@@ -17,7 +17,7 @@ export const SeafoodCard = (props: Props) => {
         }
         style={{
           backgroundImage:
-            'url(/src/assets/images/Seafoods/' + props.seafoodName + '.svg)',
+            'url(/assets/images/Seafoods/' + props.seafoodName + '.svg)',
         }}
       >
         <div className="absolute bottom-1.5 right-1.5 text-xs font-bold text-orange-900">

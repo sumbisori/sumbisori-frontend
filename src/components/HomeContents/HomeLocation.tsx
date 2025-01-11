@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { HomeChangeButton } from './HomeChangeButton';
-import LocationIcon from '@/assets/icons/location.svg?react';
+import LocationIcon from '@/icons/location.svg?react';
 
 interface HomeLocationProps {
   location: {

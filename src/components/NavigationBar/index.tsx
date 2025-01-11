@@ -1,14 +1,14 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { NavIcon } from './NavIcon';
 import { useState } from 'react';
-import NavIcon1Active from '@/assets/icons/nav/nav_icon1_active.svg?react';
-import NavIcon1Inactive from '@/assets/icons/nav/nav_icon1_inactive.svg?react';
-import NavIcon2Active from '@/assets/icons/nav/nav_icon2_active.svg?react';
-import NavIcon2Inactive from '@/assets/icons/nav/nav_icon2_inactive.svg?react';
-import NavIcon3Active from '@/assets/icons/nav/nav_icon3_active.svg?react';
-import NavIcon3Inactive from '@/assets/icons/nav/nav_icon3_inactive.svg?react';
-import NavIcon4Active from '@/assets/icons/nav/nav_icon4_active.svg?react';
-import NavIcon4Inactive from '@/assets/icons/nav/nav_icon4_inactive.svg?react';
+import NavIcon1Active from '@/icons/nav/nav_icon1_active.svg?react';
+import NavIcon1Inactive from '@/icons/nav/nav_icon1_inactive.svg?react';
+import NavIcon2Active from '@/icons/nav/nav_icon2_active.svg?react';
+import NavIcon2Inactive from '@/icons/nav/nav_icon2_inactive.svg?react';
+import NavIcon3Active from '@/icons/nav/nav_icon3_active.svg?react';
+import NavIcon3Inactive from '@/icons/nav/nav_icon3_inactive.svg?react';
+import NavIcon4Active from '@/icons/nav/nav_icon4_active.svg?react';
+import NavIcon4Inactive from '@/icons/nav/nav_icon4_inactive.svg?react';
 
 export const NavigationBar = () => {
   const navigate = useNavigate();

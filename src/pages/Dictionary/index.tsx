@@ -52,7 +52,7 @@ export const Dictionary = () => {
               className={` ${selectedSeafood.count > 0 ? '' : 'grayscale'} relative size-[9.375rem] self-center bg-cover bg-center bg-no-repeat`}
               style={{
                 backgroundImage:
-                  'url(/src/assets/images/Seafoods/' +
+                  'url(/assets/images/Seafoods/' +
                   selectedSeafood.englishName +
                   '.svg)',
               }}

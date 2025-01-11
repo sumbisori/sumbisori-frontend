@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes } from 'react';
-import ArrowRight from '@/assets/icons/arrow_right.svg?react';
+import ArrowRight from '@/icons/arrow_right.svg?react';
 
 interface HomeChangeButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {}
