@@ -90,7 +90,7 @@ export const NaverMap = ({ places, onPinClick }: NaverMapProps) => {
   }, [places]);
 
   return (
-    <div className="h-layout-nav-height relative w-full">
+    <div className="relative h-layout-nav-height w-full">
       <div
         id="map"
         className="z-10 size-full min-w-full-layout max-w-full-layout"
