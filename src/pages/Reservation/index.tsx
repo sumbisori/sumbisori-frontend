@@ -8,7 +8,6 @@ import {
   ReservationHaenyeoPlaces,
   getReservationHaenyeoPlaces,
 } from '@/api/reservation';
-import { KakaoMap } from './KakaoMap';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import { NaverMap } from './NaverMap';
 
