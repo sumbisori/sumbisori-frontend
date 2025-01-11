@@ -179,6 +179,9 @@ export default {
         'layout-height': 'calc(100vh - 4.438rem)', // $layout-height
         'nav-height': '4.438rem', // $nav-height
       },
+      aspectRatio: {
+        '3/2': '3 / 2',
+      },
     },
   },
   plugins: [],

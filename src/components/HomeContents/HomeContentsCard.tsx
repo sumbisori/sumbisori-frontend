@@ -1,20 +1,30 @@
 import { ReactNode } from 'react';
 
-interface Props {
-  content: ReactNode;
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
+  view: ReactNode;
   label: string;
   sizeType: 'lg' | 'md';
+  type?: 'button' | 'content';
 }
 
-export const HomeContentsCard = ({ content, label, sizeType }: Props) => {
+export const HomeContentsCard = ({
+  type = 'content',
+  view,
+  label,
+  sizeType,
+  ...props
+}: Props) => {
+  const buttonTypeStyle =
+    type === 'button' ? 'cursor-pointer hover:bg-gray-200' : '';
   return (
     <div className="flex flex-col items-center justify-center gap-1">
       <div
-        className={`flex w-full ${SIZE_TYPE_VARIANT[sizeType]} items-center justify-center rounded-2xl border border-gray-card-border bg-gray-card`}
+        className={`flex w-full ${SIZE_TYPE_VARIANT[sizeType]} items-center justify-center rounded-2xl border border-gray-card-border bg-gray-card ${buttonTypeStyle}`}
+        {...props}
       >
-        {content}
+        {view}
       </div>
-      <p className="flex w-full justify-center text-[0.875rem] text-charcoal-gray">
+      <p className="flex w-full justify-center whitespace-nowrap text-[0.875rem] text-charcoal-gray">
         {label}
       </p>
     </div>
@@ -22,6 +32,6 @@ export const HomeContentsCard = ({ content, label, sizeType }: Props) => {
 };
 
 const SIZE_TYPE_VARIANT = {
-  lg: 'max-w-32 min-w-[5.625rem]  h-[3.75rem]',
-  md: 'size-[3.75rem]',
+  lg: 'size-full aspect-[3/2] min-w-[5.625rem]',
+  md: 'size-full aspect-square min-w-[3.75rem] ',
 };
