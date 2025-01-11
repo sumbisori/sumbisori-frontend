@@ -10,6 +10,7 @@ import {
 } from '@/api/reservation';
 import { KakaoMap } from './KakaoMap';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
+import { NaverMap } from './NaverMap';
 
 export const Reservation = () => {
   const { handleError } = useErrorHandler();
@@ -51,7 +52,7 @@ export const Reservation = () => {
   return (
     <>
       <div className="h-full items-center justify-center">
-        <KakaoMap places={haenyeoPlaces} onPinClick={handlePinClick} />
+        <NaverMap places={haenyeoPlaces} onPinClick={handlePinClick} />
       </div>
 
       {/* 하단 팝업 */}
