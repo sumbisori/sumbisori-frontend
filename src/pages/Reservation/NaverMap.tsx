@@ -92,12 +92,6 @@ export const NaverMap = ({ places, onPinClick }: NaverMapProps) => {
           const currentLocationMarker = new NaverMaps.Marker({
             position: currentPosition,
             map: naverMapInstance.current,
-            icon: {
-              url: '/src/assets/icons/current-location-icon.svg', // 원하는 아이콘 경로
-              size: new NaverMaps.Size(40, 40),
-              anchor: new NaverMaps.Point(20, 40),
-              scaledSize: new NaverMaps.Size(40, 40),
-            },
           });
 
           // Custom property to track this marker as the current location marker
