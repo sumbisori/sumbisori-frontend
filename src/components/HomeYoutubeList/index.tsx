@@ -36,7 +36,7 @@ export const HomeYoutubeList = ({
       {videos.length === 0 && (
         <div className="flex h-[25rem] w-full flex-col items-center justify-center text-lg font-bold text-gray-900">
           관련 영상이 없습니다.
-          <img src="@/assets/images/haenyeo_sad.png"></img>
+          <img src="/assets/images/haenyeo_sad.png"></img>
         </div>
       )}
     </div>
