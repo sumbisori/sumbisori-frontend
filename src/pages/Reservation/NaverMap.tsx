@@ -14,7 +14,7 @@ export const NaverMap = ({ places, onPinClick }: NaverMapProps) => {
   const Naver = window.naver;
   const NaverMaps = window.naver.maps;
 
-  const customIconUrl = '/src/icons/sumbi_map.svg';
+  const customIconUrl = '/assets/images/Map/sumbi_map.svg';
 
   const initialPosition = useRef(
     new NaverMaps.LatLng(33.37310402515643, 126.54168511624414),
