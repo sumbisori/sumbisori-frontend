@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 export type HomeCategoryLabel = 'home' | 'training' | 'tv' | 'sea';
@@ -9,12 +9,15 @@ interface Props {
 }
 
 export const HomeCategoryBar = ({ onCategoryChange, value }: Props) => {
-  const categories: { label: string; code: HomeCategoryLabel }[] = [
-    { label: '홈', code: 'home' },
-    { label: '해녀 Training', code: 'training' },
-    { label: '숨비 TV', code: 'tv' },
-    { label: '실시간 바다', code: 'sea' },
-  ];
+  const categories: { label: string; code: HomeCategoryLabel }[] = useMemo(
+    () => [
+      { label: '홈', code: 'home' },
+      { label: '트레이닝', code: 'training' },
+      { label: 'TV', code: 'tv' },
+      { label: '바다', code: 'sea' },
+    ],
+    [],
+  );
 
   const containerRef = useRef<HTMLUListElement>(null);
   const [underlineProps, setUnderlineProps] = useState<{
@@ -48,7 +51,7 @@ export const HomeCategoryBar = ({ onCategoryChange, value }: Props) => {
     return () => {
       window.removeEventListener('resize', updateUnderline);
     };
-  }, [value, categories]);
+  }, [value]);
 
   return (
     <nav className="sticky top-0 z-10 w-full bg-white pt-5 shadow-sm">
