@@ -6,7 +6,9 @@ export const MobileLayout = () => {
   return (
     <motion.main {...animationSettings} className="h-full">
       <FullPageLogo />
-      <section className="m-auto flex min-h-full w-full min-w-80 max-w-[37.5rem] flex-col bg-gray-000 pb-[4.438rem]">
+      <section
+        className={`m-auto flex min-h-full w-full min-w-80 max-w-[37.5rem] flex-col bg-gray-000 pb-nav-height`}
+      >
         <Outlet />
       </section>
     </motion.main>
