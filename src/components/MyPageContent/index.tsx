@@ -46,7 +46,9 @@ export const MyPageContent = () => {
       <AlertBox id="not-yet">
         <div className="flex size-full flex-col items-center justify-center text-center text-lg font-medium text-gray-900">
           <img src="/assets/images/haenyeo.png"></img>
-          아직 준비 중인 서비스입니다. 조금만 기다려주세요!
+          <span className="whitespace-pre-wrap">
+            {'아직 준비 중인 서비스입니다. \n 조금만 기다려주세요!'}
+          </span>
         </div>
       </AlertBox>
     </div>

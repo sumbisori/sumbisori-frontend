@@ -14,7 +14,6 @@ export const HomeLocation = ({
   location,
   onSelectedLocation,
 }: HomeLocationProps) => {
-  const [showDropdown, setShowDropdown] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(location);
 
   const locations = [
@@ -27,7 +26,6 @@ export const HomeLocation = ({
 
   const handleLocationChange = (loc: { code: string; name: string }) => {
     setSelectedLocation(loc);
-    setShowDropdown(false);
     onSelectedLocation(loc);
   };
 
@@ -37,24 +35,10 @@ export const HomeLocation = ({
         <LocationIcon />
         <p className="text-[1rem] font-medium">{selectedLocation.name}</p>
       </div>
-      <div>
-        <HomeChangeButton onClick={() => setShowDropdown(!showDropdown)} />
-        {showDropdown && (
-          <div className="absolute z-10 rounded border bg-white shadow">
-            <ul>
-              {locations.map((loc) => (
-                <li
-                  key={loc.code}
-                  className="cursor-pointer p-2 text-[0.875rem] hover:bg-gray-200"
-                  onClick={() => handleLocationChange(loc)}
-                >
-                  {loc.name}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
+      <HomeChangeButton
+        items={locations}
+        onSelectedLocation={handleLocationChange}
+      />
     </div>
   );
 };
