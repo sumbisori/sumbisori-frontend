@@ -132,16 +132,16 @@ export const HomeContents = ({ seafoods }: Props) => {
   }, []);
 
   return (
-    <>
+    <section className="flex flex-col bg-gray-surface">
       <HomeCategoryBar
         onCategoryChange={handleCategoryChange}
         value={selectedCategory}
       />
-      <div className="flex flex-col gap-3 bg-gray-surface p-4">
-        <HomeLocation
-          location={selectedLocation}
-          onSelectedLocation={(location) => setSelectedLocation(location)}
-        />
+      <HomeLocation
+        location={selectedLocation}
+        onSelectedLocation={(location) => setSelectedLocation(location)}
+      />
+      <div className="flex flex-col gap-3 p-4">
         <HomeContentsBox
           title="오늘은 물질하기 딱 좋은 날씨네요!"
           ref={homeRef}
@@ -195,6 +195,6 @@ export const HomeContents = ({ seafoods }: Props) => {
           }
         />
       </div>
-    </>
+    </section>
   );
 };

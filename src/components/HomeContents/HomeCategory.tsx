@@ -54,7 +54,7 @@ export const HomeCategoryBar = ({ onCategoryChange, value }: Props) => {
   }, [value]);
 
   return (
-    <nav className="sticky top-0 z-10 w-full bg-white pt-5 shadow-sm">
+    <nav className="sticky top-0 z-10 w-full bg-white shadow-sm">
       <div className="relative">
         <ul ref={containerRef} className="relative flex justify-between">
           {categories.map((category) => {
@@ -67,7 +67,7 @@ export const HomeCategoryBar = ({ onCategoryChange, value }: Props) => {
               <li key={category.code} className="flex-1">
                 <button
                   onClick={() => onCategoryChange(category.code)}
-                  className={`flex w-full flex-col items-center border-b-[0.188rem] border-transparent py-2 transition-colors duration-200 focus:outline-none ${activeTextStyle} hover:border-gray-500`}
+                  className={`flex w-full flex-col items-center whitespace-nowrap border-b-[0.188rem] border-transparent py-2.5 leading-6 transition-colors duration-200 focus:outline-none ${activeTextStyle} hover:border-gray-500`}
                   aria-pressed={isActive}
                 >
                   {category.label}

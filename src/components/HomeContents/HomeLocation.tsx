@@ -32,7 +32,7 @@ export const HomeLocation = ({
   };
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between px-4 pt-6">
       <div className="flex gap-1">
         <LocationIcon />
         <p className="text-[1rem] font-medium">{selectedLocation.name}</p>
