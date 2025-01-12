@@ -17,11 +17,7 @@ import RefreshIcon from '@/icons/refresh.svg?react';
 import { HomeCategoryLabel, HomeCategoryBar } from './HomeCategory';
 import { HomeContentsTraining } from './HomeContentsTraining';
 
-interface Props {
-  seafoods: SeafoodCollected[];
-}
-
-export const HomeContents = ({ seafoods }: Props) => {
+export const HomeContents = () => {
   const { handleError } = useErrorHandler();
   const [rotationCount, setRotationCount] = useState(0);
   const [youtubeVideos, setYoutubeVideos] = useState<YoutubeVideoType[]>([]);
@@ -147,7 +143,6 @@ export const HomeContents = ({ seafoods }: Props) => {
           ref={homeRef}
           view={
             <HomeContentsWeather
-              seafoods={seafoods}
               waterHeight={waterHeight}
               waterTemperature={waterTemperature}
             />

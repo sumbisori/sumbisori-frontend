@@ -9,7 +9,7 @@ interface NaverMapProps {
 
 export const NaverMap = ({ places, onPinClick }: NaverMapProps) => {
   const naverMapInstance = useRef<any>(null);
-  const markersRef = useRef<any[]>([]); // Stores the markers
+  const markersRef = useRef<any[]>([]);
 
   const Naver = window.naver;
   const NaverMaps = window.naver.maps;

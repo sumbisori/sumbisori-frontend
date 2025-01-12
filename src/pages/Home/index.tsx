@@ -24,7 +24,7 @@ export const Home = () => {
   return (
     <div>
       <Aquarium seafoods={seafoods} />
-      <HomeContents seafoods={seafoods} />
+      <HomeContents />
     </div>
   );
 };
