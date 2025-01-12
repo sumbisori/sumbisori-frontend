@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import {
-  SeafoodCollected,
   YoutubeVideoType,
-  getJejuWaterHeight,
-  getJejuWaterTemperature,
+  getContentsWave,
   getYoutubeContents,
+  WaveSpotCode,
+  ContentWaveInfo,
+  WaveSpot,
 } from '@/api/home';
-import { HomeLocation } from './HomeLocation';
+import { HomeSpotHeader } from './HomeSpotHeader';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import { HomeYoutubeList } from '../HomeYoutubeList';
 import { motion } from 'framer-motion';
@@ -56,25 +57,15 @@ export const HomeContents = () => {
     }
   };
 
-  const [selectedLocation, setSelectedLocation] = useState<{
-    code: string;
-    name: string;
-  }>({ code: 'DT_0004', name: '제주' });
-
-  const [waterTemperature, setWaterTemperature] = useState<{
-    temp: string;
-    time: string;
-  }>({
-    temp: '0',
-    time: '2024-11-07 00:00:00',
+  const [selectedSpot, setSelectedSpot] = useState<WaveSpot>({
+    spot: 'jeju-harbor',
+    label: '제주항',
   });
 
-  const [waterHeight, setWaterHeight] = useState<{
-    height: string;
-    time: string;
-  }>({
-    height: '로딩중',
-    time: '2024-11-07 00:00:00',
+  const [waveInfo, setWaveInfo] = useState<ContentWaveInfo>({
+    waveHeight: 0,
+    waterTemperature: 0,
+    observationTime: '',
   });
 
   const handlePlay = (video: YoutubeVideoType) => {
@@ -95,33 +86,18 @@ export const HomeContents = () => {
     }
   };
 
-  const fetchWaterTemperature = async () => {
+  const fetchContentsWave = async () => {
     try {
-      const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-      const response = await getJejuWaterTemperature(
-        today,
-        selectedLocation.code,
-      );
-      setWaterTemperature(response);
-    } catch (error) {
-      handleError(error);
-    }
-  };
-
-  const fetchWaterHeight = async () => {
-    try {
-      const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-      const response = await getJejuWaterHeight(today, selectedLocation.code);
-      setWaterHeight(response);
+      const response = await getContentsWave(selectedSpot.spot);
+      setWaveInfo(response);
     } catch (error) {
       handleError(error);
     }
   };
 
   useEffect(() => {
-    fetchWaterTemperature();
-    fetchWaterHeight();
-  }, [selectedLocation.code]);
+    fetchContentsWave();
+  }, [selectedSpot.spot]);
 
   useEffect(() => {
     fetchYoutubeContents();
@@ -133,20 +109,15 @@ export const HomeContents = () => {
         onCategoryChange={handleCategoryChange}
         value={selectedCategory}
       />
-      <HomeLocation
-        location={selectedLocation}
-        onSelectedLocation={(location) => setSelectedLocation(location)}
+      <HomeSpotHeader
+        spot={selectedSpot}
+        onSelectedSpot={(spot) => setSelectedSpot(spot)}
       />
       <div className="flex flex-col gap-3 p-4">
         <HomeContentsBox
           title="오늘은 물질하기 딱 좋은 날씨네요!"
           ref={homeRef}
-          view={
-            <HomeContentsWeather
-              waterHeight={waterHeight}
-              waterTemperature={waterTemperature}
-            />
-          }
+          view={<HomeContentsWeather waveInfo={waveInfo} />}
         />
         <HomeContentsBox
           title="해녀 Training"

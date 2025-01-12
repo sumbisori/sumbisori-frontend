@@ -1,18 +1,19 @@
+import { WaveSpot } from '@/api/home';
 import { useEffect, useState } from 'react';
 
 interface HomeChangeButtonProps {
-  items: { code: string; name: string }[];
-  onSelectedLocation: (location: { code: string; name: string }) => void;
+  spots: WaveSpot[];
+  onSelectedSpot: (spot: WaveSpot) => void;
 }
 
 export const HomeChangeButton = ({
-  items,
-  onSelectedLocation,
+  spots,
+  onSelectedSpot,
 }: HomeChangeButtonProps) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const handleSelectedLocation = (location: { code: string; name: string }) => {
-    onSelectedLocation(location);
+  const handleSelectedSpot = (spot: WaveSpot) => {
+    onSelectedSpot(spot);
     setShowDropdown(false);
   };
 
@@ -46,13 +47,13 @@ export const HomeChangeButton = ({
       {showDropdown && (
         <div className="absolute right-0 top-full z-10 mt-1 rounded border bg-white shadow">
           <ul>
-            {items.map((loc) => (
+            {spots.map((spot) => (
               <li
-                key={loc.code}
+                key={spot.spot}
                 className="w-16 cursor-pointer whitespace-nowrap p-2 text-center text-[0.875rem] hover:bg-gray-200"
-                onClick={() => handleSelectedLocation(loc)}
+                onClick={() => handleSelectedSpot(spot)}
               >
-                {loc.name}
+                {spot.label}
               </li>
             ))}
           </ul>
