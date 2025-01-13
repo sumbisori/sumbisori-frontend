@@ -1,17 +1,17 @@
-import { ReservationInfo } from '../../components/ReservationInfo/ReservationInfo';
-import { OptionsInput } from '../../components/OptionsInput';
+import { ReservationInfo } from '@/components/ReservationInfo/ReservationInfo';
+import { OptionsInput } from '@/components/OptionsInput';
 import { useEffect, useState } from 'react';
-import { LargeButton } from '../../components/LargeButton';
+import { LargeButton } from '@/components/LargeButton';
 import {
   PostReservation,
   ReservationHaenyeoPlace,
   getReservationHaenyeoPlace,
   postReservation,
-} from '../../api/reservation';
+} from '@/api/reservation';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useModalContext } from '../../contexts/ModalContext';
-import { AlertBox } from '../../components/AlertBox';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { useModalContext } from '@/contexts/ModalContext';
+import { AlertBox } from '@/components/AlertBox';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
 
 export const ReservationCreate = () => {
   const params = useParams();
@@ -156,13 +156,13 @@ export const ReservationCreate = () => {
       </div>
       <AlertBox id="reservationSuccess">
         <div className="flex size-full flex-col items-center justify-center text-center text-lg font-bold text-gray-900">
-          <img src="/images/haenyeo.png"></img>
+          <img src="/assets/images/haenyeo.png"></img>
           예약이 완료되었습니다!
         </div>
       </AlertBox>
       <AlertBox id="reservationFail">
         <div className="flex size-full flex-col items-center justify-center text-center text-lg font-bold text-gray-900">
-          <img src="/images/haenyeo_sad.png"></img>
+          <img src="/assets/images/haenyeo_sad.png"></img>
           예약이 실패했습니다!
         </div>
       </AlertBox>

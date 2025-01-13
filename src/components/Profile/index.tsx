@@ -1,4 +1,4 @@
-import { UserInfo } from '../../api/myPage';
+import { UserInfo } from '@/api/myPage';
 
 interface Props {
   userInfo: UserInfo;

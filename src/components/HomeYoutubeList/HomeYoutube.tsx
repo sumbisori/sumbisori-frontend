@@ -1,8 +1,10 @@
-import { YoutubeVideoType } from '../../api/home';
-import { formatViewCount } from '../../util/formatViewCount';
-import { formatYoutubeDate } from '../../util/formatYoutubeDate';
-import { truncateTitle } from '../../util/truncateTitle';
+import { YoutubeVideoType } from '@/api/home';
+import { formatViewCount } from '@/util/formatViewCount';
+import { formatYoutubeDate } from '@/util/formatYoutubeDate';
+import { truncateTitle } from '@/util/truncateTitle';
 import { HomeYoutubeVideoIframe } from './HomeYoutubeVideoIframe';
+import PlayIcon from '@/icons/play.svg?react';
+import CloseIcon from '@/icons/close.svg?react';
 
 interface HomeYoutubeProps {
   video: YoutubeVideoType;
@@ -46,13 +48,11 @@ export const HomeYoutube = ({
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:opacity-70"
             onClick={handleControl}
           >
-            {!isPlaying && (
-              <img src="/icons/play.svg" className="size-10" alt="play"></img>
-            )}
+            {!isPlaying && <PlayIcon className="size-10" />}
             {isPlaying && (
               <div className="flex items-center gap-1">
                 <span className="text-white">닫기</span>
-                <img src="/icons/close.svg" className="size-5" alt="play"></img>
+                <CloseIcon className="size-5" />
               </div>
             )}
           </div>

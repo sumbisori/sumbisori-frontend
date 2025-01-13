@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
-import { LocationPin } from './LocationPin';
-import { Modal } from '../../components/Modal';
-import { useModalContext } from '../../contexts/ModalContext';
-import { ReservationInfo } from '../../components/ReservationInfo/ReservationInfo';
+import { Modal } from '@/components/Modal';
+import { useModalContext } from '@/contexts/ModalContext';
+import { ReservationInfo } from '@/components/ReservationInfo/ReservationInfo';
 import { useNavigate } from 'react-router-dom';
-import { LargeButton } from '../../components/LargeButton';
+import { LargeButton } from '@/components/LargeButton';
 import {
   ReservationHaenyeoPlaces,
   getReservationHaenyeoPlaces,
-} from '../../api/reservation';
-import { KakaoMap } from './KakaoMap';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
+} from '@/api/reservation';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
+import { NaverMap } from './NaverMap';
 
 export const Reservation = () => {
   const { handleError } = useErrorHandler();
@@ -52,7 +51,7 @@ export const Reservation = () => {
   return (
     <>
       <div className="h-full items-center justify-center">
-        <KakaoMap places={haenyeoPlaces} onPinClick={handlePinClick} />
+        <NaverMap places={haenyeoPlaces} onPinClick={handlePinClick} />
       </div>
 
       {/* 하단 팝업 */}

@@ -1,20 +1,12 @@
-import { KakaoLogin } from '../../components/KakaoLogin';
+import { KakaoLogin } from '@/components/KakaoLogin';
+import SumbisoriLogoVerticalIcon from '@/icons/sumbisori_logo_vertical.svg?react';
+import CharacterDiveBeforeIcon from '@/icons/character_dive_before.svg?react';
 
 export const Login = () => {
   return (
     <div className="flex h-screen flex-col items-center justify-center">
-      <div
-        className="h-[13.313rem] w-[4.875rem] bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url(/icons/sumbisori_logo_vertical.svg)',
-        }}
-      />
-      <div
-        className="size-[16.625rem] bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url(/icons/character_dive_before.svg)',
-        }}
-      />
+      <SumbisoriLogoVerticalIcon className="h-[13.313rem] w-[4.875rem]" />
+      <CharacterDiveBeforeIcon className="size-[16.625rem]" />
       <KakaoLogin />
     </div>
   );

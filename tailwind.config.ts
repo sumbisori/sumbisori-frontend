@@ -22,6 +22,7 @@ export default {
         code: ['14px', '22px'], // <code>
       },
       colors: {
+        'charcoal-gray': '#525152',
         gray: {
           '000': '#FFFFFF', // $gray-000
           '050': '#F7F7FA', // $gray-050
@@ -35,6 +36,9 @@ export default {
           800: '#3E404C', // $gray-800
           900: '#2B2D36', // $gray-900
           950: '#252730', // $gray-950
+          surface: '#F1F1F3', // $gray-layout
+          card: '#F7F6F9', // $gray-card
+          'card-border': '#F2F2F4', // $gray-card-border
         },
         red: {
           '050': '#FEF1F1', // $red-050
@@ -172,6 +176,17 @@ export default {
         md: '1rem', // $spacer-md
         lg: '1.5rem', // $spacer-lg
         xl: '3rem', // $spacer-xl
+        'layout-nav-height': 'calc(100vh - 4.438rem)', // $layout-nav-height
+        'nav-height': '4.438rem', // $nav-height
+      },
+      aspectRatio: {
+        '3/2': '3 / 2',
+      },
+      minWidth: {
+        'full-layout': '20rem',
+      },
+      maxWidth: {
+        'full-layout': '37.5rem',
       },
     },
   },

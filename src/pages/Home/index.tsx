@@ -1,8 +1,8 @@
-import { HomeContents } from '../../components/HomeContents';
+import { HomeContents } from '@/components/HomeContents';
 import { useEffect, useState } from 'react';
-import { SeafoodCollected, getSeafoodCollected } from '../../api/home';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
-import { Aquarium } from '../../components/Aquarium';
+import { SeafoodCollected, getSeafoodCollected } from '@/api/home';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
+import { Aquarium } from '@/components/Aquarium';
 
 export const Home = () => {
   const [seafoods, setSeafoods] = useState<SeafoodCollected[]>([]);
@@ -24,7 +24,7 @@ export const Home = () => {
   return (
     <div>
       <Aquarium seafoods={seafoods} />
-      <HomeContents seafoods={seafoods} />
+      <HomeContents />
     </div>
   );
 };

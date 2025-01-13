@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { MyPageContent } from '../../components/MyPageContent';
-import { Profile } from '../../components/Profile';
-import { UserInfo, getUserInfo } from '../../api/myPage';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { MyPageContent } from '@/components/MyPageContent';
+import { Profile } from '@/components/Profile';
+import { UserInfo, getUserInfo } from '@/api/myPage';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
 
 export const MyPage = () => {
   const { handleError } = useErrorHandler();

@@ -27,49 +27,31 @@ export const getYoutubeContents = async (): Promise<YoutubeVideoType[]> => {
   return response.data;
 };
 
-export const getJejuWaterTemperature = async (
-  today: string,
-  locationCode: string,
-): Promise<{
-  temp: string;
-  time: string;
-}> => {
-  const response = await axios.get(
-    `https://www.khoa.go.kr/api/oceangrid/tideObsTemp/search.do?ServiceKey=${import.meta.env.VITE_SEA_KEY}==&ObsCode=${locationCode}&Date=${today}&ResultType=json`,
-  );
-  return {
-    temp: response.data.result.data[response.data.result.data.length - 1]
-      .water_temp,
-    time: response.data.result.data[response.data.result.data.length - 1]
-      .record_time,
-  };
-};
+export interface ContentWaveInfo {
+  waveHeight: number;
+  waterTemperature: number;
+  observationTime: string;
+}
 
-export const getJejuWaterHeight = async (
-  today: string,
-  locationCode: string,
-): Promise<{
-  height: string;
-  time: string;
-}> => {
-  const response = await axios.get(
-    `https://www.khoa.go.kr/api/oceangrid/tideObsPreTab/search.do?ServiceKey=${import.meta.env.VITE_SEA_KEY}==&ObsCode=${locationCode}&Date=${today}&ResultType=json`,
-  );
+export type WaveSpotCode =
+  | 'jeju-harbor'
+  | 'chujado'
+  | 'gapado'
+  | 'udo'
+  | 'jungmoon'
+  | 'yeongnak'
+  | 'shinsan'
+  | 'gueom'
+  | 'wimi';
 
-  const currentTime = new Date();
-  const data = response.data.result.data;
+export interface WaveSpot {
+  spot: WaveSpotCode;
+  label: string;
+}
 
-  const closest = data.reduce((prev: any, curr: any) => {
-    const prevTime = new Date(prev.tph_time);
-    const currTime = new Date(curr.tph_time);
-    return Math.abs(currTime.getTime() - currentTime.getTime()) <
-      Math.abs(prevTime.getTime() - currentTime.getTime())
-      ? curr
-      : prev;
-  });
-
-  return {
-    height: closest.hl_code,
-    time: closest.tph_time,
-  };
+export const getContentsWave = async (
+  spot: WaveSpotCode,
+): Promise<ContentWaveInfo> => {
+  const response = await secureInstance.get(`/contents/wave?spot=${spot}`);
+  return response.data;
 };

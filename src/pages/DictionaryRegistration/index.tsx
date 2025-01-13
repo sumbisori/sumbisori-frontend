@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Dropdown } from '../../components/Dropdown';
+import { Dropdown } from '@/components/Dropdown';
 import {
   PostSeafood,
   SeafoodAll,
   getSeafoodTypes,
   postSeafood,
-} from '../../api/dictionaryRegistration';
+} from '@/api/dictionaryRegistration';
 import { useNavigate } from 'react-router-dom';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
+import ImageIcon from '@/icons/Image_Icon.svg?react';
 
 export const DictionaryRegistration = () => {
   const navigate = useNavigate();
@@ -75,12 +76,7 @@ export const DictionaryRegistration = () => {
               className="size-full rounded-lg object-cover"
             />
           ) : (
-            <div
-              className="size-9 bg-cover bg-center bg-no-repeat"
-              style={{
-                backgroundImage: 'url(/icons/Image_Icon.svg)',
-              }}
-            ></div>
+            <ImageIcon className="size-9" />
           )}
         </div>
         <div className="flex w-full justify-center">

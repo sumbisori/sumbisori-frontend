@@ -1,4 +1,9 @@
 import { useNavigate } from 'react-router-dom';
+import LogoBlackIcon from '@/icons/sumbisori_logo_width_black.svg?react';
+import LogoWhiteIcon from '@/icons/sumbisori_logo_width_white.svg?react';
+import BellBlackIcon from '@/icons/Icon_bell_black.svg?react';
+import BellWhiteIcon from '@/icons/Icon_bell_white.svg?react';
+import ContourIcon from '@/icons/contour.svg?react';
 
 interface Props {
   type?: 'dark' | 'light';
@@ -13,7 +18,7 @@ export const Header = ({ type = 'light', caption, absolute }: Props) => {
   };
   return (
     <header
-      className={`flex w-full min-w-80 max-w-[37.5rem] justify-between p-[1.125rem] ${
+      className={`min-w-full-layout max-w-full-layout flex w-full justify-between p-[1.125rem] ${
         absolute ? 'absolute inset-x-0 top-0 z-20 m-auto' : 'relative'
       }`}
       style={{
@@ -22,34 +27,25 @@ export const Header = ({ type = 'light', caption, absolute }: Props) => {
       }}
     >
       <div className="flex items-center">
-        <img
-          src={
-            type === 'dark'
-              ? '/icons/sumbisori_logo_width_black.svg'
-              : '/icons/sumbisori_logo_width_white.svg'
-          }
-          alt="Logo"
-          className="cursor-pointer"
-          onClick={handleNavigate}
-        />
+        {type === 'dark' ? (
+          <LogoBlackIcon className="cursor-pointer" onClick={handleNavigate} />
+        ) : (
+          <LogoWhiteIcon className="cursor-pointer" onClick={handleNavigate} />
+        )}
         {caption && (
           <div className="ml-2 flex items-center gap-2">
-            <img src={'/icons/contour.svg'} alt="contour" />
+            <ContourIcon />
             <p className="text-[1.375rem] font-bold text-gray-900">{caption}</p>
           </div>
         )}
       </div>
 
       <div className="flex items-center">
-        <img
-          src={
-            type === 'dark'
-              ? '/icons/Icon_bell_black.svg'
-              : '/icons/Icon_bell_white.svg'
-          }
-          alt="Menu"
-          className="cursor-pointer"
-        />
+        {type === 'dark' ? (
+          <BellBlackIcon className="cursor-pointer" />
+        ) : (
+          <BellWhiteIcon className="cursor-pointer" />
+        )}
       </div>
     </header>
   );

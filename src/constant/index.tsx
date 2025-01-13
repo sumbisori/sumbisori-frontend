@@ -1,4 +1,3 @@
-export const IMAGE_PATHS = {
-  AQUARIUM: '/images/Aquarium',
-  SEAFOOD: '/images/Seafoods',
-};
+import IMAGE_PATHS from './src/imagePath';
+
+export { IMAGE_PATHS };
