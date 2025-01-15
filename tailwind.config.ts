@@ -186,7 +186,7 @@ export default {
         'full-layout': '20rem',
       },
       maxWidth: {
-        'full-layout': '37.5rem',
+        'full-layout': '26.875rem',
       },
     },
   },
