@@ -51,10 +51,6 @@ export const HomeContentsWeather = ({ waveInfo }: Props) => {
                 {waveInfo.waveHeight}
               </div>
             </div>
-            {/* <div className="flex w-full justify-center text-[0.5rem]">
-              <span>{convertToTodayTime(waterHeight.time)}</span>
-              <span className="text-gray-500"> 기준</span>
-            </div> */}
           </div>
         }
       />

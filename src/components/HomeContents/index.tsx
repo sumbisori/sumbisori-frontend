@@ -112,6 +112,7 @@ export const HomeContents = () => {
       <HomeSpotHeader
         spot={selectedSpot}
         onSelectedSpot={(spot) => setSelectedSpot(spot)}
+        observationTime={waveInfo.observationTime}
       />
       <div className="flex flex-col gap-3 p-4">
         <HomeContentsBox
