@@ -1,14 +1,18 @@
-import { ContentWaveInfo } from '@/api/home';
+import { ContentWaveInfo, ContentWeatherInfo } from '@/api/home';
 import { HomeContentsCard } from './HomeContentsCard';
 import CloudIcon from '@/icons/cloud.svg?react';
 import TemperatureIcon from '@/icons/temperature.svg?react';
 import WavesIcon from '@/icons/waves.svg?react';
+import { roundingNumber } from '@/util/roundingNumber';
 
 interface Props {
   waveInfo: ContentWaveInfo;
+  weather: ContentWeatherInfo;
 }
 
-export const HomeContentsWeather = ({ waveInfo }: Props) => {
+export const HomeContentsWeather = ({ waveInfo, weather }: Props) => {
+  // 소수점 자리수
+  const DIGIT = 0;
   return (
     <div className="grid w-full grid-cols-3 gap-4 px-4">
       <HomeContentsCard
@@ -19,7 +23,7 @@ export const HomeContentsWeather = ({ waveInfo }: Props) => {
             <div className="flex items-center gap-[0.313rem]">
               <CloudIcon />
               <div className="w-12 text-center text-[1.125rem] font-semibold">
-                {waveInfo.waterTemperature}°
+                {roundingNumber(weather.temperature, DIGIT)}°
               </div>
             </div>
           </div>
@@ -33,7 +37,7 @@ export const HomeContentsWeather = ({ waveInfo }: Props) => {
             <div className="flex items-center gap-[0.313rem]">
               <TemperatureIcon />
               <div className="w-12 text-center text-[1.125rem] font-semibold">
-                {waveInfo.waterTemperature}°
+                {roundingNumber(waveInfo.waterTemperature, DIGIT)}°
               </div>
             </div>
           </div>

@@ -6,6 +6,8 @@ import {
   WaveSpotCode,
   ContentWaveInfo,
   WaveSpot,
+  ContentWeatherInfo,
+  getContentsWeather,
 } from '@/api/home';
 import { HomeSpotHeader } from './HomeSpotHeader';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
@@ -68,6 +70,11 @@ export const HomeContents = () => {
     observationTime: '',
   });
 
+  const [weather, setWeather] = useState<ContentWeatherInfo>({
+    temperature: 0,
+    weathrType: 'CLEAR_SKY',
+  });
+
   const handlePlay = (video: YoutubeVideoType) => {
     setSelectedVideo(video);
   };
@@ -95,8 +102,18 @@ export const HomeContents = () => {
     }
   };
 
+  const fetchContentsWeather = async () => {
+    try {
+      const response = await getContentsWeather(selectedSpot.spot);
+      setWeather(response);
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
   useEffect(() => {
     fetchContentsWave();
+    fetchContentsWeather();
   }, [selectedSpot.spot]);
 
   useEffect(() => {
@@ -118,7 +135,7 @@ export const HomeContents = () => {
         <HomeContentsBox
           title="오늘은 물질하기 딱 좋은 날씨네요!"
           ref={homeRef}
-          view={<HomeContentsWeather waveInfo={waveInfo} />}
+          view={<HomeContentsWeather waveInfo={waveInfo} weather={weather} />}
         />
         <HomeContentsBox
           title="해녀 Training"

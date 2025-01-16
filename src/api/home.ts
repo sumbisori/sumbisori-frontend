@@ -55,3 +55,26 @@ export const getContentsWave = async (
   const response = await secureInstance.get(`/contents/wave?spot=${spot}`);
   return response.data;
 };
+
+export interface ContentWeatherInfo {
+  temperature: number;
+  weathrType: WeatherType;
+}
+
+type WeatherType =
+  | 'CLEAR_SKY'
+  | 'FEW_CLOUDS'
+  | 'SCATTERED_CLOUDS'
+  | 'BROKEN_CLOUDS'
+  | 'SHOWER_RAIN'
+  | 'RAIN'
+  | 'THUNDERSTORM'
+  | 'SNOW'
+  | 'MIST';
+
+export const getContentsWeather = async (
+  spot: WaveSpotCode,
+): Promise<ContentWeatherInfo> => {
+  const response = await secureInstance.get(`/contents/weather?spot=${spot}`);
+  return response.data;
+};
