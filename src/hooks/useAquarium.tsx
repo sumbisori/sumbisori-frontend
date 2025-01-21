@@ -67,39 +67,38 @@ export const useAquarium = (
       height: number,
       texturePaths: {
         path: string;
-        originalHeight: number;
         position?: 'bottom' | 'middle';
       }[],
     ) => {
       const backgrounds: Matter.Body[] = [];
 
       texturePaths.forEach((texture) => {
-        const backgroundImage = new Image();
-        backgroundImage.src = texture.path;
+        const layerImage = new Image();
+        layerImage.src = texture.path;
 
-        backgroundImage.onload = () => {
+        layerImage.onload = () => {
           // 비율 유지하면서 높이 계산
-          const backgroundWidth = width; // 컨테이너의 너비와 동일
-          const scale = backgroundWidth / backgroundImage.width;
-          const backgroundHeight = texture.originalHeight * scale;
+          const layerWidth = width; // 컨테이너의 너비와 동일
+          const scale = layerWidth / layerImage.width;
+          const layerHeight = layerImage.height * scale;
 
           // Y 좌표 설정 (position에 따라 다르게 설정)
           let y;
           if (texture.position === 'middle') {
             y = height / 2; // 화면의 중간
           } else {
-            y = height - backgroundHeight / 2; // 기본값: 화면 하단
+            y = height - layerHeight / 2; // 기본값: 화면 하단
           }
 
           // X 좌표는 중앙에 고정
-          const x = backgroundWidth / 2;
+          const x = layerWidth / 2;
 
           // 충돌하지 않는 Body 생성
           const backgroundBody = Matter.Bodies.rectangle(
             x,
             y,
-            backgroundWidth,
-            backgroundHeight,
+            layerWidth,
+            layerHeight,
             {
               isStatic: true,
               render: {
@@ -336,19 +335,28 @@ export const useAquarium = (
     Render.run(render);
     addBackgroundLayers(engine, width, height, [
       {
-        path: `${IMAGE_PATHS.AQUARIUM}/Background-04.png`,
-        originalHeight: 600, // 임의 높이 (예시)
+        path: `${IMAGE_PATHS.AQUARIUM}/layer-01.png`,
         position: 'middle', // 중간에 위치
       },
       {
-        path: `${IMAGE_PATHS.AQUARIUM}/Background-02.png`,
-        originalHeight: 745,
+        path: `${IMAGE_PATHS.AQUARIUM}/layer-02.png`,
         position: 'bottom', // 기본값: 하단
       },
       {
-        path: `${IMAGE_PATHS.AQUARIUM}/Background-03.png`,
-        originalHeight: 799,
+        path: `${IMAGE_PATHS.AQUARIUM}/layer-03.png`,
         position: 'bottom', // 기본값: 하단
+      },
+      {
+        path: `${IMAGE_PATHS.AQUARIUM}/light-01.png`,
+        position: 'middle',
+      },
+      {
+        path: `${IMAGE_PATHS.AQUARIUM}/light-02.png`,
+        position: 'middle',
+      },
+      {
+        path: `${IMAGE_PATHS.AQUARIUM}/light-03.png`,
+        position: 'middle',
       },
     ]);
 
