@@ -27,10 +27,17 @@ export const getYoutubeContents = async (): Promise<YoutubeVideoType[]> => {
   return response.data;
 };
 
+export type SuitabilityStatus =
+  | 'SUITABLE'
+  | 'CAUTION'
+  | 'DANGEROUS'
+  | 'DEFAULT';
 export interface ContentWaveInfo {
   waveHeight: number;
   waterTemperature: number;
   observationTime: string;
+  waveHeightSuitability: SuitabilityStatus;
+  waterTemperatureSuitability: SuitabilityStatus;
 }
 
 export type WaveSpotCode =
@@ -58,7 +65,8 @@ export const getContentsWave = async (
 
 export interface ContentWeatherInfo {
   temperature: number;
-  weathrType: WeatherType;
+  weatherType: WeatherType;
+  suitability: SuitabilityStatus;
 }
 
 type WeatherType =

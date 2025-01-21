@@ -33,7 +33,7 @@ export const useAquarium = (
         width: width,
         height: height,
         wireframes: false,
-        background: `${IMAGE_PATHS.AQUARIUM}/Background-01.png`,
+        background: '#84bcff',
         pixelRatio: pixelRatio,
       },
     });

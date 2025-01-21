@@ -17,11 +17,11 @@ export const Aquarium = ({ seafoods }: AquariumProps) => {
   return (
     <div
       ref={containerRef}
-      className="relative h-[25.625rem] w-full rounded-b-2xl"
+      className="relative aspect-square w-full rounded-b-2xl"
     >
       <canvas ref={canvasRef} className="size-full" />
       <div
-        className="absolute bottom-4 left-4 z-10 flex cursor-pointer items-center gap-1"
+        className="absolute bottom-4 left-4 z-20 flex cursor-pointer items-center gap-1"
         onClick={() => navigate('/dictionary')}
       >
         <DictionaryIcon className="size-6" />
@@ -32,6 +32,7 @@ export const Aquarium = ({ seafoods }: AquariumProps) => {
           <span className="text-blue-300">/18</span>
         </div>
       </div>
+      <div className="absolute inset-x-0 bottom-0 z-10 h-1/5 bg-gradient-to-t from-[rgba(55,63,97,0.8)] to-[rgba(116,122,150,0.00)] bg-blend-multiply"></div>
     </div>
   );
 };

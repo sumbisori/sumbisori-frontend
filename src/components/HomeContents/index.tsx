@@ -68,12 +68,19 @@ export const HomeContents = () => {
     waveHeight: 0,
     waterTemperature: 0,
     observationTime: '',
+    waveHeightSuitability: 'DEFAULT',
+    waterTemperatureSuitability: 'DEFAULT',
   });
+
+  const [waveInfoError, setWaveInfoError] = useState<boolean>(false);
 
   const [weather, setWeather] = useState<ContentWeatherInfo>({
     temperature: 0,
-    weathrType: 'CLEAR_SKY',
+    weatherType: 'CLEAR_SKY',
+    suitability: 'DEFAULT',
   });
+
+  const [weatherError, setWeatherError] = useState<boolean>(false);
 
   const handlePlay = (video: YoutubeVideoType) => {
     setSelectedVideo(video);
@@ -99,6 +106,7 @@ export const HomeContents = () => {
       setWaveInfo(response);
     } catch (error) {
       handleError(error);
+      setWaveInfoError(true);
     }
   };
 
@@ -108,6 +116,7 @@ export const HomeContents = () => {
       setWeather(response);
     } catch (error) {
       handleError(error);
+      setWeatherError(true);
     }
   };
 
@@ -135,7 +144,14 @@ export const HomeContents = () => {
         <HomeContentsBox
           title="오늘은 물질하기 딱 좋은 날씨네요!"
           ref={homeRef}
-          view={<HomeContentsWeather waveInfo={waveInfo} weather={weather} />}
+          view={
+            <HomeContentsWeather
+              waveInfo={waveInfo}
+              weather={weather}
+              waveInfoError={waveInfoError}
+              weatherError={weatherError}
+            />
+          }
         />
         <HomeContentsBox
           title="해녀 Training"

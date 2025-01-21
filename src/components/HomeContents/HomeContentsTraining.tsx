@@ -1,4 +1,4 @@
-import { HomeContentsCard } from './HomeContentsCard';
+import { HomeTrainingCard } from './HomeTrainingCard';
 import WindBreathIcon from '@/icons/wind-breath.svg?react';
 import LungsIcon from '@/icons/lungs.svg?react';
 import WarningIcon from '@/icons/warning.svg?react';
@@ -10,36 +10,32 @@ export const HomeContentsTraining = () => {
   const { openModal } = useModalContext();
   return (
     <div className="grid w-full grid-cols-4 gap-4 px-4">
-      <HomeContentsCard
+      <HomeTrainingCard
         label="숨참기"
-        sizeType="md"
         type="button"
         view={<WindBreathIcon />}
         onClick={() => {
           openModal('not-yet');
         }}
       />
-      <HomeContentsCard
+      <HomeTrainingCard
         label="폐활량"
-        sizeType="md"
         type="button"
         view={<LungsIcon />}
         onClick={() => {
           openModal('not-yet');
         }}
       />
-      <HomeContentsCard
+      <HomeTrainingCard
         label="다리 운동"
-        sizeType="md"
         type="button"
         view={<MuscleIcon />}
         onClick={() => {
           openModal('not-yet');
         }}
       />
-      <HomeContentsCard
+      <HomeTrainingCard
         label="주의사항"
-        sizeType="md"
         type="button"
         view={<WarningIcon />}
         onClick={() => {
