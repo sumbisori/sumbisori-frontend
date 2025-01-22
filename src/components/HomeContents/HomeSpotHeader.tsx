@@ -28,7 +28,7 @@ export const HomeSpotHeader = ({
 
   return (
     <div className="flex items-center justify-between px-4 pt-6">
-      <div className="flex items-end gap-2">
+      <div className="flex items-center gap-2">
         <div className="flex items-center gap-1">
           <LocationIcon />
           <p className="text-[1rem] font-medium">{spot.label}</p>
