@@ -26,13 +26,13 @@ export const HomeWeatherCard = ({
         >
           <div className="flex items-center gap-[0.313rem]">
             {icon}
-            <div className="flex flex-col items-start">
+            <div className="flex w-7 flex-col items-start">
               <p
                 className={`text-[0.688rem] font-semibold leading-[13px] ${STATUS_VARIANTS[status].textColor}`}
               >
                 {STATUS_VARIANTS[status].text}
               </p>
-              <div className="w-fit text-center text-[1.125rem] font-semibold leading-[22px]">
+              <div className="text-center text-[1.125rem] font-semibold leading-[22px]">
                 {value}
                 {isTemperature && '°'}
               </div>
