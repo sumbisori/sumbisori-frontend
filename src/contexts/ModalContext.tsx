@@ -1,29 +1,52 @@
-import { ReactNode, createContext, useContext, useState } from 'react';
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { useLocation } from 'react-router-dom';
 
 interface ModalState {
-  openModals: { [id: string]: boolean };
+  openedModals: Set<string>;
   openModal: (id: string) => void;
-  closeModal: () => void;
+  closeModal: (id: string) => void;
+  closeAllModals: () => void;
 }
 
 const ModalContext = createContext<ModalState>({} as ModalState);
 
-export function ModalProvider({ children }: { children: ReactNode }) {
-  const [openModals, setOpenModals] = useState<{ [id: string]: boolean }>({});
+export const ModalProvider = ({ children }: { children: ReactNode }) => {
+  const [openedModals, setOpenedModals] = useState<Set<string>>(new Set());
+  const location = useLocation();
 
   const openModal = (id: string) => {
-    setOpenModals((prev) => ({ ...prev, [id]: true }));
+    setOpenedModals((prev) => new Set([...prev, id]));
   };
 
-  const closeModal = () => {
-    setOpenModals({});
+  const closeModal = (id: string) => {
+    setOpenedModals((prev) => {
+      const updated = new Set(prev);
+      updated.delete(id);
+      return updated;
+    });
   };
+
+  const closeAllModals = () => {
+    setOpenedModals(new Set());
+  };
+
+  useEffect(() => {
+    closeAllModals();
+  }, [location]);
 
   return (
-    <ModalContext.Provider value={{ openModals, openModal, closeModal }}>
+    <ModalContext.Provider
+      value={{ openedModals, openModal, closeModal, closeAllModals }}
+    >
       {children}
     </ModalContext.Provider>
   );
-}
+};
 
-export const useModalContext = () => useContext(ModalContext);
+export const useModalController = () => useContext(ModalContext);

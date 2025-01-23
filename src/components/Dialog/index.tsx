@@ -1,54 +1,63 @@
 import { ReactNode, MouseEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import ModalPortal from '../Modal/ModalPortal';
-import { useModalContext } from '@/contexts/ModalContext';
+import ModalPortal from '../BottomSheet/ModalPortal';
+import { useModalController } from '@/contexts/ModalContext';
 
 interface Props {
   id: string;
   children: ReactNode;
 }
 
-export function AlertBox({ id, children }: Props) {
-  const { openModals, closeModal } = useModalContext();
+export function Dialog({ id, children }: Props) {
+  const { openedModals, closeModal } = useModalController();
+  const mounted = openedModals.has(id);
 
   const handleBackgroundClick = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     if (e.target === e.currentTarget) {
-      closeModal();
+      closeModal(id);
     }
   };
 
   return (
     <AnimatePresence>
-      {openModals[id] && (
+      {mounted && (
         <ModalPortal>
-          <div
+          <motion.div
             onClick={handleBackgroundClick}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/30"
+            {...backDropAnimation}
           >
             <motion.div
               {...modalAnimation}
               className="relative size-80 rounded-lg bg-gray-050 p-6 shadow-lg"
             >
               <button
-                onClick={closeModal}
+                onClick={() => closeModal(id)}
                 className="absolute right-3 top-3 flex size-6 items-center justify-center rounded hover:bg-gray-300"
               >
                 ✕
               </button>
-              <div className="h-full overflow-auto">{children}</div>
+              <>{children}</>
             </motion.div>
-          </div>
+          </motion.div>
         </ModalPortal>
       )}
     </AnimatePresence>
   );
 }
 
+const backDropAnimation = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+  transition: { duration: 0.3 },
+};
+
 const modalAnimation = {
-  initial: { scale: 0.9, opacity: 0 },
-  animate: { scale: 1, opacity: 1 },
-  exit: { scale: 0.9, opacity: 0 },
-  transition: { type: 'spring', stiffness: 300, damping: 25 },
+  initial: { opacity: 0, scale: 0.95 },
+  animate: { opacity: 1, scale: 1 },
+  exit: { opacity: 0, scale: 0.95 },
+  transition: { duration: 0.3 },
 };

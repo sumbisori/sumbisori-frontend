@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { SeafoodCard } from '@/components/SeafoodCard';
-import { AlertBox } from '@/components/AlertBox';
+import { Dialog } from '@/components/Dialog';
 import { DictionarySeafood, getSeafoods } from '@/api/dictionary';
-import { useModalContext } from '@/contexts/ModalContext';
+import { useModalController } from '@/contexts/ModalContext';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 
 export const Dictionary = () => {
-  const { openModal } = useModalContext();
+  const { openModal } = useModalController();
   const { handleError } = useErrorHandler();
   const [seafoods, setSeafoods] = useState<DictionarySeafood[]>([]);
   const [selectedSeafood, setSelectedSeafood] =
@@ -46,7 +46,7 @@ export const Dictionary = () => {
         </div>
       </div>
       {selectedSeafood && (
-        <AlertBox id={`seafood-${selectedSeafood.koreanName}`}>
+        <Dialog id={`seafood-${selectedSeafood.koreanName}`}>
           <div className="flex h-full flex-col justify-between">
             <div
               className={` ${selectedSeafood.count > 0 ? '' : 'grayscale'} relative size-[9.375rem] self-center bg-cover bg-center bg-no-repeat`}
@@ -72,7 +72,7 @@ export const Dictionary = () => {
                 : '아직 잡지 못했어요'}
             </div>
           </div>
-        </AlertBox>
+        </Dialog>
       )}
     </div>
   );

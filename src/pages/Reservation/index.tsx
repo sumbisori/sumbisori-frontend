@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Modal } from '@/components/Modal';
-import { useModalContext } from '@/contexts/ModalContext';
+import { BottomSheet } from '@/components/BottomSheet';
+import { useModalController } from '@/contexts/ModalContext';
 import { ReservationInfo } from '@/components/ReservationInfo/ReservationInfo';
 import { useNavigate } from 'react-router-dom';
 import { LargeButton } from '@/components/LargeButton';
@@ -15,7 +15,7 @@ import { NaverMap } from './NaverMap';
 
 export const Reservation = () => {
   const { handleError } = useErrorHandler();
-  const { openModal } = useModalContext();
+  const { openModal } = useModalController();
   const navigate = useNavigate();
   const [haenyeoPlaces, setHaenyeoPlaces] = useState<
     ReservationHaenyeoPlaces[]
@@ -60,8 +60,8 @@ export const Reservation = () => {
       </div>
 
       {/* 하단 팝업 */}
-      {selectedPlace?.placeId && (
-        <Modal id={`reservation-${selectedPlace.placeId}`}>
+      {selectedPlace && (
+        <BottomSheet id={`reservation-${selectedPlace.placeId}`}>
           <div className="flex h-full flex-col gap-3">
             <ReservationInfo
               title={selectedPlace.name}
@@ -80,7 +80,7 @@ export const Reservation = () => {
               <LargeButton onClick={handleNavigate}>예약</LargeButton>
             </div>
           </div>
-        </Modal>
+        </BottomSheet>
       )}
     </>
   );
