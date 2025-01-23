@@ -1,4 +1,4 @@
-import { secureInstance } from './instance';
+import { https } from './instance';
 
 export interface DictionarySeafood {
   seafoodId: number;
@@ -10,6 +10,6 @@ export interface DictionarySeafood {
 }
 
 export const getSeafoods = async (): Promise<DictionarySeafood[]> => {
-  const response = await secureInstance.get('/seafoods');
+  const response = await https.get('/seafoods');
   return response.data;
 };

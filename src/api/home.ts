@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { secureInstance } from './instance';
+import { https } from './instance';
 
 export interface SeafoodCollected {
   seafoodId: number;
@@ -18,12 +17,12 @@ export interface YoutubeVideoType {
 }
 
 export const getSeafoodCollected = async (): Promise<SeafoodCollected[]> => {
-  const response = await secureInstance.get('/seafoods/collected');
+  const response = await https.get('/seafoods/collected');
   return response.data;
 };
 
 export const getYoutubeContents = async (): Promise<YoutubeVideoType[]> => {
-  const response = await secureInstance.get('/contents/youtube');
+  const response = await https.get('/contents/youtube');
   return response.data;
 };
 
@@ -59,7 +58,7 @@ export interface WaveSpot {
 export const getContentsWave = async (
   spot: WaveSpotCode,
 ): Promise<ContentWaveInfo> => {
-  const response = await secureInstance.get(`/contents/wave?spot=${spot}`);
+  const response = await https.get(`/contents/wave?spot=${spot}`);
   return response.data;
 };
 
@@ -83,6 +82,6 @@ type WeatherType =
 export const getContentsWeather = async (
   spot: WaveSpotCode,
 ): Promise<ContentWeatherInfo> => {
-  const response = await secureInstance.get(`/contents/weather?spot=${spot}`);
+  const response = await https.get(`/contents/weather?spot=${spot}`);
   return response.data;
 };

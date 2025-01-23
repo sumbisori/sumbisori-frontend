@@ -1,4 +1,4 @@
-import { instance, secureInstance } from './instance';
+import { https } from './instance';
 
 export interface ReservationHaenyeoPlaces {
   placeId: string;
@@ -35,31 +35,29 @@ export interface PostReservation {
 const getReservationHaenyeoPlaces = async (): Promise<
   ReservationHaenyeoPlaces[]
 > => {
-  const response = await instance.get(`/places`);
+  const response = await https.get(`/places`);
   return response.data;
 };
 
 const getReservationHaenyeoPlace = async (
   placeId: string,
 ): Promise<ReservationHaenyeoPlace> => {
-  const response = await instance.get(`/places/${placeId}`);
+  const response = await https.get(`/places/${placeId}`);
   return response.data;
 };
 
 const postReservation = async (data: PostReservation) => {
-  const res = await secureInstance.post(`/reservations`, data);
+  const res = await https.post(`/reservations`, data);
   return res.data;
 };
 
 const completeReservation = async (reservationId: number) => {
-  const res = await secureInstance.post(
-    `/reservations/${reservationId}/complete`,
-  );
+  const res = await https.post(`/reservations/${reservationId}/complete`);
   return res.data;
 };
 
 const cancelReservation = async (reservationId: number) => {
-  const res = await secureInstance.delete(`/reservations/${reservationId}`);
+  const res = await https.delete(`/reservations/${reservationId}`);
   return res.data;
 };
 
