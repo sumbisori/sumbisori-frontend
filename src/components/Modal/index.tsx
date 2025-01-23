@@ -39,7 +39,7 @@ export function Modal({ id, children, size = 'md' }: Props) {
                   closeModal();
                 }
               }}
-              className={`flex ${modalHeight} min-w-full-layout max-w-full-layout w-full flex-col justify-between rounded-t-lg bg-gray-050 shadow-lg`}
+              className={`flex ${modalHeight} w-full min-w-full-layout max-w-full-layout flex-col justify-between rounded-t-lg bg-gray-050 shadow-lg`}
             >
               <div className="mt-4 h-0.5 w-2/3 cursor-pointer self-center bg-gray-600" />
               <div className="h-full overflow-auto px-4 pb-4 pt-6">

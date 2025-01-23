@@ -2,11 +2,6 @@ import { https } from './instance';
 
 export interface ReservationHaenyeoPlaces {
   placeId: string;
-  name: string;
-  address: string;
-  price: number;
-  desc: string;
-  imageUrl: string;
   latitude: number;
   longitude: number;
 }
