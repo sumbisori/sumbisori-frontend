@@ -39,7 +39,7 @@ export const HomeChangeButton = ({
     <div className="relative inline-block">
       <button
         onClick={() => setShowDropdown(!showDropdown)}
-        className="flex h-[1.375rem] items-center justify-center"
+        className="flex h-[1.375rem] items-center justify-center text-gray-800 hover:text-gray-600"
       >
         변경
       </button>

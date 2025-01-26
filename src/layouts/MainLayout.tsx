@@ -14,9 +14,9 @@ export default function MainLayout() {
   } => {
     if (pathname === '/home')
       return {
-        type: 'light',
+        type: 'dark',
         caption: undefined,
-        absolute: true,
+        absolute: false,
       };
     if (pathname === '/reservation')
       return {

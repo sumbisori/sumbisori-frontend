@@ -62,7 +62,7 @@ export const HomeYoutube = ({
             className="cursor-pointer text-sm leading-tight text-blue-700 hover:underline"
             onClick={() => onSelectToPlay(video)}
           >
-            {truncateTitle(video.title, 60)}
+            {truncateTitle(video.title, 50)}
           </h5>
           <div className="text-xs text-gray-600">{video.channelTitle}</div>
           <div className="flex flex-nowrap gap-[0.1rem] text-xs text-gray-600">

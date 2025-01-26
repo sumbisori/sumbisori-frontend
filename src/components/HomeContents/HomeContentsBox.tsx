@@ -22,7 +22,7 @@ export const HomeContentsBox = forwardRef<HTMLDivElement, HomeContentsBoxProps>(
           <h2 className="text-[1.25rem] font-bold leading-6">{title}</h2>
           {icon}
         </div>
-        <div className={`${contentClassName} p-5`}>{view}</div>
+        <div className={`${contentClassName} px-5 pb-5`}>{view}</div>
       </div>
     );
   },

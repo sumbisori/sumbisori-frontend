@@ -9,15 +9,15 @@ import {
   postReservation,
 } from '@/api/reservation';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useModalContext } from '@/contexts/ModalContext';
-import { AlertBox } from '@/components/AlertBox';
+import { useModalController } from '@/contexts/ModalContext';
+import { Dialog } from '@/components/Dialog';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 
 export const ReservationCreate = () => {
   const params = useParams();
   const { handleError } = useErrorHandler();
   const navigate = useNavigate();
-  const { openModal, closeModal } = useModalContext();
+  const { openModal, closeModal } = useModalController();
   const [haenyeoPlace, setHaenyeoPlace] =
     useState<ReservationHaenyeoPlace | null>(null);
   const [placeId, setPlaceId] = useState(params.placeValue || '');
@@ -154,18 +154,18 @@ export const ReservationCreate = () => {
           예약하기
         </LargeButton>
       </div>
-      <AlertBox id="reservationSuccess">
+      <Dialog id="reservationSuccess">
         <div className="flex size-full flex-col items-center justify-center text-center text-lg font-bold text-gray-900">
           <img src="/assets/images/haenyeo.png"></img>
           예약이 완료되었습니다!
         </div>
-      </AlertBox>
-      <AlertBox id="reservationFail">
+      </Dialog>
+      <Dialog id="reservationFail">
         <div className="flex size-full flex-col items-center justify-center text-center text-lg font-bold text-gray-900">
           <img src="/assets/images/haenyeo_sad.png"></img>
           예약이 실패했습니다!
         </div>
-      </AlertBox>
+      </Dialog>
     </div>
   );
 };

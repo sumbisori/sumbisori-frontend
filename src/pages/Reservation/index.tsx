@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Modal } from '@/components/Modal';
-import { useModalContext } from '@/contexts/ModalContext';
+import { BottomSheet } from '@/components/BottomSheet';
+import { useModalController } from '@/contexts/ModalContext';
 import { ReservationInfo } from '@/components/ReservationInfo/ReservationInfo';
 import { useNavigate } from 'react-router-dom';
 import { LargeButton } from '@/components/LargeButton';
 import {
+  ReservationHaenyeoPlace,
   ReservationHaenyeoPlaces,
+  getReservationHaenyeoPlace,
   getReservationHaenyeoPlaces,
 } from '@/api/reservation';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
@@ -13,12 +15,14 @@ import { NaverMap } from './NaverMap';
 
 export const Reservation = () => {
   const { handleError } = useErrorHandler();
-  const [selectedPin, setSelectedPin] = useState<string | null>(null);
-  const { openModal } = useModalContext();
+  const { openModal } = useModalController();
   const navigate = useNavigate();
   const [haenyeoPlaces, setHaenyeoPlaces] = useState<
     ReservationHaenyeoPlaces[]
   >([]);
+  const [selectedPlace, setSelectedPlace] =
+    useState<ReservationHaenyeoPlace | null>(null);
+
   const fetchHaenyeoPlaces = async () => {
     try {
       const response = await getReservationHaenyeoPlaces();
@@ -33,20 +37,21 @@ export const Reservation = () => {
   }, []);
 
   // 핀 클릭 핸들러
-  const handlePinClick = (pinId: string) => {
-    setSelectedPin(pinId);
-    openModal(`reservation-${pinId}`);
-  };
-
-  const handleNavigate = () => {
-    if (selectedPin) {
-      navigate(`/reservation-create/${selectedPin}`);
+  const handlePinClick = async (placeId: string) => {
+    try {
+      const place = await getReservationHaenyeoPlace(placeId);
+      setSelectedPlace(place);
+      openModal(`reservation-${placeId}`);
+    } catch (error) {
+      handleError(error);
     }
   };
 
-  const selectedPlace = haenyeoPlaces.find(
-    (place) => place.placeId === selectedPin,
-  );
+  const handleNavigate = () => {
+    if (selectedPlace) {
+      navigate(`/reservation/${selectedPlace.placeId}`);
+    }
+  };
 
   return (
     <>
@@ -56,7 +61,7 @@ export const Reservation = () => {
 
       {/* 하단 팝업 */}
       {selectedPlace && (
-        <Modal id={`reservation-${selectedPin}`}>
+        <BottomSheet id={`reservation-${selectedPlace.placeId}`}>
           <div className="flex h-full flex-col gap-3">
             <ReservationInfo
               title={selectedPlace.name}
@@ -75,7 +80,7 @@ export const Reservation = () => {
               <LargeButton onClick={handleNavigate}>예약</LargeButton>
             </div>
           </div>
-        </Modal>
+        </BottomSheet>
       )}
     </>
   );

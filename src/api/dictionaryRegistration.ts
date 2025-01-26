@@ -1,4 +1,4 @@
-import { secureInstance } from './instance';
+import { https } from './instance';
 
 export interface SeafoodAll {
   seafoodId: number;
@@ -13,11 +13,11 @@ export interface PostSeafood {
 }
 
 export const getSeafoodTypes = async (): Promise<SeafoodAll[]> => {
-  const response = await secureInstance.get('/seafoods/types');
+  const response = await https.get('/seafoods/types');
   return response.data;
 };
 
 export const postSeafood = async (seafood: PostSeafood) => {
-  const response = await secureInstance.post('/seafoods', seafood);
+  const response = await https.post('/seafoods', seafood);
   return response.data;
 };

@@ -6,6 +6,8 @@ import {
   WaveSpotCode,
   ContentWaveInfo,
   WaveSpot,
+  ContentWeatherInfo,
+  getContentsWeather,
 } from '@/api/home';
 import { HomeSpotHeader } from './HomeSpotHeader';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
@@ -66,7 +68,19 @@ export const HomeContents = () => {
     waveHeight: 0,
     waterTemperature: 0,
     observationTime: '',
+    waveHeightSuitability: 'DEFAULT',
+    waterTemperatureSuitability: 'DEFAULT',
   });
+
+  const [waveInfoError, setWaveInfoError] = useState<boolean>(false);
+
+  const [weather, setWeather] = useState<ContentWeatherInfo>({
+    temperature: 0,
+    weatherType: 'CLEAR_SKY',
+    suitability: 'DEFAULT',
+  });
+
+  const [weatherError, setWeatherError] = useState<boolean>(false);
 
   const handlePlay = (video: YoutubeVideoType) => {
     setSelectedVideo(video);
@@ -92,11 +106,23 @@ export const HomeContents = () => {
       setWaveInfo(response);
     } catch (error) {
       handleError(error);
+      setWaveInfoError(true);
+    }
+  };
+
+  const fetchContentsWeather = async () => {
+    try {
+      const response = await getContentsWeather(selectedSpot.spot);
+      setWeather(response);
+    } catch (error) {
+      handleError(error);
+      setWeatherError(true);
     }
   };
 
   useEffect(() => {
     fetchContentsWave();
+    fetchContentsWeather();
   }, [selectedSpot.spot]);
 
   useEffect(() => {
@@ -112,12 +138,20 @@ export const HomeContents = () => {
       <HomeSpotHeader
         spot={selectedSpot}
         onSelectedSpot={(spot) => setSelectedSpot(spot)}
+        observationTime={waveInfo.observationTime}
       />
       <div className="flex flex-col gap-3 p-4">
         <HomeContentsBox
           title="오늘은 물질하기 딱 좋은 날씨네요!"
           ref={homeRef}
-          view={<HomeContentsWeather waveInfo={waveInfo} />}
+          view={
+            <HomeContentsWeather
+              waveInfo={waveInfo}
+              weather={weather}
+              waveInfoError={waveInfoError}
+              weatherError={weatherError}
+            />
+          }
         />
         <HomeContentsBox
           title="해녀 Training"

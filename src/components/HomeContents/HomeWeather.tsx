@@ -1,62 +1,50 @@
-import { ContentWaveInfo } from '@/api/home';
-import { HomeContentsCard } from './HomeContentsCard';
+import { ContentWaveInfo, ContentWeatherInfo } from '@/api/home';
+import { HomeTrainingCard } from './HomeTrainingCard';
 import CloudIcon from '@/icons/cloud.svg?react';
 import TemperatureIcon from '@/icons/temperature.svg?react';
 import WavesIcon from '@/icons/waves.svg?react';
+import { roundingNumber } from '@/util/roundingNumber';
+import { HomeWeatherCard } from './HomeWeatherCard';
 
 interface Props {
   waveInfo: ContentWaveInfo;
+  weather: ContentWeatherInfo;
+  waveInfoError: boolean;
+  weatherError: boolean;
 }
 
-export const HomeContentsWeather = ({ waveInfo }: Props) => {
+export const HomeContentsWeather = ({
+  waveInfo,
+  weather,
+  waveInfoError,
+  weatherError,
+}: Props) => {
+  // 소수점 자리수
+  const DIGIT = 0;
   return (
     <div className="grid w-full grid-cols-3 gap-4 px-4">
-      <HomeContentsCard
+      <HomeWeatherCard
+        icon={<CloudIcon />}
+        value={roundingNumber(weather.temperature, DIGIT)}
+        status={weather.suitability}
+        isTemperature={true}
         label="날씨"
-        sizeType="lg"
-        view={
-          <div className="flex flex-col justify-center">
-            <div className="flex items-center gap-[0.313rem]">
-              <CloudIcon />
-              <div className="w-12 text-center text-[1.125rem] font-semibold">
-                {waveInfo.waterTemperature}°
-              </div>
-            </div>
-          </div>
-        }
+        error={weatherError}
       />
-      <HomeContentsCard
+      <HomeWeatherCard
+        icon={<TemperatureIcon />}
+        value={roundingNumber(waveInfo.waterTemperature, DIGIT)}
+        status={waveInfo.waterTemperatureSuitability}
+        isTemperature={true}
         label="수온"
-        sizeType="lg"
-        view={
-          <div className="flex flex-col justify-center">
-            <div className="flex items-center gap-[0.313rem]">
-              <TemperatureIcon />
-              <div className="w-12 text-center text-[1.125rem] font-semibold">
-                {waveInfo.waterTemperature}°
-              </div>
-            </div>
-          </div>
-        }
+        error={waveInfoError}
       />
-      <HomeContentsCard
+      <HomeWeatherCard
+        icon={<WavesIcon />}
+        value={waveInfo.waveHeight}
+        status={waveInfo.waveHeightSuitability}
         label="파고"
-        sizeType="lg"
-        view={
-          <div className="flex flex-col justify-center">
-            <div className="flex items-center gap-[0.313rem]">
-              <WavesIcon />
-
-              <div className="w-12 text-center text-[1.125rem] font-semibold">
-                {waveInfo.waveHeight}
-              </div>
-            </div>
-            {/* <div className="flex w-full justify-center text-[0.5rem]">
-              <span>{convertToTodayTime(waterHeight.time)}</span>
-              <span className="text-gray-500"> 기준</span>
-            </div> */}
-          </div>
-        }
+        error={waveInfoError}
       />
     </div>
   );

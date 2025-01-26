@@ -1,4 +1,4 @@
-import { secureInstance } from './instance';
+import { https } from './instance';
 
 export interface UserInfo {
   nickname: string;
@@ -24,18 +24,18 @@ export interface MyPageReservationType {
 }
 
 export const getUserInfo = async (): Promise<UserInfo> => {
-  const response = await secureInstance.get('/users');
+  const response = await https.get('/users');
   return response.data;
 };
 
 export const getReservationList = async (
   status: 'PENDING' | 'END',
 ): Promise<MyPageReservationType[]> => {
-  const response = await secureInstance.get(`/reservations?status=${status}`);
+  const response = await https.get(`/reservations?status=${status}`);
   return response.data;
 };
 
 export const getReservationCount = async (): Promise<ReservationCount> => {
-  const response = await secureInstance.get('/reservations/count');
+  const response = await https.get('/reservations/count');
   return response.data;
 };
