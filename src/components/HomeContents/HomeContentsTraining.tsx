@@ -5,6 +5,7 @@ import WarningIcon from '@/icons/warning.svg?react';
 import MuscleIcon from '@/icons/muscle.svg?react';
 import { Dialog } from '../Dialog';
 import { useModalController } from '@/contexts/ModalContext';
+import { ImageWithTextAlert } from '../ImageWithTextAlert';
 
 export const HomeContentsTraining = () => {
   const { openModal } = useModalController();
@@ -43,12 +44,12 @@ export const HomeContentsTraining = () => {
         }}
       />
       <Dialog id="not-yet">
-        <div className="flex size-full flex-col items-center justify-center text-center text-lg font-medium text-gray-900">
-          <img src="/assets/images/haenyeo.png" className="size-40"></img>
-          <span className="whitespace-pre-wrap">
-            {'아직 준비 중인 서비스입니다. \n 조금만 기다려주세요!'}
-          </span>
-        </div>
+        <ImageWithTextAlert
+          src="/assets/images/haenyeo.png"
+          alt="준비중"
+          text={`아직 준비 중인 서비스입니다.
+조금만 기다려주세요!`}
+        />
       </Dialog>
     </div>
   );

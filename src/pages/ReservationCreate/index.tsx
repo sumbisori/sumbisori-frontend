@@ -12,6 +12,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useModalController } from '@/contexts/ModalContext';
 import { Dialog } from '@/components/Dialog';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
+import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
 
 export const ReservationCreate = () => {
   const params = useParams();
@@ -41,12 +42,12 @@ export const ReservationCreate = () => {
       openModal('reservationSuccess');
       setTimeout(() => {
         navigate('/home');
-        closeModal();
+        closeModal('reservationSuccess');
       }, 1000);
     } catch (error) {
       openModal('reservationFail');
       setTimeout(() => {
-        closeModal();
+        closeModal('reservationFail');
       }, 1000);
     }
   };
@@ -155,16 +156,18 @@ export const ReservationCreate = () => {
         </LargeButton>
       </div>
       <Dialog id="reservationSuccess">
-        <div className="flex size-full flex-col items-center justify-center text-center text-lg font-bold text-gray-900">
-          <img src="/assets/images/haenyeo.png"></img>
-          예약이 완료되었습니다!
-        </div>
+        <ImageWithTextAlert
+          src="/assets/images/haenyeo.png"
+          alt="해녀"
+          text="예약이 완료되었습니다!"
+        />
       </Dialog>
       <Dialog id="reservationFail">
-        <div className="flex size-full flex-col items-center justify-center text-center text-lg font-bold text-gray-900">
-          <img src="/assets/images/haenyeo_sad.png"></img>
-          예약이 실패했습니다!
-        </div>
+        <ImageWithTextAlert
+          src="/assets/images/haenyeo_sad.png"
+          alt="해녀"
+          text="예약이 실패했습니다!"
+        />
       </Dialog>
     </div>
   );

@@ -22,7 +22,7 @@ export const HomeWeatherCard = ({
     <div className="flex flex-col items-center justify-center gap-1">
       {!error && (
         <div
-          className={`flex aspect-[3/2] size-full w-full min-w-[5.625rem] items-center justify-center rounded-2xl border ${STATUS_VARIANTS[status].border} ${STATUS_VARIANTS[status].background} `}
+          className={`flex aspect-[10/7] size-full w-full min-w-[5.625rem] items-center justify-center rounded-2xl border ${STATUS_VARIANTS[status].border} ${STATUS_VARIANTS[status].background} `}
         >
           <div className="flex items-center gap-[0.313rem]">
             {icon}
@@ -41,7 +41,7 @@ export const HomeWeatherCard = ({
         </div>
       )}
       {error && (
-        <div className="flex aspect-[3/2] size-full w-full min-w-[5.625rem] items-center justify-center rounded-2xl border border-gray-card-border bg-gray-card">
+        <div className="flex aspect-[10/7] size-full w-full min-w-[5.625rem] items-center justify-center rounded-2xl border border-gray-card-border bg-gray-card">
           <div className="flex items-center gap-[0.313rem]">
             {icon}
             <div className="flex flex-col items-start">
