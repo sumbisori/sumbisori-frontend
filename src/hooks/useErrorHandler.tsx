@@ -10,7 +10,7 @@ export const useErrorHandler = () => {
   const navigate = useNavigate();
 
   // 500 에러 처리 필요함
-  const handleError = (err: unknown, path?: string) => {
+  const handleError = (err: unknown) => {
     if (isAxiosError<ErrorResponse>(err)) {
       const { name, status, message } = err.response?.data || {};
       const defaultMessage = '알 수 없는 오류가 발생했습니다.';
@@ -30,7 +30,6 @@ export const useErrorHandler = () => {
         alert(defaultMessage);
         return;
       }
-      path && navigate(path);
     }
   };
 
