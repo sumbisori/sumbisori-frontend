@@ -35,14 +35,11 @@ export const HomeYoutube = ({
           <img
             src={video.thumbnailUrl}
             alt={video.title}
-            style={{
-              aspectRatio: '16 / 9', // 16:9 비율 유지
-            }}
-            className="w-full cursor-pointer rounded-md object-cover"
+            className="aspect-video w-full cursor-pointer rounded-md object-cover"
             onClick={handleControl}
           />
           {isPlaying && (
-            <div className="absolute inset-0 rounded-md bg-black opacity-60"></div>
+            <div className="absolute inset-0 aspect-video rounded-md bg-black opacity-60"></div>
           )}
           <div
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:opacity-70"
@@ -62,7 +59,7 @@ export const HomeYoutube = ({
             className="cursor-pointer text-sm leading-tight text-blue-700 hover:underline"
             onClick={() => onSelectToPlay(video)}
           >
-            {truncateTitle(video.title, 50)}
+            {truncateTitle(video.title, 40)}
           </h5>
           <div className="text-xs text-gray-600">{video.channelTitle}</div>
           <div className="flex flex-nowrap gap-[0.1rem] text-xs text-gray-600">
