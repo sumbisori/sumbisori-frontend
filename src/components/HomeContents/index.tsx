@@ -129,8 +129,63 @@ export const HomeContents = () => {
     fetchYoutubeContents();
   }, []);
 
+  // useEffect(() => {
+  //   const options = {
+  //     root: null,
+  //     rootMargin: '-59px 0px -75px 0px',
+  //     threshold: 1.0,
+  //   };
+  //   const callback: IntersectionObserverCallback = (entries) => {
+  //     entries.forEach((entry) => {
+  //       if (entry.isIntersecting) {
+  //         const sectionId = entry.target.id;
+  //         console.log(`Section in view: ${sectionId}`); // 디버깅용 로그
+  //         switch (sectionId) {
+  //           case 'home-section':
+  //             setSelectedCategory('home');
+  //             break;
+  //           case 'training-section':
+  //             setSelectedCategory('training');
+  //             break;
+  //           case 'tv-section':
+  //             setSelectedCategory('tv');
+  //             break;
+  //           case 'sea-section':
+  //             setSelectedCategory('sea');
+  //             break;
+  //           default:
+  //             break;
+  //         }
+  //       }
+  //     });
+  //   };
+
+  //   const observer = new IntersectionObserver(callback, options);
+
+  //   const sections = [
+  //     homeRef.current,
+  //     trainingRef.current,
+  //     tvRef.current,
+  //     seaRef.current,
+  //   ];
+
+  //   sections.forEach((section) => {
+  //     if (section) {
+  //       observer.observe(section);
+  //     }
+  //   });
+
+  //   return () => {
+  //     sections.forEach((section) => {
+  //       if (section) {
+  //         observer.unobserve(section);
+  //       }
+  //     });
+  //   };
+  // }, []);
+
   return (
-    <section className="flex flex-col bg-gray-surface">
+    <section className="flex flex-col bg-gray-surface" id="home-container">
       <HomeCategoryBar
         onCategoryChange={handleCategoryChange}
         value={selectedCategory}
@@ -142,6 +197,7 @@ export const HomeContents = () => {
       />
       <div className="flex flex-col gap-3 p-4">
         <HomeContentsBox
+          id="home-section"
           title="오늘은 물질하기 딱 좋은 날씨네요!"
           ref={homeRef}
           view={
@@ -154,11 +210,13 @@ export const HomeContents = () => {
           }
         />
         <HomeContentsBox
+          id="training-section"
           title="해녀 Training"
           ref={trainingRef}
           view={<HomeContentsTraining />}
         />
         <HomeContentsBox
+          id="tv-section"
           title="숨비 TV"
           ref={tvRef}
           icon={
@@ -182,8 +240,8 @@ export const HomeContents = () => {
             />
           }
         />
-
         <HomeContentsBox
+          id="sea-section"
           title="실시간 바다"
           ref={seaRef}
           view={

@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import { VitePWA } from 'vite-plugin-pwa';
+import pluginChecker from 'vite-plugin-checker';
 import svgr from 'vite-plugin-svgr';
 import path from 'path';
 // https://vite.dev/config/
@@ -10,6 +11,7 @@ export default defineConfig({
     react(),
     // PWA 설정
     svgr(),
+    pluginChecker({ typescript: true }),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],

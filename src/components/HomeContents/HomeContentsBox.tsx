@@ -15,7 +15,7 @@ export const HomeContentsBox = forwardRef<HTMLDivElement, HomeContentsBoxProps>(
     return (
       <div
         ref={ref}
-        className="scroll-mt-[4.688rem] rounded-[1.25rem] bg-white"
+        className="scroll-mt-[3.688rem] rounded-[1.25rem] bg-white"
         {...props}
       >
         <div className="flex items-center justify-between p-5">
@@ -27,3 +27,5 @@ export const HomeContentsBox = forwardRef<HTMLDivElement, HomeContentsBoxProps>(
     );
   },
 );
+
+HomeContentsBox.displayName = 'HomeContentsBox';
