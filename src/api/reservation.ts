@@ -1,25 +1,31 @@
 import { https } from './instance';
 
 export interface ReservationHaenyeoPlaces {
-  placeId: string;
+  placeId: number;
   latitude: number;
   longitude: number;
 }
 
 export interface ReservationHaenyeoPlace {
-  placeId: string;
+  placeId: number;
   name: string;
   address: string;
   price: number;
-  desc: string;
+  details: HaenyeoPlaceDetail[];
   imageUrl: string;
-  availableDate: string[];
   latitude: number;
   longitude: number;
+  phoneNumber: string;
+  link: string;
+}
+
+interface HaenyeoPlaceDetail {
+  title: string;
+  description: string;
 }
 
 export interface PostReservation {
-  placeId: string;
+  placeId: number;
   personName: string;
   selectedAvailableDate: string;
   selectedTime: string;
@@ -35,7 +41,7 @@ const getReservationHaenyeoPlaces = async (): Promise<
 };
 
 const getReservationHaenyeoPlace = async (
-  placeId: string,
+  placeId: number,
 ): Promise<ReservationHaenyeoPlace> => {
   const response = await https.get(`/places/${placeId}`);
   return response.data;

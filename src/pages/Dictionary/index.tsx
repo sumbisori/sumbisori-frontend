@@ -4,6 +4,7 @@ import { Dialog } from '@/components/Dialog';
 import { DictionarySeafood, getSeafoods } from '@/api/dictionary';
 import { useModalController } from '@/contexts/ModalContext';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
+import { IMAGE_PATHS } from '@/constant';
 
 export const Dictionary = () => {
   const { openModal } = useModalController();
@@ -52,7 +53,7 @@ export const Dictionary = () => {
               className={` ${selectedSeafood.count > 0 ? '' : 'grayscale'} relative size-[9.375rem] self-center bg-cover bg-center bg-no-repeat`}
               style={{
                 backgroundImage:
-                  'url(/assets/images/Seafoods/' +
+                  `url(${IMAGE_PATHS.AQUARIUM}` +
                   selectedSeafood.englishName +
                   '.svg)',
               }}

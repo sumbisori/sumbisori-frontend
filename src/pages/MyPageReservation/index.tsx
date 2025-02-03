@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { cancelReservation, completeReservation } from '@/api/reservation';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
+import { IMAGE_PATHS } from '@/constant';
 
 export const MyPageReservation = () => {
   const { handleError } = useErrorHandler();
@@ -82,7 +83,7 @@ export const MyPageReservation = () => {
       {reservations.length === 0 && (
         <div className="h-[25rem]">
           <ImageWithTextAlert
-            src="/assets/images/haenyeo_sad.png"
+            src={`${IMAGE_PATHS.ROOT}haenyeo_sad.png`}
             alt="해녀"
             text="예약 정보가 없습니다"
           />

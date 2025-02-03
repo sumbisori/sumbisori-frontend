@@ -1,3 +1,4 @@
+import { IMAGE_PATHS } from '@/constant';
 import { ImageWithTextAlert } from '../ImageWithTextAlert';
 import { HomeYoutube } from './HomeYoutube';
 import { YoutubeVideoType } from '@/api/home';
@@ -37,7 +38,7 @@ export const HomeYoutubeList = ({
       {videos.length === 0 && (
         <div className="h-[25rem]">
           <ImageWithTextAlert
-            src="/assets/images/haenyeo_sad.png"
+            src={`${IMAGE_PATHS.ROOT}haenyeo_sad.png`}
             alt="정보없음"
             text="관련 영상이 없습니다."
           />

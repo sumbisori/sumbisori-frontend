@@ -6,6 +6,7 @@ import MuscleIcon from '@/icons/muscle.svg?react';
 import { Dialog } from '../Dialog';
 import { useModalController } from '@/contexts/ModalContext';
 import { ImageWithTextAlert } from '../ImageWithTextAlert';
+import { IMAGE_PATHS } from '@/constant';
 
 export const HomeContentsTraining = () => {
   const { openModal } = useModalController();
@@ -45,7 +46,7 @@ export const HomeContentsTraining = () => {
       />
       <Dialog id="not-yet">
         <ImageWithTextAlert
-          src="/assets/images/haenyeo.png"
+          src={`${IMAGE_PATHS.ROOT}/haenyeo.png`}
           alt="준비중"
           text={`아직 준비 중인 서비스입니다.
 조금만 기다려주세요!`}

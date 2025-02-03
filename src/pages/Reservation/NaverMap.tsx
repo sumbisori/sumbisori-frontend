@@ -1,13 +1,28 @@
-import { ReservationHaenyeoPlaces } from '@/api/reservation';
+import {
+  ReservationHaenyeoPlace,
+  ReservationHaenyeoPlaces,
+} from '@/api/reservation';
 import { useEffect, useRef } from 'react';
 import MyLocationIcon from '@/icons/my-location.svg?react';
+import ResetFocus from '@/icons/reset-focus.svg?react';
+import { IconButton } from '@/components/IconButton';
+import { motion } from 'framer-motion';
+import MdCloseIcon from '@/icons/line-md_close.svg?react';
+import LeftIcon from '@/icons/left.svg?react';
 
 interface NaverMapProps {
+  selectedPlace: ReservationHaenyeoPlace | null;
   places: ReservationHaenyeoPlaces[];
-  onPinClick: (placeId: string) => void;
+  onPinClick: (placeId: number) => void;
+  onClose: () => void;
 }
 
-export const NaverMap = ({ places, onPinClick }: NaverMapProps) => {
+export const NaverMap = ({
+  selectedPlace,
+  places,
+  onPinClick,
+  onClose,
+}: NaverMapProps) => {
   const naverMapInstance = useRef<any>(null);
   const markersRef = useRef<any[]>([]);
 
@@ -31,8 +46,6 @@ export const NaverMap = ({ places, onPinClick }: NaverMapProps) => {
 
     const map = new NaverMaps.Map(container as HTMLElement, mapOptions);
     naverMapInstance.current = map;
-
-    addMarkers();
   };
 
   const addMarkers = () => {
@@ -51,15 +64,22 @@ export const NaverMap = ({ places, onPinClick }: NaverMapProps) => {
         },
       });
 
-      NaverMaps.Event.addListener(marker, 'click', () => {
+      NaverMaps.Event.addListener(marker, 'click', (e: any) => {
         onPinClick(place.placeId);
+        // 중심으로 이동 후 zoom하기
+        const position = marker.getPosition();
+        naverMapInstance.current.panTo(position);
+        setTimeout(() => {
+          naverMapInstance.current.setCenter(position);
+          naverMapInstance.current.setZoom(11);
+          naverMapInstance.current.autoResize();
+        }, 600);
       });
 
       markersRef.current.push(marker);
     });
   };
 
-  // 현재 위치로 이동하는 함수
   const handleRecenterToCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -70,7 +90,7 @@ export const NaverMap = ({ places, onPinClick }: NaverMapProps) => {
           // 지도 중심을 현재 위치로 이동
           if (naverMapInstance.current) {
             naverMapInstance.current.setCenter(currentPosition);
-            naverMapInstance.current.setZoom(14); // 적절한 줌 레벨로 설정
+            naverMapInstance.current.setZoom(16);
           }
 
           // 기존 현재 위치 마커 제거
@@ -94,7 +114,6 @@ export const NaverMap = ({ places, onPinClick }: NaverMapProps) => {
             map: naverMapInstance.current,
           });
 
-          // Custom property to track this marker as the current location marker
           currentLocationMarker.__isCurrentLocationMarker = true;
           markersRef.current.push(currentLocationMarker);
         },
@@ -111,14 +130,32 @@ export const NaverMap = ({ places, onPinClick }: NaverMapProps) => {
   };
 
   // 제주도 전체 지도로 이동하는 함수
-  // const handleRecenter = () => {
-  //   if (naverMapInstance.current) {
-  //     naverMapInstance.current.setCenter(initialPosition);
-  //     naverMapInstance.current.setZoom(initialZoom);
-  //   } else {
-  //     console.error('Naver Maps API가 로드되지 않았습니다.');
-  //   }
-  // };
+  const handleRecenter = () => {
+    if (naverMapInstance.current) {
+      naverMapInstance.current.setCenter(initialPosition);
+      naverMapInstance.current.setZoom(initialZoom);
+      naverMapInstance.current.autoResize();
+    } else {
+      console.error('Naver Maps API가 로드되지 않았습니다.');
+    }
+  };
+
+  // 지도 초기화 및 정리
+  const handleSheetBack = () => {
+    onClose();
+    setTimeout(() => {
+      naverMapInstance.current.autoResize();
+    }, 50);
+  };
+
+  const handleSheetClose = () => {
+    onClose();
+    setTimeout(() => {
+      naverMapInstance.current.setCenter(initialPosition);
+      naverMapInstance.current.setZoom(initialZoom);
+      naverMapInstance.current.autoResize();
+    }, 50);
+  };
 
   useEffect(() => {
     if (!Naver || !NaverMaps) {
@@ -142,18 +179,32 @@ export const NaverMap = ({ places, onPinClick }: NaverMapProps) => {
   }, [places]);
 
   return (
-    <div className="relative h-layout-nav-height w-full">
+    <motion.div className={`relative size-full flex-1`}>
+      <div id="map" className="size-full" />
       <div
-        id="map"
-        className="z-10 size-full min-w-full-layout max-w-full-layout"
-      />
-      <button
-        onClick={handleRecenterToCurrentLocation}
-        className="absolute bottom-4 left-4 z-20 cursor-pointer rounded-full bg-white p-2 shadow-md hover:bg-gray-100"
-        aria-label="Re-center Map"
+        id="map-controls"
+        className="absolute bottom-4 z-20 flex w-full items-center gap-2 px-4"
       >
-        <MyLocationIcon className="size-6" />
-      </button>
-    </div>
+        <IconButton onClick={handleRecenterToCurrentLocation}>
+          <MyLocationIcon className="size-6" />
+        </IconButton>
+        <IconButton onClick={handleRecenter}>
+          <ResetFocus className="size-6" />
+        </IconButton>
+      </div>
+      {selectedPlace && (
+        <div
+          id="map-controls2"
+          className="absolute left-0 top-[3.75rem] z-20 flex w-full items-center justify-between gap-2 px-4"
+        >
+          <IconButton onClick={handleSheetBack} className="size-6">
+            <LeftIcon />
+          </IconButton>
+          <IconButton onClick={handleSheetClose}>
+            <MdCloseIcon className="size-6" />
+          </IconButton>
+        </div>
+      )}
+    </motion.div>
   );
 };

@@ -8,6 +8,7 @@ import ReviewListIcon from '@/icons/my_page/review_list.svg?react';
 import SettingIcon from '@/icons/my_page/setting.svg?react';
 import LogoutIcon from '@/icons/my_page/logout.svg?react';
 import { ImageWithTextAlert } from '../ImageWithTextAlert';
+import { IMAGE_PATHS } from '@/constant';
 
 export const MyPageContent = () => {
   const { openModal } = useModalController();
@@ -46,7 +47,7 @@ export const MyPageContent = () => {
       </MyPageButton>
       <Dialog id="not-yet">
         <ImageWithTextAlert
-          src="/assets/images/haenyeo.png"
+          src={`${IMAGE_PATHS.ROOT}haenyeo.png`}
           alt="해녀"
           text={`아직 준비 중인 서비스입니다. \n 조금만 기다려주세요!`}
         />
