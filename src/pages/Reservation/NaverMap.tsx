@@ -14,14 +14,18 @@ interface NaverMapProps {
   selectedPlace: ReservationHaenyeoPlace | null;
   places: ReservationHaenyeoPlaces[];
   onPinClick: (placeId: number) => void;
+  onBack: () => void;
   onClose: () => void;
+  mainContainerHeight: number;
 }
 
 export const NaverMap = ({
   selectedPlace,
   places,
   onPinClick,
+  onBack,
   onClose,
+  mainContainerHeight,
 }: NaverMapProps) => {
   const naverMapInstance = useRef<any>(null);
   const markersRef = useRef<any[]>([]);
@@ -143,7 +147,7 @@ export const NaverMap = ({
 
   // 지도 초기화 및 정리
   const handleSheetBack = () => {
-    onClose();
+    onBack();
     setTimeout(() => {
       naverMapInstance.current.autoResize();
     }, 50);
@@ -152,8 +156,8 @@ export const NaverMap = ({
   const handleSheetClose = () => {
     onClose();
     setTimeout(() => {
-      naverMapInstance.current.setCenter(initialPosition);
-      naverMapInstance.current.setZoom(initialZoom);
+      // naverMapInstance.current.setCenter(initialPosition);
+      // naverMapInstance.current.setZoom(initialZoom);
       naverMapInstance.current.autoResize();
     }, 50);
   };
@@ -179,12 +183,17 @@ export const NaverMap = ({
     }
   }, [places]);
 
+  const bottomOffset = mainContainerHeight ? mainContainerHeight + 16 : 16;
+
+  console.log(mainContainerHeight);
+
   return (
     <motion.div className={`relative size-full flex-1`}>
       <div id="map" className="size-full" />
       <div
         id="map-controls"
-        className="absolute bottom-4 z-20 flex w-full items-center gap-2 px-4"
+        style={{ bottom: `${bottomOffset}px` }}
+        className="absolute z-20 flex w-full items-center gap-2 px-4"
       >
         <IconButton onClick={handleRecenterToCurrentLocation}>
           <MyLocationIcon className="size-6" />
@@ -193,10 +202,11 @@ export const NaverMap = ({
           <ResetFocus className="size-6" />
         </IconButton>
       </div>
+
       {selectedPlace && (
         <div
           id="map-controls2"
-          className="absolute left-0 top-[3.75rem] z-20 flex w-full items-center justify-between gap-2 px-4"
+          className="absolute left-0 top-[3.75rem] z-200 flex w-full items-center justify-between gap-2 px-4"
         >
           <IconButton onClick={handleSheetBack} className="size-6">
             <LeftIcon />

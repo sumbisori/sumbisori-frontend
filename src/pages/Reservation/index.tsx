@@ -18,6 +18,8 @@ export const Reservation = () => {
   >([]);
   const [selectedPlace, setSelectedPlace] =
     useState<ReservationHaenyeoPlace | null>(null);
+  const [showDetail, setShowDetail] = useState(false);
+  const [mainContainerHeight, setMainContainerHeight] = useState(0);
 
   const fetchHaenyeoPlaces = async () => {
     try {
@@ -42,6 +44,20 @@ export const Reservation = () => {
     }
   };
 
+  const handleBack = () => {
+    if (showDetail) {
+      setShowDetail(false);
+    }
+    if (!showDetail && selectedPlace) {
+      setSelectedPlace(null);
+    }
+  };
+
+  const handleClose = () => {
+    setSelectedPlace(null);
+    setShowDetail(false);
+  };
+
   return (
     // 부모 컨테이너에 relative 추가
     <div className="relative h-layout-nav-height">
@@ -49,9 +65,18 @@ export const Reservation = () => {
         selectedPlace={selectedPlace}
         places={haenyeoPlaces}
         onPinClick={handlePinClick}
-        onClose={() => setSelectedPlace(null)}
+        onBack={handleBack}
+        onClose={handleClose}
+        mainContainerHeight={mainContainerHeight}
       />
-      {selectedPlace && <BottomSheet selectedPlace={selectedPlace} />}
+      {selectedPlace && (
+        <BottomSheet
+          selectedPlace={selectedPlace}
+          expanded={showDetail}
+          onMoreInfo={() => setShowDetail(true)}
+          setMainContainerHeight={setMainContainerHeight}
+        />
+      )}
     </div>
   );
 };
