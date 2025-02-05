@@ -1,35 +1,65 @@
-import { motion, PanInfo } from 'framer-motion';
-import { ReservationInfo } from '../ReservationInfo/ReservationInfo';
+import { motion } from 'framer-motion';
 import { ReservationHaenyeoPlace } from '@/api/reservation';
 import { LargeButton } from '../LargeButton';
-import { IconButton } from '../IconButton';
-
+import PhoneIcon from '@/icons/phone.svg?react';
+import MarkLinkIcon from '@/icons/mark-link.svg?react';
+import { RoundedButton } from '../RoundedButton';
 interface Props {
   selectedPlace: ReservationHaenyeoPlace;
 }
 
 export function BottomSheet({ selectedPlace }: Props) {
+  const handlePhoneClick = () => {
+    window.open(`tel:${selectedPlace.phoneNumber}`);
+  };
+
+  const handleLinkClick = () => {
+    window.open(selectedPlace.link, '_blank');
+  };
   return (
     <motion.div
       {...modalAnimation}
-      drag="y"
-      dragConstraints={{ top: 0, bottom: 200 }}
-      className={`flex h-1/3 w-full min-w-full-layout max-w-full-layout flex-col justify-between rounded-t-lg bg-gray-050 shadow-lg`}
+      className="absolute bottom-0 left-0 z-100 w-full min-w-full-layout max-w-full-layout"
     >
-      <div className="h-full overflow-auto px-4 pb-4 pt-6">
-        <div className="flex h-full flex-col gap-3">
-          <ReservationInfo
-            title={selectedPlace.name}
-            address={selectedPlace.address}
-            price={selectedPlace.price}
-            imageSrc={selectedPlace.imageUrl}
+      <div
+        className={`relative flex flex-col justify-between rounded-t-xl bg-white px-5 pb-4 pt-11 shadow-lg`}
+      >
+        <div className="absolute -top-14 left-4 rounded-2xl border border-[#F6F6F6] bg-white p-1">
+          <img
+            src={selectedPlace.imageUrl}
+            alt="place-image"
+            className="size-[4.813rem] rounded-2xl"
           />
-          <div className="flex grow flex-col gap-2">
-            <p className="text-[1rem] font-bold">체험 상세정보</p>
+        </div>
+        <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-3">
+            <div>
+              <p className="text-[1.25rem] font-bold">{selectedPlace.name}</p>
+              <p className="truncate text-[0.875rem]">
+                {selectedPlace.address}
+              </p>
+            </div>
+            <div className="flex w-full items-center justify-between">
+              <span className="text-[1.25rem] font-bold">
+                {selectedPlace.price.toLocaleString()}원
+              </span>
+              <div className="flex gap-4">
+                <PhoneIcon
+                  className="cursor-pointer"
+                  onClick={handlePhoneClick}
+                />
+                <MarkLinkIcon
+                  className="cursor-pointer"
+                  onClick={handleLinkClick}
+                />
+              </div>
+            </div>
           </div>
-
-          <div className="shrink-0">
-            <LargeButton>예약</LargeButton>
+          <div id="button-container" className="flex w-full flex-nowrap gap-2">
+            <RoundedButton buttonType="secondary" styleClass="flex-1">
+              기본정보 더보기
+            </RoundedButton>
+            <RoundedButton buttonType="primary">예약하기</RoundedButton>
           </div>
         </div>
       </div>

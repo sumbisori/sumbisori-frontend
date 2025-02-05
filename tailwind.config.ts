@@ -192,6 +192,9 @@ export default {
       maxWidth: {
         'full-layout': '26.875rem',
       },
+      zIndex: {
+        100: '100',
+      },
     },
   },
   plugins: [],

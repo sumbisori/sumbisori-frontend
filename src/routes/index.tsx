@@ -3,7 +3,6 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import { Login } from '@/pages/Login';
 import MainLayout from '@/layouts/MainLayout';
 import { Reservation } from '@/pages/Reservation';
-import { ReservationCreate } from '@/pages/ReservationCreate';
 import { Dictionary } from '@/pages/Dictionary';
 import { MyPage } from '@/pages/MyPage';
 import { MyPageReservation } from '@/pages/MyPageReservation';
@@ -23,10 +22,6 @@ export const Router = () => {
             <Route path="/" element={<Navigate to="/home" />} />
             <Route path="/home" element={<Home />} />
             <Route path="/reservation" element={<Reservation />} />
-            <Route
-              path="/reservation-create/:placeValue"
-              element={<ReservationCreate />}
-            />
             <Route path="/dictionary" element={<Dictionary />} />
             <Route
               path="/dictionary/registration"

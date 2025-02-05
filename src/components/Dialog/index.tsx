@@ -1,7 +1,7 @@
 import { ReactNode, MouseEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import ModalPortal from '../BottomSheet/ModalPortal';
+import ModalPortal from '../ModalPotal';
 import { useModalController } from '@/contexts/ModalContext';
 
 interface Props {

@@ -43,7 +43,8 @@ export const Reservation = () => {
   };
 
   return (
-    <div className="flex h-layout-nav-height flex-col">
+    // 부모 컨테이너에 relative 추가
+    <div className="relative h-layout-nav-height">
       <NaverMap
         selectedPlace={selectedPlace}
         places={haenyeoPlaces}

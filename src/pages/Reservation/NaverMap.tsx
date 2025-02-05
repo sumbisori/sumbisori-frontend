@@ -69,8 +69,9 @@ export const NaverMap = ({
         // 중심으로 이동 후 zoom하기
         const position = marker.getPosition();
         naverMapInstance.current.panTo(position);
+
         setTimeout(() => {
-          naverMapInstance.current.setCenter(position);
+          // naverMapInstance.current.setCenter(position);
           naverMapInstance.current.setZoom(11);
           naverMapInstance.current.autoResize();
         }, 600);
