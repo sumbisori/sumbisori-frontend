@@ -5,11 +5,13 @@ import { DictionarySeafood, getSeafoods } from '@/api/dictionary';
 import { useModalController } from '@/contexts/ModalContext';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import { IMAGE_PATHS } from '@/constant';
+import Skeleton from '@/components/Skeleton';
 
 export const Dictionary = () => {
   const { openModal } = useModalController();
   const { handleError } = useErrorHandler();
   const [seafoods, setSeafoods] = useState<DictionarySeafood[]>([]);
+  const [seafoodLoading, setSeafoodLoading] = useState(true);
   const [selectedSeafood, setSelectedSeafood] =
     useState<DictionarySeafood | null>(null);
   const fetchSeafoods = async () => {
@@ -18,6 +20,8 @@ export const Dictionary = () => {
       setSeafoods(response);
     } catch (error) {
       handleError(error);
+    } finally {
+      setSeafoodLoading(false);
     }
   };
 
@@ -34,16 +38,26 @@ export const Dictionary = () => {
     <div>
       <div className="p-[1.125rem]">
         <div className="grid grid-cols-3 gap-3 rounded-lg border border-orange-200 bg-white p-3">
-          {seafoods.map((seafood) => (
-            <SeafoodCard
-              key={seafood.seafoodId}
-              isNew={false}
-              seafoodName={seafood.englishName}
-              counts={seafood.count}
-              name={seafood.koreanName}
-              onClick={() => handleSeafoodClick(seafood)}
-            />
-          ))}
+          {!seafoodLoading &&
+            seafoods.map((seafood) => (
+              <SeafoodCard
+                key={seafood.seafoodId}
+                isNew={false}
+                seafoodName={seafood.englishName}
+                counts={seafood.count}
+                name={seafood.koreanName}
+                onClick={() => handleSeafoodClick(seafood)}
+              />
+            ))}
+          {seafoodLoading &&
+            Array.from({ length: 18 }).map((_, index) => (
+              <Skeleton
+                key={index}
+                className="aspect-square"
+                width={'100%'}
+                height={'100%'}
+              />
+            ))}
         </div>
       </div>
       {selectedSeafood && (
