@@ -13,7 +13,11 @@ interface Props {
   onMoreInfo: () => void;
 }
 
-export function BottomSheet({ selectedPlace, showModal, onMoreInfo }: Props) {
+export function HaenyeoPlaceDetailSheet({
+  selectedPlace,
+  showModal,
+  onMoreInfo,
+}: Props) {
   const handlePhoneClick = () => {
     window.open(`tel:${selectedPlace.phoneNumber}`);
   };

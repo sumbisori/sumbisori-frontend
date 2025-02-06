@@ -12,7 +12,7 @@ import LeftIcon from '@/icons/left.svg?react';
 import { ShowModalType } from '.';
 
 interface NaverMapProps {
-  selectedPlace: ReservationHaenyeoPlace | null;
+  selectedPlace?: ReservationHaenyeoPlace | null;
   places: ReservationHaenyeoPlaces[];
   onPinClick: (placeId: number) => void;
   onBack: () => void;

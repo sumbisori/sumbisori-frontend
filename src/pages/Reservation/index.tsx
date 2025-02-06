@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BottomSheet } from '@/components/BottomSheet';
+import { HaenyeoPlaceDetailSheet } from '@/components/HaenyeoPlaceDetailSheet';
 import { useNavigate } from 'react-router-dom';
 import {
   ReservationHaenyeoPlace,
@@ -9,41 +9,34 @@ import {
 } from '@/api/reservation';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import { NaverMap } from './NaverMap';
+import { useQuery } from '@tanstack/react-query';
+import { queryKeys } from '@/query';
 
 export type ShowModalType = 'none' | 'small' | 'full';
 
 export const Reservation = () => {
-  const { handleError } = useErrorHandler();
-  const navigate = useNavigate();
-  const [haenyeoPlaces, setHaenyeoPlaces] = useState<
-    ReservationHaenyeoPlaces[]
-  >([]);
-  const [selectedPlace, setSelectedPlace] =
-    useState<ReservationHaenyeoPlace | null>(null);
   const [showModal, setShowModal] = useState<ShowModalType>('none');
+  const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
 
-  const fetchHaenyeoPlaces = async () => {
-    try {
-      const response = await getReservationHaenyeoPlaces();
-      setHaenyeoPlaces(response);
-    } catch (error) {
-      handleError(error);
-    }
-  };
+  const { data: haenyeoPlaces } = useQuery<ReservationHaenyeoPlaces[]>({
+    queryKey: [queryKeys.haenyeoPlaces],
+    queryFn: getReservationHaenyeoPlaces,
+    initialData: [],
+  });
 
-  useEffect(() => {
-    fetchHaenyeoPlaces();
-  }, []);
+  const { data: selectedPlace } = useQuery<ReservationHaenyeoPlace | null>({
+    queryKey: [queryKeys.selectedHaenyeoPlace, selectedPlaceId],
+    queryFn: () => {
+      if (!selectedPlaceId) return Promise.resolve(null);
+      return getReservationHaenyeoPlace(selectedPlaceId);
+    },
+    enabled: !!selectedPlaceId,
+  });
 
   // 핀 클릭 핸들러
   const handlePinClick = async (placeId: number) => {
-    try {
-      const place = await getReservationHaenyeoPlace(placeId);
-      setSelectedPlace(place);
-      setShowModal('small');
-    } catch (error) {
-      handleError(error);
-    }
+    setSelectedPlaceId(placeId);
+    setShowModal('small');
   };
 
   const handleBack = () => {
@@ -51,18 +44,17 @@ export const Reservation = () => {
       setShowModal('small');
     }
     if (showModal === 'small') {
-      setSelectedPlace(null);
+      setSelectedPlaceId(null);
       setShowModal('none');
     }
   };
 
   const handleClose = () => {
-    setSelectedPlace(null);
+    setSelectedPlaceId(null);
     setShowModal('none');
   };
 
   return (
-    // 부모 컨테이너에 relative 추가
     <div className="relative h-layout-nav-height">
       <NaverMap
         selectedPlace={selectedPlace}
@@ -73,7 +65,7 @@ export const Reservation = () => {
         showModal={showModal}
       />
       {selectedPlace && (
-        <BottomSheet
+        <HaenyeoPlaceDetailSheet
           selectedPlace={selectedPlace}
           showModal={showModal}
           onMoreInfo={() => setShowModal('full')}

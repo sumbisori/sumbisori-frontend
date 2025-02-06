@@ -40,7 +40,7 @@ const getReservationHaenyeoPlaces = async (): Promise<
   return response.data;
 };
 
-const getReservationHaenyeoPlace = async (
+const getSelectedHaenyeoPlace = async (
   placeId: number,
 ): Promise<ReservationHaenyeoPlace> => {
   const response = await https.get(`/places/${placeId}`);
@@ -64,7 +64,7 @@ const cancelReservation = async (reservationId: number) => {
 
 export {
   getReservationHaenyeoPlaces,
-  getReservationHaenyeoPlace,
+  getSelectedHaenyeoPlace as getReservationHaenyeoPlace,
   postReservation,
   completeReservation,
   cancelReservation,
