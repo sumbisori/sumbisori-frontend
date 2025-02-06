@@ -50,29 +50,9 @@ export const HomeWeatherCard = ({
     }
   };
 
-  return (
-    <div className="flex flex-col items-center justify-center gap-1">
-      {!error && (
-        <div
-          className={`flex aspect-[10/7] size-full w-full min-w-[5.625rem] items-center justify-center rounded-2xl border ${STATUS_VARIANTS[status].border} ${STATUS_VARIANTS[status].background} `}
-        >
-          <div className="flex items-center gap-[0.313rem]">
-            {CardIcon(iconType)}
-            <div className="flex w-7 flex-col items-start">
-              <p
-                className={`text-[0.688rem] font-semibold leading-[13px] ${STATUS_VARIANTS[status].textColor}`}
-              >
-                {STATUS_VARIANTS[status].text}
-              </p>
-              <div className="text-center text-[1.125rem] font-semibold leading-[22px]">
-                {value}
-                {isTemperature && '°'}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      {error && (
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-1">
         <div className="flex aspect-[10/7] size-full w-full min-w-[5.625rem] items-center justify-center rounded-2xl border border-gray-card-border bg-gray-card">
           <div className="flex items-center gap-[0.313rem]">
             {CardIcon(iconType)}
@@ -88,7 +68,33 @@ export const HomeWeatherCard = ({
             </div>
           </div>
         </div>
-      )}
+        <div className="flex w-full justify-center whitespace-nowrap text-[0.875rem] text-charcoal-gray">
+          {label}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col items-center justify-center gap-1">
+      <div
+        className={`flex aspect-[10/7] size-full w-full min-w-[5.625rem] items-center justify-center rounded-2xl border ${STATUS_VARIANTS[status].border} ${STATUS_VARIANTS[status].background} `}
+      >
+        <div className="flex items-center gap-[0.313rem]">
+          {CardIcon(iconType)}
+          <div className="flex w-7 flex-col items-start">
+            <p
+              className={`text-[0.688rem] font-semibold leading-[13px] ${STATUS_VARIANTS[status].textColor}`}
+            >
+              {STATUS_VARIANTS[status].text}
+            </p>
+            <div className="text-center text-[1.125rem] font-semibold leading-[22px]">
+              {value}
+              {isTemperature && '°'}
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="flex w-full justify-center whitespace-nowrap text-[0.875rem] text-charcoal-gray">
         {label}
       </div>

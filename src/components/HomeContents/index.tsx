@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import {
   YoutubeVideoType,
   getContentsWave,
@@ -7,27 +8,21 @@ import {
   WaveSpot,
   ContentWeatherInfo,
   getContentsWeather,
-  SuitabilityStatus,
 } from '@/api/home';
 import { HomeSpotHeader } from './HomeSpotHeader';
-import { useErrorHandler } from '@/hooks/useErrorHandler';
 import { HomeYoutubeList } from '../HomeYoutubeList';
 import { motion } from 'framer-motion';
 import { HomeYoutubeVideoIframe } from '../HomeYoutubeList/HomeYoutubeVideoIframe';
 import { HomeContentsBox } from './HomeContentsBox';
-import { HomeContentsWeather } from './HomeWeather';
+import { HomeContentsWeather } from './HomeContentsWeather';
 import RefreshIcon from '@/icons/refresh.svg?react';
 import { HomeCategoryLabel, HomeCategoryBar } from './HomeCategory';
 import { HomeContentsTraining } from './HomeContentsTraining';
-import { homeTitleMessage } from '@/constant/src/homeTitleMessage';
+import { HomeSectionTitle } from '@/components/HomeContents/HomeSectionTitle';
+import { queryKeys } from '@/query';
 
 export const HomeContents = () => {
-  const { handleError } = useErrorHandler();
   const [rotationCount, setRotationCount] = useState(0);
-  const [youtubeVideos, setYoutubeVideos] = useState<YoutubeVideoType[]>([]);
-  const [selectedVideo, setSelectedVideo] = useState<YoutubeVideoType | null>(
-    null,
-  );
   const [selectedCategory, setSelectedCategory] =
     useState<HomeCategoryLabel>('home');
 
@@ -45,34 +40,48 @@ export const HomeContents = () => {
     label: '제주항',
   });
 
-  const [waveInfo, setWaveInfo] = useState<ContentWaveInfo>({
-    waveHeight: 0,
-    waterTemperature: 0,
-    observationTime: '',
-    waveHeightSuitability: 'DEFAULT',
-    waterTemperatureSuitability: 'DEFAULT',
+  const {
+    data: waveInfo,
+    isError: waveInfoError,
+    isFetching: waveInfoLoading,
+  } = useQuery<ContentWaveInfo>({
+    queryKey: [queryKeys.contentsWave, selectedSpot.spot],
+    queryFn: () => getContentsWave(selectedSpot.spot),
+    enabled: !!selectedSpot.spot,
+    initialData: {
+      waterTemperature: 0,
+      waveHeight: 0,
+      waterTemperatureSuitability: 'DEFAULT',
+      waveHeightSuitability: 'DEFAULT',
+      observationTime: '',
+    },
   });
 
-  const [waveInfoError, setWaveInfoError] = useState<boolean>(false);
-
-  const [weather, setWeather] = useState<ContentWeatherInfo>({
-    temperature: 0,
-    weatherType: 'CLEAR_SKY',
-    suitability: 'DEFAULT',
+  const {
+    data: weather,
+    isError: weatherError,
+    isFetching: weatherLoading,
+  } = useQuery<ContentWeatherInfo>({
+    queryKey: [queryKeys.contentsWeather, selectedSpot.spot],
+    queryFn: () => getContentsWeather(selectedSpot.spot),
+    enabled: !!selectedSpot.spot,
+    initialData: {
+      temperature: 0,
+      suitability: 'DEFAULT',
+      weatherType: 'CLEAR_SKY',
+    },
   });
 
-  const [weatherError, setWeatherError] = useState<boolean>(false);
-  const [weatherLoading, setWeatherLoading] = useState<boolean>(true);
-  const [waveInfoLoading, setWaveInfoLoading] = useState<boolean>(true);
-  const [youtubeLoading, setYoutubeLoading] = useState<boolean>(true);
-
-  const handlePlay = (video: YoutubeVideoType) => {
-    setSelectedVideo(video);
-  };
-
-  const handleClose = () => {
-    setSelectedVideo(null);
-  };
+  const {
+    data: youtubeVideos,
+    isFetching: youtubeLoading,
+    isError: youtubeError,
+    refetch: refetchYoutube,
+  } = useQuery<YoutubeVideoType[]>({
+    queryKey: [queryKeys.youtubeContents],
+    queryFn: () => getYoutubeContents(),
+    initialData: [],
+  });
 
   const handleCategoryChange = (category: HomeCategoryLabel) => {
     setSelectedCategory(category);
@@ -94,147 +103,6 @@ export const HomeContents = () => {
     }
   };
 
-  const fetchYoutubeContents = async () => {
-    setYoutubeLoading(true);
-    try {
-      const response = await getYoutubeContents();
-      setYoutubeVideos(response);
-      setSelectedVideo(null);
-    } catch (error) {
-      handleError(error);
-    } finally {
-      setYoutubeLoading(false);
-    }
-  };
-
-  const fetchContentsWave = async () => {
-    setWaveInfoError(false);
-    setWaveInfoLoading(true);
-    try {
-      const response = await getContentsWave(selectedSpot.spot);
-      setWaveInfo(response);
-    } catch (error) {
-      handleError(error);
-      setWaveInfoError(true);
-      setWaveInfo({
-        waveHeight: 0,
-        waterTemperature: 0,
-        observationTime: '',
-        waveHeightSuitability: 'DEFAULT',
-        waterTemperatureSuitability: 'DEFAULT',
-      });
-    } finally {
-      setWaveInfoLoading(false);
-    }
-  };
-
-  const fetchContentsWeather = async () => {
-    setWeatherError(false);
-    setWeatherLoading(true);
-    try {
-      const response = await getContentsWeather(selectedSpot.spot);
-      setWeather(response);
-    } catch (error) {
-      handleError(error);
-      setWeatherError(true);
-      setWeather({
-        temperature: 0,
-        weatherType: 'CLEAR_SKY',
-        suitability: 'DEFAULT',
-      });
-    } finally {
-      setWeatherLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchContentsWave();
-    fetchContentsWeather();
-  }, [selectedSpot.spot]);
-
-  useEffect(() => {
-    fetchYoutubeContents();
-  }, []);
-
-  // useEffect(() => {
-  //   const options = {
-  //     root: null,
-  //     rootMargin: `-47px 0px -75px 0px`,
-  //     threshold: 1.0,
-  //   };
-  //   const callback: IntersectionObserverCallback = (entries) => {
-  //     entries.forEach((entry) => {
-  //       if (entry.isIntersecting) {
-  //         const sectionId = entry.target.id;
-  //         console.log(`Section in view: ${sectionId}`); // 디버깅용 로그
-  //         switch (sectionId) {
-  //           case 'home-section':
-  //             setSelectedCategory('home');
-  //             break;
-  //           case 'training-section':
-  //             setSelectedCategory('training');
-  //             break;
-  //           case 'tv-section':
-  //             setSelectedCategory('tv');
-  //             break;
-  //           case 'sea-section':
-  //             setSelectedCategory('sea');
-  //             break;
-  //           default:
-  //             break;
-  //         }
-  //       }
-  //     });
-  //   };
-
-  //   const observer = new IntersectionObserver(callback, options);
-
-  //   const sections = [
-  //     homeRef.current,
-  //     trainingRef.current,
-  //     tvRef.current,
-  //     seaRef.current,
-  //   ];
-
-  //   sections.forEach((section) => {
-  //     if (section) {
-  //       observer.observe(section);
-  //     }
-  //   });
-
-  //   return () => {
-  //     sections.forEach((section) => {
-  //       if (section) {
-  //         observer.unobserve(section);
-  //       }
-  //     });
-  //   };
-  // }, []);
-
-  const getHomeTitle = (
-    weatherSuitability: SuitabilityStatus,
-    waterTemperatureSuitability: SuitabilityStatus,
-    waveHeightSuitability: SuitabilityStatus,
-    waveInfoError: boolean,
-    weatherError: boolean,
-  ) => {
-    if (waveInfoError || weatherError) {
-      return '정보를 불러오는 중 문제가 발생했어요';
-    }
-
-    if (
-      weatherSuitability === 'DEFAULT' ||
-      waterTemperatureSuitability === 'DEFAULT' ||
-      waveHeightSuitability === 'DEFAULT'
-    ) {
-      return null;
-    }
-
-    return homeTitleMessage[weatherSuitability][waterTemperatureSuitability][
-      waveHeightSuitability
-    ];
-  };
-
   return (
     <section className="flex flex-col bg-gray-surface" id="home-container">
       <HomeCategoryBar
@@ -249,14 +117,15 @@ export const HomeContents = () => {
       <div id="home-content-container" className="flex flex-col gap-3 p-4">
         <HomeContentsBox
           id="home-section"
-          boxTitle={getHomeTitle(
-            weather.suitability,
-            waveInfo.waterTemperatureSuitability,
-            waveInfo.waveHeightSuitability,
-            waveInfoError,
-            weatherError,
-          )}
-          boxTitleLoading={weatherLoading || waveInfoLoading}
+          boxTitle={
+            <HomeSectionTitle
+              weatherSuitability={weather.suitability}
+              waterTemperatureSuitability={waveInfo.waterTemperatureSuitability}
+              waveHeightSuitability={waveInfo.waveHeightSuitability}
+              titleError={waveInfoError || weatherError}
+              titleLoading={waveInfoLoading || weatherLoading}
+            />
+          }
           ref={homeRef}
           view={
             <HomeContentsWeather
@@ -285,7 +154,7 @@ export const HomeContents = () => {
               transition={{ duration: 0.5, ease: 'easeInOut' }}
               onClick={() => {
                 setRotationCount((prev) => prev + 1);
-                fetchYoutubeContents();
+                refetchYoutube();
               }}
             >
               <RefreshIcon className="size-5 cursor-pointer" />
@@ -294,10 +163,8 @@ export const HomeContents = () => {
           view={
             <HomeYoutubeList
               videos={youtubeVideos}
-              selectedVideo={selectedVideo}
-              onSelectToPlay={handlePlay}
-              onSelectToClose={handleClose}
               youtubeLoading={youtubeLoading}
+              youtubeError={youtubeError}
             />
           }
         />
@@ -307,7 +174,7 @@ export const HomeContents = () => {
           ref={seaRef}
           view={
             <HomeYoutubeVideoIframe
-              src={`https://www.youtube.com/embed/yoa08FUE768?autoplay=1&mute=1`}
+              src="https://www.youtube.com/embed/yoa08FUE768?autoplay=1&mute=1"
               allow="autoplay; encrypted-media"
               allowFullScreen
             />
