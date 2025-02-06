@@ -7,6 +7,7 @@ import {
   WaveSpot,
   ContentWeatherInfo,
   getContentsWeather,
+  SuitabilityStatus,
 } from '@/api/home';
 import { HomeSpotHeader } from './HomeSpotHeader';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
@@ -18,6 +19,7 @@ import { HomeContentsWeather } from './HomeWeather';
 import RefreshIcon from '@/icons/refresh.svg?react';
 import { HomeCategoryLabel, HomeCategoryBar } from './HomeCategory';
 import { HomeContentsTraining } from './HomeContentsTraining';
+import { homeTitleMessage } from '@/constant/src/homeTitleMessage';
 
 export const HomeContents = () => {
   const { handleError } = useErrorHandler();
@@ -60,6 +62,9 @@ export const HomeContents = () => {
   });
 
   const [weatherError, setWeatherError] = useState<boolean>(false);
+  const [weatherLoading, setWeatherLoading] = useState<boolean>(true);
+  const [waveInfoLoading, setWaveInfoLoading] = useState<boolean>(true);
+  const [youtubeLoading, setYoutubeLoading] = useState<boolean>(true);
 
   const handlePlay = (video: YoutubeVideoType) => {
     setSelectedVideo(video);
@@ -90,34 +95,43 @@ export const HomeContents = () => {
   };
 
   const fetchYoutubeContents = async () => {
+    setYoutubeLoading(true);
     try {
       const response = await getYoutubeContents();
       setYoutubeVideos(response);
       setSelectedVideo(null);
     } catch (error) {
       handleError(error);
+    } finally {
+      setYoutubeLoading(false);
     }
   };
 
   const fetchContentsWave = async () => {
     setWaveInfoError(false);
+    setWaveInfoLoading(true);
     try {
       const response = await getContentsWave(selectedSpot.spot);
       setWaveInfo(response);
     } catch (error) {
       handleError(error);
       setWaveInfoError(true);
+    } finally {
+      setWaveInfoLoading(false);
     }
   };
 
   const fetchContentsWeather = async () => {
     setWeatherError(false);
+    setWeatherLoading(true);
     try {
       const response = await getContentsWeather(selectedSpot.spot);
       setWeather(response);
     } catch (error) {
       handleError(error);
       setWeatherError(true);
+    } finally {
+      setWeatherLoading(false);
     }
   };
 
@@ -185,6 +199,30 @@ export const HomeContents = () => {
   //   };
   // }, []);
 
+  const getHomeTitle = (
+    weatherSuitability: SuitabilityStatus,
+    waterTemperatureSuitability: SuitabilityStatus,
+    waveHeightSuitability: SuitabilityStatus,
+    waveInfoError: boolean,
+    weatherError: boolean,
+  ) => {
+    if (waveInfoError || weatherError) {
+      return '날씨 정보를 불러오는 중 문제가 발생했어요';
+    }
+
+    if (
+      weatherSuitability === 'DEFAULT' ||
+      waterTemperatureSuitability === 'DEFAULT' ||
+      waveHeightSuitability === 'DEFAULT'
+    ) {
+      return null;
+    }
+
+    return homeTitleMessage[weatherSuitability][waterTemperatureSuitability][
+      waveHeightSuitability
+    ];
+  };
+
   return (
     <section className="flex flex-col bg-gray-surface" id="home-container">
       <HomeCategoryBar
@@ -199,7 +237,14 @@ export const HomeContents = () => {
       <div id="home-content-container" className="flex flex-col gap-3 p-4">
         <HomeContentsBox
           id="home-section"
-          title="오늘은 물질하기 딱 좋은 날씨네요!"
+          boxTitle={getHomeTitle(
+            weather.suitability,
+            waveInfo.waterTemperatureSuitability,
+            waveInfo.waveHeightSuitability,
+            waveInfoError,
+            weatherError,
+          )}
+          boxTitleLoading={weatherLoading || waveInfoLoading}
           ref={homeRef}
           view={
             <HomeContentsWeather
@@ -207,18 +252,20 @@ export const HomeContents = () => {
               weather={weather}
               waveInfoError={waveInfoError}
               weatherError={weatherError}
+              weatherLoading={weatherLoading}
+              waveInfoLoading={waveInfoLoading}
             />
           }
         />
         <HomeContentsBox
           id="training-section"
-          title="해녀 트레이닝"
+          boxTitle="해녀 트레이닝"
           ref={trainingRef}
           view={<HomeContentsTraining />}
         />
         <HomeContentsBox
           id="tv-section"
-          title="숨비채널"
+          boxTitle="숨비채널"
           ref={tvRef}
           icon={
             <motion.button
@@ -238,12 +285,13 @@ export const HomeContents = () => {
               selectedVideo={selectedVideo}
               onSelectToPlay={handlePlay}
               onSelectToClose={handleClose}
+              youtubeLoading={youtubeLoading}
             />
           }
         />
         <HomeContentsBox
           id="sea-section"
-          title="실시간 바다"
+          boxTitle="실시간 바다"
           ref={seaRef}
           view={
             <HomeYoutubeVideoIframe
