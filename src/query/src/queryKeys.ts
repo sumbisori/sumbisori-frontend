@@ -4,4 +4,5 @@ export const queryKeys = {
   youtubeContents: 'youtubeContents',
   haenyeoPlaces: 'haenyeoPlaces',
   selectedHaenyeoPlace: 'selectedHaenyeoPlace',
+  seafoods: 'seafoods',
 };

@@ -1,44 +1,58 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SeafoodCard } from '@/components/SeafoodCard';
 import { Dialog } from '@/components/Dialog';
 import { DictionarySeafood, getSeafoods } from '@/api/dictionary';
-import { useModalController } from '@/contexts/ModalContext';
-import { useErrorHandler } from '@/hooks/useErrorHandler';
+import { useModalController } from '@/contexts/src/ModalContext';
 import { IMAGE_PATHS } from '@/constant';
 import Skeleton from '@/components/Skeleton';
+import { useQuery } from '@tanstack/react-query';
+import { queryKeys } from '@/query';
 
 export const Dictionary = () => {
   const { openModal } = useModalController();
-  const { handleError } = useErrorHandler();
-  const [seafoods, setSeafoods] = useState<DictionarySeafood[]>([]);
-  const [seafoodLoading, setSeafoodLoading] = useState(true);
   const [selectedSeafood, setSelectedSeafood] =
     useState<DictionarySeafood | null>(null);
-  const fetchSeafoods = async () => {
-    try {
-      const response = await getSeafoods();
-      setSeafoods(response);
-    } catch (error) {
-      handleError(error);
-    } finally {
-      setSeafoodLoading(false);
-    }
-  };
+
+  const {
+    data: seafoods,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<DictionarySeafood[]>({
+    queryKey: [queryKeys.seafoods],
+    queryFn: getSeafoods,
+  });
 
   const handleSeafoodClick = (seafood: DictionarySeafood) => {
     setSelectedSeafood(seafood);
     openModal(`seafood-${seafood.koreanName}`);
   };
 
-  useEffect(() => {
-    fetchSeafoods();
-  }, []);
-
   return (
     <div>
       <div className="p-[1.125rem]">
         <div className="grid grid-cols-3 gap-3 rounded-lg border border-orange-200 bg-white p-3">
-          {!seafoodLoading &&
+          {isLoading &&
+            Array.from({ length: 18 }).map((_, index) => (
+              <Skeleton
+                key={index}
+                className="aspect-square"
+                width="100%"
+                height="100%"
+              />
+            ))}
+
+          {isError && (
+            <div className="col-span-3 text-center text-red-500">
+              {error instanceof Error
+                ? error.message
+                : '데이터를 불러오는 중 에러가 발생했습니다.'}
+            </div>
+          )}
+
+          {!isLoading &&
+            !isError &&
+            seafoods &&
             seafoods.map((seafood) => (
               <SeafoodCard
                 key={seafood.seafoodId}
@@ -49,22 +63,14 @@ export const Dictionary = () => {
                 onClick={() => handleSeafoodClick(seafood)}
               />
             ))}
-          {seafoodLoading &&
-            Array.from({ length: 18 }).map((_, index) => (
-              <Skeleton
-                key={index}
-                className="aspect-square"
-                width={'100%'}
-                height={'100%'}
-              />
-            ))}
         </div>
       </div>
+
       {selectedSeafood && (
         <Dialog id={`seafood-${selectedSeafood.koreanName}`}>
           <div className="flex h-full flex-col justify-between">
             <div
-              className={` ${selectedSeafood.count > 0 ? '' : 'grayscale'} relative size-[9.375rem] self-center bg-cover bg-center bg-no-repeat`}
+              className={`${selectedSeafood.count > 0 ? '' : 'grayscale'} relative size-[9.375rem] self-center bg-cover bg-center bg-no-repeat`}
               style={{
                 backgroundImage: `url(${IMAGE_PATHS.SEAFOOD}/${selectedSeafood.englishName}.svg)`,
               }}

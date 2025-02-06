@@ -4,7 +4,7 @@ import LungsIcon from '@/icons/lungs.svg?react';
 import WarningIcon from '@/icons/warning.svg?react';
 import MuscleIcon from '@/icons/muscle.svg?react';
 import { Dialog } from '../Dialog';
-import { useModalController } from '@/contexts/ModalContext';
+import { useModalController } from '@/contexts/src/ModalContext';
 import { ImageWithTextAlert } from '../ImageWithTextAlert';
 import { IMAGE_PATHS } from '@/constant';
 

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { MyPageButton } from '../MyPageButton';
 import { Dialog } from '../Dialog';
-import { useModalController } from '@/contexts/ModalContext';
+import { useModalController } from '@/contexts/src/ModalContext';
 import { API_URL } from '@/api/instance';
 import ReservationListIcon from '@/icons/my_page/reservation_list.svg?react';
 import ReviewListIcon from '@/icons/my_page/review_list.svg?react';

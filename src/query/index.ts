@@ -1,3 +1,4 @@
 import { queryKeys } from './src/queryKeys';
+import { QueryProvider } from './src/QueryProvider';
 
-export { queryKeys };
+export { queryKeys, QueryProvider };
