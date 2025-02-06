@@ -116,6 +116,13 @@ export const HomeContents = () => {
     } catch (error) {
       handleError(error);
       setWaveInfoError(true);
+      setWaveInfo({
+        waveHeight: 0,
+        waterTemperature: 0,
+        observationTime: '',
+        waveHeightSuitability: 'DEFAULT',
+        waterTemperatureSuitability: 'DEFAULT',
+      });
     } finally {
       setWaveInfoLoading(false);
     }
@@ -130,6 +137,11 @@ export const HomeContents = () => {
     } catch (error) {
       handleError(error);
       setWeatherError(true);
+      setWeather({
+        temperature: 0,
+        weatherType: 'CLEAR_SKY',
+        suitability: 'DEFAULT',
+      });
     } finally {
       setWeatherLoading(false);
     }
@@ -207,7 +219,7 @@ export const HomeContents = () => {
     weatherError: boolean,
   ) => {
     if (waveInfoError || weatherError) {
-      return '날씨 정보를 불러오는 중 문제가 발생했어요';
+      return '정보를 불러오는 중 문제가 발생했어요';
     }
 
     if (

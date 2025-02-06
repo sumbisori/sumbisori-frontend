@@ -32,7 +32,7 @@ export const HomeContentsWeather = ({
       {weatherLoading && <HomeWeatherCardSkelton />}
       {!weatherLoading && (
         <HomeWeatherCard
-          icon={<CloudIcon />}
+          iconType={weather.weatherType}
           value={roundingNumber(weather.temperature, DIGIT)}
           status={weather.suitability}
           isTemperature={true}
@@ -49,7 +49,7 @@ export const HomeContentsWeather = ({
       {!waveInfoLoading && (
         <>
           <HomeWeatherCard
-            icon={<TemperatureIcon />}
+            iconType="TEMPERATURE"
             value={roundingNumber(waveInfo.waterTemperature, DIGIT)}
             status={waveInfo.waterTemperatureSuitability}
             isTemperature={true}
@@ -57,7 +57,7 @@ export const HomeContentsWeather = ({
             error={waveInfoError}
           />
           <HomeWeatherCard
-            icon={<WavesIcon />}
+            iconType="WAVES"
             value={waveInfo.waveHeight}
             status={waveInfo.waveHeightSuitability}
             label="파고"
