@@ -83,7 +83,7 @@ export const MyPageReservation = () => {
       {reservations.length === 0 && (
         <div className="h-[25rem]">
           <ImageWithTextAlert
-            src={`${IMAGE_PATHS.ROOT}haenyeo_sad.png`}
+            src={`${IMAGE_PATHS.ROOT}/haenyeo_sad.png`}
             alt="해녀"
             text="예약 정보가 없습니다"
           />

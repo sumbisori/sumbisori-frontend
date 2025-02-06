@@ -47,7 +47,7 @@ export const MyPageContent = () => {
       </MyPageButton>
       <Dialog id="not-yet">
         <ImageWithTextAlert
-          src={`${IMAGE_PATHS.ROOT}haenyeo.png`}
+          src={`${IMAGE_PATHS.ROOT}/haenyeo.png`}
           alt="해녀"
           text={`아직 준비 중인 서비스입니다. \n 조금만 기다려주세요!`}
         />

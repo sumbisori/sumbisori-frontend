@@ -18,7 +18,7 @@ export const Header = ({ type = 'light', caption, absolute }: Props) => {
   };
   return (
     <header
-      className={`flex w-full min-w-full-layout max-w-full-layout justify-between p-[1.125rem] ${
+      className={`flex h-[3.75rem] w-full min-w-full-layout max-w-full-layout justify-between px-5 ${
         absolute ? 'absolute inset-x-0 top-0 z-20 m-auto' : 'relative'
       }`}
       style={{

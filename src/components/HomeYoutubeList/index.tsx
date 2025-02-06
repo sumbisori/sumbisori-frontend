@@ -48,7 +48,7 @@ export const HomeYoutubeList = ({
       {videos.length === 0 && !youtubeLoading && (
         <div className="h-[25rem]">
           <ImageWithTextAlert
-            src={`${IMAGE_PATHS.ROOT}haenyeo_sad.png`}
+            src={`${IMAGE_PATHS.ROOT}/haenyeo_sad.png`}
             alt="정보없음"
             text="관련 영상이 없습니다."
           />
