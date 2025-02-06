@@ -9,6 +9,7 @@ import { IconButton } from '@/components/IconButton';
 import { motion } from 'framer-motion';
 import MdCloseIcon from '@/icons/line-md_close.svg?react';
 import LeftIcon from '@/icons/left.svg?react';
+import { ShowModalType } from '.';
 
 interface NaverMapProps {
   selectedPlace: ReservationHaenyeoPlace | null;
@@ -16,7 +17,7 @@ interface NaverMapProps {
   onPinClick: (placeId: number) => void;
   onBack: () => void;
   onClose: () => void;
-  mainContainerHeight: number;
+  showModal: ShowModalType;
 }
 
 export const NaverMap = ({
@@ -25,7 +26,7 @@ export const NaverMap = ({
   onPinClick,
   onBack,
   onClose,
-  mainContainerHeight,
+  showModal,
 }: NaverMapProps) => {
   const naverMapInstance = useRef<any>(null);
   const markersRef = useRef<any[]>([]);
@@ -149,6 +150,10 @@ export const NaverMap = ({
   const handleSheetBack = () => {
     onBack();
     setTimeout(() => {
+      if (showModal === 'small') {
+        naverMapInstance.current.setCenter(initialPosition);
+        naverMapInstance.current.setZoom(initialZoom);
+      }
       naverMapInstance.current.autoResize();
     }, 50);
   };
@@ -156,8 +161,8 @@ export const NaverMap = ({
   const handleSheetClose = () => {
     onClose();
     setTimeout(() => {
-      // naverMapInstance.current.setCenter(initialPosition);
-      // naverMapInstance.current.setZoom(initialZoom);
+      naverMapInstance.current.setCenter(initialPosition);
+      naverMapInstance.current.setZoom(initialZoom);
       naverMapInstance.current.autoResize();
     }, 50);
   };
@@ -183,16 +188,14 @@ export const NaverMap = ({
     }
   }, [places]);
 
-  const bottomOffset = mainContainerHeight ? mainContainerHeight + 16 : 16;
-
-  console.log(mainContainerHeight);
+  const bottomOffset = showModal === 'none' ? 1 : 18;
 
   return (
     <motion.div className={`relative size-full flex-1`}>
       <div id="map" className="size-full" />
       <div
         id="map-controls"
-        style={{ bottom: `${bottomOffset}px` }}
+        style={{ bottom: `${bottomOffset}rem` }}
         className="absolute z-20 flex w-full items-center gap-2 px-4"
       >
         <IconButton onClick={handleRecenterToCurrentLocation}>
@@ -211,9 +214,11 @@ export const NaverMap = ({
           <IconButton onClick={handleSheetBack} className="size-6">
             <LeftIcon />
           </IconButton>
-          <IconButton onClick={handleSheetClose}>
-            <MdCloseIcon className="size-6" />
-          </IconButton>
+          {showModal === 'full' && (
+            <IconButton onClick={handleSheetClose}>
+              <MdCloseIcon className="size-6" />
+            </IconButton>
+          )}
         </div>
       )}
     </motion.div>

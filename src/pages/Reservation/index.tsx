@@ -10,6 +10,8 @@ import {
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import { NaverMap } from './NaverMap';
 
+export type ShowModalType = 'none' | 'small' | 'full';
+
 export const Reservation = () => {
   const { handleError } = useErrorHandler();
   const navigate = useNavigate();
@@ -18,8 +20,7 @@ export const Reservation = () => {
   >([]);
   const [selectedPlace, setSelectedPlace] =
     useState<ReservationHaenyeoPlace | null>(null);
-  const [showDetail, setShowDetail] = useState(false);
-  const [mainContainerHeight, setMainContainerHeight] = useState(0);
+  const [showModal, setShowModal] = useState<ShowModalType>('none');
 
   const fetchHaenyeoPlaces = async () => {
     try {
@@ -39,23 +40,25 @@ export const Reservation = () => {
     try {
       const place = await getReservationHaenyeoPlace(placeId);
       setSelectedPlace(place);
+      setShowModal('small');
     } catch (error) {
       handleError(error);
     }
   };
 
   const handleBack = () => {
-    if (showDetail) {
-      setShowDetail(false);
+    if (showModal === 'full') {
+      setShowModal('small');
     }
-    if (!showDetail && selectedPlace) {
+    if (showModal === 'small') {
       setSelectedPlace(null);
+      setShowModal('none');
     }
   };
 
   const handleClose = () => {
     setSelectedPlace(null);
-    setShowDetail(false);
+    setShowModal('none');
   };
 
   return (
@@ -67,14 +70,13 @@ export const Reservation = () => {
         onPinClick={handlePinClick}
         onBack={handleBack}
         onClose={handleClose}
-        mainContainerHeight={mainContainerHeight}
+        showModal={showModal}
       />
       {selectedPlace && (
         <BottomSheet
           selectedPlace={selectedPlace}
-          expanded={showDetail}
-          onMoreInfo={() => setShowDetail(true)}
-          setMainContainerHeight={setMainContainerHeight}
+          showModal={showModal}
+          onMoreInfo={() => setShowModal('full')}
         />
       )}
     </div>

@@ -1,24 +1,19 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ReservationHaenyeoPlace } from '@/api/reservation';
 import PhoneIcon from '@/icons/phone.svg?react';
 import MarkLinkIcon from '@/icons/mark-link.svg?react';
 import { RoundedButton } from '../RoundedButton';
 import { LargeButton } from '../LargeButton';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { ShowModalType } from '@/pages/Reservation';
 
 interface Props {
   selectedPlace: ReservationHaenyeoPlace;
-  expanded: boolean;
+  showModal: ShowModalType;
   onMoreInfo: () => void;
-  setMainContainerHeight: (height: number) => void;
 }
 
-export function BottomSheet({
-  selectedPlace,
-  expanded,
-  onMoreInfo,
-  setMainContainerHeight,
-}: Props) {
+export function BottomSheet({ selectedPlace, showModal, onMoreInfo }: Props) {
   const handlePhoneClick = () => {
     window.open(`tel:${selectedPlace.phoneNumber}`);
   };
@@ -29,27 +24,10 @@ export function BottomSheet({
 
   const mainContainerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (selectedPlace && mainContainerRef.current) {
-      const containerHeight = mainContainerRef.current.clientHeight;
-      const rootFontSize = parseFloat(
-        getComputedStyle(document.documentElement).fontSize,
-      );
-      const extraHeight = 3.5 * rootFontSize; // 3.5rem
-
-      setMainContainerHeight(containerHeight + extraHeight);
-    }
-    if (!selectedPlace) {
-      setMainContainerHeight(0);
-    }
-  }, [expanded, selectedPlace]);
-
-  console.log(selectedPlace);
-
   return (
     <div
       className={
-        !expanded
+        showModal === 'small'
           ? // 기본 모드: 하단에 고정
             'absolute bottom-0 left-0 z-100 w-full min-w-full-layout max-w-full-layout'
           : // 확장 모드: 지도 위 전체를 덮도록
@@ -57,7 +35,8 @@ export function BottomSheet({
       }
     >
       <>
-        {!expanded && ( // 기본 모드 레이아웃
+        {showModal === 'small' && (
+          // 기본 모드 레이아웃
           <motion.div
             {...unExpandedAnimation}
             ref={mainContainerRef}
@@ -114,7 +93,7 @@ export function BottomSheet({
             </div>
           </motion.div>
         )}
-        {expanded && (
+        {showModal === 'full' && (
           // 확장 모드 레이아웃
 
           <motion.div {...expandedAnimation} className="flex flex-col">
