@@ -3,7 +3,6 @@ import {
   YoutubeVideoType,
   getContentsWave,
   getYoutubeContents,
-  WaveSpotCode,
   ContentWaveInfo,
   WaveSpot,
   ContentWeatherInfo,
@@ -39,26 +38,6 @@ export const HomeContents = () => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleCategoryChange = (category: HomeCategoryLabel) => {
-    setSelectedCategory(category);
-    switch (category) {
-      case 'home':
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        break;
-      case 'training':
-        scrollToRef(trainingRef);
-        break;
-      case 'tv':
-        scrollToRef(tvRef);
-        break;
-      case 'sea':
-        scrollToRef(seaRef);
-        break;
-      default:
-        break;
-    }
-  };
-
   const [selectedSpot, setSelectedSpot] = useState<WaveSpot>({
     spot: 'jeju-harbor',
     label: '제주항',
@@ -90,6 +69,26 @@ export const HomeContents = () => {
     setSelectedVideo(null);
   };
 
+  const handleCategoryChange = (category: HomeCategoryLabel) => {
+    setSelectedCategory(category);
+    switch (category) {
+      case 'home':
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        break;
+      case 'training':
+        scrollToRef(trainingRef);
+        break;
+      case 'tv':
+        scrollToRef(tvRef);
+        break;
+      case 'sea':
+        scrollToRef(seaRef);
+        break;
+      default:
+        break;
+    }
+  };
+
   const fetchYoutubeContents = async () => {
     try {
       const response = await getYoutubeContents();
@@ -101,6 +100,7 @@ export const HomeContents = () => {
   };
 
   const fetchContentsWave = async () => {
+    setWaveInfoError(false);
     try {
       const response = await getContentsWave(selectedSpot.spot);
       setWaveInfo(response);
@@ -111,6 +111,7 @@ export const HomeContents = () => {
   };
 
   const fetchContentsWeather = async () => {
+    setWeatherError(false);
     try {
       const response = await getContentsWeather(selectedSpot.spot);
       setWeather(response);
@@ -132,7 +133,7 @@ export const HomeContents = () => {
   // useEffect(() => {
   //   const options = {
   //     root: null,
-  //     rootMargin: '-59px 0px -75px 0px',
+  //     rootMargin: `-47px 0px -75px 0px`,
   //     threshold: 1.0,
   //   };
   //   const callback: IntersectionObserverCallback = (entries) => {
@@ -195,7 +196,7 @@ export const HomeContents = () => {
         onSelectedSpot={(spot) => setSelectedSpot(spot)}
         observationTime={waveInfo.observationTime}
       />
-      <div className="flex flex-col gap-3 p-4">
+      <div id="home-content-container" className="flex flex-col gap-3 p-4">
         <HomeContentsBox
           id="home-section"
           title="오늘은 물질하기 딱 좋은 날씨네요!"
@@ -211,13 +212,13 @@ export const HomeContents = () => {
         />
         <HomeContentsBox
           id="training-section"
-          title="해녀 Training"
+          title="해녀 트레이닝"
           ref={trainingRef}
           view={<HomeContentsTraining />}
         />
         <HomeContentsBox
           id="tv-section"
-          title="숨비 TV"
+          title="숨비채널"
           ref={tvRef}
           icon={
             <motion.button

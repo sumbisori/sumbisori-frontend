@@ -29,56 +29,99 @@ export const HomeYoutube = ({
   };
 
   return (
-    <li className="flex flex-col gap-3">
-      <div className="grid grid-cols-[4fr_6fr] gap-2 rounded-sm">
-        <div className="relative">
+    <li className="flex flex-col gap-2">
+      <div className="relative">
+        {!isPlaying && (
           <img
             src={video.thumbnailUrl}
             alt={video.title}
             className="aspect-video w-full cursor-pointer rounded-md object-cover"
             onClick={handleControl}
           />
-          {isPlaying && (
-            <div className="absolute inset-0 aspect-video rounded-md bg-black opacity-60"></div>
-          )}
+        )}
+        {isPlaying && (
+          <HomeYoutubeVideoIframe
+            src={`https://www.youtube.com/embed/${selectedVideoId}?autoplay=1`}
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+          />
+        )}
+        {!isPlaying && (
           <div
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:opacity-70"
             onClick={handleControl}
           >
-            {!isPlaying && <PlayIcon className="size-10" />}
-            {isPlaying && (
-              <div className="flex items-center gap-1">
-                <span className="text-white">닫기</span>
-                <CloseIcon className="size-5" />
-              </div>
-            )}
+            <PlayIcon className="size-10" />
           </div>
-        </div>
-        <div className="flex flex-col gap-[0.1rem]">
-          <h5
-            className="cursor-pointer text-sm leading-tight text-blue-700 hover:underline"
-            onClick={() => onSelectToPlay(video)}
-          >
-            {truncateTitle(video.title, 40)}
-          </h5>
-          <div className="text-xs text-gray-600">{video.channelTitle}</div>
-          <div className="flex flex-nowrap gap-[0.1rem] text-xs text-gray-600">
-            <p>Youtube</p>
-            <p>•</p>
-            <p>{formatYoutubeDate(video.publishTime)}</p>
-            <p>•</p>
-            <p>조회수 {formatViewCount(video.viewCount)}</p>
-          </div>
+        )}
+      </div>
+      <div className="flex flex-col gap-[0.1rem]">
+        <h5
+          className="cursor-pointer text-sm leading-tight text-blue-700 hover:underline"
+          onClick={() => onSelectToPlay(video)}
+        >
+          {video.title}
+        </h5>
+        <div className="text-xs text-gray-600">{video.channelTitle}</div>
+        <div className="flex flex-nowrap gap-[0.1rem] text-xs text-gray-600">
+          <p>Youtube</p>
+          <p>•</p>
+          <p>{formatYoutubeDate(video.publishTime)}</p>
+          <p>•</p>
+          <p>조회수 {formatViewCount(video.viewCount)}</p>
         </div>
       </div>
-
-      {isPlaying && (
-        <HomeYoutubeVideoIframe
-          src={`https://www.youtube.com/embed/${selectedVideoId}?autoplay=1`}
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        />
-      )}
     </li>
+
+    // <li className="flex flex-col gap-3">
+    //   <div className="grid grid-cols-[4fr_6fr] gap-2 rounded-sm">
+    //     <div className="relative">
+    //       <img
+    //         src={video.thumbnailUrl}
+    //         alt={video.title}
+    //         className="aspect-video w-full cursor-pointer rounded-md object-cover"
+    //         onClick={handleControl}
+    //       />
+    //       {isPlaying && (
+    //         <div className="absolute inset-0 aspect-video rounded-md bg-black opacity-60"></div>
+    //       )}
+    //       <div
+    //         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:opacity-70"
+    //         onClick={handleControl}
+    //       >
+    //         {!isPlaying && <PlayIcon className="size-10" />}
+    //         {isPlaying && (
+    //           <div className="flex items-center gap-1">
+    //             <span className="text-white">닫기</span>
+    //             <CloseIcon className="size-5" />
+    //           </div>
+    //         )}
+    //       </div>
+    //     </div>
+    //     <div className="flex flex-col gap-[0.1rem]">
+    //       <h5
+    //         className="cursor-pointer text-sm leading-tight text-blue-700 hover:underline"
+    //         onClick={() => onSelectToPlay(video)}
+    //       >
+    //         {truncateTitle(video.title, 40)}
+    //       </h5>
+    //       <div className="text-xs text-gray-600">{video.channelTitle}</div>
+    //       <div className="flex flex-nowrap gap-[0.1rem] text-xs text-gray-600">
+    //         <p>Youtube</p>
+    //         <p>•</p>
+    //         <p>{formatYoutubeDate(video.publishTime)}</p>
+    //         <p>•</p>
+    //         <p>조회수 {formatViewCount(video.viewCount)}</p>
+    //       </div>
+    //     </div>
+    //   </div>
+    //   {isPlaying && (
+    //     <HomeYoutubeVideoIframe
+    //       src={`https://www.youtube.com/embed/${selectedVideoId}?autoplay=1`}
+    //       allow="autoplay; encrypted-media"
+    //       allowFullScreen
+    //     />
+    //   )}
+    // </li>
   );
 };

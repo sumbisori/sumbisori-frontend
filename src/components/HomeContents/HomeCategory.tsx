@@ -12,8 +12,8 @@ export const HomeCategoryBar = ({ onCategoryChange, value }: Props) => {
   const categories: { label: string; code: HomeCategoryLabel }[] = useMemo(
     () => [
       { label: '홈', code: 'home' },
-      { label: '해녀 Training', code: 'training' },
-      { label: '숨비 TV', code: 'tv' },
+      { label: '트레이닝', code: 'training' },
+      { label: '숨비채널', code: 'tv' },
       { label: '실시간 바다', code: 'sea' },
     ],
     [],
@@ -54,7 +54,10 @@ export const HomeCategoryBar = ({ onCategoryChange, value }: Props) => {
   }, [value]);
 
   return (
-    <nav className="sticky top-0 z-10 w-full bg-white shadow-sm">
+    <nav
+      id="home-category-bar"
+      className="sticky top-0 z-20 w-full bg-white shadow-sm"
+    >
       <div className="relative">
         <ul ref={containerRef} className="relative flex justify-between">
           {categories.map((category) => {
