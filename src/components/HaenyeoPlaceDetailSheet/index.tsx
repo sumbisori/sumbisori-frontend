@@ -6,6 +6,7 @@ import { RoundedButton } from '../RoundedButton';
 import { LargeButton } from '../LargeButton';
 import { useRef } from 'react';
 import { ShowModalType } from '@/pages/Reservation';
+import { getPlacePrice } from '@/util/getPlacePrice';
 
 interface Props {
   selectedPlace: ReservationHaenyeoPlace;
@@ -65,7 +66,11 @@ export function HaenyeoPlaceDetailSheet({
                 </div>
                 <div className="flex w-full items-center justify-between">
                   <span className="text-[1.25rem] font-bold">
-                    {selectedPlace.price.toLocaleString()}원
+                    {getPlacePrice(
+                      selectedPlace.minPrice,
+                      selectedPlace.maxPrice,
+                    )}
+                    원
                   </span>
                   <div className="flex gap-4">
                     <PhoneIcon
@@ -119,7 +124,11 @@ export function HaenyeoPlaceDetailSheet({
                 </div>
                 <div className="flex w-full items-center justify-between">
                   <span className="text-[1.25rem] font-bold">
-                    {selectedPlace.price.toLocaleString()}원
+                    {getPlacePrice(
+                      selectedPlace.minPrice,
+                      selectedPlace.maxPrice,
+                    )}
+                    원
                   </span>
                   <div className="flex gap-4">
                     <PhoneIcon

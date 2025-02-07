@@ -41,15 +41,17 @@ export interface ContentWaveInfo {
 
 export type WaveSpotCode =
   | 'jeju-harbor'
-  | 'chujado'
-  | 'gapado'
+  | 'kimnyeong'
+  | 'hado'
   | 'udo'
-  | 'jungmoon'
-  | 'yeongnak'
   | 'shinsan'
-  | 'gueom'
-  | 'wimi';
-
+  | 'wimi'
+  | 'jungmoon'
+  | 'gapado'
+  | 'yeongnak'
+  | 'sinchang'
+  | 'hyupjae'
+  | 'gueom';
 export interface WaveSpot {
   spot: WaveSpotCode;
   label: string;

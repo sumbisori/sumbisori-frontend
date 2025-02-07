@@ -1,15 +1,15 @@
 import { WaveSpot } from '@/api/home';
 import { useEffect, useState } from 'react';
 
-interface HomeChangeButtonProps {
+interface HomeChangeDropdownProps {
   spots: WaveSpot[];
   onSelectedSpot: (spot: WaveSpot) => void;
 }
 
-export const HomeChangeButton = ({
+export const HomeChangeDropdown = ({
   spots,
   onSelectedSpot,
-}: HomeChangeButtonProps) => {
+}: HomeChangeDropdownProps) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const handleSelectedSpot = (spot: WaveSpot) => {
@@ -45,12 +45,12 @@ export const HomeChangeButton = ({
       </button>
 
       {showDropdown && (
-        <div className="absolute right-0 top-full z-10 mt-1 rounded border bg-white shadow">
+        <div className="absolute right-0 top-full z-10 mt-1 h-52 overflow-auto rounded border bg-white shadow">
           <ul>
             {spots.map((spot) => (
               <li
                 key={spot.spot}
-                className="w-16 cursor-pointer whitespace-nowrap p-2 text-center text-[0.875rem] hover:bg-gray-200"
+                className="w-32 cursor-pointer whitespace-nowrap p-2 text-center text-[0.875rem] hover:bg-gray-200"
                 onClick={() => handleSelectedSpot(spot)}
               >
                 {spot.label}

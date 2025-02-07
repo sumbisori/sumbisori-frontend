@@ -1,4 +1,4 @@
-import { HomeChangeButton } from './HomeChangeButton';
+import { HomeChangeDropdown } from './HomeChangeDropdown';
 import LocationIcon from '@/icons/location.svg?react';
 import { WaveSpot } from '@/api/home';
 import { convertToTodayTime } from '@/util/convertToTodayTime';
@@ -16,14 +16,17 @@ export const HomeSpotHeader = ({
 }: Props) => {
   const spots: WaveSpot[] = [
     { spot: 'jeju-harbor', label: '제주항' },
-    { spot: 'chujado', label: '추자도' },
-    { spot: 'gapado', label: '가파도' },
+    { spot: 'kimnyeong', label: '김녕' },
+    { spot: 'hado', label: '하도' },
     { spot: 'udo', label: '우도' },
-    { spot: 'jungmoon', label: '중문' },
-    { spot: 'yeongnak', label: '영락' },
     { spot: 'shinsan', label: '신산' },
-    { spot: 'gueom', label: '구엄' },
     { spot: 'wimi', label: '위미' },
+    { spot: 'jungmoon', label: '중문' },
+    { spot: 'gapado', label: '가파도' },
+    { spot: 'yeongnak', label: '영락' },
+    { spot: 'sinchang', label: '신창' },
+    { spot: 'hyupjae', label: '협재' },
+    { spot: 'gueom', label: '구엄' },
   ];
 
   return (
@@ -37,7 +40,7 @@ export const HomeSpotHeader = ({
           {convertToTodayTime(observationTime)} 기준
         </p>
       </div>
-      <HomeChangeButton
+      <HomeChangeDropdown
         spots={spots}
         onSelectedSpot={(spot) => onSelectedSpot(spot)}
       />

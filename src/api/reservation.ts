@@ -10,7 +10,8 @@ export interface ReservationHaenyeoPlace {
   placeId: number;
   name: string;
   address: string;
-  price: number;
+  minPrice: number;
+  maxPrice: number;
   details: HaenyeoPlaceDetail[];
   imageUrl: string;
   latitude: number;
