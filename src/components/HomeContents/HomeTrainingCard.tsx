@@ -15,7 +15,7 @@ export const HomeTrainingCard = ({
   return (
     <div className="flex flex-col items-center justify-center gap-1">
       <div
-        className={`flex aspect-square size-full w-full min-w-[3.75rem] cursor-pointer items-center justify-center rounded-2xl border border-gray-card-border bg-gray-card hover:bg-gray-200`}
+        className={`flex aspect-square size-full w-full min-w-[3.125rem] cursor-pointer items-center justify-center rounded-2xl border border-gray-card-border bg-gray-card hover:bg-gray-200`}
         {...props}
       >
         {view}

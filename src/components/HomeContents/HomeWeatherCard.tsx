@@ -78,7 +78,7 @@ export const HomeWeatherCard = ({
   return (
     <div className="flex flex-col items-center justify-center gap-1">
       <div
-        className={`flex aspect-[10/7] size-full w-full min-w-[5.625rem] items-center justify-center rounded-2xl border ${STATUS_VARIANTS[status].border} ${STATUS_VARIANTS[status].background} `}
+        className={`flex aspect-[10/7] size-full min-w-[4.375rem] items-center justify-center rounded-2xl border ${STATUS_VARIANTS[status].border} ${STATUS_VARIANTS[status].background} `}
       >
         <div className="flex items-center gap-[0.313rem]">
           {CardIcon(iconType)}
@@ -88,7 +88,7 @@ export const HomeWeatherCard = ({
             >
               {STATUS_VARIANTS[status].text}
             </p>
-            <div className="text-center text-[1.125rem] font-semibold leading-[22px]">
+            <div className="text-center text-[1.125rem] font-semibold leading-[22px] max-xs:text-[1rem]">
               {value}
               {isTemperature && '°'}
             </div>
