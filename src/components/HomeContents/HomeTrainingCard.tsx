@@ -1,28 +1,24 @@
 import { ReactNode } from 'react';
+import { SquareGrayCard } from '../SquareGrayCard';
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
+interface Props {
   view: ReactNode;
   label: string;
-  type?: 'button' | 'content';
+  onClick?: () => void;
 }
 
-export const HomeTrainingCard = ({
-  type = 'content',
-  view,
-  label,
-  ...props
-}: Props) => {
+export const HomeTrainingCard = ({ view, label, onClick }: Props) => {
   return (
     <div className="flex flex-col items-center justify-center gap-1">
-      <div
-        className={`flex aspect-square size-full w-full min-w-[3.125rem] cursor-pointer items-center justify-center rounded-2xl border border-gray-card-border bg-gray-card hover:bg-gray-200`}
-        {...props}
-      >
+      <SquareGrayCard type={'button'} onClick={onClick}>
         {view}
-      </div>
-      <div className="flex w-full justify-center whitespace-nowrap text-[0.875rem] text-charcoal-gray">
+      </SquareGrayCard>
+      <label
+        className="flex w-full justify-center whitespace-nowrap text-[0.875rem] text-charcoal-gray"
+        onClick={onClick}
+      >
         {label}
-      </div>
+      </label>
     </div>
   );
 };

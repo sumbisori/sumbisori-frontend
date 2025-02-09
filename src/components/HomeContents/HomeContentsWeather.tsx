@@ -1,11 +1,6 @@
 import { ContentWaveInfo, ContentWeatherInfo } from '@/api/home';
-import { HomeTrainingCard } from './HomeTrainingCard';
-import CloudIcon from '@/icons/cloud.svg?react';
-import TemperatureIcon from '@/icons/temperature.svg?react';
-import WavesIcon from '@/icons/waves.svg?react';
 import { roundingNumber } from '@/util/roundingNumber';
 import { HomeWeatherCard } from './HomeWeatherCard';
-import Skeleton from '../Skeleton';
 import { HomeWeatherCardSkelton } from './HomeWeatherCardSkelton';
 
 interface Props {

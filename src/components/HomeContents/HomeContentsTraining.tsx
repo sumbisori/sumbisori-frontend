@@ -14,7 +14,6 @@ export const HomeContentsTraining = () => {
     <div className="grid w-full grid-cols-4 gap-4 px-4">
       <HomeTrainingCard
         label="숨참기"
-        type="button"
         view={<WindBreathIcon />}
         onClick={() => {
           openModal('not-yet');
@@ -22,7 +21,6 @@ export const HomeContentsTraining = () => {
       />
       <HomeTrainingCard
         label="폐활량"
-        type="button"
         view={<LungsIcon />}
         onClick={() => {
           openModal('not-yet');
@@ -30,7 +28,6 @@ export const HomeContentsTraining = () => {
       />
       <HomeTrainingCard
         label="다리 운동"
-        type="button"
         view={<MuscleIcon />}
         onClick={() => {
           openModal('not-yet');
@@ -38,7 +35,6 @@ export const HomeContentsTraining = () => {
       />
       <HomeTrainingCard
         label="주의사항"
-        type="button"
         view={<WarningIcon />}
         onClick={() => {
           openModal('not-yet');
