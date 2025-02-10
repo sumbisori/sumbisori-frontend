@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
-import { ReservationHaenyeoPlace } from '@/api/reservation';
+import { ReservationHaenyeoPlace } from '@/api/haenyeoPlaces';
 import PhoneIcon from '@/icons/phone.svg?react';
 import MarkLinkIcon from '@/icons/mark-link.svg?react';
 import { RoundedButton } from '../RoundedButton';
 import { LargeButton } from '../LargeButton';
 import { useRef } from 'react';
-import { ShowModalType } from '@/pages/Reservation';
+import { ShowModalType } from '@/pages/HaenyeoPlaces';
 import { getPlacePrice } from '@/util/getPlacePrice';
 import { SquareGrayCard } from '../SquareGrayCard';
 

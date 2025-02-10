@@ -1,7 +1,7 @@
 import {
   ReservationHaenyeoPlace,
   ReservationHaenyeoPlaces,
-} from '@/api/reservation';
+} from '@/api/haenyeoPlaces';
 import { useEffect, useRef } from 'react';
 import MyLocationIcon from '@/icons/my-location.svg?react';
 import ResetFocus from '@/icons/reset-focus.svg?react';

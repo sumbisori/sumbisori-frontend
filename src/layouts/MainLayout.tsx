@@ -18,7 +18,7 @@ export default function MainLayout() {
         caption: undefined,
         absolute: false,
       };
-    if (pathname === '/reservation')
+    if (pathname === '/haenyeo-places')
       return {
         type: 'dark',
         caption: undefined,

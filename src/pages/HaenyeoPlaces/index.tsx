@@ -1,20 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { HaenyeoPlaceDetailSheet } from '@/components/HaenyeoPlaceDetailSheet';
-import { useNavigate } from 'react-router-dom';
 import {
   ReservationHaenyeoPlace,
   ReservationHaenyeoPlaces,
   getReservationHaenyeoPlace,
   getReservationHaenyeoPlaces,
-} from '@/api/reservation';
-import { useErrorHandler } from '@/hooks/useErrorHandler';
+} from '@/api/haenyeoPlaces';
 import { NaverMap } from './NaverMap';
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/query';
 
 export type ShowModalType = 'none' | 'small' | 'full';
 
-export const Reservation = () => {
+export const HaenyeoPlaces = () => {
   const [showModal, setShowModal] = useState<ShowModalType>('none');
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
 

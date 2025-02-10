@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react';
-import type { ReservationHaenyeoPlaces } from '@/api/reservation';
 import { IMAGE_PATHS } from '@/constant';
+import { ReservationHaenyeoPlaces } from '@/api/haenyeoPlaces';
 
 interface UseNaverMapProps {
   places: ReservationHaenyeoPlaces[];

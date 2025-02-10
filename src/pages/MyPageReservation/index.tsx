@@ -7,7 +7,7 @@ import {
 import { SwitchReservationStatus } from '@/components/SwitchReservationStatus';
 import { MyPageReservationCard } from '@/components/MyPageReservationCard';
 import { useNavigate } from 'react-router-dom';
-import { cancelReservation, completeReservation } from '@/api/reservation';
+import { cancelReservation, completeReservation } from '@/api/haenyeoPlaces';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
 import { IMAGE_PATHS } from '@/constant';
