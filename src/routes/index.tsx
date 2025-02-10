@@ -38,8 +38,12 @@ export const Router = () => {
               element={<MyPageReservation />}
             />
           </Route>
-          {/* 모바일 레이아웃만 필요한 페이지 */}
-          <Route path="/haenyeo-places/:id" element={<HaenyeoPlacesDetail />} />
+        </Route>
+        <Route element={<MobileLayout navPadding={false} />}>
+          <Route
+            path="/haenyeo-places/:placeId"
+            element={<HaenyeoPlacesDetail />}
+          />
         </Route>
       </Routes>
     </>

@@ -1,20 +1,20 @@
-import { useState } from 'react';
-import { HaenyeoPlaceDetailSheet } from '@/components/HaenyeoPlaceDetailSheet';
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   ReservationHaenyeoPlace,
   ReservationHaenyeoPlaces,
   getReservationHaenyeoPlace,
   getReservationHaenyeoPlaces,
 } from '@/api/haenyeoPlaces';
-import { NaverMap } from './NaverMap';
-import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/query';
-
-export type ShowModalType = 'none' | 'small' | 'full';
+import { HaenyeoPlaceDetailSheet } from '@/components/HaenyeoPlaceDetailSheet';
+import { NaverMap } from '@/components/NaverMap';
 
 export const HaenyeoPlaces = () => {
-  const [showModal, setShowModal] = useState<ShowModalType>('none');
-  const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const placeIdParam = searchParams.get('placeId');
+  const selectedPlaceId = placeIdParam ? parseInt(placeIdParam, 10) : null;
 
   const { data: haenyeoPlaces } = useQuery<ReservationHaenyeoPlaces[]>({
     queryKey: [queryKeys.haenyeoPlaces],
@@ -31,25 +31,28 @@ export const HaenyeoPlaces = () => {
     enabled: !!selectedPlaceId,
   });
 
-  // 핀 클릭 핸들러
-  const handlePinClick = async (placeId: number) => {
-    setSelectedPlaceId(placeId);
-    setShowModal('small');
-  };
-
-  const handleBack = () => {
-    if (showModal === 'full') {
-      setShowModal('small');
-    }
-    if (showModal === 'small') {
-      setSelectedPlaceId(null);
-      setShowModal('none');
-    }
+  const handlePinClick = (placeId: number) => {
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      placeId: placeId.toString(),
+    });
   };
 
   const handleClose = () => {
-    setSelectedPlaceId(null);
-    setShowModal('none');
+    setSearchParams(
+      Object.fromEntries(
+        Object.entries(searchParams).filter(([key]) => key !== 'placeId'),
+      ),
+    );
+  };
+
+  const handleBack = () => {
+    handleClose();
+  };
+
+  const handleMoreInfo = () => {
+    if (!selectedPlaceId) return;
+    navigate(`/haenyeo-places/${selectedPlaceId}`);
   };
 
   return (
@@ -60,13 +63,11 @@ export const HaenyeoPlaces = () => {
         onPinClick={handlePinClick}
         onBack={handleBack}
         onClose={handleClose}
-        showModal={showModal}
       />
       {selectedPlace && (
         <HaenyeoPlaceDetailSheet
           selectedPlace={selectedPlace}
-          showModal={showModal}
-          onMoreInfo={() => setShowModal('full')}
+          onMoreInfo={handleMoreInfo}
         />
       )}
     </div>
