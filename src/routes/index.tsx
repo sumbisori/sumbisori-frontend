@@ -11,6 +11,7 @@ import { DictionaryConfirm } from '@/pages/DictionaryConfirm';
 import { MobileLayout } from '@/layouts/MobileLayout';
 import ScrollToTop from './ScrollToTop';
 import { HaenyeoPlacesDetail } from '@/pages/HaenyeoPlacesDetail';
+import { NotFound } from '@/pages/NotFound';
 
 export const Router = () => {
   return (
@@ -44,6 +45,7 @@ export const Router = () => {
             path="/haenyeo-places/:placeId"
             element={<HaenyeoPlacesDetail />}
           />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </>
