@@ -20,10 +20,12 @@ export const Router = () => {
       <Routes>
         <Route element={<MobileLayout />}>
           <Route path="/login" element={<Login />} />
+          {/* Nav 와 Header 보유 */}
           <Route element={<MainLayout />}>
             <Route path="/" element={<Navigate to="/home" />} />
             <Route path="/home" element={<Home />} />
             <Route path="/haenyeo-places" element={<HaenyeoPlaces />} />
+
             <Route path="/dictionary" element={<Dictionary />} />
             <Route
               path="/dictionary/registration"
@@ -39,13 +41,21 @@ export const Router = () => {
               element={<MyPageReservation />}
             />
           </Route>
-        </Route>
-        <Route element={<MobileLayout navPadding={false} />}>
+          {/* Nav 보유 Header 미보유 */}
+          <Route element={<MainLayout hasHeader={false} />}>
+            <Route
+              path="/haenyeo-places/:placeId"
+              element={<HaenyeoPlacesDetail />}
+            />
+          </Route>
+          {/* Nav 미보유 Header 보유 */}
+          <Route element={<MainLayout hasNavigation={false} />}></Route>
+          {/* Nav 미보유 Header 보유 */}
           <Route
-            path="/haenyeo-places/:placeId"
-            element={<HaenyeoPlacesDetail />}
-          />
-          <Route path="*" element={<NotFound />} />
+            element={<MainLayout hasHeader={false} hasNavigation={false} />}
+          >
+            <Route path="*" element={<NotFound />} />
+          </Route>
         </Route>
       </Routes>
     </>

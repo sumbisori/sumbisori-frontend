@@ -95,9 +95,12 @@ export const HaenyeoPlacesDetail = () => {
 
   return (
     <>
-      <div className="relative h-screen select-none bg-gray-100">
+      <div className="relative h-screen bg-gray-100">
         {/* 항상 보이는 배경 이미지 레이어 */}
-        <div id="place-detail-image-container">
+        <div
+          id="place-detail-image-container"
+          className="fixed inset-x-0 top-0 m-auto min-w-full-layout max-w-full-layout select-none"
+        >
           <motion.img
             src={selectedPlace.imageUrl}
             alt="place-image"
@@ -138,7 +141,7 @@ export const HaenyeoPlacesDetail = () => {
           onDragEnd={handleDragDown}
         >
           {/* 상단 정보 영역 */}
-          <div className="rounded-t-2xl bg-white">
+          <div className="sticky top-0 z-20 rounded-t-2xl bg-white shadow-sm">
             <motion.div
               className="flex h-5 items-center justify-center"
               onPointerDown={(e) => dragControls.start(e)}
@@ -191,7 +194,7 @@ export const HaenyeoPlacesDetail = () => {
           {/* 내용 영역 */}
           <motion.div
             id="expanded-place-detail"
-            className="flex flex-1 flex-col bg-gray-100"
+            className="flex flex-1 flex-col bg-gray-100 pb-nav-height"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.4 }}

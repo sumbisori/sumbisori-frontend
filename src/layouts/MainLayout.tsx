@@ -2,7 +2,15 @@ import { NavigationBar } from '@/components/NavigationBar';
 import { Header } from '@/components/Header';
 import { Outlet, useLocation } from 'react-router-dom';
 
-export default function MainLayout() {
+interface Props {
+  hasNavigation?: boolean;
+  hasHeader?: boolean;
+}
+
+export default function MainLayout({
+  hasNavigation = true,
+  hasHeader = true,
+}: Props) {
   const location = useLocation();
 
   const getHeaderType = (
@@ -75,14 +83,18 @@ export default function MainLayout() {
   const headerType = getHeaderType(location.pathname);
 
   return (
-    <div className="flex flex-1 flex-col">
-      <Header
-        type={headerType.type}
-        caption={headerType.caption}
-        absolute={headerType.absolute}
-      />
+    <div
+      className={`flex flex-1 flex-col ${hasNavigation ? 'pb-nav-height' : ''} `}
+    >
+      {hasHeader && (
+        <Header
+          type={headerType.type}
+          caption={headerType.caption}
+          absolute={headerType.absolute}
+        />
+      )}
       <Outlet />
-      <NavigationBar />
+      {hasNavigation && <NavigationBar />}
     </div>
   );
 }
