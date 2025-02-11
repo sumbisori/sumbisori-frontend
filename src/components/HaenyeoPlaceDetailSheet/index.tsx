@@ -6,8 +6,8 @@ import { RoundedButton } from '../RoundedButton';
 import { useRef } from 'react';
 import { getPlacePrice } from '@/util/getPlacePrice';
 import { useModalController } from '@/contexts/src/ModalContext';
-import { Dialog } from '../Dialog';
 import { HaenyeoPlaceReservationMethodModal } from '../HaenyeoPlaceReservationMethodModal';
+import DownArrowIcon from '@/icons/down-arrow.svg?react';
 
 interface Props {
   selectedPlace: ReservationHaenyeoPlace;
@@ -80,10 +80,11 @@ export function HaenyeoPlaceDetailSheet({ selectedPlace, onMoreInfo }: Props) {
             >
               <RoundedButton
                 buttonType="secondary"
-                styleClass="flex-1"
+                styleClass="flex-1 flex justify-center items-center gap-1"
                 onClick={onMoreInfo}
               >
                 기본정보 더보기
+                <DownArrowIcon className="stroke-black" />
               </RoundedButton>
               <RoundedButton
                 buttonType="primary"
