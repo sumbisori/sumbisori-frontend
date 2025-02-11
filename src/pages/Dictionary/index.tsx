@@ -76,7 +76,7 @@ export const Dictionary = () => {
               }}
             />
             <div
-              className={`${selectedSeafood.count > 0 ? 'border-orange-200' : 'border-gray-200'} w-full rounded-lg border py-0.5 text-center text-[1.125rem] font-bold`}
+              className={`${selectedSeafood.count > 0 ? 'border-orange-200' : 'border-gray-200'} w-full rounded-lg border py-0.5 text-center text-lg font-bold`}
             >
               {selectedSeafood.koreanName}
             </div>

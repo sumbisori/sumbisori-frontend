@@ -138,7 +138,7 @@ export const HaenyeoPlacesDetail = () => {
         {/* 내용 영역 - 스크롤 가능하게 설정 */}
         <div id="expanded-place-detail" className="flex flex-1 flex-col p-4">
           <div className="flex flex-col gap-4 rounded-2xl bg-white p-5">
-            <h3 className="text-[1.125rem] font-bold">체험 상세정보</h3>
+            <h3 className="text-lg font-bold">체험 상세정보</h3>
             <div className="flex flex-col gap-2">
               {selectedPlace.details.map((detail, index) => (
                 <div

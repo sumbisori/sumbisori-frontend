@@ -62,7 +62,7 @@ export const HomeWeatherCard = ({
               >
                 오류
               </p>
-              <div className="w-fit text-center text-[1.125rem] font-semibold leading-[22px]">
+              <div className="w-fit text-center text-lg font-semibold leading-[22px]">
                 --{isTemperature && '°'}
               </div>
             </div>
@@ -88,7 +88,7 @@ export const HomeWeatherCard = ({
             >
               {STATUS_VARIANTS[status].text}
             </p>
-            <div className="text-center text-[1.125rem] font-semibold leading-[22px] max-xs:text-[1rem]">
+            <div className="text-center text-lg font-semibold leading-[22px] max-mobile-small:text-[0.875rem] max-xs:text-[1rem]">
               {value}
               {isTemperature && '°'}
             </div>

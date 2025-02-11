@@ -200,13 +200,19 @@ export default {
         500: '500',
       },
       screens: {
-        xs: '365px',
-        sm: '460px',
-        md: '640px',
+        'mobile-small': { max: '374px' }, // 374px 이상: 작은 모바일
+        xs: '392px', // 필요에 따라 392px 이상에서 특별한 스타일 적용
+        sm: '640px', // 태블릿 이상
+        md: '768px',
         lg: '1024px',
         xl: '1280px',
         '2xl': '1536px',
-        'max-xs': { max: '350px' },
+        'max-xl': { max: '1280px' },
+        'max-lg': { max: '1024px' },
+        'max-md': { max: '768px' },
+        'max-xs': { max: '392px' }, // 374px 이하: 모바일
+        'max-mobile-small': { max: '374px' }, // 374px 이하: 작은 모바일
+        'max-sm': { max: '640px' }, // 640px 이하: 태블릿
       },
     },
   },
