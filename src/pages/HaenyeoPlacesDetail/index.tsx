@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { motion } from 'framer-motion';
+import { motion, useDragControls } from 'framer-motion';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import {
   ReservationHaenyeoPlace,
@@ -24,6 +24,7 @@ export const HaenyeoPlacesDetail = () => {
   const { openModal } = useModalController();
   const navigate = useNavigate();
   const { placeId } = useParams();
+  const dragControls = useDragControls();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleDragDown = (
@@ -32,9 +33,7 @@ export const HaenyeoPlacesDetail = () => {
   ) => {
     const threshold = 130; // 임계치 (px)
     if (info.offset.y > threshold) {
-      if (!isExpanded) {
-        navigate(`/haenyeo-places?placeId=${placeId}`);
-      }
+      navigate(`/haenyeo-places?placeId=${placeId}`);
     }
   };
 
@@ -133,6 +132,8 @@ export const HaenyeoPlacesDetail = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.3 }}
           drag="y"
+          dragListener={false}
+          dragControls={dragControls}
           dragConstraints={{ top: 0, bottom: 0 }}
           dragElastic={0.1}
           onDragEnd={handleDragDown}
@@ -141,12 +142,13 @@ export const HaenyeoPlacesDetail = () => {
           <div className="rounded-t-2xl bg-white">
             <motion.div
               className="flex h-5 items-center justify-center"
+              onPointerDown={(e) => dragControls.start(e)}
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
             >
               <DragHandleIcon
-                className="cursor-pointer stroke-gray-surface hover:stroke-gray-300"
+                className="cursor-grab stroke-gray-surface hover:stroke-gray-300"
                 strokeWidth={5}
               />
             </motion.div>
