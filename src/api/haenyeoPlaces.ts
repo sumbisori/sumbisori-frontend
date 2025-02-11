@@ -18,6 +18,7 @@ export interface ReservationHaenyeoPlace {
   longitude: number;
   phoneNumber: string;
   link: string;
+  reservationLink: null | string;
 }
 
 interface HaenyeoPlaceDetail {
