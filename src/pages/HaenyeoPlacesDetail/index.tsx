@@ -25,13 +25,12 @@ export const HaenyeoPlacesDetail = () => {
   const navigate = useNavigate();
   const { placeId } = useParams();
   const dragControls = useDragControls();
-  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleDragDown = (
     event: MouseEvent | TouchEvent | PointerEvent,
     info: { offset: { y: number } },
   ) => {
-    const threshold = 130; // 임계치 (px)
+    const threshold = 100; // 임계치 (px)
     if (info.offset.y > threshold) {
       navigate(`/haenyeo-places?placeId=${placeId}`);
     }

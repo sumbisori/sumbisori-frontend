@@ -6,7 +6,7 @@ import svgr from 'vite-plugin-svgr';
 import path from 'path';
 // https://vite.dev/config/
 export default defineConfig({
-  base: '',
+  base: '/',
   plugins: [
     react(),
     // PWA 설정
@@ -19,6 +19,10 @@ export default defineConfig({
         name: '숨비소리',
         short_name: '숨비소리',
         theme_color: '#ffffff',
+        background_color: '#ffffff',
+        orientation: 'portrait',
+        scope: '/',
+        start_url: '/',
         lang: 'ko',
         icons: [
           {
