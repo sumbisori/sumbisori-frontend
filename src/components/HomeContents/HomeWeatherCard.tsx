@@ -88,7 +88,7 @@ export const HomeWeatherCard = ({
             >
               {STATUS_VARIANTS[status].text}
             </p>
-            <div className="text-center text-lg font-semibold leading-[22px] max-mobile-small:text-[0.875rem] max-xs:text-[1rem]">
+            <div className="text-center text-lg font-semibold leading-[22px] max-xs:text-[1rem] max-mobile-small:text-[0.875rem]">
               {value}
               {isTemperature && '°'}
             </div>
