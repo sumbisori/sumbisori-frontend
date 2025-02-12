@@ -185,6 +185,7 @@ export default {
       aspectRatio: {
         '3/2': '3 / 2',
         '10/7': '10 / 7',
+        '7/3': '7 / 3',
       },
       minWidth: {
         'full-layout': '20rem',

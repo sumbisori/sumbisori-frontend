@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { SeafoodCard } from '@/components/SeafoodCard';
 import { Dialog } from '@/components/Dialog';
 import { DictionarySeafood, getSeafoods } from '@/api/dictionary';
@@ -8,7 +8,12 @@ import Skeleton from '@/components/Skeleton';
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/query';
 
+import { useDictionaryAquarium } from '@/hooks/useDictionaryAquarium';
+
 export const Dictionary = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  useDictionaryAquarium(containerRef, canvasRef, 'SeaUrchin');
   const { openModal } = useModalController();
   const [selectedSeafood, setSelectedSeafood] =
     useState<DictionarySeafood | null>(null);
@@ -30,8 +35,15 @@ export const Dictionary = () => {
 
   return (
     <div>
+      <div
+        ref={containerRef}
+        className="relative aspect-7/3 w-full rounded-b-2xl"
+      >
+        <canvas ref={canvasRef} className="size-full" />
+      </div>
       <div className="p-[1.125rem]">
-        <div className="grid grid-cols-3 gap-3 rounded-lg border border-orange-200 bg-white p-3">
+        <div></div>
+        <div className="grid grid-cols-3 gap-3 rounded-lg p-3">
           {isLoading &&
             Array.from({ length: 18 }).map((_, index) => (
               <Skeleton
