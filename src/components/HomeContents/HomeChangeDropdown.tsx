@@ -50,7 +50,7 @@ export const HomeChangeDropdown = ({
             {spots.map((spot) => (
               <li
                 key={spot.spot}
-                className="w-32 cursor-pointer whitespace-nowrap p-2 text-center text-[0.875rem] hover:bg-gray-200"
+                className="w-32 cursor-pointer whitespace-nowrap p-2 text-center text-sm hover:bg-gray-200"
                 onClick={() => handleSelectedSpot(spot)}
               >
                 {spot.label}

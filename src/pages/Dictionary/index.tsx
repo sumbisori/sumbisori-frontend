@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { SeafoodCard } from '@/components/SeafoodCard';
 import { Dialog } from '@/components/Dialog';
 import { DictionarySeafood, getSeafoods } from '@/api/dictionary';
@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/query';
 
 import { useDictionaryAquarium } from '@/hooks/useDictionaryAquarium';
+import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
 
 export const Dictionary = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -33,6 +34,11 @@ export const Dictionary = () => {
     openModal(`seafood-${seafood.koreanName}`);
   };
 
+  const seafoodCount = useMemo(
+    () => seafoods?.filter((seafood) => seafood.count > 0).length || 0,
+    [seafoods],
+  );
+
   return (
     <div>
       <div
@@ -41,41 +47,61 @@ export const Dictionary = () => {
       >
         <canvas ref={canvasRef} className="size-full" />
       </div>
-      <div className="p-[1.125rem]">
-        <div></div>
-        <div className="grid grid-cols-3 gap-3 rounded-lg p-3">
-          {isLoading &&
-            Array.from({ length: 18 }).map((_, index) => (
-              <Skeleton
-                key={index}
-                className="aspect-square"
-                width="100%"
-                height="100%"
-              />
-            ))}
-
-          {isError && (
-            <div className="col-span-3 text-center text-red-500">
-              {error instanceof Error
-                ? error.message
-                : '데이터를 불러오는 중 에러가 발생했습니다.'}
+      <div className="flex flex-col p-4">
+        <div
+          id="dictionary-subtitle"
+          className="flex w-full items-center justify-between border-b-2 border-gray-400 py-2.5"
+        >
+          <div className="flex items-center gap-2">
+            <div className="h-[1.375rem] w-2 bg-gray-700" />
+            <p className="text-sm font-medium leading-3 text-gray-800">
+              도감 달성도
+            </p>
+          </div>
+          {isLoading ? (
+            <Skeleton variant="text" width={'30px'} />
+          ) : (
+            <div className="font-semibold">
+              <span>{seafoodCount}/</span>
+              <span className="text-gray-600">18</span>
             </div>
           )}
-
-          {!isLoading &&
-            !isError &&
-            seafoods &&
-            seafoods.map((seafood) => (
-              <SeafoodCard
-                key={seafood.seafoodId}
-                isNew={false}
-                seafoodName={seafood.englishName}
-                counts={seafood.count}
-                name={seafood.koreanName}
-                onClick={() => handleSeafoodClick(seafood)}
-              />
-            ))}
         </div>
+        {!isError && (
+          <div className="grid grid-cols-3 gap-3 p-3">
+            {isLoading &&
+              Array.from({ length: 18 }).map((_, index) => (
+                <Skeleton
+                  key={index}
+                  className="aspect-square"
+                  width="100%"
+                  height="100%"
+                />
+              ))}
+
+            {!isLoading &&
+              seafoods &&
+              seafoods.map((seafood) => (
+                <SeafoodCard
+                  key={seafood.seafoodId}
+                  isNew={false}
+                  seafoodName={seafood.englishName}
+                  counts={seafood.count}
+                  name={seafood.koreanName}
+                  onClick={() => handleSeafoodClick(seafood)}
+                />
+              ))}
+          </div>
+        )}
+        {isError && (
+          <div className="flex flex-1 items-center justify-center">
+            <ImageWithTextAlert
+              src={`${IMAGE_PATHS.ROOT}/haenyeo_sad.png`}
+              alt="정보없음"
+              text="관련 영상을 불러오는 중 문제가 발생했습니다."
+            />
+          </div>
+        )}
       </div>
 
       {selectedSeafood && (

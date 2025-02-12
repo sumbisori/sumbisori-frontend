@@ -14,7 +14,7 @@ export const HomeTrainingCard = ({ view, label, onClick }: Props) => {
         {view}
       </SquareGrayCard>
       <label
-        className="flex w-full justify-center whitespace-nowrap text-[0.875rem] text-charcoal-gray"
+        className="flex w-full justify-center whitespace-nowrap text-sm text-charcoal-gray"
         onClick={onClick}
       >
         {label}

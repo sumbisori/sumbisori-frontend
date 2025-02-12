@@ -20,9 +20,7 @@ export const HomeContentsBox = forwardRef<HTMLDivElement, HomeContentsBoxProps>(
         {...props}
       >
         <div className="flex items-center justify-between p-5">
-          <h2 className="w-full text-[1.25rem] font-bold leading-6">
-            {boxTitle}
-          </h2>
+          <h2 className="w-full text-xl font-bold leading-6">{boxTitle}</h2>
           {icon}
         </div>
         <div className={`${contentClassName} px-5 pb-5`}>{view}</div>

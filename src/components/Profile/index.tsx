@@ -13,10 +13,8 @@ export const Profile = ({ userInfo }: Props) => {
         className="size-[4.5rem] rounded-full border-2 border-gray-500"
       />
       <div className="flex flex-col items-start self-center">
-        <div className="text-[1.25rem] font-semibold">
-          {userInfo.nickname} 님
-        </div>
-        <div className="text-[0.875rem]">채취 횟수 : {userInfo.count}</div>
+        <div className="text-xl font-semibold">{userInfo.nickname} 님</div>
+        <div className="text-sm">채취 횟수 : {userInfo.count}</div>
       </div>
     </div>
   );

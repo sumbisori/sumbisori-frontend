@@ -34,9 +34,9 @@ export const HomeSpotHeader = ({
       <div className="flex items-center gap-2">
         <div className="flex items-center gap-1">
           <LocationIcon />
-          <p className="text-[1rem] font-medium">{spot.label}</p>
+          <p className="text-base font-medium">{spot.label}</p>
         </div>
-        <p className="text-[0.75rem] text-gray-700">
+        <p className="text-xs text-gray-700">
           {convertToTodayTime(observationTime)} 기준
         </p>
       </div>

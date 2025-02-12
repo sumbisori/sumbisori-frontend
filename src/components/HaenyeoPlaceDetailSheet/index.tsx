@@ -49,13 +49,11 @@ export function HaenyeoPlaceDetailSheet({ selectedPlace, onMoreInfo }: Props) {
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-3">
               <div>
-                <p className="text-[1.25rem] font-bold">{selectedPlace.name}</p>
-                <p className="truncate text-[0.875rem]">
-                  {selectedPlace.address}
-                </p>
+                <p className="text-xl font-bold">{selectedPlace.name}</p>
+                <p className="truncate text-sm">{selectedPlace.address}</p>
               </div>
               <div className="flex w-full items-center justify-between">
-                <span className="text-[1.25rem] font-bold">
+                <span className="text-xl font-bold">
                   {getPlacePrice(
                     selectedPlace.minPrice,
                     selectedPlace.maxPrice,

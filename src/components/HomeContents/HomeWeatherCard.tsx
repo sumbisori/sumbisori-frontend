@@ -68,7 +68,7 @@ export const HomeWeatherCard = ({
             </div>
           </div>
         </div>
-        <div className="flex w-full justify-center whitespace-nowrap text-[0.875rem] text-charcoal-gray">
+        <div className="flex w-full justify-center whitespace-nowrap text-sm text-charcoal-gray">
           {label}
         </div>
       </div>
@@ -88,14 +88,14 @@ export const HomeWeatherCard = ({
             >
               {STATUS_VARIANTS[status].text}
             </p>
-            <div className="text-center text-lg font-semibold leading-[22px] max-xs:text-[1rem] max-mobile-small:text-[0.875rem]">
+            <div className="text-center text-lg font-semibold leading-[22px] max-xs:text-base max-mobile-small:text-sm">
               {value}
               {isTemperature && '°'}
             </div>
           </div>
         </div>
       </div>
-      <div className="flex w-full justify-center whitespace-nowrap text-[0.875rem] text-charcoal-gray">
+      <div className="flex w-full justify-center whitespace-nowrap text-sm text-charcoal-gray">
         {label}
       </div>
     </div>

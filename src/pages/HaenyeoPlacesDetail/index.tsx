@@ -129,8 +129,8 @@ export const HaenyeoPlacesDetail = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <p className="text-[1.25rem] font-bold">{selectedPlace.name}</p>
-              <p className="text-[0.875rem]">{selectedPlace.address}</p>
+              <p className="text-xl font-bold">{selectedPlace.name}</p>
+              <p className="text-sm">{selectedPlace.address}</p>
             </motion.div>
             <div
               id="expanded-place-button-container"
@@ -151,7 +151,7 @@ export const HaenyeoPlacesDetail = () => {
                 <p>네이버지도</p>
               </button>
             </div>
-            <span className="text-[1.25rem] font-bold">
+            <span className="text-xl font-bold">
               {getPlacePrice(selectedPlace.minPrice, selectedPlace.maxPrice)} 원
             </span>
           </div>
@@ -201,11 +201,11 @@ export const HaenyeoPlacesDetail = () => {
                     className="whitespace-pre-wrap"
                     size="59px"
                   >
-                    <span className="text-[0.875rem] font-medium">
+                    <span className="text-sm font-medium">
                       {splitTextByTwo(detail.title)}
                     </span>
                   </SquareGrayCard>
-                  <p className="flex-1 text-[0.875rem] text-gray-700">
+                  <p className="flex-1 text-sm text-gray-700">
                     {detail.description}
                   </p>
                 </motion.div>
