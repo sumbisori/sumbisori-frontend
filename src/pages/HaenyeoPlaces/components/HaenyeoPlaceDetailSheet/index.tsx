@@ -16,6 +16,7 @@ interface Props {
 
 export function HaenyeoPlaceDetailSheet({ selectedPlace, onMoreInfo }: Props) {
   const { openModal } = useModalController();
+
   const handlePhoneClick = (phoneNumber: string) => {
     window.open(`tel:${phoneNumber}`);
   };
@@ -39,11 +40,11 @@ export function HaenyeoPlaceDetailSheet({ selectedPlace, onMoreInfo }: Props) {
           ref={mainContainerRef}
           className="relative flex flex-col justify-between rounded-t-xl bg-white px-5 pb-4 pt-11 shadow-lg"
         >
-          <div className="absolute -top-14 left-4 rounded-2xl border border-[#F6F6F6] bg-white p-1">
+          <div className="absolute -top-14 left-4 rounded-3xl border-[5px] border-white shadow-sm">
             <img
               src={selectedPlace.imageUrl}
               alt="place-image"
-              className="size-[4.813rem] rounded-2xl"
+              className="size-[4.813rem] rounded-3xl"
             />
           </div>
           <div className="flex flex-col gap-8">

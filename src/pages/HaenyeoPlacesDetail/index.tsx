@@ -119,7 +119,7 @@ export const HaenyeoPlacesDetail = () => {
         open={bottomSheetOpen}
         blocking={false}
         customSnapPoints={['top', 'middle']}
-        onDismiss={() => navigate('/haenyeo-places')}
+        onDismiss={() => navigate(`/haenyeo-places?placeId=${placeId}`)}
         expandOnContentDrag={true}
         skipInitialTransition={true}
         header={

@@ -21,7 +21,7 @@ export const HomeSectionTitle = ({
     return <Skeleton variant="text" width="100%" height="1.5rem" />;
   }
   if (titleError) {
-    return <span>정보를 불러오는 중 문제가 발생했어요</span>;
+    return <span>데이터가 존재하지 않아요</span>;
   }
 
   if (
