@@ -19,7 +19,8 @@
     "matter-js": "^0.20.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.27.0"
+    "react-router-dom": "^6.27.0",
+    "react-spring-bottom-sheet": "^3.4.1"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.59.7",
