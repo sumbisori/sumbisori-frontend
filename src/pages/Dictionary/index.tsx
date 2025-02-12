@@ -1,78 +1,90 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { SeafoodCard } from '@/components/SeafoodCard';
 import { Dialog } from '@/components/Dialog';
 import { DictionarySeafood, getSeafoods } from '@/api/dictionary';
-import { useModalController } from '@/contexts/ModalContext';
-import { useErrorHandler } from '@/hooks/useErrorHandler';
+import { useModalController } from '@/contexts/src/ModalContext';
+import { IMAGE_PATHS } from '@/constant';
+import Skeleton from '@/components/Skeleton';
+import { useQuery } from '@tanstack/react-query';
+import { queryKeys } from '@/query';
+import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
+import { DictionaryTitle } from '@/pages/Dictionary/components/DictionaryTitle';
+import { DictionarySubtitle } from '@/pages/Dictionary/components/DictionarySubtitle';
+import { DictionaryDialog } from '@/pages/Dictionary/components/DictionaryDialog';
+import { DictionaryAquarium } from './components/DictionaryAquarium';
 
 export const Dictionary = () => {
   const { openModal } = useModalController();
-  const { handleError } = useErrorHandler();
-  const [seafoods, setSeafoods] = useState<DictionarySeafood[]>([]);
   const [selectedSeafood, setSelectedSeafood] =
     useState<DictionarySeafood | null>(null);
-  const fetchSeafoods = async () => {
-    try {
-      const response = await getSeafoods();
-      setSeafoods(response);
-    } catch (error) {
-      handleError(error);
-    }
-  };
+  const {
+    data: seafoods,
+    isLoading,
+    isError,
+  } = useQuery<DictionarySeafood[]>({
+    queryKey: [queryKeys.seafoods],
+    queryFn: getSeafoods,
+  });
 
   const handleSeafoodClick = (seafood: DictionarySeafood) => {
     setSelectedSeafood(seafood);
     openModal(`seafood-${seafood.koreanName}`);
   };
 
-  useEffect(() => {
-    fetchSeafoods();
-  }, []);
+  const seafoodCount = useMemo(
+    () => seafoods?.filter((seafood) => seafood.count > 0).length || 0,
+    [seafoods],
+  );
+
+  const seafoodPercentage = useMemo(() => {
+    return ((seafoodCount / 18) * 100).toFixed(2);
+  }, [seafoodCount]);
 
   return (
     <div>
-      <div className="p-[1.125rem]">
-        <div className="grid grid-cols-3 gap-3 rounded-lg border border-orange-200 bg-white p-3">
-          {seafoods.map((seafood) => (
-            <SeafoodCard
-              key={seafood.seafoodId}
-              isNew={false}
-              seafoodName={seafood.englishName}
-              counts={seafood.count}
-              name={seafood.koreanName}
-              onClick={() => handleSeafoodClick(seafood)}
-            />
-          ))}
-        </div>
-      </div>
-      {selectedSeafood && (
-        <Dialog id={`seafood-${selectedSeafood.koreanName}`}>
-          <div className="flex h-full flex-col justify-between">
-            <div
-              className={` ${selectedSeafood.count > 0 ? '' : 'grayscale'} relative size-[9.375rem] self-center bg-cover bg-center bg-no-repeat`}
-              style={{
-                backgroundImage:
-                  'url(/assets/images/Seafoods/' +
-                  selectedSeafood.englishName +
-                  '.svg)',
-              }}
-            />
-            <div
-              className={`${selectedSeafood.count > 0 ? 'border-orange-200' : 'border-gray-200'} w-full rounded-lg border py-0.5 text-center text-[1.125rem] font-bold`}
-            >
-              {selectedSeafood.koreanName}
-            </div>
-            <div className="min-h-20 border-b-2 py-3 text-center text-[0.938rem]">
-              {selectedSeafood.count > 0 ? selectedSeafood.description : '???'}
-            </div>
-            <div className="text-center text-sm">
-              채취시기 |{' '}
-              {selectedSeafood.insDt
-                ? selectedSeafood.insDt
-                : '아직 잡지 못했어요'}
-            </div>
+      <DictionaryAquarium favoriteSeafoodName="SeaUrchin" />
+      <div className="flex flex-col p-4">
+        <DictionaryTitle seafoodPercentage={seafoodPercentage} />
+        <DictionarySubtitle seafoodCount={seafoodCount} isLoading={isLoading} />
+        {!isError && (
+          <div className="grid grid-cols-3 gap-3 p-3">
+            {isLoading &&
+              Array.from({ length: 18 }).map((_, index) => (
+                <Skeleton
+                  key={index}
+                  className="aspect-square"
+                  width="100%"
+                  height="100%"
+                />
+              ))}
+
+            {!isLoading &&
+              seafoods &&
+              seafoods.map((seafood) => (
+                <SeafoodCard
+                  key={seafood.seafoodId}
+                  isNew={false}
+                  seafoodName={seafood.englishName}
+                  counts={seafood.count}
+                  name={seafood.koreanName}
+                  onClick={() => handleSeafoodClick(seafood)}
+                />
+              ))}
           </div>
-        </Dialog>
+        )}
+        {isError && (
+          <div className="flex flex-1 items-center justify-center">
+            <ImageWithTextAlert
+              src={`${IMAGE_PATHS.ROOT}/haenyeo_sad.png`}
+              alt="정보없음"
+              text="관련 영상을 불러오는 중 문제가 발생했습니다."
+            />
+          </div>
+        )}
+      </div>
+
+      {selectedSeafood && (
+        <DictionaryDialog selectedSeafood={selectedSeafood} />
       )}
     </div>
   );

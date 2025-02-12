@@ -30,9 +30,9 @@ export const MyPageReservationCard = ({
       <div className="flex gap-2">
         <img src={imageSrc} alt="img" className="size-[4.5rem] rounded-lg" />
         <div className="flex h-[4.5rem] flex-col">
-          <p className="text-[1.25rem] font-semibold tracking-tight">{title}</p>
+          <p className="text-xl font-semibold tracking-tight">{title}</p>
           <p className="w-[16.625rem] truncate text-[0.625rem]">{address}</p>
-          <p className="text-[1rem] font-bold">
+          <p className="text-base font-bold">
             {fullDate} · {people}명
           </p>
         </div>
@@ -83,7 +83,7 @@ const MyPageButton = ({
 }: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (
     <button
-      className="w-full cursor-pointer rounded-md border border-[#gray-200] bg-gray-000 px-2 py-1 text-[1rem] text-[#B1B1B1] transition-colors duration-200 ease-in-out hover:border-[#007AFF] hover:bg-[#ebf5ff] hover:text-[#007AFF]"
+      className="w-full cursor-pointer rounded-md border border-[#gray-200] bg-gray-000 px-2 py-1 text-base text-[#B1B1B1] transition-colors duration-200 ease-in-out hover:border-[#007AFF] hover:bg-[#ebf5ff] hover:text-[#007AFF]"
       {...props}
     >
       {children}

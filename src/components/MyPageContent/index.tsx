@@ -1,12 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { MyPageButton } from '../MyPageButton';
 import { Dialog } from '../Dialog';
-import { useModalController } from '@/contexts/ModalContext';
+import { useModalController } from '@/contexts/src/ModalContext';
 import { API_URL } from '@/api/instance';
 import ReservationListIcon from '@/icons/my_page/reservation_list.svg?react';
 import ReviewListIcon from '@/icons/my_page/review_list.svg?react';
 import SettingIcon from '@/icons/my_page/setting.svg?react';
 import LogoutIcon from '@/icons/my_page/logout.svg?react';
+import { ImageWithTextAlert } from '../ImageWithTextAlert';
+import { IMAGE_PATHS } from '@/constant';
 
 export const MyPageContent = () => {
   const { openModal } = useModalController();
@@ -44,12 +46,11 @@ export const MyPageContent = () => {
         로그아웃
       </MyPageButton>
       <Dialog id="not-yet">
-        <div className="flex size-full flex-col items-center justify-center text-center text-lg font-medium text-gray-900">
-          <img src="/assets/images/haenyeo.png"></img>
-          <span className="whitespace-pre-wrap">
-            {'아직 준비 중인 서비스입니다. \n 조금만 기다려주세요!'}
-          </span>
-        </div>
+        <ImageWithTextAlert
+          src={`${IMAGE_PATHS.ROOT}/haenyeo.png`}
+          alt="해녀"
+          text={`아직 준비 중인 서비스입니다. \n 조금만 기다려주세요!`}
+        />
       </Dialog>
     </div>
   );

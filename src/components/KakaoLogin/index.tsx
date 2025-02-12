@@ -1,13 +1,11 @@
+import { API_URL } from '@/api/instance';
 import KakaoLoginButton from '@/icons/kakao-login.svg?react';
 
-interface Props extends React.AnchorHTMLAttributes<HTMLAnchorElement> {}
-
-export const KakaoLogin = ({ ...props }: Props) => {
+export const KakaoLogin = () => {
   return (
     <a
-      href="https://api.sumbisori.site/api/oauth2/authorization/kakao"
+      href={`${API_URL}/oauth2/authorization/kakao`}
       className="block h-[2.813rem] w-[18.75rem] bg-cover bg-center bg-no-repeat"
-      {...props}
     >
       <KakaoLoginButton className="size-full" />
     </a>

@@ -15,7 +15,7 @@ export const OptionsInput = ({
 }: Props) => {
   return (
     <div className="flex flex-col gap-[0.938rem]">
-      <div className="block text-[0.875rem] font-semibold text-gray-900">
+      <div className="block text-sm font-semibold text-gray-900">
         {inputLabel}
       </div>
       <div className="hide-scroll flex gap-2.5 overflow-x-auto">

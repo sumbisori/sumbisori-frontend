@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { LargeButton } from '@/components/LargeButton';
 import ArrowRight2 from '@/icons/arrow-right2.svg?react';
+import { IMAGE_PATHS } from '@/constant';
 
 export const DictionaryConfirm = () => {
   const params = useParams();
@@ -12,7 +13,7 @@ export const DictionaryConfirm = () => {
           className={`relative size-[9.375rem] self-center bg-cover bg-center bg-no-repeat`}
           style={{
             backgroundImage:
-              'url(/assets/images/Seafoods/' + params.seafood + '.svg)',
+              `url(${IMAGE_PATHS.SEAFOOD}` + params.seafood + '.svg)',
           }}
         />
         <div className="flex flex-col gap-3 text-center">

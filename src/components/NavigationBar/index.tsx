@@ -25,7 +25,7 @@ export const NavigationBar = () => {
     },
     {
       label: '예약',
-      path: '/reservation',
+      path: '/haenyeo-places',
       activeIcon: <NavIcon2Active />,
       inactiveIcon: <NavIcon2Inactive />,
     },

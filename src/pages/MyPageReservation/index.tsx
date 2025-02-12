@@ -4,11 +4,13 @@ import {
   getReservationCount,
   getReservationList,
 } from '@/api/myPage';
-import { SwitchReservationStatus } from '@/components/SwitchReservationStatus';
+import { SwitchReservationStatus } from '@/pages/MyPageReservation/components/SwitchReservationStatus';
 import { MyPageReservationCard } from '@/components/MyPageReservationCard';
 import { useNavigate } from 'react-router-dom';
-import { cancelReservation, completeReservation } from '@/api/reservation';
+import { cancelReservation, completeReservation } from '@/api/haenyeoPlaces';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
+import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
+import { IMAGE_PATHS } from '@/constant';
 
 export const MyPageReservation = () => {
   const { handleError } = useErrorHandler();
@@ -79,9 +81,12 @@ export const MyPageReservation = () => {
       </div>
 
       {reservations.length === 0 && (
-        <div className="flex h-[25rem] w-full flex-col items-center justify-center text-lg font-bold text-gray-900">
-          예약 정보가 없습니다
-          <img src="/assets/images/haenyeo_sad.png"></img>
+        <div className="h-[25rem]">
+          <ImageWithTextAlert
+            src={`${IMAGE_PATHS.ROOT}/haenyeo_sad.png`}
+            alt="해녀"
+            text="예약 정보가 없습니다"
+          />
         </div>
       )}
       <div className="flex flex-col overflow-auto">

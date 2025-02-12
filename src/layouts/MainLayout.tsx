@@ -1,8 +1,17 @@
 import { NavigationBar } from '@/components/NavigationBar';
 import { Header } from '@/components/Header';
 import { Outlet, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
-export default function MainLayout() {
+interface Props {
+  hasNavigation?: boolean;
+  hasHeader?: boolean;
+}
+
+export default function MainLayout({
+  hasNavigation = true,
+  hasHeader = true,
+}: Props) {
   const location = useLocation();
 
   const getHeaderType = (
@@ -18,7 +27,7 @@ export default function MainLayout() {
         caption: undefined,
         absolute: false,
       };
-    if (pathname === '/reservation')
+    if (pathname === '/haenyeo-places')
       return {
         type: 'dark',
         caption: undefined,
@@ -75,14 +84,25 @@ export default function MainLayout() {
   const headerType = getHeaderType(location.pathname);
 
   return (
-    <div className="flex flex-1 flex-col">
-      <Header
-        type={headerType.type}
-        caption={headerType.caption}
-        absolute={headerType.absolute}
-      />
-      <Outlet />
-      <NavigationBar />
+    <div
+      className={`flex flex-1 flex-col ${hasNavigation ? 'pb-nav-height' : ''} `}
+    >
+      {hasHeader && (
+        <Header
+          type={headerType.type}
+          caption={headerType.caption}
+          absolute={headerType.absolute}
+        />
+      )}
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, ease: 'easeInOut' }}
+      >
+        <Outlet />
+      </motion.div>
+      {hasNavigation && <NavigationBar />}
     </div>
   );
 }

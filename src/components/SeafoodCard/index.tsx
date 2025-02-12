@@ -1,3 +1,5 @@
+import { IMAGE_PATHS } from '@/constant';
+
 interface Props {
   seafoodName: string;
   isNew: boolean;
@@ -16,7 +18,7 @@ export const SeafoodCard = (props: Props) => {
       }
     >
       <img
-        src={`/assets/images/Seafoods/${props.seafoodName}.svg`}
+        src={`${IMAGE_PATHS.SEAFOOD}/${props.seafoodName}.svg`}
         alt={props.name}
         className="size-full"
       />

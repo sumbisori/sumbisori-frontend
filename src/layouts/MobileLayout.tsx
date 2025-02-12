@@ -4,14 +4,14 @@ import { Outlet } from 'react-router-dom';
 
 export const MobileLayout = () => {
   return (
-    <motion.main {...animationSettings} className="h-full">
+    <div className="h-full">
       <FullPageLogo />
       <section
-        className={`m-auto flex min-h-full w-full min-w-full-layout max-w-full-layout flex-col bg-gray-000 pb-nav-height`}
+        className={`m-auto flex min-h-full w-full min-w-full-layout max-w-full-layout flex-col bg-gray-000`}
       >
         <Outlet />
       </section>
-    </motion.main>
+    </div>
   );
 };
 

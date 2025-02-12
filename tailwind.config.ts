@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   theme: {
     extend: {
       fontFamily: {
@@ -181,12 +184,36 @@ export default {
       },
       aspectRatio: {
         '3/2': '3 / 2',
+        '10/7': '10 / 7',
+        '7/3': '7 / 3',
       },
       minWidth: {
         'full-layout': '20rem',
       },
       maxWidth: {
         'full-layout': '26.875rem',
+      },
+      zIndex: {
+        100: '100',
+        200: '200',
+        300: '300',
+        400: '400',
+        500: '500',
+      },
+      screens: {
+        'mobile-small': { max: '374px' }, // 374px 이상: 작은 모바일
+        xs: '392px', // 필요에 따라 392px 이상에서 특별한 스타일 적용
+        sm: '640px', // 태블릿 이상
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1536px',
+        'max-xl': { max: '1280px' },
+        'max-lg': { max: '1024px' },
+        'max-md': { max: '768px' },
+        'max-xs': { max: '392px' }, // 374px 이하: 모바일
+        'max-mobile-small': { max: '374px' }, // 374px 이하: 작은 모바일
+        'max-sm': { max: '640px' }, // 640px 이하: 태블릿
       },
     },
   },

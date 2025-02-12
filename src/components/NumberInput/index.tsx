@@ -13,7 +13,7 @@ export const NumberInput = ({
   return (
     <div className="flex flex-col gap-2.5">
       <label
-        className="block text-[0.875rem] font-semibold text-gray-900"
+        className="block text-sm font-semibold text-gray-900"
         htmlFor={props.id}
       >
         {inputLabel}
@@ -25,10 +25,10 @@ export const NumberInput = ({
           max={20}
           value={value}
           onChange={onChange}
-          className="h-10 w-20 rounded-md border border-gray-050 bg-gray-100 px-4 text-[0.875rem] text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
+          className="h-10 w-20 rounded-md border border-gray-050 bg-gray-100 px-4 text-sm text-gray-700 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300"
           {...props}
         />
-        <p className="text-[0.875rem]">명</p>
+        <p className="text-sm">명</p>
       </div>
     </div>
   );
