@@ -11,6 +11,7 @@ import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
 import { DictionaryTitle } from '@/pages/Dictionary/components/DictionaryTitle';
 import { DictionarySubtitle } from '@/pages/Dictionary/components/DictionarySubtitle';
 import { DictionaryDialog } from '@/pages/Dictionary/components/DictionaryDialog';
+import { DictionaryAquarium } from './components/DictionaryAquarium';
 
 export const Dictionary = () => {
   const { openModal } = useModalController();
@@ -41,6 +42,7 @@ export const Dictionary = () => {
 
   return (
     <div>
+      <DictionaryAquarium favoriteSeafoodName="SeaUrchin" />
       <div className="flex flex-col p-4">
         <DictionaryTitle seafoodPercentage={seafoodPercentage} />
         <DictionarySubtitle seafoodCount={seafoodCount} isLoading={isLoading} />

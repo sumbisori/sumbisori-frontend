@@ -1,10 +1,14 @@
 import { useDictionaryAquarium } from '@/hooks/useDictionaryAquarium';
 import { useRef } from 'react';
 
-export const DictionaryAquarium = () => {
+interface Props {
+  favoriteSeafoodName: string;
+}
+
+export const DictionaryAquarium = ({ favoriteSeafoodName }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  useDictionaryAquarium(containerRef, canvasRef, 'SeaUrchin');
+  useDictionaryAquarium(containerRef, canvasRef, favoriteSeafoodName);
   return (
     <div
       ref={containerRef}
