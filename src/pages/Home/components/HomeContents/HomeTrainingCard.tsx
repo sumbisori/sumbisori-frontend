@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { SquareGrayCard } from '../SquareGrayCard';
+import { SquareGrayCard } from '../../../../components/SquareGrayCard';
 
 interface Props {
   view: ReactNode;

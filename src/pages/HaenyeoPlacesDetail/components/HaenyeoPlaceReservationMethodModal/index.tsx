@@ -1,5 +1,5 @@
 import { ReservationHaenyeoPlace } from '@/api/haenyeoPlaces';
-import { Dialog } from '../Dialog';
+import { Dialog } from '../../../../components/Dialog';
 interface Props {
   selectedPlace: ReservationHaenyeoPlace;
   onPhoneClick: (phoneNumber: string) => void;

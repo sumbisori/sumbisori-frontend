@@ -2,11 +2,11 @@ import { motion } from 'framer-motion';
 import { ReservationHaenyeoPlace } from '@/api/haenyeoPlaces';
 import PhoneIcon from '@/icons/phone.svg?react';
 import MarkLinkIcon from '@/icons/mark-link.svg?react';
-import { RoundedButton } from '../RoundedButton';
+import { RoundedButton } from '../../../../components/RoundedButton';
 import { useRef } from 'react';
 import { getPlacePrice } from '@/util/getPlacePrice';
 import { useModalController } from '@/contexts/src/ModalContext';
-import { HaenyeoPlaceReservationMethodModal } from '../HaenyeoPlaceReservationMethodModal';
+import { HaenyeoPlaceReservationMethodModal } from '../../../HaenyeoPlacesDetail/components/HaenyeoPlaceReservationMethodModal';
 import DownArrowIcon from '@/icons/down-arrow.svg?react';
 
 interface Props {

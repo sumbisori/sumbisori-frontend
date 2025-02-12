@@ -1,5 +1,5 @@
 import { forwardRef, ReactNode } from 'react';
-import Skeleton from '../Skeleton';
+import Skeleton from '../../../../components/Skeleton';
 
 interface HomeContentsBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   view: ReactNode;

@@ -4,7 +4,7 @@ import {
   getReservationCount,
   getReservationList,
 } from '@/api/myPage';
-import { SwitchReservationStatus } from '@/components/SwitchReservationStatus';
+import { SwitchReservationStatus } from '@/pages/MyPageReservation/components/SwitchReservationStatus';
 import { MyPageReservationCard } from '@/components/MyPageReservationCard';
 import { useNavigate } from 'react-router-dom';
 import { cancelReservation, completeReservation } from '@/api/haenyeoPlaces';

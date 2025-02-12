@@ -3,9 +3,9 @@ import WindBreathIcon from '@/icons/wind-breath.svg?react';
 import LungsIcon from '@/icons/lungs.svg?react';
 import WarningIcon from '@/icons/warning.svg?react';
 import MuscleIcon from '@/icons/muscle.svg?react';
-import { Dialog } from '../Dialog';
+import { Dialog } from '../../../../components/Dialog';
 import { useModalController } from '@/contexts/src/ModalContext';
-import { ImageWithTextAlert } from '../ImageWithTextAlert';
+import { ImageWithTextAlert } from '../../../../components/ImageWithTextAlert';
 import { IMAGE_PATHS } from '@/constant';
 
 export const HomeContentsTraining = () => {

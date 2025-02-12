@@ -1,6 +1,6 @@
 import { SuitabilityStatus } from '@/api/home';
 import { homeTitleMessage } from '@/constant/src/homeTitleMessage';
-import Skeleton from '../Skeleton';
+import Skeleton from '../../../../components/Skeleton';
 
 interface HomeTitle {
   weatherSuitability: SuitabilityStatus;

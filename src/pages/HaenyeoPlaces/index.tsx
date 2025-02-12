@@ -7,7 +7,7 @@ import {
   getReservationHaenyeoPlaces,
 } from '@/api/haenyeoPlaces';
 import { queryKeys } from '@/query';
-import { HaenyeoPlaceDetailSheet } from '@/components/HaenyeoPlaceDetailSheet';
+import { HaenyeoPlaceDetailSheet } from '@/pages/HaenyeoPlaces/components/HaenyeoPlaceDetailSheet';
 import { NaverMap } from '@/components/NaverMap';
 
 export const HaenyeoPlaces = () => {

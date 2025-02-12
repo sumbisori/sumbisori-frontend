@@ -17,7 +17,7 @@ import LeftIcon from '@/icons/left.svg?react';
 import MdCloseIcon from '@/icons/line-md_close.svg?react';
 import { Spinner } from '@/components/Spinner';
 import { useModalController } from '@/contexts/src/ModalContext';
-import { HaenyeoPlaceReservationMethodModal } from '@/components/HaenyeoPlaceReservationMethodModal';
+import { HaenyeoPlaceReservationMethodModal } from '@/pages/HaenyeoPlacesDetail/components/HaenyeoPlaceReservationMethodModal';
 import { BottomSheet } from '@/components/BottomSheet';
 
 export const HaenyeoPlacesDetail = () => {
