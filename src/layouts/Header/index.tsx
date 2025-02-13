@@ -16,15 +16,16 @@ export const Header = ({ type = 'light', caption, absolute }: Props) => {
   const handleNavigate = () => {
     navigate('/home');
   };
+
   return (
     <header
-      className={`flex h-[3.75rem] w-full min-w-full-layout max-w-full-layout justify-between px-5 ${
-        absolute ? 'absolute inset-x-0 top-0 z-20 m-auto' : 'relative'
-      }`}
-      style={{
-        textAlign: 'center', // 텍스트 정렬
-        lineHeight: 'normal', // 텍스트의 줄 간격을 고정
-      }}
+      className={clsx(
+        'flex h-[3.75rem] w-full min-w-full-layout max-w-full-layout justify-between px-5',
+        {
+          'absolute inset-x-0 top-0 z-20 m-auto': absolute,
+          relative: !absolute,
+        },
+      )}
     >
       <div className="flex items-center">
         {type === 'dark' ? (
