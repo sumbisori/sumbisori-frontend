@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { MyPageButton } from '../MyPageButton';
-import { Dialog } from '../Dialog';
+import { Dialog } from '../../../../components/Dialog';
 import { useModalController } from '@/contexts/src/ModalContext';
 import { API_URL } from '@/api/instance';
 import ReservationListIcon from '@/icons/my_page/reservation_list.svg?react';
 import ReviewListIcon from '@/icons/my_page/review_list.svg?react';
 import SettingIcon from '@/icons/my_page/setting.svg?react';
 import LogoutIcon from '@/icons/my_page/logout.svg?react';
-import { ImageWithTextAlert } from '../ImageWithTextAlert';
+import { ImageWithTextAlert } from '../../../../components/ImageWithTextAlert';
 import { IMAGE_PATHS } from '@/constant';
 
 export const MyPageContent = () => {

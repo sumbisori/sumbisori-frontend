@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { HaenyeoPlaceDetail } from '@/api/haenyeoPlaces';
 import PhoneIcon from '@/icons/phone.svg?react';
 import MarkLinkIcon from '@/icons/mark-link.svg?react';
-import { RoundedButton } from '../../../../components/RoundedButton';
+import { RoundedButton } from '@/components/RoundedButton';
 import { useRef } from 'react';
 import { getPlacePrice } from '@/util/getPlacePrice';
 import { useModalController } from '@/contexts/src/ModalContext';

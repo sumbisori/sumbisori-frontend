@@ -16,12 +16,12 @@ export interface Props {
   variant?: 'text' | 'square' | 'circle';
 }
 
-const Skeleton: React.FC<Props> = ({
+const Skeleton = ({
   className = '',
   width = '100%',
   height = '1em',
   variant = 'square',
-}) => {
+}: Props) => {
   // 기본 Tailwind 클래스: 회색 배경과 펄스 애니메이션
   const baseClasses = 'bg-gray-300 animate-pulse';
 

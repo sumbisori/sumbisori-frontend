@@ -9,17 +9,20 @@ import {
   ContentWeatherInfo,
   getContentsWeather,
 } from '@/api/home';
-import { HomeSpotHeader } from './HomeSpotHeader';
-import { HomeYoutubeList } from '../../../../components/HomeYoutubeList';
+
+import { HomeYoutubeList } from '../HomeYoutubeList';
 import { motion } from 'framer-motion';
-import { HomeYoutubeVideoIframe } from '../../../../components/HomeYoutubeList/HomeYoutubeVideoIframe';
-import { HomeContentsBox } from './HomeContentsBox';
-import { HomeContentsWeather } from './HomeContentsWeather';
+import { HomeYoutubeVideoIframe } from '../HomeYoutubeVideoIframe';
+
 import RefreshIcon from '@/icons/refresh.svg?react';
-import { HomeCategoryLabel, HomeCategoryBar } from './HomeCategory';
-import { HomeContentsTraining } from './HomeContentsTraining';
-import { HomeSectionTitle } from '@/pages/Home/components/HomeContents/HomeSectionTitle';
+
 import { queryKeys } from '@/query';
+import { HomeContentsBox } from '../HomeContentsBox';
+import { HomeSpotHeader } from '../HomeSpotHeader';
+import { HomeCategoryBar, HomeCategoryLabel } from '../HomeCategory';
+import { HomeSectionTitle } from '../HomeSectionTitle';
+import { HomeContentsWeather } from '../HomeContentsWeather';
+import { HomeContentsTraining } from '../HomeContentsTraining';
 
 export const HomeContents = () => {
   const [rotationCount, setRotationCount] = useState(0);

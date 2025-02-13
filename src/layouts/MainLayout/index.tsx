@@ -1,5 +1,5 @@
-import { NavigationBar } from '@/components/NavigationBar';
-import { Header } from '@/components/Header';
+import { NavigationBar } from '@/layouts/NavigationBar';
+import { Header } from '@/layouts/Header';
 import { Outlet, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 

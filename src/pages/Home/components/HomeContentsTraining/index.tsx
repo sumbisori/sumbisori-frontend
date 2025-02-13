@@ -1,12 +1,14 @@
-import { HomeTrainingCard } from './HomeTrainingCard';
+import { HomeTrainingCard } from '../HomeTrainingCard';
 import WindBreathIcon from '@/icons/wind-breath.svg?react';
 import LungsIcon from '@/icons/lungs.svg?react';
 import WarningIcon from '@/icons/warning.svg?react';
 import MuscleIcon from '@/icons/muscle.svg?react';
-import { Dialog } from '../../../../components/Dialog';
+
 import { useModalController } from '@/contexts/src/ModalContext';
-import { ImageWithTextAlert } from '../../../../components/ImageWithTextAlert';
+
 import { IMAGE_PATHS } from '@/constant';
+import { Dialog } from '@/components/Dialog';
+import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
 
 export const HomeContentsTraining = () => {
   const { openModal } = useModalController();

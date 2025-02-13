@@ -1,8 +1,8 @@
 import { IMAGE_PATHS } from '@/constant';
-import { ImageWithTextAlert } from '../ImageWithTextAlert';
-import { HomeYoutube } from './HomeYoutube';
+import { ImageWithTextAlert } from '../../../../components/ImageWithTextAlert';
+import { HomeYoutube } from '../HomeYoutube';
 import { YoutubeVideoType } from '@/api/home';
-import { HomeYoutubeSkeleton } from './HomeYoutubeSkeleton';
+import { HomeYoutubeSkeleton } from '../HomeYoutubeSkeleton';
 import { useState } from 'react';
 
 interface HomeYoutubeListProps {

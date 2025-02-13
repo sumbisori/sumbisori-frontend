@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FullPageLogo } from '@/components/FullPageLogo';
+import { FullPageLogo } from '@/layouts/FullPageLogo';
 import { Outlet } from 'react-router-dom';
 
 export const MobileLayout = () => {

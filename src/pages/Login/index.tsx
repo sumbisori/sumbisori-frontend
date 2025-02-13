@@ -1,4 +1,4 @@
-import { KakaoLogin } from '@/components/KakaoLogin';
+import { KakaoLogin } from '@/pages/Login/components/KakaoLogin';
 import SumbisoriLogoVerticalIcon from '@/icons/sumbisori_logo_vertical.svg?react';
 import CharacterDiveBeforeIcon from '@/icons/character_dive_before.svg?react';
 

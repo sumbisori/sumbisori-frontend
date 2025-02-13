@@ -5,7 +5,7 @@ import {
   getReservationList,
 } from '@/api/myPage';
 import { SwitchReservationStatus } from '@/pages/MyPageReservation/components/SwitchReservationStatus';
-import { MyPageReservationCard } from '@/components/MyPageReservationCard';
+import { MyPageReservationCard } from '@/pages/MyPageReservation/components/MyPageReservationCard';
 import { useNavigate } from 'react-router-dom';
 import { cancelReservation, completeReservation } from '@/api/haenyeoPlaces';
 import { useErrorHandler } from '@/hooks/useErrorHandler';

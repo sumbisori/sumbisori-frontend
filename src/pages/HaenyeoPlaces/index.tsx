@@ -8,7 +8,7 @@ import {
 } from '@/api/haenyeoPlaces';
 import { queryKeys } from '@/query';
 import { HaenyeoPlaceDetailSheet } from '@/pages/HaenyeoPlaces/components/HaenyeoPlaceDetailSheet';
-import { NaverMap } from '@/components/NaverMap';
+import { NaverMap } from '@/pages/HaenyeoPlaces/components/NaverMap';
 
 export const HaenyeoPlaces = () => {
   const navigate = useNavigate();

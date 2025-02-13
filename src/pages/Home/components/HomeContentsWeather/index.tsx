@@ -1,7 +1,7 @@
 import { ContentWaveInfo, ContentWeatherInfo } from '@/api/home';
 import { roundingNumber } from '@/util/roundingNumber';
-import { HomeWeatherCard } from './HomeWeatherCard';
-import { HomeWeatherCardSkelton } from './HomeWeatherCardSkelton';
+import { HomeWeatherCard } from '../HomeWeatherCard';
+import { HomeWeatherCardSkelton } from '../HomeWeatherCardSkelton';
 
 interface Props {
   waveInfo: ContentWaveInfo;
