@@ -58,6 +58,7 @@ export const HomeContents = () => {
       waveHeightSuitability: 'DEFAULT',
       observationTime: '',
     },
+    retry: false,
   });
 
   const {

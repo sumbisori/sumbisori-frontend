@@ -1,16 +1,21 @@
 import { useRef } from 'react';
-import { SeafoodCollected } from '@/api/home';
+import { SeafoodCollected, getSeafoodCollected } from '@/api/home';
 import { useAquarium } from '@/hooks/useAquarium';
 import DictionaryIcon from '@/icons/dictionary.svg?react';
 import { useNavigate } from 'react-router-dom';
-interface AquariumProps {
-  seafoods: SeafoodCollected[];
-}
+import { useQuery } from '@tanstack/react-query';
+import { queryKeys } from '@/query';
 
-export const Aquarium = ({ seafoods }: AquariumProps) => {
+export const Aquarium = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const navigate = useNavigate();
+
+  const { data: seafoods } = useQuery<SeafoodCollected[]>({
+    queryKey: [queryKeys.seafoodsCollected],
+    queryFn: getSeafoodCollected,
+    initialData: [],
+  });
 
   useAquarium(containerRef, canvasRef, seafoods);
 
