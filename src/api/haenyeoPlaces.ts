@@ -1,18 +1,18 @@
 import { https } from './instance';
 
-export interface ReservationHaenyeoPlaces {
+export interface HaenyeoPlacesLocations {
   placeId: number;
   latitude: number;
   longitude: number;
 }
 
-export interface ReservationHaenyeoPlace {
+export interface HaenyeoPlaceDetail {
   placeId: number;
   name: string;
   address: string;
   minPrice: number;
   maxPrice: number;
-  details: HaenyeoPlaceDetail[];
+  details: HaenyeoPlaceDescription[];
   imageUrl: string;
   latitude: number;
   longitude: number;
@@ -21,7 +21,7 @@ export interface ReservationHaenyeoPlace {
   reservationLink: null | string;
 }
 
-interface HaenyeoPlaceDetail {
+interface HaenyeoPlaceDescription {
   title: string;
   description: string;
 }
@@ -35,16 +35,14 @@ export interface PostReservation {
   phone: string;
 }
 
-const getReservationHaenyeoPlaces = async (): Promise<
-  ReservationHaenyeoPlaces[]
-> => {
-  const response = await https.get(`/places`);
+const getPlacesLoactions = async (): Promise<HaenyeoPlacesLocations[]> => {
+  const response = await https.get(`/places/locations`);
   return response.data;
 };
 
-const getSelectedHaenyeoPlace = async (
+const getHaenyeoPlaceDetail = async (
   placeId: number,
-): Promise<ReservationHaenyeoPlace> => {
+): Promise<HaenyeoPlaceDetail> => {
   const response = await https.get(`/places/${placeId}`);
   return response.data;
 };
@@ -65,8 +63,8 @@ const cancelReservation = async (reservationId: number) => {
 };
 
 export {
-  getReservationHaenyeoPlaces,
-  getSelectedHaenyeoPlace as getReservationHaenyeoPlace,
+  getPlacesLoactions,
+  getHaenyeoPlaceDetail,
   postReservation,
   completeReservation,
   cancelReservation,

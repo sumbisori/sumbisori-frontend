@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
-  ReservationHaenyeoPlace,
-  ReservationHaenyeoPlaces,
-  getReservationHaenyeoPlace,
-  getReservationHaenyeoPlaces,
+  HaenyeoPlaceDetail,
+  HaenyeoPlacesLocations,
+  getHaenyeoPlaceDetail,
+  getPlacesLoactions,
 } from '@/api/haenyeoPlaces';
 import { queryKeys } from '@/query';
 import { HaenyeoPlaceDetailSheet } from '@/pages/HaenyeoPlaces/components/HaenyeoPlaceDetailSheet';
@@ -16,17 +16,17 @@ export const HaenyeoPlaces = () => {
   const placeIdParam = searchParams.get('placeId');
   const selectedPlaceId = placeIdParam ? parseInt(placeIdParam, 10) : null;
 
-  const { data: haenyeoPlaces } = useQuery<ReservationHaenyeoPlaces[]>({
-    queryKey: [queryKeys.haenyeoPlaces],
-    queryFn: getReservationHaenyeoPlaces,
+  const { data: haenyeoPlaces } = useQuery<HaenyeoPlacesLocations[]>({
+    queryKey: [queryKeys.haenyeoPlacesLocations],
+    queryFn: getPlacesLoactions,
     initialData: [],
   });
 
-  const { data: selectedPlace } = useQuery<ReservationHaenyeoPlace | null>({
-    queryKey: [queryKeys.selectedHaenyeoPlace, selectedPlaceId],
+  const { data: selectedPlace } = useQuery<HaenyeoPlaceDetail | null>({
+    queryKey: [queryKeys.haenyeoPlaceDetail, selectedPlaceId],
     queryFn: () => {
       if (!selectedPlaceId) return Promise.resolve(null);
-      return getReservationHaenyeoPlace(selectedPlaceId);
+      return getHaenyeoPlaceDetail(selectedPlaceId);
     },
     enabled: !!selectedPlaceId,
   });
@@ -38,16 +38,12 @@ export const HaenyeoPlaces = () => {
     });
   };
 
-  const handleClose = () => {
+  const handleBack = () => {
     setSearchParams(
       Object.fromEntries(
         Object.entries(searchParams).filter(([key]) => key !== 'placeId'),
       ),
     );
-  };
-
-  const handleBack = () => {
-    handleClose();
   };
 
   const handleMoreInfo = () => {
@@ -62,7 +58,6 @@ export const HaenyeoPlaces = () => {
         places={haenyeoPlaces}
         onPinClick={handlePinClick}
         onBack={handleBack}
-        onClose={handleClose}
       />
       {selectedPlace && (
         <HaenyeoPlaceDetailSheet

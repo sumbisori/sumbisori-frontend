@@ -1,6 +1,6 @@
 import {
-  ReservationHaenyeoPlace,
-  ReservationHaenyeoPlaces,
+  HaenyeoPlaceDetail,
+  HaenyeoPlacesLocations,
 } from '@/api/haenyeoPlaces';
 import { useEffect, useRef } from 'react';
 import MyLocationIcon from '@/icons/my-location.svg?react';
@@ -8,13 +8,13 @@ import ResetFocus from '@/icons/reset-focus.svg?react';
 import { IconButton } from '@/components/IconButton';
 import { motion } from 'framer-motion';
 import LeftIcon from '@/icons/left.svg?react';
+import { IMAGE_PATHS } from '@/constant';
 
 interface NaverMapProps {
-  selectedPlace?: ReservationHaenyeoPlace | null;
-  places: ReservationHaenyeoPlaces[];
+  selectedPlace?: HaenyeoPlaceDetail | null;
+  places: HaenyeoPlacesLocations[];
   onPinClick: (placeId: number) => void;
   onBack: () => void;
-  onClose: () => void;
 }
 
 export const NaverMap = ({
@@ -22,15 +22,13 @@ export const NaverMap = ({
   places,
   onPinClick,
   onBack,
-  onClose,
 }: NaverMapProps) => {
-  const naverMapInstance = useRef<any>(null);
-  const markersRef = useRef<any[]>([]);
+  const naverMapInstance = useRef<naver.maps.Map | null>(null);
+  const markersRef = useRef<naver.maps.Marker[]>([]);
 
-  const Naver = window.naver;
   const NaverMaps = window.naver.maps;
 
-  const customIconUrl = '/assets/images/Map/sumbi_map.svg';
+  const customIconUrl = `${IMAGE_PATHS.MAP}/sumbi_map.svg`;
 
   const initialPosition = useRef(
     new NaverMaps.LatLng(33.37310402515643, 126.54168511624414),
@@ -44,7 +42,6 @@ export const NaverMap = ({
       center: initialPosition,
       zoom: initialZoom,
     };
-
     const map = new NaverMaps.Map(container as HTMLElement, mapOptions);
     naverMapInstance.current = map;
   };
@@ -67,22 +64,13 @@ export const NaverMap = ({
 
       NaverMaps.Event.addListener(marker, 'click', (e: any) => {
         onPinClick(place.placeId);
-        // // 중심으로 이동 후 zoom하기
-        // const position = marker.getPosition();
-        // naverMapInstance.current.panTo(position);
-
-        // setTimeout(() => {
-        //   // naverMapInstance.current.setCenter(position);
-        //   naverMapInstance.current.setZoom(11);
-        //   naverMapInstance.current.autoResize();
-        // }, 600);
       });
 
       markersRef.current.push(marker);
     });
   };
 
-  const handleRecenterToCurrentLocation = () => {
+  const getCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -93,21 +81,6 @@ export const NaverMap = ({
           if (naverMapInstance.current) {
             naverMapInstance.current.setCenter(currentPosition);
             naverMapInstance.current.setZoom(16);
-          }
-
-          // 기존 현재 위치 마커 제거
-          if (
-            markersRef.current.find(
-              (marker) => marker.__isCurrentLocationMarker,
-            )
-          ) {
-            markersRef.current = markersRef.current.filter((marker) => {
-              if (marker.__isCurrentLocationMarker) {
-                marker.setMap(null);
-                return false;
-              }
-              return true;
-            });
           }
 
           // 현재 위치를 나타내는 마커 추가
@@ -126,8 +99,22 @@ export const NaverMap = ({
           enableHighAccuracy: true,
         },
       );
-    } else {
-      console.error('Geolocation API를 지원하지 않는 브라우저입니다.');
+    }
+  };
+
+  const moveToSelectedPlace = () => {
+    if (naverMapInstance.current && selectedPlace) {
+      const position = new NaverMaps.LatLng(
+        selectedPlace.latitude,
+        selectedPlace.longitude,
+      );
+      naverMapInstance.current.panTo(position);
+      setTimeout(() => {
+        if (naverMapInstance.current) {
+          naverMapInstance.current.setZoom(11);
+          naverMapInstance.current.autoResize();
+        }
+      }, 600);
     }
   };
 
@@ -137,8 +124,6 @@ export const NaverMap = ({
       naverMapInstance.current.setCenter(initialPosition);
       naverMapInstance.current.setZoom(initialZoom);
       naverMapInstance.current.autoResize();
-    } else {
-      console.error('Naver Maps API가 로드되지 않았습니다.');
     }
   };
 
@@ -147,30 +132,13 @@ export const NaverMap = ({
     onBack();
     setTimeout(() => {
       if (selectedPlace) {
-        naverMapInstance.current.setCenter(initialPosition);
-        naverMapInstance.current.setZoom(initialZoom);
+        handleRecenter();
       }
-      naverMapInstance.current.autoResize();
-    }, 50);
-  };
-
-  const handleSheetClose = () => {
-    onClose();
-    setTimeout(() => {
-      naverMapInstance.current.setCenter(initialPosition);
-      naverMapInstance.current.setZoom(initialZoom);
-      naverMapInstance.current.autoResize();
     }, 50);
   };
 
   useEffect(() => {
-    if (!Naver || !NaverMaps) {
-      console.error('Naver Maps API가 로드되지 않았습니다.');
-      return;
-    }
-
     initMap();
-
     return () => {
       if (naverMapInstance.current) {
         naverMapInstance.current.destroy();
@@ -179,24 +147,11 @@ export const NaverMap = ({
   }, []);
 
   useEffect(() => {
-    if (naverMapInstance.current) {
-      addMarkers();
-    }
+    addMarkers();
   }, [places]);
 
   useEffect(() => {
-    if (selectedPlace) {
-      const position = new NaverMaps.LatLng(
-        selectedPlace.latitude,
-        selectedPlace.longitude,
-      );
-      naverMapInstance.current.panTo(position);
-      setTimeout(() => {
-        // naverMapInstance.current.setCenter(position);
-        naverMapInstance.current.setZoom(11);
-        naverMapInstance.current.autoResize();
-      }, 600);
-    }
+    moveToSelectedPlace();
   }, [selectedPlace]);
 
   const bottomOffset = selectedPlace ? 18 : 1;
@@ -209,7 +164,7 @@ export const NaverMap = ({
         style={{ bottom: `${bottomOffset}rem` }}
         className="absolute z-20 flex w-full items-center gap-2 px-4"
       >
-        <IconButton onClick={handleRecenterToCurrentLocation}>
+        <IconButton onClick={getCurrentLocation}>
           <MyLocationIcon className="size-6" />
         </IconButton>
         <IconButton onClick={handleRecenter}>
@@ -225,11 +180,6 @@ export const NaverMap = ({
           <IconButton onClick={handleSheetBack} className="size-6">
             <LeftIcon />
           </IconButton>
-          {/* {showModal === 'full' && (
-            <IconButton onClick={handleSheetClose}>
-              <MdCloseIcon className="size-6" />
-            </IconButton>
-          )} */}
         </div>
       )}
     </motion.div>

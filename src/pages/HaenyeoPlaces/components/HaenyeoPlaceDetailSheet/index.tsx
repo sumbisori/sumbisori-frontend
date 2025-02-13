@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ReservationHaenyeoPlace } from '@/api/haenyeoPlaces';
+import { HaenyeoPlaceDetail } from '@/api/haenyeoPlaces';
 import PhoneIcon from '@/icons/phone.svg?react';
 import MarkLinkIcon from '@/icons/mark-link.svg?react';
 import { RoundedButton } from '../../../../components/RoundedButton';
@@ -10,7 +10,7 @@ import { HaenyeoPlaceReservationMethodModal } from '../../../HaenyeoPlacesDetail
 import DownArrowIcon from '@/icons/down-arrow.svg?react';
 
 interface Props {
-  selectedPlace: ReservationHaenyeoPlace;
+  selectedPlace: HaenyeoPlaceDetail;
   onMoreInfo: () => void;
 }
 
@@ -40,13 +40,12 @@ export function HaenyeoPlaceDetailSheet({ selectedPlace, onMoreInfo }: Props) {
           ref={mainContainerRef}
           className="relative flex flex-col justify-between rounded-t-xl bg-white px-5 pb-4 pt-11 shadow-lg"
         >
-          <div className="absolute -top-14 left-4 rounded-3xl border-[5px] border-white shadow-sm">
-            <img
-              src={selectedPlace.imageUrl}
-              alt="place-image"
-              className="size-[4.813rem] rounded-3xl"
-            />
-          </div>
+          <img
+            src={selectedPlace.imageUrl}
+            alt="place-image"
+            className="absolute -top-14 left-4 size-[4.813rem] rounded-[1.25rem] border-[5px] border-white object-cover shadow-sm"
+          />
+
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-3">
               <div>

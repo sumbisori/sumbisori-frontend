@@ -1,7 +1,7 @@
-import { ReservationHaenyeoPlace } from '@/api/haenyeoPlaces';
+import { HaenyeoPlaceDetail } from '@/api/haenyeoPlaces';
 import { Dialog } from '../../../../components/Dialog';
 interface Props {
-  selectedPlace: ReservationHaenyeoPlace;
+  selectedPlace: HaenyeoPlaceDetail;
   onPhoneClick: (phoneNumber: string) => void;
   onLinkClick: (link: string | null) => void;
 }

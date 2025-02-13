@@ -2,10 +2,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import {
-  ReservationHaenyeoPlace,
-  getReservationHaenyeoPlace,
-} from '@/api/haenyeoPlaces';
+import { HaenyeoPlaceDetail, getHaenyeoPlaceDetail } from '@/api/haenyeoPlaces';
 import { LargeButton } from '@/components/LargeButton';
 import { queryKeys } from '@/query';
 import PhoneIcon from '@/icons/phone.svg?react';
@@ -30,11 +27,11 @@ export const HaenyeoPlacesDetail = () => {
     data: selectedPlace,
     isLoading,
     isError,
-  } = useQuery<ReservationHaenyeoPlace | null>({
-    queryKey: [queryKeys.selectedHaenyeoPlace, placeId],
+  } = useQuery<HaenyeoPlaceDetail | null>({
+    queryKey: [queryKeys.haenyeoPlaceDetail, placeId],
     queryFn: () => {
       if (!placeId) return Promise.resolve(null);
-      return getReservationHaenyeoPlace(parseInt(placeId, 10));
+      return getHaenyeoPlaceDetail(parseInt(placeId, 10));
     },
     enabled: !!placeId,
   });
