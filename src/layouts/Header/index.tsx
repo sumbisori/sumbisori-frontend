@@ -4,6 +4,7 @@ import LogoWhiteIcon from '@/icons/sumbisori_logo_width_white.svg?react';
 import BellBlackIcon from '@/icons/Icon_bell_black.svg?react';
 import BellWhiteIcon from '@/icons/Icon_bell_white.svg?react';
 import ContourIcon from '@/icons/contour.svg?react';
+import { useHeaderVisibility } from '@/contexts/src/HeaderVisibilityContext';
 
 interface Props {
   type?: 'dark' | 'light';
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export const Header = ({ type = 'light', caption, absolute }: Props) => {
+  const { showHeader } = useHeaderVisibility();
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate('/home');
@@ -20,10 +22,15 @@ export const Header = ({ type = 'light', caption, absolute }: Props) => {
   return (
     <header
       className={clsx(
-        'flex h-[3.75rem] w-full min-w-full-layout max-w-full-layout justify-between px-5',
+        'z-100 flex h-header-height w-full min-w-full-layout max-w-full-layout justify-between px-5',
         {
-          'absolute inset-x-0 top-0 z-20 m-auto': absolute,
-          relative: !absolute,
+          'absolute inset-x-0 top-0 m-auto': absolute,
+          'fixed inset-x-0 top-0 m-auto bg-white transition-transform duration-300 ease-in-out':
+            !absolute,
+        },
+        {
+          'translate-y-0': showHeader,
+          '-translate-y-full': !showHeader,
         },
       )}
     >

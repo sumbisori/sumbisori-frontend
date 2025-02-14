@@ -2,6 +2,7 @@ import { NavigationBar } from '@/layouts/NavigationBar';
 import { Header } from '@/layouts/Header';
 import { Outlet, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useMemo } from 'react';
 
 interface Props {
   hasNavigation?: boolean;
@@ -81,11 +82,17 @@ export default function MainLayout({
     };
   };
 
-  const headerType = getHeaderType(location.pathname);
+  const headerType = useMemo(
+    () => getHeaderType(location.pathname),
+    [location.pathname],
+  );
 
   return (
     <div
-      className={`flex flex-1 flex-col ${hasNavigation ? 'pb-nav-height' : ''} `}
+      className={clsx(
+        hasHeader && !headerType.absolute ? 'pt-header-height' : '',
+        hasNavigation ? 'pb-nav-height' : '',
+      )}
     >
       {hasHeader && (
         <Header

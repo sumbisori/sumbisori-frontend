@@ -180,6 +180,7 @@ export default {
         lg: '1.5rem', // $spacer-lg
         xl: '3rem', // $spacer-xl
         'layout-nav-height': 'calc(100vh - 4.438rem)', // $layout-nav-height
+        'header-height': '3.75rem', // $header-height
         'nav-height': '4.438rem', // $nav-height
       },
       aspectRatio: {

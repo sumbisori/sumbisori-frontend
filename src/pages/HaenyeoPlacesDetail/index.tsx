@@ -59,7 +59,7 @@ export const HaenyeoPlacesDetail = () => {
       <div className="relative flex h-screen items-center justify-center">
         <div
           id="map-controls2"
-          className="absolute left-0 top-[3.75rem] z-10 flex w-full items-center justify-between gap-2 px-4"
+          className="absolute left-0 top-header-height z-10 flex w-full items-center justify-between gap-2 px-4"
         >
           <IconButton
             onClick={() => navigate(`/haenyeo-places?placeId=${placeId}`)}
@@ -99,7 +99,7 @@ export const HaenyeoPlacesDetail = () => {
         />
         <div
           id="map-controls2"
-          className="absolute left-0 top-[3.75rem] z-10 flex w-full items-center justify-between gap-2 px-4"
+          className="absolute left-0 top-header-height z-10 flex w-full items-center justify-between gap-2 px-4"
         >
           <IconButton
             onClick={() => navigate(`/haenyeo-places?placeId=${placeId}`)}
@@ -161,7 +161,7 @@ export const HaenyeoPlacesDetail = () => {
       >
         <div className="flex flex-1 px-4 py-6">
           <motion.div
-            className="flex flex-col gap-4 rounded-2xl bg-white p-5"
+            className="flex w-full flex-col gap-4 rounded-2xl bg-white p-5"
             initial="hidden"
             animate="visible"
             variants={{

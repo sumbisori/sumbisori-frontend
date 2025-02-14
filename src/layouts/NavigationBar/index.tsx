@@ -44,24 +44,22 @@ export const NavigationBar = () => {
   ];
 
   return (
-    <nav className="z-20">
-      <div className="fixed inset-x-0 bottom-0 m-auto flex h-nav-height w-full min-w-full-layout max-w-full-layout justify-between bg-gray-800 px-6 pt-[0.438rem] text-white">
-        {navItems.map((item, index) => (
-          <NavIcon
-            key={index}
-            label={item.label}
-            onClick={() => navigate(item.path)}
-            onMouseEnter={() => setHovered(item.path)}
-            onMouseLeave={() => setHovered(null)}
-            isActive={location.pathname.startsWith(item.path)}
-            icon={
-              location.pathname.startsWith(item.path) || hovered === item.path
-                ? item.activeIcon
-                : item.inactiveIcon
-            }
-          />
-        ))}
-      </div>
+    <nav className="fixed inset-x-0 bottom-0 z-100 m-auto flex h-nav-height w-full min-w-full-layout max-w-full-layout justify-between bg-gray-800 px-6 pt-[0.438rem] text-white">
+      {navItems.map((item, index) => (
+        <NavIcon
+          key={index}
+          label={item.label}
+          onClick={() => navigate(item.path)}
+          onMouseEnter={() => setHovered(item.path)}
+          onMouseLeave={() => setHovered(null)}
+          isActive={location.pathname.startsWith(item.path)}
+          icon={
+            location.pathname.startsWith(item.path) || hovered === item.path
+              ? item.activeIcon
+              : item.inactiveIcon
+          }
+        />
+      ))}
     </nav>
   );
 };

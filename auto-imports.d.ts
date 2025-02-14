@@ -6,5 +6,5 @@
 // biome-ignore lint: disable
 export {}
 declare global {
-  const clsx: (typeof import('clsx'))['default'];
+  const clsx: typeof import('clsx')['default']
 }

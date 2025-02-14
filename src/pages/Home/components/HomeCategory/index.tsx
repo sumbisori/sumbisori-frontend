@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { useHeaderVisibility } from '@/contexts/src/HeaderVisibilityContext';
 
 export type HomeCategoryLabel = 'home' | 'training' | 'tv' | 'sea';
 
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export const HomeCategoryBar = ({ onCategoryChange, value }: Props) => {
+  const { showHeader } = useHeaderVisibility();
   const categories: { label: string; code: HomeCategoryLabel }[] = useMemo(
     () => [
       { label: '홈', code: 'home' },
@@ -56,7 +58,13 @@ export const HomeCategoryBar = ({ onCategoryChange, value }: Props) => {
   return (
     <nav
       id="home-category-bar"
-      className="sticky top-0 z-20 w-full bg-white shadow-sm"
+      className={clsx(
+        'sticky z-20 w-full bg-white shadow-sm transition-all duration-300 ease-in-out',
+        {
+          'top-0': !showHeader,
+          'top-header-height': showHeader,
+        },
+      )}
     >
       <div className="relative">
         <ul ref={containerRef} className="relative flex justify-between">

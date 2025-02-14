@@ -162,7 +162,7 @@ export const NaverMap = ({
       <div
         id="map-controls"
         style={{ bottom: `${bottomOffset}rem` }}
-        className="absolute z-20 flex w-full items-center gap-2 px-4"
+        className="absolute z-10 flex w-full items-center gap-2 px-4"
       >
         <IconButton onClick={getCurrentLocation}>
           <MyLocationIcon className="size-6" />
@@ -175,7 +175,7 @@ export const NaverMap = ({
       {selectedPlace && (
         <div
           id="map-controls2"
-          className="absolute left-0 top-[3.75rem] z-200 flex w-full items-center justify-between gap-2 px-4"
+          className="absolute left-0 top-header-height z-10 flex w-full items-center justify-between gap-2 px-4"
         >
           <IconButton onClick={handleSheetBack} className="size-6">
             <LeftIcon />
