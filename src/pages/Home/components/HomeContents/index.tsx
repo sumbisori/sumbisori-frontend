@@ -33,6 +33,28 @@ export const HomeContents = () => {
   const tvRef = useRef<HTMLDivElement>(null);
   const seaRef = useRef<HTMLDivElement>(null);
 
+  // const layoutMargin = `-119px 0px -71px 0px`;
+
+  // const homeView = useInView(homeRef, {
+  //   amount: 'all',
+  //   margin: layoutMargin,
+  // });
+
+  // const trainingView = useInView(trainingRef, {
+  //   amount: 'all',
+  //   margin: layoutMargin,
+  // });
+
+  // const tvView = useInView(tvRef, {
+  //   amount: 0.7,
+  //   margin: layoutMargin,
+  // });
+
+  // const seaView = useInView(seaRef, {
+  //   amount: 'all',
+  //   margin: layoutMargin,
+  // });
+
   const YOUTUBE_COUNT = 3;
 
   const scrollToRef = (ref: React.RefObject<HTMLDivElement>) => {
