@@ -1,45 +1,34 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { NavIcon } from './NavIcon';
-import { useState } from 'react';
-import NavIcon1Active from '@/icons/nav/nav_icon1_active.svg?react';
-import NavIcon1Inactive from '@/icons/nav/nav_icon1_inactive.svg?react';
-import NavIcon2Active from '@/icons/nav/nav_icon2_active.svg?react';
-import NavIcon2Inactive from '@/icons/nav/nav_icon2_inactive.svg?react';
-import NavIcon3Active from '@/icons/nav/nav_icon3_active.svg?react';
-import NavIcon3Inactive from '@/icons/nav/nav_icon3_inactive.svg?react';
-import NavIcon4Active from '@/icons/nav/nav_icon4_active.svg?react';
-import NavIcon4Inactive from '@/icons/nav/nav_icon4_inactive.svg?react';
+import NavIcon1Active from '@/icons/nav/nav_icon1.svg?react';
+import NavIcon2Active from '@/icons/nav/nav_icon2.svg?react';
+import NavIcon3Active from '@/icons/nav/nav_icon3.svg?react';
+import NavIcon4Active from '@/icons/nav/nav_icon4.svg?react';
 
 export const NavigationBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [hovered, setHovered] = useState<string | null>(null);
-
   const navItems = [
     {
       label: '홈',
       path: '/home',
-      activeIcon: <NavIcon1Active />,
-      inactiveIcon: <NavIcon1Inactive />,
+      icon: <NavIcon1Active />,
     },
     {
       label: '예약',
       path: '/haenyeo-places',
-      activeIcon: <NavIcon2Active />,
-      inactiveIcon: <NavIcon2Inactive />,
+      icon: <NavIcon2Active />,
     },
     {
       label: '도감',
       path: '/dictionary',
-      activeIcon: <NavIcon3Active />,
-      inactiveIcon: <NavIcon3Inactive />,
+      icon: <NavIcon3Active />,
     },
     {
       label: '마이',
       path: '/my-page',
-      activeIcon: <NavIcon4Active />,
-      inactiveIcon: <NavIcon4Inactive />,
+      icon: <NavIcon4Active />,
     },
   ];
 
@@ -50,14 +39,8 @@ export const NavigationBar = () => {
           key={index}
           label={item.label}
           onClick={() => navigate(item.path)}
-          onMouseEnter={() => setHovered(item.path)}
-          onMouseLeave={() => setHovered(null)}
           isActive={location.pathname.startsWith(item.path)}
-          icon={
-            location.pathname.startsWith(item.path) || hovered === item.path
-              ? item.activeIcon
-              : item.inactiveIcon
-          }
+          icon={item.icon}
         />
       ))}
     </nav>

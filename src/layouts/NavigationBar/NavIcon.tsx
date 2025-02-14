@@ -1,7 +1,9 @@
-import { ReactNode } from 'react';
+import { cloneElement, isValidElement } from 'react';
+
+import { ReactElement, SVGProps } from 'react';
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
-  icon: ReactNode;
+  icon: ReactElement<SVGProps<SVGSVGElement>>;
   label: string;
   isActive?: boolean;
 }
@@ -9,18 +11,15 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 export const NavIcon = ({ icon, label, isActive = false, ...props }: Props) => {
   return (
     <button
-      className="group flex cursor-pointer flex-col items-center justify-center pb-2.5"
+      className={clsx(
+        'flex cursor-pointer flex-col items-center justify-center pb-2.5 transition-colors duration-200 ease-in-out hover:text-[#ffffff]',
+        isActive ? 'text-white' : 'text-gray-500',
+      )}
       {...props}
     >
-      <div className={isActive ? 'text-[#ffffff]' : 'text-gray-500'}>
-        {icon}
-      </div>
+      <div>{icon}</div>
 
-      <p
-        className={`flex w-9 justify-center text-xs transition-colors duration-300 ease-in-out ${isActive ? 'text-[#ffffff]' : 'text-gray-500'} group-hover:text-[#ffffff]`}
-      >
-        {label}
-      </p>
+      <p className={`flex w-9 justify-center text-xs`}>{label}</p>
     </button>
   );
 };

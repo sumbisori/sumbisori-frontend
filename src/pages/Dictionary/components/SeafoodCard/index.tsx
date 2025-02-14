@@ -12,17 +12,24 @@ export const SeafoodCard = (props: Props) => {
   return (
     <div
       onClick={props.onClick}
-      className={
-        'relative flex aspect-square size-full items-center justify-center border border-orange-300 bg-orange-100 ' +
-        (props.counts > 0 ? '' : ' grayscale')
-      }
+      className={clsx(
+        'relative flex aspect-square size-full cursor-pointer items-center justify-center border',
+        props.counts > 0
+          ? 'border-orange-300 bg-orange-100'
+          : 'border-gray-300 bg-gray-100',
+      )}
     >
       <img
         src={`${IMAGE_PATHS.SEAFOOD}/${props.seafoodName}.svg`}
         alt={props.name}
-        className="size-full"
+        className={clsx('size-full', props.counts > 0 ? '' : 'grayscale')}
       />
-      <div className="absolute bottom-1 right-1 text-xs font-bold text-orange-900">
+      <div
+        className={clsx(
+          'absolute bottom-1 right-1 text-xs font-bold',
+          props.counts > 0 ? 'text-orange-900' : 'text-gray-500',
+        )}
+      >
         {props.name}
       </div>
       {props.counts > 0 && (

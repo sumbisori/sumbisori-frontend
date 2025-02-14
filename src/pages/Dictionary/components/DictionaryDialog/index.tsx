@@ -11,13 +11,19 @@ export const DictionaryDialog = ({ selectedSeafood }: Props) => {
     <Dialog id={`seafood-${selectedSeafood.koreanName}`}>
       <div className="flex h-full flex-col justify-between">
         <div
-          className={`${selectedSeafood.count > 0 ? '' : 'grayscale'} relative size-[9.375rem] self-center bg-cover bg-center bg-no-repeat`}
+          className={clsx(
+            'relative size-[9.375rem] self-center bg-cover bg-center bg-no-repeat',
+            selectedSeafood.count > 0 ? '' : 'grayscale',
+          )}
           style={{
             backgroundImage: `url(${IMAGE_PATHS.SEAFOOD}/${selectedSeafood.englishName}.svg)`,
           }}
         />
         <div
-          className={`${selectedSeafood.count > 0 ? 'border-orange-200' : 'border-gray-200'} w-full rounded-lg border py-0.5 text-center text-lg font-bold`}
+          className={clsx(
+            'w-full rounded-lg border py-0.5 text-center text-lg font-bold',
+            selectedSeafood.count > 0 ? 'border-orange-200' : 'border-gray-200',
+          )}
         >
           {selectedSeafood.koreanName}
         </div>
