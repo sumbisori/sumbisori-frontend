@@ -21,8 +21,10 @@ export const getSeafoodCollected = async (): Promise<SeafoodCollected[]> => {
   return response.data;
 };
 
-export const getYoutubeContents = async (): Promise<YoutubeVideoType[]> => {
-  const response = await https.get('/contents/youtube');
+export const getYoutubeContents = async (
+  count: number,
+): Promise<YoutubeVideoType[]> => {
+  const response = await https.get(`/contents/youtube?count=${count}`);
   return response.data;
 };
 

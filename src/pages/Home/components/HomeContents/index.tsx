@@ -28,11 +28,12 @@ export const HomeContents = () => {
   const [rotationCount, setRotationCount] = useState(0);
   const [selectedCategory, setSelectedCategory] =
     useState<HomeCategoryLabel>('home');
-
   const homeRef = useRef<HTMLDivElement>(null);
   const trainingRef = useRef<HTMLDivElement>(null);
   const tvRef = useRef<HTMLDivElement>(null);
   const seaRef = useRef<HTMLDivElement>(null);
+
+  const YOUTUBE_COUNT = 3;
 
   const scrollToRef = (ref: React.RefObject<HTMLDivElement>) => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
@@ -82,8 +83,10 @@ export const HomeContents = () => {
     isError: youtubeError,
     refetch: refetchYoutube,
   } = useQuery<YoutubeVideoType[]>({
-    queryKey: [queryKeys.youtubeContents],
-    queryFn: () => getYoutubeContents(),
+    queryKey: [queryKeys.youtubeContents, YOUTUBE_COUNT],
+    queryFn: () => {
+      return getYoutubeContents(YOUTUBE_COUNT);
+    },
     initialData: [],
   });
 

@@ -35,7 +35,7 @@ export interface PostReservation {
   phone: string;
 }
 
-const getPlacesLoactions = async (): Promise<HaenyeoPlacesLocations[]> => {
+const getPlacesLocations = async (): Promise<HaenyeoPlacesLocations[]> => {
   const response = await https.get(`/places/locations`);
   return response.data;
 };
@@ -63,7 +63,7 @@ const cancelReservation = async (reservationId: number) => {
 };
 
 export {
-  getPlacesLoactions,
+  getPlacesLocations as getPlacesLoactions,
   getHaenyeoPlaceDetail,
   postReservation,
   completeReservation,
