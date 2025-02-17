@@ -12,18 +12,31 @@ export interface HaenyeoPlaceDetail {
   address: string;
   minPrice: number;
   maxPrice: number;
-  details: HaenyeoPlaceDescription[];
+  details: HaenyeoPlaceDetailInfo;
   imageUrl: string;
   latitude: number;
   longitude: number;
   phoneNumber: string;
   link: string;
-  reservationLink: null | string;
+  reservationLink: null;
 }
 
-interface HaenyeoPlaceDescription {
+interface HaenyeoPlaceDetailInfo {
+  operationInfo: HaenyeoPlaceOperationInfo[];
+  facilities: HaenyeoPlaceFacility[];
+  inquiries: any[];
+}
+
+interface HaenyeoPlaceFacility {
   title: string;
-  description: string;
+  iconUrl: string;
+}
+
+interface HaenyeoPlaceOperationInfo {
+  title: string;
+  content?: string;
+  iconUrl: string;
+  description?: string;
 }
 
 export interface PostReservation {

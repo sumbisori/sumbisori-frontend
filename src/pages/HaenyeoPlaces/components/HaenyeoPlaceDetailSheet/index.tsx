@@ -15,29 +15,36 @@ interface Props {
 }
 
 export function HaenyeoPlaceDetailSheet({ selectedPlace, onMoreInfo }: Props) {
-  const { openModal } = useModalController();
+  const { openModal, closeModal } = useModalController();
 
   const handlePhoneClick = (phoneNumber: string) => {
-    window.open(`tel:${phoneNumber}`);
+    closeModal('reservation-method');
+    setTimeout(() => {
+      if (window.confirm(`${phoneNumber}로 전화를 거시겠습니까?`)) {
+        window.open(`tel:${phoneNumber}`);
+      }
+    }, 100);
   };
 
   const handleLinkClick = (link: string | null) => {
     if (!link) return;
-    window.open(link, '_blank');
+    closeModal('reservation-method');
+    setTimeout(() => {
+      if (window.confirm('네이버 지도를 열겠습니까?')) {
+        window.open(link, '_blank');
+      }
+    }, 100);
   };
 
   const handleOpenReservation = () => {
     openModal('reservation-method');
   };
 
-  const mainContainerRef = useRef<HTMLDivElement>(null);
-
   return (
     <>
       <div className="absolute bottom-0 left-0 z-100 w-full min-w-full-layout max-w-full-layout">
         <motion.div
           {...animation}
-          ref={mainContainerRef}
           className="relative flex flex-col justify-between rounded-t-xl bg-white px-5 pb-4 pt-11 shadow-lg"
         >
           <img

@@ -18,7 +18,7 @@ import { HaenyeoPlaceReservationMethodModal } from '@/pages/HaenyeoPlacesDetail/
 import { BottomSheet } from '@/components/BottomSheet';
 
 export const HaenyeoPlacesDetail = () => {
-  const { openModal } = useModalController();
+  const { openModal, closeModal } = useModalController();
   const navigate = useNavigate();
   const { placeId } = useParams();
   const [bottomSheetOpen] = useState(true);
@@ -37,12 +37,22 @@ export const HaenyeoPlacesDetail = () => {
   });
 
   const handlePhoneClick = (phoneNumber: string) => {
-    window.open(`tel:${phoneNumber}`);
+    closeModal('reservation-method');
+    setTimeout(() => {
+      if (window.confirm(`${phoneNumber}로 전화를 거시겠습니까?`)) {
+        window.open(`tel:${phoneNumber}`);
+      }
+    }, 100);
   };
 
   const handleLinkClick = (link: string | null) => {
     if (!link) return;
-    window.open(link, '_blank');
+    closeModal('reservation-method');
+    setTimeout(() => {
+      if (window.confirm('네이버 지도를 열겠습니까?')) {
+        window.open(link, '_blank');
+      }
+    }, 100);
   };
 
   const handleOpenReservation = () => {
@@ -185,7 +195,7 @@ export const HaenyeoPlacesDetail = () => {
                 visible: { transition: { staggerChildren: 0.1 } },
               }}
             >
-              {selectedPlace.details.map((detail, index) => (
+              {/* {selectedPlace.details.map((detail, index) => (
                 <motion.div
                   className="flex flex-nowrap items-center gap-2"
                   key={detail.title + index}
@@ -206,7 +216,7 @@ export const HaenyeoPlacesDetail = () => {
                     {detail.description}
                   </p>
                 </motion.div>
-              ))}
+              ))} */}
             </motion.div>
           </motion.div>
         </div>
