@@ -14,7 +14,7 @@ import { HomeYoutubeList } from '../HomeYoutubeList';
 import { motion } from 'framer-motion';
 import { HomeYoutubeVideoIframe } from '../HomeYoutubeVideoIframe';
 
-import RefreshIcon from '@/icons/refresh.svg?react';
+import RefreshIcon from '@/icons/home/refresh.svg?react';
 
 import { queryKeys } from '@/query';
 import { HomeContentsBox } from '../HomeContentsBox';

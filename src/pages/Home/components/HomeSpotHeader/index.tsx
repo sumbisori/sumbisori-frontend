@@ -1,5 +1,5 @@
 import { HomeChangeDropdown } from '../HomeChangeDropdown';
-import LocationIcon from '@/icons/location.svg?react';
+import LocationIcon from '@/icons/home/location.svg?react';
 import { WaveSpot } from '@/api/home';
 import { convertToTodayTime } from '@/util/convertToTodayTime';
 

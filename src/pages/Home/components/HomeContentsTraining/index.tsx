@@ -1,8 +1,8 @@
 import { HomeTrainingCard } from '../HomeTrainingCard';
-import WindBreathIcon from '@/icons/wind-breath.svg?react';
-import LungsIcon from '@/icons/lungs.svg?react';
-import WarningIcon from '@/icons/warning.svg?react';
-import MuscleIcon from '@/icons/muscle.svg?react';
+import WindBreathIcon from '@/icons/home/wind-breath.svg?react';
+import LungsIcon from '@/icons/home/lungs.svg?react';
+import WarningIcon from '@/icons/home/warning.svg?react';
+import MuscleIcon from '@/icons/home/muscle.svg?react';
 
 import { useModalController } from '@/contexts/src/ModalContext';
 
