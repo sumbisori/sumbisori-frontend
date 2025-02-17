@@ -24,7 +24,7 @@ export interface HaenyeoPlaceDetail {
 interface HaenyeoPlaceDetailInfo {
   operationInfo: HaenyeoPlaceOperationInfo[];
   facilities: HaenyeoPlaceFacility[];
-  inquiries: any[];
+  inquiries: HaenyeoPlaceInquiry[];
 }
 
 interface HaenyeoPlaceFacility {
@@ -34,9 +34,15 @@ interface HaenyeoPlaceFacility {
 
 interface HaenyeoPlaceOperationInfo {
   title: string;
-  content?: string;
+  content: string | null;
   iconUrl: string;
-  description?: string;
+  description: string | null;
+}
+
+interface HaenyeoPlaceInquiry {
+  title: string;
+  content: string;
+  iconUrl: string;
 }
 
 export interface PostReservation {
