@@ -15,7 +15,9 @@ import { Spinner } from '@/components/Spinner';
 import { useModalController } from '@/contexts/src/ModalContext';
 import { HaenyeoPlaceReservationMethodModal } from '@/pages/HaenyeoPlacesDetail/components/HaenyeoPlaceReservationMethodModal';
 import { BottomSheet } from '@/components/BottomSheet';
-import OperationDividerIcon from '@/icons/operation-divider.svg?react';
+import { HaenyeoPlaceOperationInfo } from './components/HaenyeoPlaceOperationInfo';
+import { HaenyeoPlaceFacilities } from './components/HaenyeoPlaceFacilities';
+import { HaenyeoPlaceInquiries } from './components/HaenyeoPlaceInquiries';
 
 export const HaenyeoPlacesDetail = () => {
   const { openModal, closeModal } = useModalController();
@@ -92,7 +94,7 @@ export const HaenyeoPlacesDetail = () => {
           --rsbs-bg: #f0f0f5;
         }
       `}</style>
-      {/* 항상 보이는 배경 이미지 레이어 */}
+      {/* 배경 이미지 */}
       <div
         id="place-detail-image-container"
         className="fixed inset-x-0 top-0 m-auto min-w-full-layout max-w-full-layout select-none"
@@ -183,132 +185,16 @@ export const HaenyeoPlacesDetail = () => {
             >
               체험 상세정보
             </motion.h3>
-            {/* 운영정보 */}
-            <motion.div
-              className="flex flex-col gap-9"
-              variants={{
-                hidden: {},
-                visible: { transition: { staggerChildren: 0.1 } },
-              }}
-            >
-              {selectedPlace.details.operationInfo.map((operation, index) => (
-                <motion.div
-                  className="flex flex-col gap-1"
-                  key={operation.title + index}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                >
-                  <div className="flex flex-nowrap items-center gap-3">
-                    <img
-                      src={operation.iconUrl}
-                      alt="icon"
-                      className="size-6"
-                    />
-                    <div className="flex flex-nowrap items-center gap-2 text-sm font-medium">
-                      <p className="whitespace-nowrap">{operation.title}</p>
-                      <OperationDividerIcon className="shrink-0" />
-                      <p>{operation.content ? operation.content : '-'}</p>
-                    </div>
-                  </div>
-                  {operation.description && (
-                    <p className="pl-9 text-sm text-gray-700">
-                      {operation.description}
-                    </p>
-                  )}
-                </motion.div>
-              ))}
-            </motion.div>
-            {/* 편의시설 */}
-            {selectedPlace.details.facilities.length > 0 && (
-              <motion.div
-                className="flex flex-col gap-[1.375rem] border-t border-gray-200 py-4"
-                variants={{
-                  hidden: {},
-                  visible: { transition: { staggerChildren: 0.1 } },
-                }}
-              >
-                <motion.h3
-                  className="text-sm font-medium"
-                  variants={{
-                    hidden: { opacity: 0, y: 10 },
-                    visible: { opacity: 1, y: 0 },
-                  }}
-                >
-                  편의시설
-                </motion.h3>
-                <motion.div
-                  className="flex flex-wrap gap-6"
-                  variants={{
-                    hidden: {},
-                    visible: { transition: { staggerChildren: 0.1 } },
-                  }}
-                >
-                  {selectedPlace.details.facilities.map((facility, index) => (
-                    <motion.div
-                      key={facility.title + index}
-                      className="flex flex-col items-center gap-3"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
-                    >
-                      <img
-                        src={facility.iconUrl}
-                        alt="facility-icon"
-                        className="size-6"
-                      />
-                      <p className="text-sm">{facility.title}</p>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </motion.div>
-            )}
-            {/* 문의 */}
-            {selectedPlace.details.inquiries.length > 0 && (
-              <motion.div
-                className="flex flex-col gap-4 border-t border-gray-200 py-4"
-                variants={{
-                  hidden: {},
-                  visible: { transition: { staggerChildren: 0.1 } },
-                }}
-              >
-                <motion.h3
-                  className="text-sm font-medium"
-                  variants={{
-                    hidden: { opacity: 0, y: 10 },
-                    visible: { opacity: 1, y: 0 },
-                  }}
-                >
-                  문의
-                </motion.h3>
-                <motion.div
-                  className="flex flex-wrap gap-4"
-                  variants={{
-                    hidden: {},
-                    visible: { transition: { staggerChildren: 0.1 } },
-                  }}
-                >
-                  {selectedPlace.details.inquiries.map((inquire, index) => (
-                    <motion.div
-                      key={inquire.title + index}
-                      className="flex flex-nowrap items-center gap-2"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
-                    >
-                      <img
-                        src={inquire.iconUrl}
-                        alt="inquire-icon"
-                        className="size-6"
-                      />
-                      <p className="cursor-pointer text-sm font-medium text-gray-800 hover:text-gray-600">
-                        {inquire.content}
-                      </p>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </motion.div>
-            )}
+
+            <HaenyeoPlaceOperationInfo
+              operationInfo={selectedPlace.details.operationInfo}
+            />
+            <HaenyeoPlaceFacilities
+              facilities={selectedPlace.details.facilities}
+            />
+            <HaenyeoPlaceInquiries
+              inquiries={selectedPlace.details.inquiries}
+            />
           </motion.div>
         </div>
       </BottomSheet>

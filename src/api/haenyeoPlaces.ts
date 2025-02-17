@@ -21,25 +21,25 @@ export interface HaenyeoPlaceDetail {
   reservationLink: null;
 }
 
-interface HaenyeoPlaceDetailInfo {
-  operationInfo: HaenyeoPlaceOperationInfo[];
-  facilities: HaenyeoPlaceFacility[];
-  inquiries: HaenyeoPlaceInquiry[];
+export interface HaenyeoPlaceDetailInfo {
+  operationInfo: HaenyeoPlaceOperationInfoType[];
+  facilities: HaenyeoPlaceFacilityType[];
+  inquiries: HaenyeoPlaceInquiryType[];
 }
 
-interface HaenyeoPlaceFacility {
+export interface HaenyeoPlaceFacilityType {
   title: string;
   iconUrl: string;
 }
 
-interface HaenyeoPlaceOperationInfo {
+export interface HaenyeoPlaceOperationInfoType {
   title: string;
   content: string | null;
   iconUrl: string;
   description: string | null;
 }
 
-interface HaenyeoPlaceInquiry {
+export interface HaenyeoPlaceInquiryType {
   title: string;
   content: string;
   iconUrl: string;
