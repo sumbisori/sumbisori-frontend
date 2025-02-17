@@ -55,7 +55,7 @@ export const HomeContents = () => {
   //   margin: layoutMargin,
   // });
 
-  const YOUTUBE_COUNT = 3;
+  const YOUTUBE_COUNT = 2;
 
   const scrollToRef = (ref: React.RefObject<HTMLDivElement>) => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
