@@ -9,7 +9,7 @@ import { MyPageReservation } from '@/pages/MyPageReservation';
 import { MobileLayout } from '@/layouts/MobileLayout';
 import ScrollToTop from './src/ScrollToTop';
 import { HaenyeoPlacesDetail } from '@/pages/HaenyeoPlacesDetail';
-import { NotFound } from '@/pages/NotFound';
+import { ErrorPage } from '@/pages/ErrorPage';
 import { JournalCreate } from '@/pages/JournalCreate';
 import { routes } from './src/routes';
 
@@ -43,18 +43,18 @@ export const Router = () => {
             />
           </Route>
           {/* Nav 미보유 Header 보유 */}
-          <Route element={<MainLayout hasNavigation={false} />}>
+          <Route element={<MainLayout hasNavigation={false} />}></Route>
+          {/* Nav 미보유 Header 보유 */}
+          <Route
+            element={<MainLayout hasHeader={false} hasNavigation={false} />}
+          >
             <Route
               path={routes.journalCreate(':step')}
               element={<JournalCreate />}
             />
           </Route>
-          {/* Nav 미보유 Header 보유 */}
-          <Route
-            element={<MainLayout hasHeader={false} hasNavigation={false} />}
-          >
-            <Route path="*" element={<NotFound />} />
-          </Route>
+          {/* 에러 페이지 */}
+          <Route path="*" element={<ErrorPage type="not-found" />} />
         </Route>
       </Routes>
     </>

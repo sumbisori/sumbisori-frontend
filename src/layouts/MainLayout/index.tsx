@@ -8,11 +8,13 @@ import { routes } from '@/routes/src/routes';
 interface Props {
   hasNavigation?: boolean;
   hasHeader?: boolean;
+  children?: React.ReactNode;
 }
 
 export default function MainLayout({
   hasNavigation = true,
   hasHeader = true,
+  children,
 }: Props) {
   const location = useLocation();
 
@@ -88,7 +90,7 @@ export default function MainLayout({
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, ease: 'easeInOut' }}
       >
-        <Outlet />
+        {children ? children : <Outlet />}
       </motion.div>
       {hasNavigation && <NavigationBar />}
     </div>
