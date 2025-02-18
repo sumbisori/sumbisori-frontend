@@ -82,7 +82,7 @@ const cancelReservation = async (reservationId: number) => {
 };
 
 export {
-  getPlacesLocations as getPlacesLoactions,
+  getPlacesLocations,
   getHaenyeoPlaceDetail,
   postReservation,
   completeReservation,

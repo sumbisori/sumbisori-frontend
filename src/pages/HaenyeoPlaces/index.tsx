@@ -4,7 +4,7 @@ import {
   HaenyeoPlaceDetail,
   HaenyeoPlacesLocations,
   getHaenyeoPlaceDetail,
-  getPlacesLoactions,
+  getPlacesLocations,
 } from '@/api/haenyeoPlaces';
 import { queryKeys } from '@/query';
 import { HaenyeoPlaceDetailSheet } from '@/pages/HaenyeoPlaces/components/HaenyeoPlaceDetailSheet';
@@ -18,7 +18,7 @@ export const HaenyeoPlaces = () => {
 
   const { data: haenyeoPlaces } = useQuery<HaenyeoPlacesLocations[]>({
     queryKey: [queryKeys.haenyeoPlacesLocations],
-    queryFn: getPlacesLoactions,
+    queryFn: getPlacesLocations,
     initialData: [],
   });
 
