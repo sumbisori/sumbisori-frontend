@@ -8,12 +8,12 @@ import { useHeaderVisibility } from '@/contexts/src/HeaderVisibilityContext';
 import { routes } from '@/routes/src/routes';
 
 interface Props {
-  type?: 'dark' | 'light';
-  caption?: string;
+  type: 'dark' | 'light';
+  caption: string | null;
   absolute: boolean;
 }
 
-export const Header = ({ type = 'light', caption, absolute }: Props) => {
+export const Header = ({ type, caption, absolute }: Props) => {
   const { showHeader } = useHeaderVisibility();
   const navigate = useNavigate();
   const handleNavigate = () => {

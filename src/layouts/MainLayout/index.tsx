@@ -20,20 +20,20 @@ export default function MainLayout({
     pathname: string,
   ): {
     type: 'light' | 'dark';
-    caption: string | undefined;
+    caption: string | null;
     absolute: boolean;
   } => {
     switch (pathname) {
       case routes.home:
         return {
           type: 'dark',
-          caption: undefined,
+          caption: null,
           absolute: false,
         };
       case routes.haenyeoPlaces:
         return {
           type: 'dark',
-          caption: undefined,
+          caption: null,
           absolute: true,
         };
       case routes.dictionary:
@@ -57,7 +57,7 @@ export default function MainLayout({
       default:
         return {
           type: 'dark',
-          caption: undefined,
+          caption: null,
           absolute: false,
         };
     }

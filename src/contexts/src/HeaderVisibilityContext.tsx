@@ -6,6 +6,7 @@ import {
   useRef,
   ReactNode,
 } from 'react';
+import { useLocation } from 'react-router-dom';
 
 interface HeaderVisibilityContextType {
   showHeader: boolean;
@@ -24,12 +25,16 @@ export const HeaderVisibilityProvider = ({
 }: HeaderVisibilityProviderProps) => {
   const [showHeader, setShowHeader] = useState(true);
   const prevScrollPos = useRef(window.scrollY);
+  const location = useLocation();
+
+  useEffect(() => {
+    setShowHeader(true);
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
 
-      // 페이지의 끝에 가까울 경우 헤더 상태 변경을 하지 않음
       const windowHeight = window.innerHeight;
       const docHeight = document.documentElement.scrollHeight;
       if (window.scrollY + windowHeight >= docHeight - 10) {
