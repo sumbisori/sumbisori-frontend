@@ -5,6 +5,7 @@ import DictionaryIcon from '@/icons/dictionary.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/query';
+import { routes } from '@/routes/src/routes';
 
 export const Aquarium = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -27,7 +28,7 @@ export const Aquarium = () => {
       <canvas ref={canvasRef} className="size-full" />
       <div
         className="absolute bottom-4 left-4 z-20 flex cursor-pointer items-center gap-1"
-        onClick={() => navigate('/dictionary')}
+        onClick={() => navigate(routes.dictionary)}
       >
         <DictionaryIcon className="size-6" />
         <div className="text-xl font-medium">

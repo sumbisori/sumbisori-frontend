@@ -7,9 +7,11 @@ import { Dictionary } from '@/pages/Dictionary';
 import { MyPage } from '@/pages/MyPage';
 import { MyPageReservation } from '@/pages/MyPageReservation';
 import { MobileLayout } from '@/layouts/MobileLayout';
-import ScrollToTop from './ScrollToTop';
+import ScrollToTop from './src/ScrollToTop';
 import { HaenyeoPlacesDetail } from '@/pages/HaenyeoPlacesDetail';
 import { NotFound } from '@/pages/NotFound';
+import { JournalCreate } from '@/pages/JournalCreate';
+import { routes } from './src/routes';
 
 export const Router = () => {
   return (
@@ -17,29 +19,36 @@ export const Router = () => {
       <ScrollToTop />
       <Routes>
         <Route element={<MobileLayout />}>
-          <Route path="/login" element={<Login />} />
+          <Route path={routes.login} element={<Login />} />
           {/* Nav 와 Header 보유 */}
           <Route element={<MainLayout />}>
-            <Route path="/" element={<Navigate to="/home" />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/haenyeo-places" element={<HaenyeoPlaces />} />
-
-            <Route path="/dictionary" element={<Dictionary />} />
-            <Route path="/my-page" element={<MyPage />} />
             <Route
-              path="/my-page/reservation"
+              path={routes.default}
+              element={<Navigate to={routes.home} />}
+            />
+            <Route path={routes.home} element={<Home />} />
+            <Route path={routes.haenyeoPlaces} element={<HaenyeoPlaces />} />
+            <Route path={routes.dictionary} element={<Dictionary />} />
+            <Route path={routes.myPage} element={<MyPage />} />
+            <Route
+              path={routes.myPageReservation}
               element={<MyPageReservation />}
             />
           </Route>
           {/* Nav 보유 Header 미보유 */}
           <Route element={<MainLayout hasHeader={false} />}>
             <Route
-              path="/haenyeo-places/:placeId"
+              path={routes.haenyeoPlacesDetail(':placeId')}
               element={<HaenyeoPlacesDetail />}
             />
           </Route>
           {/* Nav 미보유 Header 보유 */}
-          <Route element={<MainLayout hasNavigation={false} />}></Route>
+          <Route element={<MainLayout hasNavigation={false} />}>
+            <Route
+              path={routes.journalCreate(':step')}
+              element={<JournalCreate />}
+            />
+          </Route>
           {/* Nav 미보유 Header 보유 */}
           <Route
             element={<MainLayout hasHeader={false} hasNavigation={false} />}

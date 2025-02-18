@@ -9,6 +9,7 @@ import SettingIcon from '@/icons/my_page/setting.svg?react';
 import LogoutIcon from '@/icons/my_page/logout.svg?react';
 import { ImageWithTextAlert } from '../../../../components/ImageWithTextAlert';
 import { IMAGE_PATHS } from '@/constant';
+import { routes } from '@/routes/src/routes';
 
 export const MyPageContent = () => {
   const { openModal } = useModalController();
@@ -21,7 +22,7 @@ export const MyPageContent = () => {
       <MyPageButton
         icon={<ReservationListIcon />}
         onClick={() => {
-          navigate('/my-page/reservation');
+          navigate(routes.myPageReservation);
         }}
       >
         예약 정보 조회

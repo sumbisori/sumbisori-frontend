@@ -5,6 +5,7 @@ import HomeIcon from '@/icons/home.svg?react';
 
 import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
 import { IMAGE_PATHS } from '@/constant';
+import { routes } from '@/routes/src/routes';
 
 export const NotFound = () => {
   const navigate = useNavigate();
@@ -12,12 +13,12 @@ export const NotFound = () => {
     <div className="relative h-screen">
       <div
         id="map-controls2"
-        className="absolute left-0 top-[3.75rem] z-200 flex w-full items-center justify-between gap-2 px-4"
+        className="absolute left-0 top-header-height z-200 flex w-full items-center justify-between gap-2 px-4"
       >
         <IconButton onClick={() => navigate(-1)} className="size-6">
           <LeftIcon />
         </IconButton>
-        <IconButton onClick={() => navigate('/home')} className="size-6">
+        <IconButton onClick={() => navigate(routes.home)} className="size-6">
           <HomeIcon />
         </IconButton>
       </div>

@@ -100,9 +100,6 @@ export const MyPageReservation = () => {
             fullDate={reservation.reservationDate}
             people={reservation.peopleCount}
             status={reservation.status}
-            onRegister={() => {
-              navigate('/dictionary/registration');
-            }}
             onComplete={handleComplete}
             onCancel={handleCancel}
           />

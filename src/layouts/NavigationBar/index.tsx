@@ -4,6 +4,7 @@ import NavIcon1Active from '@/icons/nav/nav_icon1.svg?react';
 import NavIcon2Active from '@/icons/nav/nav_icon2.svg?react';
 import NavIcon3Active from '@/icons/nav/nav_icon3.svg?react';
 import NavIcon4Active from '@/icons/nav/nav_icon4.svg?react';
+import { routes } from '@/routes/src/routes';
 
 export const NavigationBar = () => {
   const navigate = useNavigate();
@@ -12,22 +13,22 @@ export const NavigationBar = () => {
   const navItems = [
     {
       label: '홈',
-      path: '/home',
+      path: routes.home,
       icon: <NavIcon1Active />,
     },
     {
       label: '예약',
-      path: '/haenyeo-places',
+      path: routes.haenyeoPlaces,
       icon: <NavIcon2Active />,
     },
     {
       label: '도감',
-      path: '/dictionary',
+      path: routes.dictionary,
       icon: <NavIcon3Active />,
     },
     {
       label: '마이',
-      path: '/my-page',
+      path: routes.myPage,
       icon: <NavIcon4Active />,
     },
   ];

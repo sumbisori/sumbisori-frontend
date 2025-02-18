@@ -1,3 +1,4 @@
+import { routes } from '@/routes/src/routes';
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 export type ErrorResponse = {
@@ -22,7 +23,7 @@ export const useErrorHandler = () => {
 
       if (name === 'AUTHENTICATION_REQUIRED') {
         alert('로그인이 필요합니다.');
-        navigate('/login');
+        navigate(routes.login);
         return;
       }
 

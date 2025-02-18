@@ -11,9 +11,13 @@ import { DictionaryTitle } from '@/pages/Dictionary/components/DictionaryTitle';
 import { DictionarySubtitle } from '@/pages/Dictionary/components/DictionarySubtitle';
 import { DictionaryDialog } from '@/pages/Dictionary/components/DictionaryDialog';
 import { DictionaryAquarium } from './components/DictionaryAquarium';
+import { LargeButton } from '@/components/LargeButton';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '@/routes/src/routes';
 
 export const Dictionary = () => {
   const { openModal } = useModalController();
+  const navigate = useNavigate();
   const [selectedSeafood, setSelectedSeafood] =
     useState<DictionarySeafood | null>(null);
   const {
@@ -85,6 +89,12 @@ export const Dictionary = () => {
       {selectedSeafood && (
         <DictionaryDialog selectedSeafood={selectedSeafood} />
       )}
+
+      <div className="px-5 pb-5">
+        <LargeButton onClick={() => navigate(routes.journalCreate('calendar'))}>
+          일지 작성 및 도감등록
+        </LargeButton>
+      </div>
     </div>
   );
 };

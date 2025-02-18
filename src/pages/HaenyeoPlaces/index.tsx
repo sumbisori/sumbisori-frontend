@@ -9,6 +9,7 @@ import {
 import { queryKeys } from '@/query';
 import { HaenyeoPlaceDetailSheet } from '@/pages/HaenyeoPlaces/components/HaenyeoPlaceDetailSheet';
 import { NaverMap } from '@/pages/HaenyeoPlaces/components/NaverMap';
+import { routes } from '@/routes/src/routes';
 
 export const HaenyeoPlaces = () => {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ export const HaenyeoPlaces = () => {
 
   const handleMoreInfo = () => {
     if (!selectedPlaceId) return;
-    navigate(`/haenyeo-places/${selectedPlaceId}`);
+    navigate(routes.haenyeoPlacesDetail(selectedPlaceId));
   };
 
   return (

@@ -18,6 +18,7 @@ import { BottomSheet } from '@/components/BottomSheet';
 import { HaenyeoPlaceOperationInfo } from './components/HaenyeoPlaceOperationInfo';
 import { HaenyeoPlaceFacilities } from './components/HaenyeoPlaceFacilities';
 import { HaenyeoPlaceInquiries } from './components/HaenyeoPlaceInquiries';
+import { routes } from '@/routes/src/routes';
 
 export const HaenyeoPlacesDetail = () => {
   const { openModal, closeModal } = useModalController();
@@ -69,12 +70,14 @@ export const HaenyeoPlacesDetail = () => {
           className="absolute left-0 top-header-height z-10 flex w-full items-center justify-between gap-2 px-4"
         >
           <IconButton
-            onClick={() => navigate(`/haenyeo-places?placeId=${placeId}`)}
+            onClick={() =>
+              navigate(routes.haenyeoPlaces + `?placeId=${placeId}`)
+            }
             className="size-6"
           >
             <LeftIcon />
           </IconButton>
-          <IconButton onClick={() => navigate('/haenyeo-places')}>
+          <IconButton onClick={() => navigate(routes.haenyeoPlaces)}>
             <MdCloseIcon className="size-6" />
           </IconButton>
         </div>
@@ -109,12 +112,14 @@ export const HaenyeoPlacesDetail = () => {
           className="absolute left-0 top-header-height z-10 flex w-full items-center justify-between gap-2 px-4"
         >
           <IconButton
-            onClick={() => navigate(`/haenyeo-places?placeId=${placeId}`)}
+            onClick={() =>
+              navigate(routes.haenyeoPlaces + `?placeId=${placeId}`)
+            }
             className="size-6"
           >
             <LeftIcon />
           </IconButton>
-          <IconButton onClick={() => navigate('/haenyeo-places')}>
+          <IconButton onClick={() => navigate(routes.haenyeoPlaces)}>
             <MdCloseIcon className="size-6" />
           </IconButton>
         </div>
@@ -123,7 +128,7 @@ export const HaenyeoPlacesDetail = () => {
         open={bottomSheetOpen}
         blocking={false}
         customSnapPoints={['top', 'middle']}
-        onDismiss={() => navigate(`/haenyeo-places?placeId=${placeId}`)}
+        onDismiss={() => navigate(routes.haenyeoPlaces + `?placeId=${placeId}`)}
         expandOnContentDrag={true}
         skipInitialTransition={true}
         header={
@@ -160,11 +165,11 @@ export const HaenyeoPlacesDetail = () => {
             </span>
           </div>
         }
-        footer={
-          <div className="bg-gray-100 p-4">
-            <LargeButton onClick={handleOpenReservation}>예약방법</LargeButton>
-          </div>
-        }
+        // footer={
+        //   <div className="bg-gray-100 px-5 pb-5">
+        //     <LargeButton onClick={handleOpenReservation}>예약방법</LargeButton>
+        //   </div>
+        // }
       >
         <div className="flex flex-1 px-4 py-6">
           <motion.div
@@ -196,6 +201,9 @@ export const HaenyeoPlacesDetail = () => {
               inquiries={selectedPlace.details.inquiries}
             />
           </motion.div>
+        </div>
+        <div className="px-5 pb-5">
+          <LargeButton onClick={handleOpenReservation}>예약방법</LargeButton>
         </div>
       </BottomSheet>
       {/* 예약방법 모달 */}

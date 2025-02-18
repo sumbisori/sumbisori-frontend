@@ -5,6 +5,7 @@ import BellBlackIcon from '@/icons/Icon_bell_black.svg?react';
 import BellWhiteIcon from '@/icons/Icon_bell_white.svg?react';
 import ContourIcon from '@/icons/contour.svg?react';
 import { useHeaderVisibility } from '@/contexts/src/HeaderVisibilityContext';
+import { routes } from '@/routes/src/routes';
 
 interface Props {
   type?: 'dark' | 'light';
@@ -16,7 +17,7 @@ export const Header = ({ type = 'light', caption, absolute }: Props) => {
   const { showHeader } = useHeaderVisibility();
   const navigate = useNavigate();
   const handleNavigate = () => {
-    navigate('/home');
+    navigate(routes.home);
   };
 
   return (

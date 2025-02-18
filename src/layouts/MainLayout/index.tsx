@@ -3,6 +3,7 @@ import { Header } from '@/layouts/Header';
 import { Outlet, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useMemo } from 'react';
+import { routes } from '@/routes/src/routes';
 
 interface Props {
   hasNavigation?: boolean;
@@ -22,64 +23,44 @@ export default function MainLayout({
     caption: string | undefined;
     absolute: boolean;
   } => {
-    if (pathname === '/home')
-      return {
-        type: 'dark',
-        caption: undefined,
-        absolute: false,
-      };
-    if (pathname === '/haenyeo-places')
-      return {
-        type: 'dark',
-        caption: undefined,
-        absolute: true,
-      };
-    if (pathname.includes('/reservation-create'))
-      return {
-        type: 'dark',
-        caption: '예약',
-        absolute: false,
-      };
-    if (pathname === '/dictionary')
-      return {
-        type: 'dark',
-        caption: '물질도감',
-        absolute: false,
-      };
-
-    if (pathname === '/my-page')
-      return {
-        type: 'dark',
-        caption: '마이',
-        absolute: false,
-      };
-
-    if (pathname === '/my-page/reservation')
-      return {
-        type: 'dark',
-        caption: '예약정보 조회',
-        absolute: false,
-      };
-
-    if (pathname === '/dictionary/registration')
-      return {
-        type: 'dark',
-        caption: '도감 등록',
-        absolute: false,
-      };
-
-    if (pathname.includes('/dictionary/confirm'))
-      return {
-        type: 'dark',
-        caption: '도감 등록',
-        absolute: false,
-      };
-
-    return {
-      type: 'light',
-      caption: undefined,
-      absolute: false,
-    };
+    switch (pathname) {
+      case routes.home:
+        return {
+          type: 'dark',
+          caption: undefined,
+          absolute: false,
+        };
+      case routes.haenyeoPlaces:
+        return {
+          type: 'dark',
+          caption: undefined,
+          absolute: true,
+        };
+      case routes.dictionary:
+        return {
+          type: 'dark',
+          caption: '물질도감',
+          absolute: false,
+        };
+      case routes.myPage:
+        return {
+          type: 'dark',
+          caption: '마이',
+          absolute: false,
+        };
+      case routes.myPageReservation:
+        return {
+          type: 'dark',
+          caption: '예약정보 조회',
+          absolute: false,
+        };
+      default:
+        return {
+          type: 'dark',
+          caption: undefined,
+          absolute: false,
+        };
+    }
   };
 
   const headerType = useMemo(
