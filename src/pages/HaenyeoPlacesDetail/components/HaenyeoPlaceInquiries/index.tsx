@@ -41,9 +41,12 @@ export const HaenyeoPlaceInquiries = ({ inquiries }: Props) => {
             transition={{ duration: 0.3, delay: index * 0.1 }}
           >
             <img src={inquire.iconUrl} alt="inquire-icon" className="size-6" />
-            <p className="cursor-pointer text-sm font-medium text-gray-800 hover:text-gray-600">
+            <a
+              className="cursor-pointer text-sm font-medium text-gray-800 hover:text-gray-600"
+              href={inquire.content}
+            >
               {inquire.content}
-            </p>
+            </a>
           </motion.div>
         ))}
       </motion.div>

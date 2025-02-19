@@ -30,31 +30,33 @@ export const HomeWeatherCard = ({
   error = false,
   isTemperature = false,
 }: Props) => {
-  const weatherIconColor = useMemo(() => {
-    return isNightTime() ? 'text-gray-600' : STATUS_VARIANTS[status].iconColor;
-  }, [status]);
-
   const CardIcon = (type: string) => {
     // 날씨 아이콘
     switch (type) {
       case 'CLEAR_SKY':
-        return <ClearSkyIcon className={weatherIconColor} />;
+        return <ClearSkyIcon className={STATUS_VARIANTS[status].iconColor} />;
       case 'FEW_CLOUDS':
-        return <FewCloudsIcon className={weatherIconColor} />;
+        return <FewCloudsIcon className={STATUS_VARIANTS[status].iconColor} />;
       case 'SCATTERED_CLOUDS':
-        return <ScatteredCloudsIcon className={weatherIconColor} />;
+        return (
+          <ScatteredCloudsIcon className={STATUS_VARIANTS[status].iconColor} />
+        );
       case 'BROKEN_CLOUDS':
-        return <BrokenCloudsIcon className={weatherIconColor} />;
+        return (
+          <BrokenCloudsIcon className={STATUS_VARIANTS[status].iconColor} />
+        );
       case 'SHOWER_RAIN':
-        return <ShowerRainIcon className={weatherIconColor} />;
+        return <ShowerRainIcon className={STATUS_VARIANTS[status].iconColor} />;
       case 'RAIN':
-        return <RainIcon className={weatherIconColor} />;
+        return <RainIcon className={STATUS_VARIANTS[status].iconColor} />;
       case 'THUNDERSTORM':
-        return <ThunderstormIcon className={weatherIconColor} />;
+        return (
+          <ThunderstormIcon className={STATUS_VARIANTS[status].iconColor} />
+        );
       case 'SNOW':
-        return <SnowIcon className={weatherIconColor} />;
+        return <SnowIcon className={STATUS_VARIANTS[status].iconColor} />;
       case 'MIST':
-        return <MistIcon className={weatherIconColor} />;
+        return <MistIcon className={STATUS_VARIANTS[status].iconColor} />;
 
       // 기본 아이콘
       case 'TEMPERATURE':

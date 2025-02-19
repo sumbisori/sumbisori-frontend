@@ -32,7 +32,7 @@ export const HaenyeoPlaceOperationInfo = ({ operationInfo }: Props) => {
             </div>
           </div>
           {operation.description && (
-            <p className="pl-9 text-sm text-gray-700">
+            <p className="whitespace-pre-wrap pl-9 text-sm text-gray-700">
               {operation.description}
             </p>
           )}
