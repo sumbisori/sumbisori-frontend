@@ -9,6 +9,7 @@ import { IconButton } from '@/components/IconButton';
 import { motion } from 'framer-motion';
 import LeftIcon from '@/icons/left.svg?react';
 import { IMAGE_PATHS } from '@/constant';
+import { TopDetailPageHeader } from '@/components/TopDetailPageHeader';
 
 interface NaverMapProps {
   selectedPlace?: HaenyeoPlaceDetail | null;
@@ -172,16 +173,7 @@ export const NaverMap = ({
         </IconButton>
       </div>
 
-      {selectedPlace && (
-        <div
-          id="map-controls2"
-          className="absolute left-0 top-header-height z-10 flex w-full items-center justify-between gap-2 px-4"
-        >
-          <IconButton onClick={handleSheetBack} className="size-6">
-            <LeftIcon />
-          </IconButton>
-        </div>
-      )}
+      {selectedPlace && <TopDetailPageHeader onBackClick={handleSheetBack} />}
     </motion.div>
   );
 };

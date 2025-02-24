@@ -19,6 +19,7 @@ import { HaenyeoPlaceOperationInfo } from './components/HaenyeoPlaceOperationInf
 import { HaenyeoPlaceFacilities } from './components/HaenyeoPlaceFacilities';
 import { HaenyeoPlaceInquiries } from './components/HaenyeoPlaceInquiries';
 import { routes } from '@/routes/src/routes';
+import { TopDetailPageHeader } from '@/components/TopDetailPageHeader';
 
 export const HaenyeoPlacesDetail = () => {
   const { openModal, closeModal } = useModalController();
@@ -92,120 +93,89 @@ export const HaenyeoPlacesDetail = () => {
 
   return (
     <div className="relative">
-      <style>{`
-        :root {
-          --rsbs-bg: #f0f0f5;
-        }
-      `}</style>
       {/* 배경 이미지 */}
-      <div
-        id="place-detail-image-container"
-        className="fixed inset-x-0 top-0 m-auto min-w-full-layout max-w-full-layout select-none"
-      >
+      <div id="place-detail-image-container" className="relative w-full">
         <img
           src={selectedPlace.imageUrl}
           alt="place-image"
           className="h-[342px] w-full object-cover"
         />
-        <div
-          id="map-controls2"
-          className="absolute left-0 top-header-height z-10 flex w-full items-center justify-between gap-2 px-4"
-        >
-          <IconButton
-            onClick={() =>
-              navigate(routes.haenyeoPlaces + `?placeId=${placeId}`)
-            }
-            className="size-6"
-          >
-            <LeftIcon />
-          </IconButton>
-          <IconButton onClick={() => navigate(routes.haenyeoPlaces)}>
-            <MdCloseIcon className="size-6" />
-          </IconButton>
-        </div>
       </div>
-      <BottomSheet
-        open={bottomSheetOpen}
-        blocking={false}
-        customSnapPoints={['top', 'middle']}
-        onDismiss={() => navigate(routes.haenyeoPlaces + `?placeId=${placeId}`)}
-        expandOnContentDrag={true}
-        skipInitialTransition={true}
-        header={
-          <div className="bg-white p-5">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <p className="text-xl font-bold">{selectedPlace.name}</p>
-              <p className="text-sm">{selectedPlace.address}</p>
-            </motion.div>
-            <div
-              id="expanded-place-button-container"
-              className="my-3 flex gap-4"
-            >
-              <button
-                className="flex cursor-pointer items-center gap-1 rounded-full border border-gray-200 px-3 py-1.5 hover:bg-gray-100"
-                onClick={() => handlePhoneClick(selectedPlace.phoneNumber)}
-              >
-                <PhoneIcon />
-                <p>전화</p>
-              </button>
-              <button
-                className="flex cursor-pointer items-center gap-1 rounded-full border border-gray-200 px-3 py-1.5 hover:bg-gray-100"
-                onClick={() => handleLinkClick(selectedPlace.link)}
-              >
-                <MarkLinkIcon />
-                <p>네이버지도</p>
-              </button>
-            </div>
-            <span className="text-xl font-bold">
-              {getPlacePrice(selectedPlace.minPrice, selectedPlace.maxPrice)} 원
-            </span>
-          </div>
+
+      {/* 상단 버튼 */}
+      <TopDetailPageHeader
+        onBackClick={() =>
+          navigate(routes.haenyeoPlaces + `?placeId=${placeId}`)
         }
-        // footer={
-        //   <div className="bg-gray-100 px-5 pb-5">
-        //     <LargeButton onClick={handleOpenReservation}>예약방법</LargeButton>
-        //   </div>
-        // }
-      >
-        <div className="flex flex-1 px-4 py-6">
-          <motion.div
-            className="flex w-full flex-col gap-6 rounded-2xl bg-white p-6"
-            initial="hidden"
-            animate="visible"
+        onCloseClick={() => navigate(routes.haenyeoPlaces)}
+      />
+
+      {/* 체험 상세정보 헤더 */}
+      <div className="bg-white p-5">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <p className="text-xl font-bold">{selectedPlace.name}</p>
+          <p className="text-sm">{selectedPlace.address}</p>
+        </motion.div>
+        <div id="expanded-place-button-container" className="my-3 flex gap-4">
+          <button
+            className="flex cursor-pointer items-center gap-1 rounded-full border border-gray-200 px-3 py-1.5 hover:bg-gray-100"
+            onClick={() => handlePhoneClick(selectedPlace.phoneNumber)}
+          >
+            <PhoneIcon />
+            <p>전화</p>
+          </button>
+          <button
+            className="flex cursor-pointer items-center gap-1 rounded-full border border-gray-200 px-3 py-1.5 hover:bg-gray-100"
+            onClick={() => handleLinkClick(selectedPlace.link)}
+          >
+            <MarkLinkIcon />
+            <p>네이버지도</p>
+          </button>
+        </div>
+        <span className="text-xl font-bold">
+          {getPlacePrice(selectedPlace.minPrice, selectedPlace.maxPrice)} 원
+        </span>
+      </div>
+
+      {/* 체험 상세정보 */}
+      <div className="flex flex-1 bg-gray-200 px-4 py-6">
+        <motion.div
+          className="flex w-full flex-col gap-6 rounded-2xl bg-white p-6"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.1 } },
+          }}
+        >
+          <motion.h3
+            className="text-lg font-bold"
             variants={{
-              hidden: {},
-              visible: { transition: { staggerChildren: 0.1 } },
+              hidden: { opacity: 0, y: 10 },
+              visible: { opacity: 1, y: 0 },
             }}
           >
-            <motion.h3
-              className="text-lg font-bold"
-              variants={{
-                hidden: { opacity: 0, y: 10 },
-                visible: { opacity: 1, y: 0 },
-              }}
-            >
-              체험 상세정보
-            </motion.h3>
+            체험 상세정보
+          </motion.h3>
 
-            <HaenyeoPlaceOperationInfo
-              operationInfo={selectedPlace.details.operationInfo}
-            />
-            <HaenyeoPlaceFacilities
-              facilities={selectedPlace.details.facilities}
-            />
-            <HaenyeoPlaceInquiries
-              inquiries={selectedPlace.details.inquiries}
-            />
-          </motion.div>
-        </div>
-        <div className="px-5 pb-5">
-          <LargeButton onClick={handleOpenReservation}>예약방법</LargeButton>
-        </div>
-      </BottomSheet>
+          <HaenyeoPlaceOperationInfo
+            operationInfo={selectedPlace.details.operationInfo}
+          />
+          <HaenyeoPlaceFacilities
+            facilities={selectedPlace.details.facilities}
+          />
+          <HaenyeoPlaceInquiries inquiries={selectedPlace.details.inquiries} />
+        </motion.div>
+      </div>
+
+      <div className="fixed inset-x-0 bottom-0 z-10 m-auto mb-nav-height w-full min-w-full-layout max-w-full-layout px-5 pb-5 pt-3">
+        <LargeButton onClick={handleOpenReservation}>예약방법</LargeButton>
+      </div>
+
       {/* 예약방법 모달 */}
       <HaenyeoPlaceReservationMethodModal
         selectedPlace={selectedPlace}
