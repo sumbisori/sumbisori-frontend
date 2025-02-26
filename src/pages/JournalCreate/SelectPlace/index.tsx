@@ -1,3 +1,3 @@
 export const SelectPlace = () => {
-  return <div>SelectPlace</div>;
+  return <div className="p-4">SelectPlace</div>;
 };

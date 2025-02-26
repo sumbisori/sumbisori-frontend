@@ -10,12 +10,13 @@ import { SelectWeather } from './SelectWeather';
 import { SelectPhoto } from './SelecrPhoto';
 import { SelectSeafood } from './SelecrSeafood';
 import { Register } from './Register';
-
+import { InputTitle } from './InputTitle';
+import { JOURNAL_CREATE_INPUT_TITLE } from '@/constant/src/journalCreateInputTitle';
+import { StepBar } from './StepBar';
 type Step = 'calendar' | 'place' | 'weather' | 'photo' | 'seafood' | 'register';
 
 export const JournalCreate = () => {
   const { step } = useParams();
-  // const [selectedDate, setSelectedDate] = useState(dayjs());
   const [form, setForm] = useState({
     date: dayjs(),
     place: null,
@@ -66,14 +67,24 @@ export const JournalCreate = () => {
   }
 
   return (
-    <div className="flex h-full min-h-screen flex-col bg-gray-050">
-      <NavigatorHeader
-        title="일기 작성"
-        onBackClick={step === 'calendar' ? undefined : handleBackClick}
-        onCloseClick={handleCloseClick}
-      />
+    <div className="flex h-full min-h-screen flex-col bg-gray-050 pt-header-height">
+      <div className="bg-white">
+        <NavigatorHeader
+          title="체험 일지"
+          onBackClick={step === 'calendar' ? undefined : handleBackClick}
+          onCloseClick={handleCloseClick}
+        />
+        <StepBar
+          current={stepList.indexOf(step as Step) + 1}
+          total={stepList.length}
+        />
+        <InputTitle
+          title={JOURNAL_CREATE_INPUT_TITLE(step).title}
+          subtitle={JOURNAL_CREATE_INPUT_TITLE(step).subtitle}
+        />
+      </div>
       <form className="flex flex-1 flex-col">
-        <div className="flex-1 pt-header-height">
+        <div className="flex-1">
           {step === 'calendar' && (
             <SelectCalendar
               value={form.date}

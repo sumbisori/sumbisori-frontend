@@ -1,3 +1,3 @@
 export const SelectSeafood = () => {
-  return <div>SelectSeafood</div>;
+  return <div className="p-4">SelectSeafood</div>;
 };

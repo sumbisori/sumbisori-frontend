@@ -1,3 +1,3 @@
 export const Register = () => {
-  return <div>Register</div>;
+  return <div className="p-4">Register</div>;
 };

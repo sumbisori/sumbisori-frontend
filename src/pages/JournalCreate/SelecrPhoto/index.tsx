@@ -1,3 +1,3 @@
 export const SelectPhoto = () => {
-  return <div>SelectPhoto</div>;
+  return <div className="p-4">SelectPhoto</div>;
 };
