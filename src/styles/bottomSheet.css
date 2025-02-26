@@ -31,7 +31,7 @@
 [data-rsbs-overlay],
 [data-rsbs-backdrop],
 [data-rsbs-root]:after {
-  z-index: 3;
+  z-index: 999;
   -ms-scroll-chaining: none;
   overscroll-behavior: none;
   touch-action: none;

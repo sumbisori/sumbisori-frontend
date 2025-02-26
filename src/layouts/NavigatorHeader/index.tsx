@@ -18,7 +18,7 @@ export const NavigatorHeader = ({
   return (
     <div
       className={clsx(
-        'fixed inset-x-0 top-0 z-100 m-auto flex h-header-height w-full min-w-full-layout max-w-full-layout items-center justify-between bg-white px-5 transition-transform duration-300 ease-in-out',
+        'fixed inset-x-0 top-0 z-10 m-auto flex h-header-height w-full min-w-full-layout max-w-full-layout items-center justify-between bg-white px-5 transition-transform duration-300 ease-in-out',
 
         {
           'translate-y-0': showHeader,

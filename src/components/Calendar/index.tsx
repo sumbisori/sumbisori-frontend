@@ -72,6 +72,7 @@ export const Calendar = ({ value, onChange }: CalendarProps) => {
       <button
         onClick={handleDatePickerClick}
         className="flex items-center gap-1 text-xl"
+        type="button"
       >
         <div className="flex items-center gap-2">
           <p>{currentMonth.format('YYYY년')}</p>
@@ -101,6 +102,7 @@ export const Calendar = ({ value, onChange }: CalendarProps) => {
               <button
                 key={day.date.format('YYYYMMDD')}
                 onClick={() => handleDateClick(day.date)}
+                type="button"
                 className={clsx(
                   'flex size-11 items-center justify-center rounded-full text-lg',
                   'transition-colors duration-200 ease-in-out',

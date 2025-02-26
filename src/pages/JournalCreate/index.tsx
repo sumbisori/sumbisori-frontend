@@ -5,12 +5,24 @@ import { LargeButton } from '@/components/LargeButton';
 import dayjs from '@/util/dayjs';
 import { NavigatorHeader } from '@/layouts/NavigatorHeader';
 import { routes } from '@/routes/src/routes';
+import { SelectPlace } from './SelectPlace';
+import { SelectWeather } from './SelectWeather';
+import { SelectPhoto } from './SelecrPhoto';
+import { SelectSeafood } from './SelecrSeafood';
+import { Register } from './Register';
 
 type Step = 'calendar' | 'place' | 'weather' | 'photo' | 'seafood' | 'register';
 
 export const JournalCreate = () => {
   const { step } = useParams();
-  const [selectedDate, setSelectedDate] = useState(dayjs());
+  // const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [form, setForm] = useState({
+    date: dayjs(),
+    place: null,
+    weather: null,
+    photo: null,
+    seafood: null,
+  });
   const navigate = useNavigate();
   const params = useParams();
 
@@ -32,6 +44,10 @@ export const JournalCreate = () => {
     }
   };
 
+  const handleCloseClick = () => {
+    navigate(routes.dictionary);
+  };
+
   const handleNextClick = () => {
     const currentStep = params.step as Step;
     const currentIndex = stepList.indexOf(currentStep);
@@ -45,33 +61,47 @@ export const JournalCreate = () => {
     navigate(routes.home);
   };
 
-  const handleCloseClick = () => {
-    navigate(routes.dictionary);
-  };
-
   if (!step || !stepList.includes(step as Step)) {
     return <Navigate to="/not-found" replace />;
   }
 
   return (
-    <div className="flex h-full min-h-screen flex-col bg-gray-050 pt-header-height">
+    <div className="flex h-full min-h-screen flex-col bg-gray-050">
       <NavigatorHeader
         title="일기 작성"
         onBackClick={step === 'calendar' ? undefined : handleBackClick}
         onCloseClick={handleCloseClick}
       />
-      <div className="flex-1">
-        {step === 'calendar' && (
-          <SelectCalendar value={selectedDate} onChange={setSelectedDate} />
-        )}
-      </div>
-      <div className="mt-auto px-5 pb-5">
-        <LargeButton
-          onClick={step === 'register' ? handleCompleteClick : handleNextClick}
-        >
-          {step === 'register' ? '등록' : '다음'}
-        </LargeButton>
-      </div>
+      <form className="flex flex-1 flex-col">
+        <div className="flex-1 pt-header-height">
+          {step === 'calendar' && (
+            <SelectCalendar
+              value={form.date}
+              onChange={(date) =>
+                setForm({
+                  ...form,
+                  date,
+                })
+              }
+            />
+          )}
+          {step === 'place' && <SelectPlace />}
+          {step === 'weather' && <SelectWeather />}
+          {step === 'photo' && <SelectPhoto />}
+          {step === 'seafood' && <SelectSeafood />}
+          {step === 'register' && <Register />}
+        </div>
+        <div className="px-5 pb-5">
+          <LargeButton
+            onClick={
+              step === 'register' ? handleCompleteClick : handleNextClick
+            }
+            type={step === 'register' ? 'submit' : 'button'}
+          >
+            {step === 'register' ? '등록' : '다음'}
+          </LargeButton>
+        </div>
+      </form>
     </div>
   );
 };
