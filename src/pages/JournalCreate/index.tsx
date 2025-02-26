@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
-import dayjs from 'dayjs';
 import { SelectCalendar } from './SelectCalendar';
 import { LargeButton } from '@/components/LargeButton';
+import dayjs from '@/util/dayjs';
 
 export const JournalCreate = () => {
   const { step } = useParams();

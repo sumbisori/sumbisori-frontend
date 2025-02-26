@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs from '@/util/dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import { useState } from 'react';
 import { Dayjs } from 'dayjs';
