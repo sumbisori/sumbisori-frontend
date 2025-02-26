@@ -73,6 +73,7 @@ export const JournalCreate = () => {
           title="체험 일지"
           onBackClick={step === 'calendar' ? undefined : handleBackClick}
           onCloseClick={handleCloseClick}
+          className="bg-white"
         />
         <StepBar
           current={stepList.indexOf(step as Step) + 1}

@@ -6,12 +6,14 @@ interface NavigatorHeaderProps {
   title: string;
   onBackClick?: () => void;
   onCloseClick?: () => void;
+  className?: string;
 }
 
 export const NavigatorHeader = ({
   title,
   onBackClick,
   onCloseClick,
+  className,
 }: NavigatorHeaderProps) => {
   const { showHeader } = useHeaderVisibility();
 
@@ -19,7 +21,7 @@ export const NavigatorHeader = ({
     <div
       className={clsx(
         'fixed inset-x-0 top-0 z-10 m-auto flex h-header-height w-full min-w-full-layout max-w-full-layout items-center justify-between px-5 transition-transform duration-300 ease-in-out',
-
+        className,
         {
           'translate-y-0': showHeader,
           '-translate-y-full': !showHeader,
