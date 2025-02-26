@@ -38,13 +38,13 @@ export const Calendar = ({ value, onChange }: CalendarProps) => {
       const timer = setTimeout(() => {
         selectedYearRef.current?.scrollIntoView({
           block: 'center',
-          behavior: 'smooth',
+          behavior: 'auto',
         });
         selectedMonthRef.current?.scrollIntoView({
           block: 'center',
-          behavior: 'smooth',
+          behavior: 'auto',
         });
-      }, 300);
+      }, 100);
       return () => clearTimeout(timer);
     }
   }, [pickerOpen]);
@@ -141,6 +141,7 @@ export const Calendar = ({ value, onChange }: CalendarProps) => {
         open={pickerOpen}
         onDismiss={() => setPickerOpen(false)}
         header={<h3 className="p-4 text-lg font-semibold">날짜 선택</h3>}
+        scrollLocking={false}
       >
         <div className="flex h-[400px]">
           <div className="flex-1 overflow-auto border-r">
