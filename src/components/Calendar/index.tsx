@@ -1,6 +1,6 @@
+import { useState, useRef, useEffect } from 'react';
 import dayjs from '@/util/dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
-import { useState } from 'react';
 import { Dayjs } from 'dayjs';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import '@/styles/bottomSheet.css';
@@ -18,7 +18,9 @@ export const Calendar = ({ value, onChange }: CalendarProps) => {
   const [currentMonth, setCurrentMonth] = useState(value || dayjs());
   const [pickerOpen, setPickerOpen] = useState(false);
 
-  // 연도 목록 생성 (현재 연도 ±10년)
+  const selectedYearRef = useRef<HTMLButtonElement>(null);
+  const selectedMonthRef = useRef<HTMLButtonElement>(null);
+
   const years = Array.from({ length: 21 }, (_, i) => dayjs().year() - 10 + i);
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
@@ -30,6 +32,22 @@ export const Calendar = ({ value, onChange }: CalendarProps) => {
     setCurrentMonth(currentMonth.year(year).month(month - 1));
     setPickerOpen(false);
   };
+
+  useEffect(() => {
+    if (pickerOpen) {
+      const timer = setTimeout(() => {
+        selectedYearRef.current?.scrollIntoView({
+          block: 'center',
+          behavior: 'smooth',
+        });
+        selectedMonthRef.current?.scrollIntoView({
+          block: 'center',
+          behavior: 'smooth',
+        });
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [pickerOpen]);
 
   const generateCalendar = () => {
     const startWeek = currentMonth.startOf('month').week();
@@ -60,7 +78,6 @@ export const Calendar = ({ value, onChange }: CalendarProps) => {
   };
 
   const handleDateClick = (date: Dayjs) => {
-    // 선택한 날짜의 월이 현재 보여지는 월과 다르면 해당 월로 이동
     if (date.month() !== currentMonth.month()) {
       setCurrentMonth(date);
     }
@@ -98,7 +115,7 @@ export const Calendar = ({ value, onChange }: CalendarProps) => {
 
         <div className="grid grid-cols-7 gap-3">
           {generateCalendar().map((week, weekIndex) =>
-            week.map((day, dayIndex) => (
+            week.map((day) => (
               <button
                 key={day.date.format('YYYYMMDD')}
                 onClick={() => handleDateClick(day.date)}
@@ -125,13 +142,18 @@ export const Calendar = ({ value, onChange }: CalendarProps) => {
         onDismiss={() => setPickerOpen(false)}
         header={<h3 className="p-4 text-lg font-semibold">날짜 선택</h3>}
       >
-        <div className="flex h-[300px]">
+        <div className="flex h-[400px]">
           <div className="flex-1 overflow-auto border-r">
             {years.map((year) => (
               <button
                 key={year}
+                ref={currentMonth.year() === year ? selectedYearRef : null}
                 onClick={() => setCurrentMonth(currentMonth.year(year))}
-                className={`w-full p-4 text-center hover:bg-gray-100 ${currentMonth.year() === year ? 'bg-gray-100 font-bold' : ''}`}
+                className={clsx(
+                  'w-full p-4 text-center hover:bg-gray-100',
+                  currentMonth.year() === year ? 'bg-gray-100 font-bold' : '',
+                )}
+                tabIndex={pickerOpen ? 0 : -1}
               >
                 {year}년
               </button>
@@ -141,8 +163,17 @@ export const Calendar = ({ value, onChange }: CalendarProps) => {
             {months.map((month) => (
               <button
                 key={month}
+                ref={
+                  currentMonth.month() + 1 === month ? selectedMonthRef : null
+                }
                 onClick={() => handlePickerSelect(currentMonth.year(), month)}
-                className={`w-full p-4 text-center hover:bg-gray-100 ${currentMonth.month() + 1 === month ? 'bg-gray-100 font-bold' : ''}`}
+                className={clsx(
+                  'w-full p-4 text-center hover:bg-gray-100',
+                  currentMonth.month() + 1 === month
+                    ? 'bg-gray-100 font-bold'
+                    : '',
+                )}
+                tabIndex={pickerOpen ? 0 : -1}
               >
                 {month}월
               </button>
