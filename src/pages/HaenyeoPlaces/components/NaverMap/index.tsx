@@ -7,9 +7,8 @@ import MyLocationIcon from '@/icons/my-location.svg?react';
 import ResetFocus from '@/icons/reset-focus.svg?react';
 import { IconButton } from '@/components/IconButton';
 import { motion } from 'framer-motion';
-import LeftIcon from '@/icons/left.svg?react';
 import { IMAGE_PATHS } from '@/constant';
-import { TopDetailPageHeader } from '@/components/TopDetailPageHeader';
+import { TopDetailPageHeader } from '@/layouts/TopDetailPageHeader';
 
 interface NaverMapProps {
   selectedPlace?: HaenyeoPlaceDetail | null;

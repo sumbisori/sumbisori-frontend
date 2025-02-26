@@ -14,12 +14,11 @@ import MdCloseIcon from '@/icons/line-md_close.svg?react';
 import { Spinner } from '@/components/Spinner';
 import { useModalController } from '@/contexts/src/ModalContext';
 import { HaenyeoPlaceReservationMethodModal } from '@/pages/HaenyeoPlacesDetail/components/HaenyeoPlaceReservationMethodModal';
-import { BottomSheet } from '@/components/BottomSheet';
 import { HaenyeoPlaceOperationInfo } from './components/HaenyeoPlaceOperationInfo';
 import { HaenyeoPlaceFacilities } from './components/HaenyeoPlaceFacilities';
 import { HaenyeoPlaceInquiries } from './components/HaenyeoPlaceInquiries';
 import { routes } from '@/routes/src/routes';
-import { TopDetailPageHeader } from '@/components/TopDetailPageHeader';
+import { TopDetailPageHeader } from '@/layouts/TopDetailPageHeader';
 
 export const HaenyeoPlacesDetail = () => {
   const { openModal, closeModal } = useModalController();
@@ -74,9 +73,8 @@ export const HaenyeoPlacesDetail = () => {
             onClick={() =>
               navigate(routes.haenyeoPlaces + `?placeId=${placeId}`)
             }
-            className="size-6"
           >
-            <LeftIcon />
+            <LeftIcon className="size-6" />
           </IconButton>
           <IconButton onClick={() => navigate(routes.haenyeoPlaces)}>
             <MdCloseIcon className="size-6" />

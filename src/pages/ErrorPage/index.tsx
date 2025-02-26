@@ -41,11 +41,11 @@ export const ErrorPage = ({ resetErrorBoundary, type = 'error' }: Props) => {
           id="map-controls2"
           className="absolute left-0 top-header-height z-200 flex w-full items-center justify-between gap-2 px-4"
         >
-          <IconButton onClick={handleBack} className="size-6">
-            <LeftIcon />
+          <IconButton onClick={handleBack}>
+            <LeftIcon className="size-6" />
           </IconButton>
-          <IconButton onClick={handleHome} className="size-6">
-            <HomeIcon />
+          <IconButton onClick={handleHome}>
+            <HomeIcon className="size-6" />
           </IconButton>
         </div>
         <ImageWithTextAlert

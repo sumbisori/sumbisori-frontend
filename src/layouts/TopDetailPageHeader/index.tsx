@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IconButton } from '../IconButton';
+import { IconButton } from '@/components/IconButton';
 import LeftIcon from '@/icons/left.svg?react';
 import MdCloseIcon from '@/icons/line-md_close.svg?react';
 
@@ -31,12 +31,12 @@ export const TopDetailPageHeader = ({ onBackClick, onCloseClick }: Props) => {
     >
       {onBackClick && (
         <IconButton onClick={onBackClick} className="size-6">
-          <LeftIcon />
+          <LeftIcon className="size-6 text-black" />
         </IconButton>
       )}
       {onCloseClick && (
         <IconButton onClick={onCloseClick}>
-          <MdCloseIcon className="size-6" />
+          <MdCloseIcon className="size-6 text-black" />
         </IconButton>
       )}
     </div>

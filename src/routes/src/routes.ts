@@ -44,5 +44,5 @@ export const routes = {
    * "/journal/create/:step"
    * 체험 일지 작성 페이지
    */
-  journalCreate: (step: ':step' | 'calendar') => `/journal/create/${step}`,
+  journalCreate: (step: string) => `/journal/create/${step}`,
 };
