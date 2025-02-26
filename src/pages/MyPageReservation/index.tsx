@@ -105,7 +105,7 @@ export const MyPageReservation = () => {
           />
         ))}
       </div>
-      <div className="h-[0.313rem] w-full bg-[#F7F7FA]"></div>
+      <div className="h-[0.313rem] w-full bg-gray-050"></div>
     </div>
   );
 };

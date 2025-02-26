@@ -3,8 +3,9 @@ import weekOfYear from 'dayjs/plugin/weekOfYear';
 import { useState } from 'react';
 import { Dayjs } from 'dayjs';
 import { BottomSheet } from 'react-spring-bottom-sheet';
-import '../../../styles/bottomSheet.css';
+import '@/styles/bottomSheet.css';
 import ArrowDownFullIcon from '@/icons/arrow-down-full.svg?react';
+import clsx from 'clsx';
 
 dayjs.extend(weekOfYear);
 
@@ -59,6 +60,10 @@ export const Calendar = ({ value, onChange }: CalendarProps) => {
   };
 
   const handleDateClick = (date: Dayjs) => {
+    // 선택한 날짜의 월이 현재 보여지는 월과 다르면 해당 월로 이동
+    if (date.month() !== currentMonth.month()) {
+      setCurrentMonth(date);
+    }
     onChange?.(date);
   };
 
@@ -76,10 +81,10 @@ export const Calendar = ({ value, onChange }: CalendarProps) => {
       </button>
 
       <div
-        className="flex flex-col gap-4 rounded-2xl border border-gray-400 px-4 py-8"
+        className="flex flex-col gap-4 rounded-2xl border border-gray-400 bg-white px-4 py-8"
         id="calendar"
       >
-        <div className="flex flex-nowrap items-center justify-between">
+        <div className="grid grid-cols-7 gap-3">
           {['일', '월', '화', '수', '목', '금', '토'].map((day) => (
             <div
               key={day}
@@ -93,19 +98,21 @@ export const Calendar = ({ value, onChange }: CalendarProps) => {
         <div className="grid grid-cols-7 gap-3">
           {generateCalendar().map((week, weekIndex) =>
             week.map((day, dayIndex) => (
-              <div
+              <button
                 key={day.date.format('YYYYMMDD')}
                 onClick={() => handleDateClick(day.date)}
                 className={clsx(
-                  'flex h-11 w-full cursor-pointer items-center justify-center rounded-full text-center text-lg hover:bg-gray-100',
+                  'flex size-11 items-center justify-center rounded-full text-lg',
+                  'transition-colors duration-200 ease-in-out',
                   !day.isCurrentMonth && 'text-gray-400',
                   day.isToday && 'text-xl font-bold text-blue-700',
-                  day.isSelected &&
-                    'border border-blue-700 bg-blue-100 text-xl font-bold text-blue-700',
+                  day.isSelected
+                    ? 'border border-blue-700 bg-blue-100 text-xl font-bold text-blue-700'
+                    : 'hover:bg-gray-100',
                 )}
               >
                 {day.date.format('D')}
-              </div>
+              </button>
             )),
           )}
         </div>
