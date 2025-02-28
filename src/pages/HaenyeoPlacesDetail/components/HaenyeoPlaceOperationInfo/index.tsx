@@ -23,19 +23,29 @@ export const HaenyeoPlaceOperationInfo = ({ operationInfo }: Props) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: index * 0.1 }}
         >
-          <div className="flex flex-nowrap items-center gap-3">
-            <img src={operation.iconUrl} alt="icon" className="size-6" />
-            <div className="flex flex-nowrap items-center gap-2 text-sm font-medium">
-              <p className="whitespace-nowrap">{operation.title}</p>
-              <OperationDividerIcon className="shrink-0" />
-              <p>{operation.content ? operation.content : '-'}</p>
+          <div className="grid grid-cols-[auto,1fr] gap-2 text-sm font-medium">
+            {/* 첫 행 */}
+            <div>
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
+                  <img src={operation.iconUrl} alt="icon" className="size-6" />
+                  <p className="whitespace-nowrap">{operation.title}</p>
+                </div>
+                <OperationDividerIcon className="shrink-0" />
+              </div>
             </div>
-          </div>
-          {operation.description && (
-            <p className="whitespace-pre-wrap pl-9 text-sm text-gray-700">
-              {operation.description}
+            <p className="pt-0.5">
+              {operation.content ? operation.content : '-'}
             </p>
-          )}
+            {/* 두 번째 행: description은 content의 시작 지점에 위치 */}
+            {operation.description && (
+              <div className="col-start-2">
+                <p className="whitespace-pre-wrap text-sm text-gray-700">
+                  {operation.description}
+                </p>
+              </div>
+            )}
+          </div>
         </motion.div>
       ))}
     </motion.div>

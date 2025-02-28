@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
@@ -24,7 +23,6 @@ export const HaenyeoPlacesDetail = () => {
   const { openModal, closeModal } = useModalController();
   const navigate = useNavigate();
   const { placeId } = useParams();
-  const [bottomSheetOpen] = useState(true);
 
   const {
     data: selectedPlace,
@@ -142,7 +140,7 @@ export const HaenyeoPlacesDetail = () => {
         </div>
 
         {/* 체험 상세정보 */}
-        <div className="bg-gray-200 px-4 py-6">
+        <div className="bg-gray-200 px-4 pb-[4.5rem] pt-6">
           <motion.div
             className="flex w-full flex-col gap-6 rounded-2xl bg-white p-6"
             initial="hidden"
@@ -175,7 +173,7 @@ export const HaenyeoPlacesDetail = () => {
         </div>
 
         {/* 예약방법 버튼 */}
-        <div className="mt-auto bg-gray-200 px-5 pb-5 pt-3">
+        <div className="fixed inset-x-0 bottom-nav-height z-10 m-auto flex w-full min-w-full-layout max-w-full-layout px-5 pb-5 pt-3">
           <LargeButton onClick={handleOpenReservation}>예약방법</LargeButton>
         </div>
       </div>

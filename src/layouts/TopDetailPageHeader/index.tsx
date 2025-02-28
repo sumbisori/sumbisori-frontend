@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { IconButton } from '@/components/IconButton';
 import LeftIcon from '@/icons/left.svg?react';
 import MdCloseIcon from '@/icons/line-md_close.svg?react';
@@ -14,7 +14,7 @@ export const TopDetailPageHeader = ({ onBackClick, onCloseClick }: Props) => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      const maxScroll = 200; // 투명도가 0이 되는 스크롤 위치
+      const maxScroll = 200;
       const newOpacity = Math.max(0, 1 - scrollPosition / maxScroll);
       setOpacity(newOpacity);
     };
@@ -23,6 +23,18 @@ export const TopDetailPageHeader = ({ onBackClick, onCloseClick }: Props) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const isButtonTransparent = useMemo(() => opacity === 0, [opacity]);
+
+  const handleBackClick = () => {
+    if (isButtonTransparent) return;
+    onBackClick?.();
+  };
+
+  const handleCloseClick = () => {
+    if (isButtonTransparent) return;
+    onCloseClick?.();
+  };
+
   return (
     <div
       id="map-controls"
@@ -30,12 +42,22 @@ export const TopDetailPageHeader = ({ onBackClick, onCloseClick }: Props) => {
       style={{ opacity }}
     >
       {onBackClick && (
-        <IconButton onClick={onBackClick} className="size-6">
+        <IconButton
+          onClick={handleBackClick}
+          className={clsx(
+            isButtonTransparent ? 'cursor-default' : 'cursor-pointer',
+          )}
+        >
           <LeftIcon className="size-6 text-black" />
         </IconButton>
       )}
       {onCloseClick && (
-        <IconButton onClick={onCloseClick}>
+        <IconButton
+          onClick={handleCloseClick}
+          className={clsx(
+            isButtonTransparent ? 'cursor-default' : 'cursor-pointer',
+          )}
+        >
           <MdCloseIcon className="size-6 text-black" />
         </IconButton>
       )}
