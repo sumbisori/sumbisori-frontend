@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
-import {
-  MyPageReservationType,
-  getReservationCount,
-  getReservationList,
-} from '@/api/myPage';
+import { getReservationCount, getReservationList } from '@/api/myPage';
+import { MyPageReservationType } from '@/api/myPage/types';
 import { SwitchReservationStatus } from '@/pages/MyPageReservation/components/SwitchReservationStatus';
 import { MyPageReservationCard } from '@/pages/MyPageReservation/components/MyPageReservationCard';
 import { useNavigate } from 'react-router-dom';

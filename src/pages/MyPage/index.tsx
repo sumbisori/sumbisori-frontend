@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { MyPageContent } from '@/pages/MyPage/components/MyPageContent';
 import { Profile } from '@/pages/MyPage/components/Profile';
-import { UserInfo, getUserInfo } from '@/api/myPage';
+import { getUserInfo } from '@/api/myPage';
+import { UserInfo } from '@/api/myPage/types';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 
 export const MyPage = () => {
