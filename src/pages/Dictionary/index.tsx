@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { SeafoodCard } from '@/pages/Dictionary/components/SeafoodCard';
-import { DictionarySeafood, getSeafoods } from '@/api/dictionary';
+import { getSeafoods } from '@/api/dictionary';
+import { DictionarySeafood } from '@/api/dictionary/types';
 import { useModalController } from '@/contexts/src/ModalContext';
 import { IMAGE_PATHS } from '@/constant';
 import Skeleton from '@/components/Skeleton';

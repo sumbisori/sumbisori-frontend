@@ -1,4 +1,4 @@
-import { DictionarySeafood } from '@/api/dictionary';
+import { DictionarySeafood } from '@/api/dictionary/types';
 import { Dialog } from '../../../../components/Dialog';
 import { IMAGE_PATHS } from '@/constant';
 
