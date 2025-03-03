@@ -2,20 +2,19 @@ import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import {
   YoutubeVideoType,
-  getContentsWave,
-  getYoutubeContents,
   ContentWaveInfo,
   WaveSpot,
   ContentWeatherInfo,
+} from '@/api/home/types';
+import {
+  getContentsWave,
+  getYoutubeContents,
   getContentsWeather,
 } from '@/api/home';
-
 import { HomeYoutubeList } from '../HomeYoutubeList';
 import { motion } from 'framer-motion';
 import { HomeYoutubeVideoIframe } from '../HomeYoutubeVideoIframe';
-
 import RefreshIcon from '@/icons/home/refresh.svg?react';
-
 import { queryKeys } from '@/query';
 import { HomeContentsBox } from '../HomeContentsBox';
 import { HomeSpotHeader } from '../HomeSpotHeader';

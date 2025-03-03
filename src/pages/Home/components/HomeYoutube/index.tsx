@@ -1,10 +1,8 @@
-import { YoutubeVideoType } from '@/api/home';
+import { YoutubeVideoType } from '@/api/home/types';
 import { formatViewCount } from '@/util/formatViewCount';
 import { formatYoutubeDate } from '@/util/formatYoutubeDate';
-import { truncateTitle } from '@/util/truncateTitle';
 import { HomeYoutubeVideoIframe } from '../HomeYoutubeVideoIframe';
 import PlayIcon from '@/icons/play.svg?react';
-import CloseIcon from '@/icons/close.svg?react';
 
 interface HomeYoutubeProps {
   video: YoutubeVideoType;

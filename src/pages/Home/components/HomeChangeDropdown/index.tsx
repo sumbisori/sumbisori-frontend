@@ -1,4 +1,4 @@
-import { WaveSpot } from '@/api/home';
+import { WaveSpot } from '@/api/home/types';
 import { useEffect, useState } from 'react';
 
 interface HomeChangeDropdownProps {

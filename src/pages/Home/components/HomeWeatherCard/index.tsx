@@ -1,4 +1,4 @@
-import { SuitabilityStatus } from '@/api/home';
+import { SuitabilityStatus } from '@/api/home/types';
 import TemperatureIcon from '@/icons/home/temperature.svg?react';
 import WavesIcon from '@/icons/home/waves.svg?react';
 import { isNightTime } from '@/util/isNightTime';

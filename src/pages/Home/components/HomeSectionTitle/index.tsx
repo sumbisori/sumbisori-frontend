@@ -1,4 +1,4 @@
-import { SuitabilityStatus } from '@/api/home';
+import { SuitabilityStatus } from '@/api/home/types';
 import Skeleton from '@/components/Skeleton';
 import { homeTitleMessage } from '@/constant';
 

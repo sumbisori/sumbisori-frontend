@@ -1,4 +1,4 @@
-import { ContentWaveInfo, ContentWeatherInfo } from '@/api/home';
+import { ContentWaveInfo, ContentWeatherInfo } from '@/api/home/types';
 import { roundingNumber } from '@/util/roundingNumber';
 import { HomeWeatherCard } from '../HomeWeatherCard';
 import { HomeWeatherCardSkelton } from '../HomeWeatherCardSkelton';

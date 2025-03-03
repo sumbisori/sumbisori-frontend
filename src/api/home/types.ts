@@ -1,5 +1,3 @@
-import { https } from './instance';
-
 export interface SeafoodCollected {
   seafoodId: number;
   koreanName: string;
@@ -16,18 +14,6 @@ export interface YoutubeVideoType {
   viewCount: number;
 }
 
-export const getSeafoodCollected = async (): Promise<SeafoodCollected[]> => {
-  const response = await https.get('/seafoods/collected');
-  return response.data;
-};
-
-export const getYoutubeContents = async (
-  count: number,
-): Promise<YoutubeVideoType[]> => {
-  const response = await https.get(`/contents/youtube?count=${count}`);
-  return response.data;
-};
-
 export type SuitabilityStatus =
   | 'SUITABLE'
   | 'CAUTION'
@@ -39,6 +25,12 @@ export interface ContentWaveInfo {
   observationTime: string;
   waveHeightSuitability: SuitabilityStatus;
   waterTemperatureSuitability: SuitabilityStatus;
+}
+
+export interface ContentWeatherInfo {
+  temperature: number;
+  weatherType: WeatherType;
+  suitability: SuitabilityStatus;
 }
 
 export type WaveSpotCode =
@@ -59,20 +51,7 @@ export interface WaveSpot {
   label: string;
 }
 
-export const getContentsWave = async (
-  spot: WaveSpotCode,
-): Promise<ContentWaveInfo> => {
-  const response = await https.get(`/contents/wave?spot=${spot}`);
-  return response.data;
-};
-
-export interface ContentWeatherInfo {
-  temperature: number;
-  weatherType: WeatherType;
-  suitability: SuitabilityStatus;
-}
-
-type WeatherType =
+export type WeatherType =
   | 'CLEAR_SKY'
   | 'FEW_CLOUDS'
   | 'SCATTERED_CLOUDS'
@@ -82,10 +61,3 @@ type WeatherType =
   | 'THUNDERSTORM'
   | 'SNOW'
   | 'MIST';
-
-export const getContentsWeather = async (
-  spot: WaveSpotCode,
-): Promise<ContentWeatherInfo> => {
-  const response = await https.get(`/contents/weather?spot=${spot}`);
-  return response.data;
-};

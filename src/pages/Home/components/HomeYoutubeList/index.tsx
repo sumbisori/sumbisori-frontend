@@ -1,7 +1,7 @@
 import { IMAGE_PATHS } from '@/constant';
-import { ImageWithTextAlert } from '../../../../components/ImageWithTextAlert';
+import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
 import { HomeYoutube } from '../HomeYoutube';
-import { YoutubeVideoType } from '@/api/home';
+import { YoutubeVideoType } from '@/api/home/types';
 import { HomeYoutubeSkeleton } from '../HomeYoutubeSkeleton';
 import { useState } from 'react';
 

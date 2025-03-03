@@ -1,5 +1,6 @@
 import { useRef } from 'react';
-import { SeafoodCollected, getSeafoodCollected } from '@/api/home';
+import { SeafoodCollected } from '@/api/home/types';
+import { getSeafoodCollected } from '@/api/home';
 import { useAquarium } from '@/hooks/useAquarium';
 import DictionaryIcon from '@/icons/dictionary.svg?react';
 import { useNavigate } from 'react-router-dom';
