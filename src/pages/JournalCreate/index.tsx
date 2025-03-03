@@ -14,11 +14,11 @@ import { InputTitle } from './InputTitle';
 import { JOURNAL_CREATE_INPUT_TITLE } from '@/constant/src/journalCreateInputTitle';
 import { StepBar } from './StepBar';
 import { motion } from 'framer-motion';
-type Step = 'calendar' | 'place' | 'weather' | 'photo' | 'seafood' | 'register';
+import { JournalForm, JournalStep } from '@/api/journal/types';
 
 export const JournalCreate = () => {
   const { step } = useParams();
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<JournalForm>({
     date: dayjs(),
     place: null,
     weather: null,
@@ -28,7 +28,7 @@ export const JournalCreate = () => {
   const navigate = useNavigate();
   const params = useParams();
 
-  const stepList: Step[] = [
+  const stepList: JournalStep[] = [
     'calendar',
     'place',
     'weather',
@@ -38,7 +38,7 @@ export const JournalCreate = () => {
   ];
 
   const handleBackClick = () => {
-    const currentStep = params.step as Step;
+    const currentStep = params.step as JournalStep;
     const currentIndex = stepList.indexOf(currentStep);
     if (currentIndex > 0) {
       const previousStep = stepList[currentIndex - 1];
@@ -51,7 +51,7 @@ export const JournalCreate = () => {
   };
 
   const handleNextClick = () => {
-    const currentStep = params.step as Step;
+    const currentStep = params.step as JournalStep;
     const currentIndex = stepList.indexOf(currentStep);
     if (currentIndex < stepList.length - 1) {
       const nextStep = stepList[currentIndex + 1];
@@ -63,7 +63,7 @@ export const JournalCreate = () => {
     navigate(routes.home);
   };
 
-  if (!step || !stepList.includes(step as Step)) {
+  if (!step || !stepList.includes(step as JournalStep)) {
     return <Navigate to="/not-found" replace />;
   }
 
@@ -77,7 +77,7 @@ export const JournalCreate = () => {
           className="bg-white"
         />
         <StepBar
-          current={stepList.indexOf(step as Step) + 1}
+          current={stepList.indexOf(step as JournalStep) + 1}
           total={stepList.length}
         />
         <InputTitle
@@ -103,7 +103,12 @@ export const JournalCreate = () => {
               }
             />
           )}
-          {step === 'place' && <SelectPlace />}
+          {step === 'place' && (
+            <SelectPlace
+              place={form.place}
+              onPlaceChange={(place) => setForm({ ...form, place })}
+            />
+          )}
           {step === 'weather' && <SelectWeather />}
           {step === 'photo' && <SelectPhoto />}
           {step === 'seafood' && <SelectSeafood />}
