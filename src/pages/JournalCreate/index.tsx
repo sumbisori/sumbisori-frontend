@@ -13,6 +13,7 @@ import { Register } from './Register';
 import { InputTitle } from './InputTitle';
 import { JOURNAL_CREATE_INPUT_TITLE } from '@/constant/src/journalCreateInputTitle';
 import { StepBar } from './StepBar';
+import { motion } from 'framer-motion';
 type Step = 'calendar' | 'place' | 'weather' | 'photo' | 'seafood' | 'register';
 
 export const JournalCreate = () => {
@@ -85,7 +86,12 @@ export const JournalCreate = () => {
         />
       </div>
       <form className="flex flex-1 flex-col">
-        <div className="flex-1">
+        <motion.div
+          className="flex-1"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
+        >
           {step === 'calendar' && (
             <SelectCalendar
               value={form.date}
@@ -102,7 +108,7 @@ export const JournalCreate = () => {
           {step === 'photo' && <SelectPhoto />}
           {step === 'seafood' && <SelectSeafood />}
           {step === 'register' && <Register />}
-        </div>
+        </motion.div>
         <div className="px-5 pb-5">
           <LargeButton
             onClick={
