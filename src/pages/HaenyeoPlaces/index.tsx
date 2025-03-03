@@ -3,9 +3,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   HaenyeoPlaceDetail,
   HaenyeoPlacesLocations,
-  getHaenyeoPlaceDetail,
-  getPlacesLocations,
-} from '@/api/haenyeoPlaces';
+} from '@/api/haenyeoPlaces/types';
+import { getHaenyeoPlaceDetail, getPlacesLocations } from '@/api/haenyeoPlaces';
 import { queryKeys } from '@/query';
 import { HaenyeoPlaceDetailSheet } from '@/pages/HaenyeoPlaces/components/HaenyeoPlaceDetailSheet';
 import { NaverMap } from '@/pages/HaenyeoPlaces/components/NaverMap';

@@ -1,5 +1,5 @@
-import { HaenyeoPlaceDetail } from '@/api/haenyeoPlaces';
-import { Dialog } from '../../../../components/Dialog';
+import { HaenyeoPlaceDetail } from '@/api/haenyeoPlaces/types';
+import { Dialog } from '@/components/Dialog';
 interface Props {
   selectedPlace: HaenyeoPlaceDetail;
   onPhoneClick: (phoneNumber: string) => void;

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import OperationDividerIcon from '@/icons/operation-divider.svg?react';
-import { HaenyeoPlaceOperationInfoType } from '@/api/haenyeoPlaces';
+import { HaenyeoPlaceOperationInfoType } from '@/api/haenyeoPlaces/types';
 
 interface Props {
   operationInfo: HaenyeoPlaceOperationInfoType[];

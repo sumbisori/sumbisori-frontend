@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { HaenyeoPlaceFacilityType } from '@/api/haenyeoPlaces';
+import { HaenyeoPlaceFacilityType } from '@/api/haenyeoPlaces/types';
 
 interface Props {
   facilities: HaenyeoPlaceFacilityType[];

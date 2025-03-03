@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { HaenyeoPlaceInquiryType } from '@/api/haenyeoPlaces';
+import { HaenyeoPlaceInquiryType } from '@/api/haenyeoPlaces/types';
 
 interface Props {
   inquiries: HaenyeoPlaceInquiryType[];

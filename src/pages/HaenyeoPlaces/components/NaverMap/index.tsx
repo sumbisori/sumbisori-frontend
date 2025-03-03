@@ -1,7 +1,7 @@
 import {
   HaenyeoPlaceDetail,
   HaenyeoPlacesLocations,
-} from '@/api/haenyeoPlaces';
+} from '@/api/haenyeoPlaces/types';
 import { useEffect, useRef } from 'react';
 import MyLocationIcon from '@/icons/my-location.svg?react';
 import ResetFocus from '@/icons/reset-focus.svg?react';

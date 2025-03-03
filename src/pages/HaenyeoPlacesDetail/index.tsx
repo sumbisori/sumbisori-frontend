@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import { HaenyeoPlaceDetail, getHaenyeoPlaceDetail } from '@/api/haenyeoPlaces';
+import { getHaenyeoPlaceDetail } from '@/api/haenyeoPlaces';
 import { LargeButton } from '@/components/LargeButton';
 import { queryKeys } from '@/query';
 import PhoneIcon from '@/icons/phone.svg?react';
@@ -18,6 +18,7 @@ import { HaenyeoPlaceFacilities } from './components/HaenyeoPlaceFacilities';
 import { HaenyeoPlaceInquiries } from './components/HaenyeoPlaceInquiries';
 import { routes } from '@/routes/src/routes';
 import { TopDetailPageHeader } from '@/layouts/TopDetailPageHeader';
+import { HaenyeoPlaceDetail } from '@/api/haenyeoPlaces/types';
 
 export const HaenyeoPlacesDetail = () => {
   const { openModal, closeModal } = useModalController();
