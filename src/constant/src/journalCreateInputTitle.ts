@@ -1,4 +1,6 @@
-export const JOURNAL_CREATE_INPUT_TITLE = (step: string) => {
+import { JournalStep } from '@/api/journalCreate/types';
+
+export const JOURNAL_CREATE_INPUT_TITLE = (step: JournalStep) => {
   switch (step) {
     case 'calendar':
       return {

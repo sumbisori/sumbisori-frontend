@@ -7,7 +7,7 @@ export const StepBar = ({ current, total }: Props) => {
   const steps = Array.from({ length: total }, (_, index) => index + 1);
   return (
     <div
-      className="grid gap-2 px-4"
+      className="grid gap-2"
       style={{ gridTemplateColumns: `repeat(${total}, 1fr)` }}
     >
       {steps.map((step) => (
