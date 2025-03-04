@@ -2,8 +2,18 @@ import { JOURNAL_CREATE_INPUT_TITLE } from '@/constant/src/journalCreateInputTit
 import { InputTitle } from '../InputTitle';
 import { motion } from 'framer-motion';
 import { animationY } from '@/util/animationY';
+import { UploadImageButton } from '../UploadImageButton';
+import { useState } from 'react';
 
 export const SelectPhoto = () => {
+  const [image, setImage] = useState<string | null>(null);
+  const handleImageUpload = (file: File) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
   return (
     <>
       <InputTitle
@@ -12,7 +22,7 @@ export const SelectPhoto = () => {
       />
 
       <motion.div className="p-4" {...animationY(0.6)}>
-        안녕하세요
+        <UploadImageButton image={image} onImageUpload={handleImageUpload} />
       </motion.div>
     </>
   );

@@ -15,7 +15,7 @@ export const SmallButton = ({
   return (
     <button
       className={clsx(
-        'rounded-lg border',
+        'flex items-center justify-center whitespace-nowrap rounded-lg border',
         !selected && 'border-gray-500 bg-white text-gray-500',
         selected && 'border-blue-700 bg-blue-50 text-blue-700',
         className,

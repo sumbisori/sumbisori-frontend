@@ -40,12 +40,12 @@ export const SelectWeather = ({
       />
 
       <motion.div className="p-4" {...animationY(0.6)}>
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-5 gap-2">
           {weathers.map((weather) => (
             <SmallButton
               key={weather}
               selected={selectedWeather === weather}
-              className="p-2.5"
+              className="aspect-square"
               onClick={() => onWeatherChange(weather)}
             >
               <WeatherIcon type={weather} className="size-9" />
@@ -58,12 +58,13 @@ export const SelectWeather = ({
         subtitle={JOURNAL_CREATE_INPUT_TITLE('companion').subtitle}
       />
       <motion.div className="p-4" {...animationY(0.6)}>
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-4 gap-2">
           {companions.map((companion) => (
             <SmallButton
               key={companion}
               selected={selectedCompanion === companion}
               onClick={() => onCompanionChange(companion)}
+              className="w-full px-3 py-2"
             >
               {companion}
             </SmallButton>
