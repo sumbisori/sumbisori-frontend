@@ -7,7 +7,7 @@ interface Props {
 
 export const InputTitle = ({ title, subtitle }: Props) => {
   return (
-    <div className="bg-white px-4 py-8">
+    <div className="sticky top-header-height z-10 bg-white px-4 py-8 shadow-sm">
       <div className="flex flex-col">
         <motion.p className="text-2xl font-medium" {...animationY(0)}>
           {title}

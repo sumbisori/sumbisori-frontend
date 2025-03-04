@@ -21,17 +21,11 @@ export const NavigatorHeader = ({
   className,
   stepBar,
 }: NavigatorHeaderProps) => {
-  const { showHeader } = useHeaderVisibility();
-
   return (
     <div
       className={clsx(
         'fixed inset-x-0 top-0 z-10 m-auto flex h-header-height w-full min-w-full-layout max-w-full-layout flex-col px-5 transition-transform duration-300 ease-in-out',
         className,
-        {
-          'translate-y-0': showHeader,
-          '-translate-y-full': !showHeader,
-        },
       )}
     >
       <div className="flex h-36 items-center justify-between">
