@@ -11,7 +11,8 @@ interface JournalStore {
 const initialJournalForm: JournalForm = {
   date: dayjs(),
   placeId: null,
-  weather: null,
+  weather: 'CLEAR_SKY',
+  companion: '혼자',
   photo: null,
   seafood: null,
 };

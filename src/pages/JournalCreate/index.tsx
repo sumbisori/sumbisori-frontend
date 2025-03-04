@@ -99,7 +99,22 @@ export const JournalCreate = () => {
               }
             />
           )}
-          {step === 'weather' && <SelectWeather />}
+          {step === 'weather' && (
+            <SelectWeather
+              selectedWeather={journalForm.weather}
+              onWeatherChange={(weather) =>
+                updateJournal({
+                  weather,
+                })
+              }
+              selectedCompanion={journalForm.companion}
+              onCompanionChange={(companion) =>
+                updateJournal({
+                  companion,
+                })
+              }
+            />
+          )}
           {step === 'photo' && <SelectPhoto />}
           {step === 'seafood' && <SelectSeafood />}
           {step === 'register' && <Register />}
