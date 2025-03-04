@@ -4,7 +4,7 @@ import { NavigatorHeader } from '@/layouts/NavigatorHeader';
 import { routes } from '@/routes/src/routes';
 import { JournalStep } from '@/api/journalCreate/types';
 import { useJournalStore } from '@/stores';
-import { useEffect } from 'react';
+import { MouseEvent, useEffect } from 'react';
 import { SelectCalendar } from './SelectCalendar';
 import { SelectPlace } from './SelectPlace';
 import { SelectWeather } from './SelectWeather';
@@ -40,7 +40,8 @@ export const JournalCreate = () => {
     navigate(routes.dictionary);
   };
 
-  const handleNextClick = () => {
+  const handleNextClick = (e: MouseEvent) => {
+    e.preventDefault();
     const currentStep = params.step as JournalStep;
     const currentIndex = stepList.indexOf(currentStep);
     if (currentIndex < stepList.length - 1) {
@@ -49,7 +50,8 @@ export const JournalCreate = () => {
     }
   };
 
-  const handleCompleteClick = () => {
+  const handleCompleteClick = (e: MouseEvent) => {
+    e.preventDefault();
     navigate(routes.home);
   };
 
@@ -65,19 +67,16 @@ export const JournalCreate = () => {
 
   return (
     <div className="flex h-full min-h-screen flex-col pt-header-height">
-      <div className="bg-white">
-        <NavigatorHeader
-          title="체험 일지"
-          onBackClick={step === 'calendar' ? undefined : handleBackClick}
-          onCloseClick={handleCloseClick}
-          className="bg-white"
-          stepBar={{
-            current: stepList.indexOf(step as JournalStep) + 1,
-            total: stepList.length,
-          }}
-        />
-      </div>
-
+      <NavigatorHeader
+        title="체험 일지"
+        onBackClick={step === 'calendar' ? undefined : handleBackClick}
+        onCloseClick={handleCloseClick}
+        className="bg-white"
+        stepBar={{
+          current: stepList.indexOf(step as JournalStep) + 1,
+          total: stepList.length,
+        }}
+      />
       <form className="flex flex-1 flex-col bg-gray-050">
         <div className="flex-1">
           {step === 'calendar' && (

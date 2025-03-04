@@ -3,16 +3,29 @@ import { motion } from 'framer-motion';
 interface Props {
   title: string;
   subtitle: string;
+  titleAniDelay?: number;
+  subtitleAniDelay?: number;
 }
 
-export const InputTitle = ({ title, subtitle }: Props) => {
+export const InputTitle = ({
+  title,
+  subtitle,
+  titleAniDelay = 0,
+  subtitleAniDelay = 0.3,
+}: Props) => {
   return (
     <div className="sticky top-header-height z-10 bg-white px-4 py-8 shadow-sm">
       <div className="flex flex-col">
-        <motion.p className="text-2xl font-medium" {...animationY(0)}>
+        <motion.h2
+          className="text-2xl font-medium"
+          {...animationY(titleAniDelay)}
+        >
           {title}
-        </motion.p>
-        <motion.p {...animationY(0.4)} className="text-sm text-gray-600">
+        </motion.h2>
+        <motion.p
+          {...animationY(subtitleAniDelay)}
+          className="text-sm text-gray-600"
+        >
           {subtitle}
         </motion.p>
       </div>

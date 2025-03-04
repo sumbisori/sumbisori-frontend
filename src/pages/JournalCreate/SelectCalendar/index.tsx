@@ -17,7 +17,7 @@ export const SelectCalendar = ({ value, onChange }: SelectCalendarProps) => {
         title={JOURNAL_CREATE_INPUT_TITLE('calendar').title}
         subtitle={JOURNAL_CREATE_INPUT_TITLE('calendar').subtitle}
       />
-      <motion.div className="p-4" {...animationY(0.8)}>
+      <motion.div className="p-4" {...animationY(0.6)}>
         <Calendar value={value} onChange={onChange} />
       </motion.div>
     </>

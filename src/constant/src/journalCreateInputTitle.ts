@@ -1,6 +1,4 @@
-import { JournalStep } from '@/api/journalCreate/types';
-
-export const JOURNAL_CREATE_INPUT_TITLE = (step: JournalStep) => {
+export const JOURNAL_CREATE_INPUT_TITLE = (step: string) => {
   switch (step) {
     case 'calendar':
       return {
@@ -15,6 +13,11 @@ export const JOURNAL_CREATE_INPUT_TITLE = (step: JournalStep) => {
     case 'weather':
       return {
         title: '그날의 날씨는 어땠나요?',
+        subtitle: '최근 체험한 내용을 되짚어보아요',
+      };
+    case 'who':
+      return {
+        title: '누구와 함께 하셨나요?',
         subtitle: '최근 체험한 내용을 되짚어보아요',
       };
     case 'photo':

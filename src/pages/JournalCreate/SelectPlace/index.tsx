@@ -54,7 +54,7 @@ export const SelectPlace = ({ selectedPlace, onPlaceChange }: Props) => {
         </div>
       )}
       {places && !isPlacesLoading && (
-        <motion.div className="p-4" {...animationY(0.8)}>
+        <motion.div className="p-4" {...animationY(0.6)}>
           <div className="flex flex-col gap-4">
             {places.map((place) => (
               <motion.div
