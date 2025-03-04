@@ -1,26 +1,20 @@
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
-import { useState } from 'react';
-import { SelectCalendar } from './SelectCalendar';
 import { LargeButton } from '@/components/LargeButton';
-import dayjs from '@/util/dayjs';
 import { NavigatorHeader } from '@/layouts/NavigatorHeader';
 import { routes } from '@/routes/src/routes';
+import { JournalStep } from '@/api/journalCreate/types';
+import { useJournalStore } from '@/stores';
+import { useEffect } from 'react';
+import { SelectCalendar } from './SelectCalendar';
 import { SelectPlace } from './SelectPlace';
 import { SelectWeather } from './SelectWeather';
 import { SelectPhoto } from './SelecrPhoto';
 import { SelectSeafood } from './SelecrSeafood';
 import { Register } from './Register';
-import { JournalForm, JournalStep } from '@/api/journalCreate/types';
 
 export const JournalCreate = () => {
   const { step } = useParams();
-  const [form, setForm] = useState<JournalForm>({
-    date: dayjs(),
-    placeId: 1,
-    weather: null,
-    photo: null,
-    seafood: null,
-  });
+  const { journalForm, updateJournal, resetJournal } = useJournalStore();
   const navigate = useNavigate();
   const params = useParams();
 
@@ -59,6 +53,12 @@ export const JournalCreate = () => {
     navigate(routes.home);
   };
 
+  useEffect(() => {
+    return () => {
+      resetJournal();
+    };
+  }, []);
+
   if (!step || !stepList.includes(step as JournalStep)) {
     return <Navigate to="/not-found" replace />;
   }
@@ -77,14 +77,14 @@ export const JournalCreate = () => {
           }}
         />
       </div>
+
       <form className="flex flex-1 flex-col bg-gray-050">
         <div className="flex-1">
           {step === 'calendar' && (
             <SelectCalendar
-              value={form.date}
+              value={journalForm.date}
               onChange={(date) =>
-                setForm({
-                  ...form,
+                updateJournal({
                   date,
                 })
               }
@@ -92,8 +92,12 @@ export const JournalCreate = () => {
           )}
           {step === 'place' && (
             <SelectPlace
-              selectedPlace={form.placeId}
-              onPlaceChange={(place) => setForm({ ...form, placeId: place })}
+              selectedPlace={journalForm.placeId}
+              onPlaceChange={(place) =>
+                updateJournal({
+                  placeId: place,
+                })
+              }
             />
           )}
           {step === 'weather' && <SelectWeather />}

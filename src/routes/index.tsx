@@ -10,8 +10,8 @@ import { MobileLayout } from '@/layouts/MobileLayout';
 import ScrollToTop from './src/ScrollToTop';
 import { HaenyeoPlacesDetail } from '@/pages/HaenyeoPlacesDetail';
 import { ErrorPage } from '@/pages/ErrorPage';
-import { JournalCreate } from '@/pages/JournalCreate';
 import { routes } from './src/routes';
+import { JournalCreate } from '@/pages/JournalCreate';
 
 export const Router = () => {
   return (

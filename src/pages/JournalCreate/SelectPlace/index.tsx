@@ -2,26 +2,36 @@ import { JOURNAL_CREATE_INPUT_TITLE } from '@/constant/src/journalCreateInputTit
 import { InputTitle } from '../InputTitle';
 import { motion } from 'framer-motion';
 import { animationY } from '@/util/animationY';
-import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/query';
-import { getJournalCreatePlace } from '@/api/journalCreate';
+
 import { JournalCreatePlace } from '@/api/journalCreate/types';
 import Skeleton from '@/components/Skeleton';
 import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
 import { IMAGE_PATHS } from '@/constant';
 import { RadioButton } from '@/components/RadioButton';
+import { useQuery } from '@tanstack/react-query';
+import { queryKeys } from '@/query';
+import { getJournalCreatePlace } from '@/api/journalCreate';
+import { useEffect } from 'react';
+
 interface Props {
-  selectedPlace: number | null;
-  onPlaceChange: (selectedPlace: number | null) => void;
+  selectedPlace?: number | null;
+  onPlaceChange?: (selectedPlace: number | null) => void;
 }
 
 export const SelectPlace = ({ selectedPlace, onPlaceChange }: Props) => {
-  const { data: places, isLoading } = useQuery<JournalCreatePlace[]>({
+  const { data: places, isLoading: isPlacesLoading } = useQuery<
+    JournalCreatePlace[]
+  >({
     queryKey: [queryKeys.journalCreatePlace],
     queryFn: () => getJournalCreatePlace(),
+    initialData: [],
   });
 
-  // 라디오버튼, 이미지, 주소, 장소명명
+  useEffect(() => {
+    if (places && places.length > 0) {
+      onPlaceChange?.(places[0].placeId);
+    }
+  }, [places]);
 
   return (
     <>
@@ -29,7 +39,7 @@ export const SelectPlace = ({ selectedPlace, onPlaceChange }: Props) => {
         title={JOURNAL_CREATE_INPUT_TITLE('place').title}
         subtitle={JOURNAL_CREATE_INPUT_TITLE('place').subtitle}
       />
-      {isLoading && (
+      {isPlacesLoading && (
         <div className="flex flex-col gap-4 p-4">
           {Array.from({ length: 5 }).map((_, index) => (
             <div key={index} className="flex items-center gap-2">
@@ -43,18 +53,18 @@ export const SelectPlace = ({ selectedPlace, onPlaceChange }: Props) => {
           ))}
         </div>
       )}
-      {places && !isLoading && (
+      {places && !isPlacesLoading && (
         <motion.div className="p-4" {...animationY(0.8)}>
           <div className="flex flex-col gap-4">
             {places.map((place) => (
               <motion.div
                 key={place.placeId}
                 className="flex cursor-pointer items-center gap-2"
-                onClick={() => onPlaceChange(place.placeId)}
+                onClick={() => onPlaceChange?.(place.placeId)}
               >
                 <RadioButton
                   selected={place.placeId === selectedPlace}
-                  onClick={() => onPlaceChange(place.placeId)}
+                  onClick={() => onPlaceChange?.(place.placeId)}
                 />
                 <img
                   src={place.imageUrl}
@@ -72,7 +82,7 @@ export const SelectPlace = ({ selectedPlace, onPlaceChange }: Props) => {
           </div>
         </motion.div>
       )}
-      {!places && !isLoading && (
+      {!places && !isPlacesLoading && (
         <div className="p-4">
           <ImageWithTextAlert
             src={`${IMAGE_PATHS.ROOT}/haenyeo_sad.png`}
