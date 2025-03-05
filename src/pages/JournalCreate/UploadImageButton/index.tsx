@@ -16,6 +16,7 @@ export const UploadImageButton = ({
     const file = e.target.files?.[0];
     if (file) {
       onImageUpload(file);
+      e.target.value = '';
     }
   };
 

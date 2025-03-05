@@ -13,7 +13,8 @@ export interface JournalForm {
   placeId: number | null;
   weather: string;
   companion: string;
-  photo: string | null;
+  experience: string;
+  photos: string[];
   seafood: string | null;
 }
 

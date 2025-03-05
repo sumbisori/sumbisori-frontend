@@ -13,7 +13,8 @@ const initialJournalForm: JournalForm = {
   placeId: null,
   weather: 'CLEAR_SKY',
   companion: '혼자',
-  photo: null,
+  experience: '',
+  photos: [],
   seafood: null,
 };
 

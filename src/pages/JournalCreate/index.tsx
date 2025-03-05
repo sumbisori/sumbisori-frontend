@@ -66,7 +66,7 @@ export const JournalCreate = () => {
   }
 
   return (
-    <div className="flex h-full min-h-screen flex-col pt-header-height">
+    <div className="relative flex h-full min-h-screen flex-col pt-header-height">
       <NavigatorHeader
         title="체험 일지"
         onBackClick={step === 'calendar' ? undefined : handleBackClick}
@@ -115,7 +115,22 @@ export const JournalCreate = () => {
               }
             />
           )}
-          {step === 'photo' && <SelectPhoto />}
+          {step === 'photo' && (
+            <SelectPhoto
+              photos={journalForm.photos}
+              onPhotosChange={(photos) =>
+                updateJournal({
+                  photos,
+                })
+              }
+              experience={journalForm.experience}
+              onExperienceChange={(experience) =>
+                updateJournal({
+                  experience,
+                })
+              }
+            />
+          )}
           {step === 'seafood' && <SelectSeafood />}
           {step === 'register' && <Register />}
         </div>
