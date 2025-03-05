@@ -15,6 +15,7 @@ const initialJournalForm: JournalForm = {
   companion: '혼자',
   experience: '',
   photos: [],
+  satisfaction: 0,
   seafood: null,
 };
 

@@ -11,11 +11,14 @@ import { Textarea } from '@/components/Textarea';
 import { useMutation } from '@tanstack/react-query';
 import { getJournalCreateImageUrl } from '@/api/journalCreate';
 import { Spinner } from '@/components/Spinner';
+import { SatisfactionStars } from '../SatisfactionStars';
 interface Props {
   photos: string[];
   onPhotosChange: (photos: string[]) => void;
   experience: string;
   onExperienceChange: (experience: string) => void;
+  satisfaction: number;
+  onSatisfactionChange: (satisfaction: number) => void;
 }
 
 export const SelectPhoto = ({
@@ -23,6 +26,8 @@ export const SelectPhoto = ({
   onPhotosChange,
   experience,
   onExperienceChange,
+  satisfaction,
+  onSatisfactionChange,
 }: Props) => {
   const mutation = useMutation({
     mutationFn: getJournalCreateImageUrl,
@@ -115,6 +120,16 @@ export const SelectPhoto = ({
             onChange={(e) => onExperienceChange(e.target.value)}
           />
           <div id="divider" className="h-px w-full bg-gray-200" />
+          <div
+            id="satisfaction-stars"
+            className="flex flex-nowrap items-center gap-2"
+          >
+            <p className="text-lg font-medium">체험 만족도</p>
+            <SatisfactionStars
+              satisfaction={satisfaction}
+              onSatisfactionChange={onSatisfactionChange}
+            />
+          </div>
         </div>
       </motion.div>
     </>

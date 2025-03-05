@@ -16,6 +16,7 @@ export interface JournalForm {
   experience: string;
   photos: string[];
   seafood: string | null;
+  satisfaction: number;
 }
 
 export interface JournalCreatePlace {

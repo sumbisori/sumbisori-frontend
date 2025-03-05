@@ -129,6 +129,12 @@ export const JournalCreate = () => {
                   experience,
                 })
               }
+              satisfaction={journalForm.satisfaction}
+              onSatisfactionChange={(satisfaction) =>
+                updateJournal({
+                  satisfaction,
+                })
+              }
             />
           )}
           {step === 'seafood' && <SelectSeafood />}
