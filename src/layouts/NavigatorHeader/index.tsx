@@ -31,7 +31,7 @@ export const NavigatorHeader = ({
       <div className="flex h-36 items-center justify-between">
         {onBackClick && (
           <button
-            className="flex size-6 items-center gap-2"
+            className="flex size-6 items-center gap-2 hover:text-gray-500 active:text-gray-500"
             onClick={onBackClick}
           >
             <ThinLeftIcon />
@@ -41,7 +41,7 @@ export const NavigatorHeader = ({
         <div className="flex-1 text-center text-lg font-semibold">{title}</div>
         {onCloseClick && (
           <button
-            className="flex size-6 items-center gap-2"
+            className="flex size-6 items-center gap-2 hover:text-gray-500 active:text-gray-500"
             onClick={onCloseClick}
           >
             <ThinCloseIcon />
