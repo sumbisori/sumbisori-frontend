@@ -78,7 +78,7 @@ export const HomeCategoryBar = ({ onCategoryChange, value }: Props) => {
               <li key={category.code} className="flex-1">
                 <button
                   onClick={() => onCategoryChange(category.code)}
-                  className={`flex w-full flex-col items-center whitespace-nowrap border-b-[0.188rem] border-transparent py-2.5 leading-6 transition-colors duration-200 focus:outline-none ${activeTextStyle} hover:border-gray-500`}
+                  className={`flex w-full flex-col items-center whitespace-nowrap border-b-[0.188rem] border-transparent py-2.5 leading-6 transition-colors duration-200 focus:outline-none ${activeTextStyle} hover:border-gray-500 active:border-gray-500`}
                   aria-pressed={isActive}
                 >
                   {category.label}

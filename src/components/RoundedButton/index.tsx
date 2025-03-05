@@ -12,7 +12,11 @@ export const RoundedButton = ({
 }: Props) => {
   return (
     <button
-      className={`whitespace-nowrap rounded-[1.25rem] border px-4 py-2.5 leading-none ${BUTTON_VARIANTS[buttonType]} ${styleClass}`}
+      className={clsx(
+        'whitespace-nowrap rounded-[1.25rem] border px-4 py-2.5 leading-none',
+        BUTTON_VARIANTS[buttonType],
+        styleClass,
+      )}
       {...props}
     >
       {children}
@@ -21,6 +25,8 @@ export const RoundedButton = ({
 };
 
 const BUTTON_VARIANTS = {
-  primary: 'bg-blue-700 hover:bg-blue-800  border-blue-700 text-white',
-  secondary: 'bg-white hover:bg-gray-100  border-gray-300 text-black',
+  primary:
+    'bg-blue-700 hover:bg-blue-800 active:bg-blue-800 border-blue-700 text-white',
+  secondary:
+    'bg-white hover:bg-gray-100 active:bg-gray-100 border-gray-300 text-black',
 };

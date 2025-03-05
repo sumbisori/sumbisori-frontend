@@ -40,7 +40,7 @@ export function Dialog({ id, children, type = 'alert' }: Props) {
                     >
                       <button
                         onClick={() => closeModal(id)}
-                        className="absolute right-3 top-3 flex size-6 items-center justify-center rounded hover:bg-gray-300"
+                        className="absolute right-3 top-3 flex size-6 items-center justify-center rounded hover:bg-gray-300 active:bg-gray-300"
                       >
                         ✕
                       </button>
@@ -62,7 +62,7 @@ export function Dialog({ id, children, type = 'alert' }: Props) {
                       <div>{children}</div>
                       <button
                         onClick={() => closeModal(id)}
-                        className="flex items-center justify-center rounded text-lg font-medium hover:text-gray-500"
+                        className="flex items-center justify-center rounded text-lg font-medium hover:text-gray-500 active:text-gray-500"
                       >
                         취소
                       </button>

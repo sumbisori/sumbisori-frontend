@@ -13,7 +13,7 @@ export const SeafoodCard = (props: Props) => {
     <div
       onClick={props.onClick}
       className={clsx(
-        'relative flex aspect-square size-full cursor-pointer items-center justify-center border',
+        'relative flex aspect-square size-full cursor-pointer items-center justify-center border hover:border-orange-400 active:border-orange-400',
         props.counts > 0
           ? 'border-orange-300 bg-orange-100'
           : 'border-gray-300 bg-gray-100',

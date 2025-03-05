@@ -121,7 +121,7 @@ export const HaenyeoPlacesDetail = () => {
           </motion.div>
           <div id="expanded-place-button-container" className="my-3 flex gap-4">
             <button
-              className="flex cursor-pointer items-center gap-1 rounded-full border border-gray-200 px-3 py-1.5 hover:bg-gray-100"
+              className="flex cursor-pointer items-center gap-1 rounded-full border border-gray-200 px-3 py-1.5 hover:bg-gray-100 active:bg-gray-100"
               onClick={() => handlePhoneClick(selectedPlace.phoneNumber)}
             >
               <PhoneIcon />

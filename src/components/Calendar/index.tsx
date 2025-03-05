@@ -127,7 +127,7 @@ export const Calendar = ({ value, onChange }: CalendarProps) => {
                   day.isToday && 'text-xl font-bold text-blue-700',
                   day.isSelected
                     ? 'border border-blue-700 bg-blue-100 text-xl font-bold text-blue-700'
-                    : 'hover:bg-gray-100',
+                    : 'hover:bg-gray-100 active:bg-gray-100',
                 )}
               >
                 {day.date.format('D')}

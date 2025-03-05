@@ -23,7 +23,7 @@ export const UploadImageButton = ({
   return (
     <label
       className={clsx(
-        'flex size-24 shrink-0 cursor-pointer flex-col items-center justify-center rounded-xl border border-gray-500 bg-white text-gray-500 hover:border-blue-700 hover:bg-blue-50 hover:text-blue-700',
+        'flex size-24 shrink-0 cursor-pointer flex-col items-center justify-center rounded-xl border border-gray-500 bg-white text-gray-500 hover:border-blue-700 hover:bg-blue-50 hover:text-blue-700 active:border-blue-700 active:bg-blue-50 active:text-blue-700',
       )}
     >
       <input

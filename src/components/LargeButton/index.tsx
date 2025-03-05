@@ -8,7 +8,7 @@ export const LargeButton = ({ children, ...props }: Props) => {
       className={clsx(
         props.disabled
           ? 'w-full cursor-not-allowed rounded-md bg-gray-400 py-2 text-base text-white'
-          : 'flex w-full justify-center rounded-md bg-[#007AFF] py-2 text-base text-white',
+          : 'flex w-full justify-center rounded-md bg-blue-700 py-2 text-base text-white hover:bg-blue-800 active:bg-blue-800',
       )}
       {...props}
     >
