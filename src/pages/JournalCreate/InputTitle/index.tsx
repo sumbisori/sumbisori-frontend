@@ -14,7 +14,7 @@ export const InputTitle = ({
   subtitleAniDelay = 0.3,
 }: Props) => {
   return (
-    <div className="sticky top-header-height z-10 bg-white px-4 py-8 shadow-sm">
+    <div className="sticky top-header-height z-10 bg-white px-4 py-8 shadow-[0_2px_3px_-1px_rgba(0,0,0,0.1)]">
       <div className="flex flex-col">
         <motion.h2
           className="text-2xl font-medium"
