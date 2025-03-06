@@ -3,15 +3,17 @@ import { InputTitle } from '../InputTitle';
 import { motion } from 'framer-motion';
 import { animationY } from '@/util/animationY';
 import { UploadImageButton } from '../UploadImageButton';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AddAPhotoIcon from '@/icons/journal/add-a-photo.svg?react';
 import CloseIcon from '@/icons/journal/close.svg?react';
 import { IconButton } from '@/components/IconButton';
 import { Textarea } from '@/components/Textarea';
 import { useMutation } from '@tanstack/react-query';
-import { getJournalCreateImageUrl } from '@/api/journalCreate';
 import { Spinner } from '@/components/Spinner';
 import { SatisfactionStars } from '../SatisfactionStars';
+import { getPresignedUrl, putAmazonS3 } from '@/api/file';
+import { PresignedUrlRequest } from '@/api/file/types';
+import { toast } from '@/components/Toast';
 interface Props {
   photos: string[];
   onPhotosChange: (photos: string[]) => void;
@@ -29,31 +31,46 @@ export const SelectPhoto = ({
   satisfaction,
   onSatisfactionChange,
 }: Props) => {
+  const [localPhotos, setLocalPhotos] = useState<File[]>([]);
+
   const mutation = useMutation({
-    mutationFn: getJournalCreateImageUrl,
+    mutationFn: getPresignedUrl,
+  });
+
+  const putMutation = useMutation({
+    mutationFn: putAmazonS3,
   });
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleImageUpload = (file: File) => {
-    if (photos.length >= 10) {
-      alert('최대 10개의 사진만 업로드할 수 있습니다.');
-      return;
+  const handleImageUpload = (files: File[]) => {
+    const req: PresignedUrlRequest = {
+      fileInfo: files.map((file) => ({
+        contentType: file.type,
+        size: file.size,
+      })),
+    };
+    mutation.mutate(req);
+    if (mutation.data) {
+      mutation.data.forEach((data) => {
+        putMutation.mutate({
+          presignedUrl: data.url,
+          image: files[0],
+        });
+      });
     }
-    mutation.mutate(file);
+    if (putMutation.isSuccess) {
+      setLocalPhotos([...localPhotos, ...files]);
+    }
+    if (mutation.isError || putMutation.isError) {
+      toast.error('이미지 업로드에 실패했습니다.');
+    }
   };
 
   const handleImageDelete = (index: number) => {
     const newImageList = photos.filter((_, i) => i !== index);
     onPhotosChange(newImageList);
   };
-
-  useEffect(() => {
-    if (mutation.data) {
-      const newImageList = [...photos, mutation.data.imageUrl];
-      onPhotosChange(newImageList);
-    }
-  }, [mutation.data]);
 
   useEffect(() => {
     if (imageContainerRef.current) {
@@ -91,10 +108,10 @@ export const SelectPhoto = ({
                 </span>
               }
             />
-            {photos.map((image, index) => (
+            {localPhotos.map((image, index) => (
               <div key={index} className="relative size-24 shrink-0">
                 <img
-                  src={image}
+                  src={URL.createObjectURL(image)}
                   alt="업로드된 이미지"
                   className="size-full rounded-xl border border-gray-200 object-cover"
                 />

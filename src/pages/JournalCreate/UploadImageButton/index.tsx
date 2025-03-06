@@ -4,7 +4,7 @@ import AddAPhotoIcon from '@/icons/journal/add-a-photo.svg?react';
 interface UploadImageButtonProps {
   icon?: ReactNode;
   text?: ReactNode;
-  onImageUpload: (file: File) => void;
+  onImageUpload: (files: File[]) => void;
 }
 
 export const UploadImageButton = ({
@@ -13,11 +13,9 @@ export const UploadImageButton = ({
   onImageUpload,
 }: UploadImageButtonProps) => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      onImageUpload(file);
-      e.target.value = '';
-    }
+    const files = Array.from(e.target.files || []);
+    onImageUpload(files);
+    e.target.value = '';
   };
 
   return (
@@ -29,6 +27,7 @@ export const UploadImageButton = ({
       <input
         type="file"
         accept="image/*"
+        multiple
         className="hidden"
         onChange={handleImageChange}
       />

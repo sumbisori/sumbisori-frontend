@@ -8,7 +8,7 @@ import { MouseEvent, useEffect } from 'react';
 import { SelectCalendar } from './SelectCalendar';
 import { SelectPlace } from './SelectPlace';
 import { SelectWeather } from './SelectWeather';
-import { SelectPhoto } from './SelecrPhoto';
+import { SelectPhoto } from './SelectPhoto';
 import { SelectSeafood } from './SelecrSeafood';
 import { Register } from './Register';
 
