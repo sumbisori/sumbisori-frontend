@@ -20,6 +20,7 @@ import { ERROR_MESSAGE } from '@/constant/src/error';
 import { JournalPhoto } from '@/api/journalCreate/types';
 import { useJournalStore } from '@/stores';
 import { WARNING_MESSAGE } from '@/constant/src/warning';
+import { Divider } from '@/components/Divider';
 interface Props {
   photos: JournalPhoto[];
   onPhotosChange: (photos: JournalPhoto[]) => void;
@@ -38,6 +39,7 @@ export const SelectPhoto = ({
   onSatisfactionChange,
 }: Props) => {
   const { journalForm } = useJournalStore();
+
   const mutation = useMutation({
     mutationFn: getPresignedUrl,
     onError: (error: AxiosError<ErrorResponse>) => {
@@ -169,7 +171,7 @@ export const SelectPhoto = ({
             value={experience}
             onChange={(e) => onExperienceChange(e.target.value)}
           />
-          <div id="divider" className="h-px w-full bg-gray-200" />
+          <Divider />
           <div
             id="satisfaction-stars"
             className="flex flex-nowrap items-center gap-2"

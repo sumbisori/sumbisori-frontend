@@ -136,7 +136,16 @@ export const JournalCreate = () => {
               }
             />
           )}
-          {step === 'seafood' && <SelectSeafood />}
+          {step === 'seafood' && (
+            <SelectSeafood
+              seafood={journalForm.seafood}
+              onSeafoodChange={(seafood) =>
+                updateJournal({
+                  seafood,
+                })
+              }
+            />
+          )}
           {step === 'register' && <Register />}
         </div>
         <div className="fixed inset-x-0 bottom-0 z-10 m-auto flex w-full min-w-full-layout max-w-full-layout px-5 pb-5 pt-3">

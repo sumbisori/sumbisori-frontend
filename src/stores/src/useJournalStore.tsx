@@ -16,7 +16,7 @@ const initialJournalForm: JournalForm = {
   experience: '',
   photos: [],
   satisfaction: 0,
-  seafood: null,
+  seafood: [],
 };
 
 export const useJournalStore = create<JournalStore>((set) => ({

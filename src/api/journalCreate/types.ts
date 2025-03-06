@@ -15,13 +15,22 @@ export interface JournalForm {
   companion: string;
   experience: string;
   photos: JournalPhoto[];
-  seafood: string | null;
   satisfaction: number;
+  seafood: JournalSeafood[];
 }
 
 export interface JournalPhoto {
   objectKey: string;
   file: File;
+}
+
+export interface JournalSeafood {
+  objectKey: string;
+  file: File;
+  seafoods: {
+    name: string;
+    count: number;
+  }[];
 }
 
 export interface JournalCreatePlace {
