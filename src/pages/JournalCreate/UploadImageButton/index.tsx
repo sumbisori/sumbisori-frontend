@@ -31,13 +31,6 @@ export const UploadImageButton = ({
     e.target.value = '';
   };
 
-  //   - URL 요청 개수: 1 ~ 10개
-  // - 파일 크기: 1 ~ 10 * 1024 * 1024 bytes (1MB ~ 10MB)
-  // - 지원되는 콘텐츠 타입:
-  //     - image/jpeg
-  //     - image/png
-  //     - image/gif
-
   return (
     <label
       className={clsx(
