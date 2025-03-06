@@ -5,6 +5,8 @@ import { InputTitle } from '../InputTitle';
 import { JOURNAL_CREATE_INPUT_TITLE } from '@/constant/src/journalCreateInputTitle';
 import { motion } from 'framer-motion';
 import { animationY } from '@/util/animationY';
+import dayjs from '@/util/dayjs';
+
 interface SelectCalendarProps {
   value: Dayjs;
   onChange: (date: Dayjs) => void;
@@ -18,7 +20,12 @@ export const SelectCalendar = ({ value, onChange }: SelectCalendarProps) => {
         subtitle={JOURNAL_CREATE_INPUT_TITLE('calendar').subtitle}
       />
       <motion.div className="p-4" {...animationY(0.6)}>
-        <Calendar value={value} onChange={onChange} />
+        <Calendar
+          value={value}
+          onChange={onChange}
+          maxDate={dayjs()}
+          minDate={dayjs().subtract(4, 'year')}
+        />
       </motion.div>
     </>
   );

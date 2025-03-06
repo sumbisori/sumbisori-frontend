@@ -22,13 +22,13 @@ export const NavigatorHeader = ({
   stepBar,
 }: NavigatorHeaderProps) => {
   return (
-    <div
-      className={clsx(
-        'fixed inset-x-0 top-0 z-10 m-auto flex h-header-height w-full min-w-full-layout max-w-full-layout flex-col px-5 transition-transform duration-300 ease-in-out',
-        className,
-      )}
-    >
-      <div className="flex h-36 items-center justify-between">
+    <>
+      <div
+        className={clsx(
+          'fixed inset-x-0 top-0 z-10 m-auto flex h-header-height w-full min-w-full-layout max-w-full-layout items-center justify-between px-4 transition-transform duration-300 ease-in-out',
+          className,
+        )}
+      >
         {onBackClick && (
           <button
             className="flex size-6 items-center gap-2 hover:text-gray-500 active:text-gray-500"
@@ -47,9 +47,13 @@ export const NavigatorHeader = ({
             <ThinCloseIcon />
           </button>
         )}
+        {!onCloseClick && <div className="size-6" />}
       </div>
-      {!onCloseClick && <div className="size-6" />}
-      {stepBar && <StepBar current={stepBar.current} total={stepBar.total} />}
-    </div>
+      {stepBar && (
+        <div className="px-4 pt-2">
+          <StepBar current={stepBar.current} total={stepBar.total} />
+        </div>
+      )}
+    </>
   );
 };
