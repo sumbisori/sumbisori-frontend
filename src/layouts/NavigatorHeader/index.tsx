@@ -22,38 +22,40 @@ export const NavigatorHeader = ({
   stepBar,
 }: NavigatorHeaderProps) => {
   return (
-    <>
-      <div
-        className={clsx(
-          'fixed inset-x-0 top-0 z-10 m-auto flex h-header-height w-full min-w-full-layout max-w-full-layout items-center justify-between px-4 transition-transform duration-300 ease-in-out',
-          className,
-        )}
-      >
-        {onBackClick && (
+    <div
+      className={clsx(
+        'fixed inset-x-0 top-0 z-10 m-auto w-full min-w-full-layout max-w-full-layout',
+        className,
+      )}
+    >
+      <div className="flex h-header-height items-center justify-between px-4 transition-transform duration-300 ease-in-out">
+        {onBackClick ? (
           <button
             className="flex size-6 items-center gap-2 hover:text-gray-500 active:text-gray-500"
             onClick={onBackClick}
           >
             <ThinLeftIcon />
           </button>
+        ) : (
+          <div className="size-6" />
         )}
-        {!onBackClick && <div className="size-6" />}
         <div className="flex-1 text-center text-lg font-semibold">{title}</div>
-        {onCloseClick && (
+        {onCloseClick ? (
           <button
             className="flex size-6 items-center gap-2 hover:text-gray-500 active:text-gray-500"
             onClick={onCloseClick}
           >
             <ThinCloseIcon />
           </button>
+        ) : (
+          <div className="size-6" />
         )}
-        {!onCloseClick && <div className="size-6" />}
       </div>
       {stepBar && (
         <div className="px-4 pt-2">
           <StepBar current={stepBar.current} total={stepBar.total} />
         </div>
       )}
-    </>
+    </div>
   );
 };

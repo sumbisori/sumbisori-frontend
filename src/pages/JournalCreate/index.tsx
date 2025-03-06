@@ -77,7 +77,7 @@ export const JournalCreate = () => {
           total: stepList.length,
         }}
       />
-      <form className="flex flex-1 flex-col bg-gray-050">
+      <form className="flex flex-1 flex-col bg-gray-050 pb-[4.5rem]">
         <div className="flex-1">
           {step === 'calendar' && (
             <SelectCalendar
@@ -140,7 +140,7 @@ export const JournalCreate = () => {
           {step === 'seafood' && <SelectSeafood />}
           {step === 'register' && <Register />}
         </div>
-        <div className="px-5 pb-5">
+        <div className="fixed inset-x-0 bottom-0 z-10 m-auto flex w-full min-w-full-layout max-w-full-layout px-5 pb-5 pt-3">
           <LargeButton
             onClick={
               step === 'register' ? handleCompleteClick : handleNextClick

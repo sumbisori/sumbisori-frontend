@@ -35,10 +35,16 @@ export const SelectPhoto = ({
 
   const mutation = useMutation({
     mutationFn: getPresignedUrl,
+    onError: () => {
+      toast.error('이미지 업로드에 실패했습니다.');
+    },
   });
 
   const putMutation = useMutation({
     mutationFn: putAmazonS3,
+    onError: () => {
+      toast.error('이미지 업로드에 실패했습니다.');
+    },
   });
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -61,9 +67,6 @@ export const SelectPhoto = ({
     }
     if (putMutation.isSuccess) {
       setLocalPhotos([...localPhotos, ...files]);
-    }
-    if (mutation.isError || putMutation.isError) {
-      toast.error('이미지 업로드에 실패했습니다.');
     }
   };
 

@@ -47,7 +47,7 @@ export const Dictionary = () => {
   return (
     <div>
       <DictionaryAquarium favoriteSeafoodName="SeaUrchin" />
-      <div className="flex flex-col p-4">
+      <div className="flex flex-col p-4 pb-[4.5rem]">
         <DictionaryTitle seafoodPercentage={seafoodPercentage} />
         <DictionarySubtitle seafoodCount={seafoodCount} isLoading={isLoading} />
         {!isError && (
@@ -91,7 +91,7 @@ export const Dictionary = () => {
         <DictionaryDialog selectedSeafood={selectedSeafood} />
       )}
 
-      <div className="px-5 pb-5">
+      <div className="fixed inset-x-0 bottom-nav-height z-10 m-auto flex w-full min-w-full-layout max-w-full-layout px-5 pb-5 pt-3">
         <LargeButton onClick={() => navigate(routes.journalCreate('calendar'))}>
           일지 작성 및 도감등록
         </LargeButton>
