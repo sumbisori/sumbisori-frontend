@@ -11,7 +11,6 @@ import { SelectWeather } from './SelectWeather';
 import { SelectPhoto } from './SelectPhoto';
 import { SelectSeafood } from './SelecrSeafood';
 import { Register } from './Register';
-
 export const JournalCreate = () => {
   const { step } = useParams();
   const { journalForm, updateJournal, resetJournal } = useJournalStore();

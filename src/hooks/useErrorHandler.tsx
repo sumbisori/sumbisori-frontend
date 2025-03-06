@@ -1,11 +1,7 @@
+import { ErrorResponse } from '@/api/types';
 import { routes } from '@/routes/src/routes';
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
-export type ErrorResponse = {
-  message: string[];
-  name: string;
-  status: number;
-};
 
 export const useErrorHandler = () => {
   const navigate = useNavigate();

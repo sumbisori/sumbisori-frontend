@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 import AddAPhotoIcon from '@/icons/journal/add-a-photo.svg?react';
+import { toast } from '@/components/Toast';
+import { ERROR_MESSAGE } from '@/constant/src/error';
 
 interface UploadImageButtonProps {
   icon?: ReactNode;
@@ -14,9 +16,27 @@ export const UploadImageButton = ({
 }: UploadImageButtonProps) => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    onImageUpload(files);
+
+    const MAX_SIZE = 10 * 1024 * 1024;
+
+    const validFiles = files.filter((file) => {
+      if (file.size > MAX_SIZE) {
+        toast.error(ERROR_MESSAGE.MAX_PHOTO_SIZE);
+        return false;
+      }
+      return true;
+    });
+
+    onImageUpload(validFiles);
     e.target.value = '';
   };
+
+  //   - URL 요청 개수: 1 ~ 10개
+  // - 파일 크기: 1 ~ 10 * 1024 * 1024 bytes (1MB ~ 10MB)
+  // - 지원되는 콘텐츠 타입:
+  //     - image/jpeg
+  //     - image/png
+  //     - image/gif
 
   return (
     <label
@@ -26,7 +46,7 @@ export const UploadImageButton = ({
     >
       <input
         type="file"
-        accept="image/*"
+        accept="image/jpeg, image/png, image/gif"
         multiple
         className="hidden"
         onChange={handleImageChange}

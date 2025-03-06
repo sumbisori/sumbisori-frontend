@@ -3,7 +3,7 @@ import { InputTitle } from '../InputTitle';
 import { motion } from 'framer-motion';
 import { animationY } from '@/util/animationY';
 import { UploadImageButton } from '../UploadImageButton';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import AddAPhotoIcon from '@/icons/journal/add-a-photo.svg?react';
 import CloseIcon from '@/icons/journal/close.svg?react';
 import { IconButton } from '@/components/IconButton';
@@ -14,9 +14,15 @@ import { SatisfactionStars } from '../SatisfactionStars';
 import { getPresignedUrl, putAmazonS3 } from '@/api/file';
 import { PresignedUrlRequest } from '@/api/file/types';
 import { toast } from '@/components/Toast';
+import { AxiosError } from 'axios';
+import { ErrorResponse } from '@/api/types';
+import { ERROR_MESSAGE } from '@/constant/src/error';
+import { JournalPhoto } from '@/api/journalCreate/types';
+import { useJournalStore } from '@/stores';
+import { WARNING_MESSAGE } from '@/constant/src/warning';
 interface Props {
-  photos: string[];
-  onPhotosChange: (photos: string[]) => void;
+  photos: JournalPhoto[];
+  onPhotosChange: (photos: JournalPhoto[]) => void;
   experience: string;
   onExperienceChange: (experience: string) => void;
   satisfaction: number;
@@ -31,25 +37,33 @@ export const SelectPhoto = ({
   satisfaction,
   onSatisfactionChange,
 }: Props) => {
-  const [localPhotos, setLocalPhotos] = useState<File[]>([]);
-
+  const { journalForm } = useJournalStore();
   const mutation = useMutation({
     mutationFn: getPresignedUrl,
-    onError: () => {
-      toast.error('이미지 업로드에 실패했습니다.');
+    onError: (error: AxiosError<ErrorResponse>) => {
+      if (error.response?.data.name === 'INVALID_IMAGE_CONTENT_TYPE') {
+        toast.error(ERROR_MESSAGE.INVALID_IMAGE_CONTENT_TYPE);
+      } else {
+        toast.error(ERROR_MESSAGE.IMAGE_UPLOAD_FAILED);
+      }
     },
   });
 
   const putMutation = useMutation({
     mutationFn: putAmazonS3,
     onError: () => {
-      toast.error('이미지 업로드에 실패했습니다.');
+      toast.error(ERROR_MESSAGE.IMAGE_UPLOAD_FAILED);
     },
   });
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
+  const prevPhotosLengthRef = useRef(photos.length);
 
   const handleImageUpload = async (files: File[]) => {
+    if (journalForm.photos.length + files.length > 10) {
+      toast.warning(WARNING_MESSAGE.MAX_PHOTO_COUNT);
+      return;
+    }
     try {
       const req: PresignedUrlRequest = {
         fileInfos: files.map((file) => ({
@@ -57,7 +71,6 @@ export const SelectPhoto = ({
           size: file.size,
         })),
       };
-
       const presignedData = await mutation.mutateAsync(req);
 
       await Promise.all(
@@ -69,28 +82,36 @@ export const SelectPhoto = ({
         ),
       );
 
-      setLocalPhotos((prev) => [...prev, ...files]);
-      onPhotosChange([
-        ...photos,
-        ...presignedData.map((data) => data.objectKey),
-      ]);
+      const newPhotos: JournalPhoto[] = files.map((file, index) => ({
+        objectKey: presignedData[index].objectKey,
+        file: file,
+      }));
+
+      onPhotosChange([...photos, ...newPhotos]);
     } catch (error) {
-      toast.error('이미지 업로드에 실패했습니다.');
+      console.error(error);
     }
   };
 
-  const handleImageDelete = (index: number) => {
-    const newImageList = photos.filter((_, i) => i !== index);
-    onPhotosChange(newImageList);
+  const handleImageDelete = (objectKey: string) => {
+    onPhotosChange(photos.filter((photo) => photo.objectKey !== objectKey));
   };
 
-  useEffect(() => {
-    if (imageContainerRef.current) {
+  const handleImageUploadScroll = () => {
+    if (
+      imageContainerRef.current &&
+      photos.length > prevPhotosLengthRef.current
+    ) {
       imageContainerRef.current.scrollTo({
         left: imageContainerRef.current.scrollWidth,
         behavior: 'smooth',
       });
     }
+    prevPhotosLengthRef.current = photos.length;
+  };
+
+  useEffect(() => {
+    handleImageUploadScroll();
   }, [photos]);
 
   return (
@@ -120,10 +141,10 @@ export const SelectPhoto = ({
                 </span>
               }
             />
-            {localPhotos.map((image, index) => (
+            {photos.map((image, index) => (
               <div key={index} className="relative size-24 shrink-0">
                 <img
-                  src={URL.createObjectURL(image)}
+                  src={URL.createObjectURL(image.file)}
                   alt="업로드된 이미지"
                   className="size-full rounded-xl border border-gray-200 object-cover"
                 />
@@ -131,7 +152,7 @@ export const SelectPhoto = ({
                   className="absolute -right-1 -top-1 z-10"
                   variant="black"
                   type="button"
-                  onClick={() => handleImageDelete(index)}
+                  onClick={() => handleImageDelete(image.objectKey)}
                 >
                   <CloseIcon />
                 </IconButton>

@@ -14,9 +14,14 @@ export interface JournalForm {
   weather: string;
   companion: string;
   experience: string;
-  photos: string[];
+  photos: JournalPhoto[];
   seafood: string | null;
   satisfaction: number;
+}
+
+export interface JournalPhoto {
+  objectKey: string;
+  file: File;
 }
 
 export interface JournalCreatePlace {

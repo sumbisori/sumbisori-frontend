@@ -16,6 +16,11 @@ export const putAmazonS3 = async ({
   presignedUrl: string;
   image: File;
 }) => {
-  const response = await axios.put(presignedUrl, image);
+  const response = await axios.put(presignedUrl, image, {
+    headers: {
+      'Content-Type': image.type,
+    },
+  });
+
   return response.data;
 };
