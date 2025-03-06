@@ -31,7 +31,7 @@ export const SatisfactionStars = ({
         control.start({ scale: 1 });
       }
     });
-  }, [satisfaction, animations]);
+  }, [satisfaction]);
 
   const handleStarClick = (index: number) => {
     onSatisfactionChange(index + 1);
