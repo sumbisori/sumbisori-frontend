@@ -1,5 +1,5 @@
 export interface PresignedUrlRequest {
-  fileInfo: PresignedUrlFileInfo[];
+  fileInfos: PresignedUrlFileInfo[];
 }
 
 export interface PresignedUrlFileInfo {

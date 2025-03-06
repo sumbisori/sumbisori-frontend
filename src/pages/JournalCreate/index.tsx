@@ -66,7 +66,7 @@ export const JournalCreate = () => {
   }
 
   return (
-    <div className="relative flex h-full min-h-screen flex-col pt-header-height">
+    <div className="relative flex h-full min-h-screen flex-col pt-[4.5rem]">
       <NavigatorHeader
         title="체험 일지"
         onBackClick={step === 'calendar' ? undefined : handleBackClick}

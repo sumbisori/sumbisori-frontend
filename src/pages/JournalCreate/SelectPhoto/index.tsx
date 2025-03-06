@@ -49,24 +49,33 @@ export const SelectPhoto = ({
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleImageUpload = (files: File[]) => {
-    const req: PresignedUrlRequest = {
-      fileInfo: files.map((file) => ({
-        contentType: file.type,
-        size: file.size,
-      })),
-    };
-    mutation.mutate(req);
-    if (mutation.data) {
-      mutation.data.forEach((data) => {
-        putMutation.mutate({
-          presignedUrl: data.url,
-          image: files[0],
-        });
-      });
-    }
-    if (putMutation.isSuccess) {
-      setLocalPhotos([...localPhotos, ...files]);
+  const handleImageUpload = async (files: File[]) => {
+    try {
+      const req: PresignedUrlRequest = {
+        fileInfos: files.map((file) => ({
+          contentType: file.type,
+          size: file.size,
+        })),
+      };
+
+      const presignedData = await mutation.mutateAsync(req);
+
+      await Promise.all(
+        files.map((file, index) =>
+          putMutation.mutateAsync({
+            presignedUrl: presignedData[index].url,
+            image: file,
+          }),
+        ),
+      );
+
+      setLocalPhotos((prev) => [...prev, ...files]);
+      onPhotosChange([
+        ...photos,
+        ...presignedData.map((data) => data.objectKey),
+      ]);
+    } catch (error) {
+      toast.error('이미지 업로드에 실패했습니다.');
     }
   };
 
