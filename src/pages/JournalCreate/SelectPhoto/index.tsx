@@ -139,7 +139,7 @@ export const SelectPhoto = ({
               onSwiper={setSwiperInstance}
               slidesPerView="auto"
               spaceBetween={12}
-              className="w-full pr-1 pt-2"
+              className="w-full pr-4 pt-2"
             >
               {photos.map((photo, index) => (
                 <SwiperSlide
