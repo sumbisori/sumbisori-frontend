@@ -9,9 +9,11 @@ import AddAPhotoIcon2 from '@/icons/journal/add-a-photo2.svg?react';
 import CloseIcon from '@/icons/journal/close.svg?react';
 import { IconButton } from '@/components/IconButton';
 import { useJournalStore } from '@/stores';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-
+import { CollectedSeafoodCard } from '../CollectedSeafoodCard';
+import { RoundedButton } from '@/components/RoundedButton';
+import InformationOutlineIcon from '@/icons/information-outline.svg?react';
 interface Props {
   collectedSeafoods: JournalCollectedSeafood[];
   onCollectedSeafoodsChange: (
@@ -26,7 +28,10 @@ export const SelectCollectedSeafood = ({
   const { journalForm } = useJournalStore();
   const [selectedCollectedSeafood, setSelectedCollectedSeafood] =
     useState<JournalCollectedSeafood | null>(null);
-  const [swiperInstance, setSwiperInstance] = useState<any>(null);
+  const [imageSwiperInstance, setImageSwiperInstance] =
+    useState<SwiperClass | null>(null);
+  const [cardSwiperInstance, setCardSwiperInstance] =
+    useState<SwiperClass | null>(null);
 
   const handleSeafoodImageUpload = async (files: File[]) => {
     const newCollectedSeafoods = files.map((file) => ({
@@ -55,14 +60,16 @@ export const SelectCollectedSeafood = ({
   const prevCollectedSeafoodsLengthRef = useRef(collectedSeafoods.length);
 
   useEffect(() => {
-    if (collectedSeafoods.length > prevCollectedSeafoodsLengthRef.current) {
-      setSelectedCollectedSeafood(
-        collectedSeafoods[collectedSeafoods.length - 1],
-      );
-      swiperInstance.slideTo(collectedSeafoods.length);
+    if (imageSwiperInstance) {
+      if (collectedSeafoods.length > prevCollectedSeafoodsLengthRef.current) {
+        setSelectedCollectedSeafood(
+          collectedSeafoods[collectedSeafoods.length - 1],
+        );
+        imageSwiperInstance.slideTo(collectedSeafoods.length);
+      }
     }
     prevCollectedSeafoodsLengthRef.current = collectedSeafoods.length;
-  }, [collectedSeafoods, swiperInstance]);
+  }, [imageSwiperInstance, collectedSeafoods]);
 
   return (
     <>
@@ -71,30 +78,27 @@ export const SelectCollectedSeafood = ({
         subtitle={JOURNAL_CREATE_INPUT_TITLE('seafood').subtitle}
       />
 
-      <motion.div className="p-4" {...animationY(0.6)}>
-        <div className="flex flex-col gap-6">
+      <motion.div className="flex flex-col gap-6 py-4" {...animationY(0.6)}>
+        <div className="flex items-center gap-3 pl-4">
+          <UploadImageButton
+            onImageUpload={handleSeafoodImageUpload}
+            icon={<AddAPhotoIcon2 />}
+            className="mt-2"
+            text={<span className="text-xs">추가</span>}
+            multiple={false}
+          />
           <Swiper
-            onSwiper={setSwiperInstance}
+            onSwiper={setImageSwiperInstance}
             slidesPerView="auto"
-            centeredSlides={collectedSeafoods.length > 1}
             spaceBetween={12}
-            slideToClickedSlide={true}
-            className="w-full pr-1 pt-2"
+            className="w-full pr-4 pt-2"
           >
             {/* 업로드 버튼을 첫 슬라이드에 배치 */}
-            <SwiperSlide className="size-24">
-              <UploadImageButton
-                onImageUpload={handleSeafoodImageUpload}
-                icon={<AddAPhotoIcon2 />}
-                text={<span className="text-xs">추가</span>}
-                multiple={false}
-              />
-            </SwiperSlide>
 
             {collectedSeafoods.map((collectedSeafood) => (
               <SwiperSlide
                 key={collectedSeafood.objectKey}
-                className="relative size-24 cursor-pointer select-none"
+                className="size-24 select-none"
                 onClick={() => handleCollectedSeafoodClick(collectedSeafood)}
               >
                 <img
@@ -120,6 +124,32 @@ export const SelectCollectedSeafood = ({
               </SwiperSlide>
             ))}
           </Swiper>
+        </div>
+        <div className="flex flex-col gap-9">
+          <Swiper
+            onSwiper={setCardSwiperInstance}
+            slidesPerView={1.1}
+            className="w-full"
+            centeredSlides={true}
+            spaceBetween={8}
+          >
+            {collectedSeafoods.map((collectedSeafood) => (
+              <SwiperSlide key={collectedSeafood.objectKey}>
+                <CollectedSeafoodCard collectedSeafood={collectedSeafood} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <div className="flex items-center justify-between gap-2 px-4">
+            {selectedCollectedSeafood && (
+              <div className="flex items-center gap-2">
+                <InformationOutlineIcon className="text-gray-500" />
+                <p>정확하지 않나요?</p>
+              </div>
+            )}
+            <RoundedButton buttonType="gray" className="!py-2" type="button">
+              직접 입력하기
+            </RoundedButton>
+          </div>
         </div>
       </motion.div>
     </>

@@ -83,8 +83,8 @@ export function HaenyeoPlaceDetailSheet({ selectedPlace, onMoreInfo }: Props) {
               className="flex w-full flex-nowrap gap-2"
             >
               <RoundedButton
-                buttonType="secondary"
-                styleClass="flex-1 flex justify-center items-center gap-1"
+                buttonType="white"
+                className="flex flex-1 items-center justify-center gap-1"
                 onClick={onMoreInfo}
               >
                 기본정보 더보기
