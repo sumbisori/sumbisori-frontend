@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   placeholder: string;
   maxLength?: number;
+  className?: string;
 }
 
 export const Textarea = ({
@@ -10,6 +11,7 @@ export const Textarea = ({
   value = '',
   onChange,
   maxLength = 150,
+  className,
   ...props
 }: Props) => {
   const [textLength, setTextLength] = useState(0);
@@ -28,7 +30,12 @@ export const Textarea = ({
   };
 
   return (
-    <div className="flex max-h-[11.875rem] min-h-[10.188rem] flex-col gap-2 rounded-2xl border border-gray-100 bg-white">
+    <div
+      className={clsx(
+        'flex max-h-[11.875rem] min-h-[10.188rem] flex-col gap-2 rounded-2xl border border-gray-100 bg-white',
+        className,
+      )}
+    >
       <textarea
         className="size-full flex-1 resize-none rounded-2xl px-5 pt-6 text-black focus:outline-none"
         placeholder={placeholder}

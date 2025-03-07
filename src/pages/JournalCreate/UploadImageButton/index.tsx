@@ -8,6 +8,7 @@ interface UploadImageButtonProps {
   text?: ReactNode;
   onImageUpload: (files: File[]) => void;
   multiple?: boolean;
+  className?: string;
 }
 
 export const UploadImageButton = ({
@@ -15,6 +16,7 @@ export const UploadImageButton = ({
   text = <span className="text-sm">이미지 추가</span>,
   onImageUpload,
   multiple = true,
+  className,
 }: UploadImageButtonProps) => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -37,6 +39,7 @@ export const UploadImageButton = ({
     <label
       className={clsx(
         'flex size-24 shrink-0 cursor-pointer select-none flex-col items-center justify-center rounded-xl border border-gray-500 bg-white text-gray-500 hover:border-blue-700 hover:bg-blue-50 hover:text-blue-700 active:border-blue-700 active:bg-blue-50 active:text-blue-700',
+        className,
       )}
     >
       <input

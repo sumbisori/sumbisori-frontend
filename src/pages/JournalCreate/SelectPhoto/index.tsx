@@ -120,65 +120,71 @@ export const SelectPhoto = ({
       {mutation.isPending && (
         <Spinner className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2" />
       )}
-      <motion.div className="p-4" {...animationY(0.6)}>
+      <motion.div className="py-4" {...animationY(0.6)}>
         <div className="flex flex-col gap-6">
-          <Swiper
-            onSwiper={setSwiperInstance}
-            slidesPerView="auto"
-            spaceBetween={12}
-            className="w-full pr-1 pt-2"
-          >
-            <SwiperSlide className="size-24">
-              <UploadImageButton
-                onImageUpload={handleImageUpload}
-                icon={<AddAPhotoIcon />}
-                text={
-                  <span className="text-xs">
-                    <span className="text-blue-700">{photos.length}</span>
-                    <span>/</span>
-                    <span>10</span>
-                  </span>
-                }
-              />
-            </SwiperSlide>
-            {photos.map((photo, index) => (
-              <SwiperSlide key={photo.objectKey} className="size-24">
-                <img
-                  src={URL.createObjectURL(photo.file)}
-                  alt="업로드된 이미지"
-                  className="size-full rounded-xl border border-gray-200 object-cover"
-                />
-                <IconButton
-                  className="absolute -right-1 -top-1 z-10"
-                  variant="black"
-                  type="button"
-                  onClick={() => handleImageDelete(photo.objectKey)}
-                >
-                  <CloseIcon />
-                </IconButton>
-                {index === 0 && (
-                  <div className="absolute bottom-0 left-0 z-10 flex h-5 w-24 items-center justify-center rounded-b-xl bg-black/40 text-white">
-                    <span className="text-xs">대표 사진</span>
-                  </div>
-                )}
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <Textarea
-            placeholder="체험하며 느낀 점들을 자유롭게 남겨주세요."
-            value={experience}
-            onChange={(e) => onExperienceChange(e.target.value)}
-          />
-          <Divider />
-          <div
-            id="satisfaction-stars"
-            className="flex flex-nowrap items-center gap-2"
-          >
-            <p className="text-lg font-medium">체험 만족도</p>
-            <SatisfactionStars
-              satisfaction={satisfaction}
-              onSatisfactionChange={onSatisfactionChange}
+          <div className="flex items-center gap-3 pl-4">
+            <UploadImageButton
+              onImageUpload={handleImageUpload}
+              icon={<AddAPhotoIcon />}
+              className="mt-2"
+              text={
+                <span className="text-xs">
+                  <span className="text-blue-700">{photos.length}</span>
+                  <span>/</span>
+                  <span>10</span>
+                </span>
+              }
             />
+            <Swiper
+              onSwiper={setSwiperInstance}
+              slidesPerView="auto"
+              spaceBetween={12}
+              className="w-full pr-1 pt-2"
+            >
+              {photos.map((photo, index) => (
+                <SwiperSlide
+                  key={photo.objectKey}
+                  className="size-24 select-none"
+                >
+                  <img
+                    src={URL.createObjectURL(photo.file)}
+                    alt="업로드된 이미지"
+                    className="size-full rounded-xl border border-gray-200 object-cover"
+                  />
+                  <IconButton
+                    className="absolute -right-1 -top-1 z-10"
+                    variant="black"
+                    type="button"
+                    onClick={() => handleImageDelete(photo.objectKey)}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                  {index === 0 && (
+                    <div className="absolute bottom-0 left-0 z-10 flex h-5 w-24 items-center justify-center rounded-b-xl bg-black/40 text-white">
+                      <span className="text-xs">대표 사진</span>
+                    </div>
+                  )}
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+          <div className="flex flex-col gap-6 px-4">
+            <Textarea
+              placeholder="체험하며 느낀 점들을 자유롭게 남겨주세요."
+              value={experience}
+              onChange={(e) => onExperienceChange(e.target.value)}
+            />
+            <Divider />
+            <div
+              id="satisfaction-stars"
+              className="flex flex-nowrap items-center gap-2"
+            >
+              <p className="text-lg font-medium">체험 만족도</p>
+              <SatisfactionStars
+                satisfaction={satisfaction}
+                onSatisfactionChange={onSatisfactionChange}
+              />
+            </div>
           </div>
         </div>
       </motion.div>
