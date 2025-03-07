@@ -9,7 +9,7 @@ import { SelectCalendar } from './SelectCalendar';
 import { SelectPlace } from './SelectPlace';
 import { SelectWeather } from './SelectWeather';
 import { SelectPhoto } from './SelectPhoto';
-import { SelectSeafood } from './SelecrSeafood';
+import { SelectCollectedSeafood } from './SelectCollectedSeafood';
 import { Register } from './Register';
 export const JournalCreate = () => {
   const { step } = useParams();
@@ -137,11 +137,11 @@ export const JournalCreate = () => {
             />
           )}
           {step === 'seafood' && (
-            <SelectSeafood
-              seafood={journalForm.seafood}
-              onSeafoodChange={(seafood) =>
+            <SelectCollectedSeafood
+              collectedSeafoods={journalForm.collectedSeafoods}
+              onCollectedSeafoodsChange={(collectedSeafoods) =>
                 updateJournal({
-                  seafood,
+                  collectedSeafoods,
                 })
               }
             />

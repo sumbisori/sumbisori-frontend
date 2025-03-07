@@ -19,7 +19,6 @@ import { ErrorResponse } from '@/api/types';
 import { ERROR_MESSAGE } from '@/constant/src/error';
 import { JournalPhoto } from '@/api/journalCreate/types';
 import { useJournalStore } from '@/stores';
-import { WARNING_MESSAGE } from '@/constant/src/warning';
 import { Divider } from '@/components/Divider';
 interface Props {
   photos: JournalPhoto[];
@@ -45,8 +44,11 @@ export const SelectPhoto = ({
     onError: (error: AxiosError<ErrorResponse>) => {
       if (error.response?.data.name === 'INVALID_IMAGE_CONTENT_TYPE') {
         toast.error(ERROR_MESSAGE.INVALID_IMAGE_CONTENT_TYPE);
-      } else {
-        toast.error(ERROR_MESSAGE.IMAGE_UPLOAD_FAILED);
+        return;
+      }
+      if (error.response?.data.name === 'VALIDATION_FAILED') {
+        toast.error(ERROR_MESSAGE.IMAGE_VALIDATION_FAILED);
+        return;
       }
     },
   });
@@ -63,7 +65,7 @@ export const SelectPhoto = ({
 
   const handleImageUpload = async (files: File[]) => {
     if (journalForm.photos.length + files.length > 10) {
-      toast.warning(WARNING_MESSAGE.MAX_PHOTO_COUNT);
+      toast.warning(ERROR_MESSAGE.MAX_PHOTO_COUNT);
       return;
     }
     try {
@@ -143,10 +145,10 @@ export const SelectPhoto = ({
                 </span>
               }
             />
-            {photos.map((image, index) => (
-              <div key={index} className="relative size-24 shrink-0">
+            {photos.map((photo, index) => (
+              <div key={photo.objectKey} className="relative size-24 shrink-0">
                 <img
-                  src={URL.createObjectURL(image.file)}
+                  src={URL.createObjectURL(photo.file)}
                   alt="업로드된 이미지"
                   className="size-full rounded-xl border border-gray-200 object-cover"
                 />
@@ -154,7 +156,7 @@ export const SelectPhoto = ({
                   className="absolute -right-1 -top-1 z-10"
                   variant="black"
                   type="button"
-                  onClick={() => handleImageDelete(image.objectKey)}
+                  onClick={() => handleImageDelete(photo.objectKey)}
                 >
                   <CloseIcon />
                 </IconButton>

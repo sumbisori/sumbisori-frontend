@@ -16,7 +16,7 @@ export interface JournalForm {
   experience: string;
   photos: JournalPhoto[];
   satisfaction: number;
-  seafood: JournalSeafood[];
+  collectedSeafoods: JournalCollectedSeafood[];
 }
 
 export interface JournalPhoto {
@@ -24,7 +24,7 @@ export interface JournalPhoto {
   file: File;
 }
 
-export interface JournalSeafood {
+export interface JournalCollectedSeafood {
   objectKey: string;
   file: File;
   seafoods: {
