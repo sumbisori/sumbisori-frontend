@@ -26,12 +26,13 @@ export const SelectCollectedSeafood = ({
   onCollectedSeafoodsChange,
 }: Props) => {
   const { journalForm } = useJournalStore();
-  const [selectedCollectedSeafood, setSelectedCollectedSeafood] =
-    useState<JournalCollectedSeafood | null>(null);
+  const [activeObjectKey, setActiveObjectKey] = useState<string>('');
   const [imageSwiperInstance, setImageSwiperInstance] =
     useState<SwiperClass | null>(null);
   const [cardSwiperInstance, setCardSwiperInstance] =
     useState<SwiperClass | null>(null);
+
+  console.log(activeObjectKey);
 
   const handleSeafoodImageUpload = async (files: File[]) => {
     const newCollectedSeafoods = files.map((file) => ({
@@ -43,70 +44,69 @@ export const SelectCollectedSeafood = ({
   };
 
   const handleSeafoodImageDelete = (objectKey: string) => {
-    onCollectedSeafoodsChange(
-      collectedSeafoods.filter(
-        (collectedSeafood) => collectedSeafood.objectKey !== objectKey,
-      ),
+    const updatedSeafoods = collectedSeafoods.filter(
+      (collectedSeafood) => collectedSeafood.objectKey !== objectKey,
     );
+    onCollectedSeafoodsChange(updatedSeafoods);
+
+    if (objectKey === activeObjectKey) {
+      if (updatedSeafoods.length > 0) {
+        handleSlideChange(updatedSeafoods[0].objectKey);
+      } else {
+        setActiveObjectKey('');
+      }
+    }
   };
 
-  // 이미지 클릭 시 선택 상태 업데이트
+  const handleSlideChange = (objectKey: string) => {
+    const index = collectedSeafoods.findIndex(
+      (seafood) => seafood.objectKey === objectKey,
+    );
+    if (index === -1) return;
+
+    setActiveObjectKey(objectKey);
+    imageSwiperInstance?.slideTo(index);
+    cardSwiperInstance?.slideTo(index);
+  };
+
   const handleCollectedSeafoodClick = (
     collectedSeafood: JournalCollectedSeafood,
-    index: number,
   ) => {
-    if (index < 0 || index >= collectedSeafoods.length) return;
-    setSelectedCollectedSeafood(collectedSeafood);
-
-    if (imageSwiperInstance && cardSwiperInstance) {
-      imageSwiperInstance.slideTo(index);
-      cardSwiperInstance.slideTo(index);
-    }
+    handleSlideChange(collectedSeafood.objectKey);
   };
 
   const prevCollectedSeafoodsLengthRef = useRef(collectedSeafoods.length);
 
   useEffect(() => {
-    if (imageSwiperInstance) {
-      if (collectedSeafoods.length > prevCollectedSeafoodsLengthRef.current) {
-        setSelectedCollectedSeafood(
-          collectedSeafoods[collectedSeafoods.length - 1],
-        );
-        imageSwiperInstance.slideTo(collectedSeafoods.length);
-      }
-    }
-    prevCollectedSeafoodsLengthRef.current = collectedSeafoods.length;
-  }, [imageSwiperInstance, collectedSeafoods]);
-
-  useEffect(() => {
     if (imageSwiperInstance && cardSwiperInstance) {
-      // 이미지 스와이퍼 변경 시 카드 스와이퍼 연동
-      const imageChangeHandler = () => {
-        const currentIndex = imageSwiperInstance.activeIndex;
-        cardSwiperInstance.slideTo(currentIndex);
-        setSelectedCollectedSeafood(collectedSeafoods[currentIndex]);
+      const slideChangeHandler = (swiper: SwiperClass) => {
+        const currentSeafood = collectedSeafoods[swiper.activeIndex];
+        if (currentSeafood) {
+          handleSlideChange(currentSeafood.objectKey);
+        }
       };
 
-      const cardChangeHandler = () => {
-        const currentIndex = cardSwiperInstance.activeIndex;
-        imageSwiperInstance.slideTo(currentIndex);
-        setSelectedCollectedSeafood(collectedSeafoods[currentIndex]);
-      };
-
-      imageSwiperInstance.on('slideChange', imageChangeHandler);
-      cardSwiperInstance.on('slideChange', cardChangeHandler);
-
-      // 초기 선택 상태 설정
-      if (collectedSeafoods.length > 0 && !selectedCollectedSeafood) {
-        setSelectedCollectedSeafood(collectedSeafoods[0]);
-      }
+      imageSwiperInstance.on('slideChange', () =>
+        slideChangeHandler(imageSwiperInstance),
+      );
+      cardSwiperInstance.on('slideChange', () =>
+        slideChangeHandler(cardSwiperInstance),
+      );
 
       return () => {
-        imageSwiperInstance.off('slideChange', imageChangeHandler);
-        cardSwiperInstance.off('slideChange', cardChangeHandler);
+        imageSwiperInstance.off('slideChange');
+        cardSwiperInstance.off('slideChange');
       };
     }
   }, [imageSwiperInstance, cardSwiperInstance, collectedSeafoods]);
+
+  useEffect(() => {
+    if (collectedSeafoods.length > prevCollectedSeafoodsLengthRef.current) {
+      const lastSeafood = collectedSeafoods[collectedSeafoods.length - 1];
+      handleSlideChange(lastSeafood.objectKey);
+    }
+    prevCollectedSeafoodsLengthRef.current = collectedSeafoods.length;
+  }, [collectedSeafoods]);
 
   return (
     <>
@@ -132,31 +132,28 @@ export const SelectCollectedSeafood = ({
           >
             {/* 업로드 버튼을 첫 슬라이드에 배치 */}
 
-            {collectedSeafoods.map((collectedSeafood, index) => (
+            {collectedSeafoods.map((collectedSeafood) => (
               <SwiperSlide
                 key={collectedSeafood.objectKey}
                 className="size-24 select-none"
-                onClick={() =>
-                  handleCollectedSeafoodClick(collectedSeafood, index)
-                }
+                onClick={() => handleCollectedSeafoodClick(collectedSeafood)}
               >
                 <img
                   src={URL.createObjectURL(collectedSeafood.file)}
                   alt="업로드된 이미지"
                   className="size-full rounded-xl border border-gray-200 object-cover"
                 />
-                {(!selectedCollectedSeafood ||
-                  selectedCollectedSeafood.objectKey !==
-                    collectedSeafood.objectKey) && (
+                {activeObjectKey !== collectedSeafood.objectKey && (
                   <div className="absolute inset-0 rounded-xl bg-black/45" />
                 )}
                 <IconButton
                   className="absolute -right-1 -top-1 z-10"
                   variant="black"
                   type="button"
-                  onClick={() =>
-                    handleSeafoodImageDelete(collectedSeafood.objectKey)
-                  }
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSeafoodImageDelete(collectedSeafood.objectKey);
+                  }}
                 >
                   <CloseIcon />
                 </IconButton>
@@ -179,7 +176,9 @@ export const SelectCollectedSeafood = ({
             ))}
           </Swiper>
           <div className="flex items-center justify-between gap-2 px-4">
-            {selectedCollectedSeafood && (
+            {collectedSeafoods.find(
+              (seafood) => seafood.objectKey === activeObjectKey,
+            ) && (
               <div className="flex items-center gap-2">
                 <InformationOutlineIcon className="text-gray-500" />
                 <p>정확하지 않나요?</p>
