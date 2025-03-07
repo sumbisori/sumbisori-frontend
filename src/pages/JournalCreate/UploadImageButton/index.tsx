@@ -7,12 +7,14 @@ interface UploadImageButtonProps {
   icon?: ReactNode;
   text?: ReactNode;
   onImageUpload: (files: File[]) => void;
+  multiple?: boolean;
 }
 
 export const UploadImageButton = ({
   icon = <AddAPhotoIcon />,
   text = <span className="text-sm">이미지 추가</span>,
   onImageUpload,
+  multiple = true,
 }: UploadImageButtonProps) => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -34,13 +36,13 @@ export const UploadImageButton = ({
   return (
     <label
       className={clsx(
-        'flex size-24 shrink-0 cursor-pointer flex-col items-center justify-center rounded-xl border border-gray-500 bg-white text-gray-500 hover:border-blue-700 hover:bg-blue-50 hover:text-blue-700 active:border-blue-700 active:bg-blue-50 active:text-blue-700',
+        'flex size-24 shrink-0 cursor-pointer select-none flex-col items-center justify-center rounded-xl border border-gray-500 bg-white text-gray-500 hover:border-blue-700 hover:bg-blue-50 hover:text-blue-700 active:border-blue-700 active:bg-blue-50 active:text-blue-700',
       )}
     >
       <input
         type="file"
         accept="image/jpeg, image/png, image/gif"
-        multiple
+        multiple={multiple}
         className="hidden"
         onChange={handleImageChange}
       />

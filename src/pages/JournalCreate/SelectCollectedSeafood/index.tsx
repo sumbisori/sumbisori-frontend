@@ -3,12 +3,15 @@ import { InputTitle } from '../InputTitle';
 import { motion } from 'framer-motion';
 import { animationY } from '@/util/animationY';
 import { JournalCollectedSeafood } from '@/api/journalCreate/types';
-import { useRef, useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { UploadImageButton } from '../UploadImageButton';
 import AddAPhotoIcon2 from '@/icons/journal/add-a-photo2.svg?react';
 import CloseIcon from '@/icons/journal/close.svg?react';
 import { IconButton } from '@/components/IconButton';
 import { useJournalStore } from '@/stores';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+
 interface Props {
   collectedSeafoods: JournalCollectedSeafood[];
   onCollectedSeafoodsChange: (
@@ -21,9 +24,9 @@ export const SelectCollectedSeafood = ({
   onCollectedSeafoodsChange,
 }: Props) => {
   const { journalForm } = useJournalStore();
-
-  const imageContainerRef = useRef<HTMLDivElement>(null);
-  const prevPhotosLengthRef = useRef(collectedSeafoods.length);
+  const [selectedCollectedSeafood, setSelectedCollectedSeafood] =
+    useState<JournalCollectedSeafood | null>(null);
+  const [swiperInstance, setSwiperInstance] = useState<any>(null);
 
   const handleSeafoodImageUpload = async (files: File[]) => {
     const newCollectedSeafoods = files.map((file) => ({
@@ -33,6 +36,7 @@ export const SelectCollectedSeafood = ({
     }));
     onCollectedSeafoodsChange([...collectedSeafoods, ...newCollectedSeafoods]);
   };
+
   const handleSeafoodImageDelete = (objectKey: string) => {
     onCollectedSeafoodsChange(
       collectedSeafoods.filter(
@@ -41,22 +45,24 @@ export const SelectCollectedSeafood = ({
     );
   };
 
-  const handleImageUploadScroll = () => {
-    if (
-      imageContainerRef.current &&
-      collectedSeafoods.length > prevPhotosLengthRef.current
-    ) {
-      imageContainerRef.current.scrollTo({
-        left: imageContainerRef.current.scrollWidth,
-        behavior: 'smooth',
-      });
-    }
-    prevPhotosLengthRef.current = collectedSeafoods.length;
+  // 이미지 클릭 시 선택 상태 업데이트
+  const handleCollectedSeafoodClick = (
+    collectedSeafood: JournalCollectedSeafood,
+  ) => {
+    setSelectedCollectedSeafood(collectedSeafood);
   };
 
+  const prevCollectedSeafoodsLengthRef = useRef(collectedSeafoods.length);
+
   useEffect(() => {
-    handleImageUploadScroll();
-  }, [collectedSeafoods]);
+    if (collectedSeafoods.length > prevCollectedSeafoodsLengthRef.current) {
+      setSelectedCollectedSeafood(
+        collectedSeafoods[collectedSeafoods.length - 1],
+      );
+      swiperInstance.slideTo(collectedSeafoods.length);
+    }
+    prevCollectedSeafoodsLengthRef.current = collectedSeafoods.length;
+  }, [collectedSeafoods, swiperInstance]);
 
   return (
     <>
@@ -67,34 +73,40 @@ export const SelectCollectedSeafood = ({
 
       <motion.div className="p-4" {...animationY(0.6)}>
         <div className="flex flex-col gap-6">
-          <div
-            id="image-container"
-            ref={imageContainerRef}
-            className="hide-scroll flex gap-3 overflow-x-auto pb-1 pr-1 pt-2"
+          <Swiper
+            onSwiper={setSwiperInstance}
+            slidesPerView="auto"
+            centeredSlides={collectedSeafoods.length > 1}
+            spaceBetween={12}
+            slideToClickedSlide={true}
+            className="w-full pr-1 pt-2"
           >
-            <UploadImageButton
-              onImageUpload={handleSeafoodImageUpload}
-              icon={<AddAPhotoIcon2 />}
-              text={<span className="text-xs">추가</span>}
-            />
-            {collectedSeafoods.map((collectedSeafood, index) => (
-              <div
+            {/* 업로드 버튼을 첫 슬라이드에 배치 */}
+            <SwiperSlide className="size-24">
+              <UploadImageButton
+                onImageUpload={handleSeafoodImageUpload}
+                icon={<AddAPhotoIcon2 />}
+                text={<span className="text-xs">추가</span>}
+                multiple={false}
+              />
+            </SwiperSlide>
+
+            {collectedSeafoods.map((collectedSeafood) => (
+              <SwiperSlide
                 key={collectedSeafood.objectKey}
-                className="relative size-24 shrink-0"
+                className="relative size-24 cursor-pointer select-none"
+                onClick={() => handleCollectedSeafoodClick(collectedSeafood)}
               >
-                <div className="relative">
-                  <img
-                    src={URL.createObjectURL(collectedSeafood.file)}
-                    alt="업로드된 이미지"
-                    className="size-full rounded-xl border border-gray-200 object-cover"
-                    style={{
-                      clipPath:
-                        "path('M0 10.81% C0 4.84%, 5.59% 0, 12.5% 0 H87.5% C94.44% 0, 100% 4.84%, 100% 10.81% V75.68% C100% 81.61%, 94.44% 86.49%, 87.5% 86.49% H62.63% L53.69% 100% C52.05% 102.4%, 48% 102.4%, 46.41% 100% L37.36% 86.49% H12.5% C5.59% 86.49%, 0 81.61%, 0 75.68% V10.81% Z')",
-                      WebkitClipPath:
-                        "path('M0 10.81% C0 4.84%, 5.59% 0, 12.5% 0 H87.5% C94.44% 0, 100% 4.84%, 100% 10.81% V75.68% C100% 81.61%, 94.44% 86.49%, 87.5% 86.49% H62.63% L53.69% 100% C52.05% 102.4%, 48% 102.4%, 46.41% 100% L37.36% 86.49% H12.5% C5.59% 86.49%, 0 81.61%, 0 75.68% V10.81% Z')",
-                    }}
-                  />
-                </div>
+                <img
+                  src={URL.createObjectURL(collectedSeafood.file)}
+                  alt="업로드된 이미지"
+                  className="size-full rounded-xl border border-gray-200 object-cover"
+                />
+                {(!selectedCollectedSeafood ||
+                  selectedCollectedSeafood.objectKey !==
+                    collectedSeafood.objectKey) && (
+                  <div className="absolute inset-0 rounded-xl bg-black/45" />
+                )}
                 <IconButton
                   className="absolute -right-1 -top-1 z-10"
                   variant="black"
@@ -105,9 +117,9 @@ export const SelectCollectedSeafood = ({
                 >
                   <CloseIcon />
                 </IconButton>
-              </div>
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
         </div>
       </motion.div>
     </>

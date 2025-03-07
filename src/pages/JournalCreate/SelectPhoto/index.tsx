@@ -3,7 +3,7 @@ import { InputTitle } from '../InputTitle';
 import { motion } from 'framer-motion';
 import { animationY } from '@/util/animationY';
 import { UploadImageButton } from '../UploadImageButton';
-import { useEffect, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import AddAPhotoIcon from '@/icons/journal/add-a-photo.svg?react';
 import CloseIcon from '@/icons/journal/close.svg?react';
 import { IconButton } from '@/components/IconButton';
@@ -20,6 +20,8 @@ import { ERROR_MESSAGE } from '@/constant/src/error';
 import { JournalPhoto } from '@/api/journalCreate/types';
 import { useJournalStore } from '@/stores';
 import { Divider } from '@/components/Divider';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 interface Props {
   photos: JournalPhoto[];
   onPhotosChange: (photos: JournalPhoto[]) => void;
@@ -38,6 +40,8 @@ export const SelectPhoto = ({
   onSatisfactionChange,
 }: Props) => {
   const { journalForm } = useJournalStore();
+  const [swiperInstance, setSwiperInstance] = useState<any>(null);
+  const prevPhotoLengthRef = useRef(photos.length);
 
   const mutation = useMutation({
     mutationFn: getPresignedUrl,
@@ -59,9 +63,6 @@ export const SelectPhoto = ({
       toast.error(ERROR_MESSAGE.IMAGE_UPLOAD_FAILED);
     },
   });
-
-  const imageContainerRef = useRef<HTMLDivElement>(null);
-  const prevPhotosLengthRef = useRef(photos.length);
 
   const handleImageUpload = async (files: File[]) => {
     if (journalForm.photos.length + files.length > 10) {
@@ -101,22 +102,14 @@ export const SelectPhoto = ({
     onPhotosChange(photos.filter((photo) => photo.objectKey !== objectKey));
   };
 
-  const handleImageUploadScroll = () => {
-    if (
-      imageContainerRef.current &&
-      photos.length > prevPhotosLengthRef.current
-    ) {
-      imageContainerRef.current.scrollTo({
-        left: imageContainerRef.current.scrollWidth,
-        behavior: 'smooth',
-      });
-    }
-    prevPhotosLengthRef.current = photos.length;
-  };
-
   useEffect(() => {
-    handleImageUploadScroll();
-  }, [photos]);
+    if (photos.length > 0 && swiperInstance) {
+      if (photos.length > prevPhotoLengthRef.current) {
+        swiperInstance.slideTo(photos.length);
+      }
+      prevPhotoLengthRef.current = photos.length;
+    }
+  }, [swiperInstance, photos]);
 
   return (
     <>
@@ -129,24 +122,27 @@ export const SelectPhoto = ({
       )}
       <motion.div className="p-4" {...animationY(0.6)}>
         <div className="flex flex-col gap-6">
-          <div
-            id="image-container"
-            ref={imageContainerRef}
-            className="hide-scroll flex gap-3 overflow-x-auto pb-1 pr-1 pt-2"
+          <Swiper
+            onSwiper={setSwiperInstance}
+            slidesPerView="auto"
+            spaceBetween={12}
+            className="w-full pr-1 pt-2"
           >
-            <UploadImageButton
-              onImageUpload={handleImageUpload}
-              icon={<AddAPhotoIcon />}
-              text={
-                <span className="text-xs">
-                  <span className="text-blue-700">{photos.length}</span>
-                  <span>/</span>
-                  <span>10</span>
-                </span>
-              }
-            />
+            <SwiperSlide className="size-24">
+              <UploadImageButton
+                onImageUpload={handleImageUpload}
+                icon={<AddAPhotoIcon />}
+                text={
+                  <span className="text-xs">
+                    <span className="text-blue-700">{photos.length}</span>
+                    <span>/</span>
+                    <span>10</span>
+                  </span>
+                }
+              />
+            </SwiperSlide>
             {photos.map((photo, index) => (
-              <div key={photo.objectKey} className="relative size-24 shrink-0">
+              <SwiperSlide key={photo.objectKey} className="size-24">
                 <img
                   src={URL.createObjectURL(photo.file)}
                   alt="업로드된 이미지"
@@ -165,9 +161,9 @@ export const SelectPhoto = ({
                     <span className="text-xs">대표 사진</span>
                   </div>
                 )}
-              </div>
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
           <Textarea
             placeholder="체험하며 느낀 점들을 자유롭게 남겨주세요."
             value={experience}
