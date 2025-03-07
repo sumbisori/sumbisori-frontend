@@ -188,6 +188,9 @@ export default {
         '10/7': '10 / 7',
         '7/3': '7 / 3',
       },
+      size: {
+        '50': '200px',
+      },
       minWidth: {
         'full-layout': '20rem',
       },

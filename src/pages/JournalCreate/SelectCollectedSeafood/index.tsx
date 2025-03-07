@@ -53,8 +53,15 @@ export const SelectCollectedSeafood = ({
   // 이미지 클릭 시 선택 상태 업데이트
   const handleCollectedSeafoodClick = (
     collectedSeafood: JournalCollectedSeafood,
+    index: number,
   ) => {
+    if (index < 0 || index >= collectedSeafoods.length) return;
     setSelectedCollectedSeafood(collectedSeafood);
+
+    if (imageSwiperInstance && cardSwiperInstance) {
+      imageSwiperInstance.slideTo(index);
+      cardSwiperInstance.slideTo(index);
+    }
   };
 
   const prevCollectedSeafoodsLengthRef = useRef(collectedSeafoods.length);
@@ -70,6 +77,36 @@ export const SelectCollectedSeafood = ({
     }
     prevCollectedSeafoodsLengthRef.current = collectedSeafoods.length;
   }, [imageSwiperInstance, collectedSeafoods]);
+
+  useEffect(() => {
+    if (imageSwiperInstance && cardSwiperInstance) {
+      // 이미지 스와이퍼 변경 시 카드 스와이퍼 연동
+      const imageChangeHandler = () => {
+        const currentIndex = imageSwiperInstance.activeIndex;
+        cardSwiperInstance.slideTo(currentIndex);
+        setSelectedCollectedSeafood(collectedSeafoods[currentIndex]);
+      };
+
+      const cardChangeHandler = () => {
+        const currentIndex = cardSwiperInstance.activeIndex;
+        imageSwiperInstance.slideTo(currentIndex);
+        setSelectedCollectedSeafood(collectedSeafoods[currentIndex]);
+      };
+
+      imageSwiperInstance.on('slideChange', imageChangeHandler);
+      cardSwiperInstance.on('slideChange', cardChangeHandler);
+
+      // 초기 선택 상태 설정
+      if (collectedSeafoods.length > 0 && !selectedCollectedSeafood) {
+        setSelectedCollectedSeafood(collectedSeafoods[0]);
+      }
+
+      return () => {
+        imageSwiperInstance.off('slideChange', imageChangeHandler);
+        cardSwiperInstance.off('slideChange', cardChangeHandler);
+      };
+    }
+  }, [imageSwiperInstance, cardSwiperInstance, collectedSeafoods]);
 
   return (
     <>
@@ -95,11 +132,13 @@ export const SelectCollectedSeafood = ({
           >
             {/* 업로드 버튼을 첫 슬라이드에 배치 */}
 
-            {collectedSeafoods.map((collectedSeafood) => (
+            {collectedSeafoods.map((collectedSeafood, index) => (
               <SwiperSlide
                 key={collectedSeafood.objectKey}
                 className="size-24 select-none"
-                onClick={() => handleCollectedSeafoodClick(collectedSeafood)}
+                onClick={() =>
+                  handleCollectedSeafoodClick(collectedSeafood, index)
+                }
               >
                 <img
                   src={URL.createObjectURL(collectedSeafood.file)}
