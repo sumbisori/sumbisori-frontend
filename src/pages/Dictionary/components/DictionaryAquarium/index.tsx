@@ -1,8 +1,9 @@
+import { SeafoodType } from '@/api/types';
 import { useDictionaryAquarium } from '@/hooks/useDictionaryAquarium';
 import { useRef } from 'react';
 
 interface Props {
-  favoriteSeafoodName: string;
+  favoriteSeafoodName: SeafoodType;
 }
 
 export const DictionaryAquarium = ({ favoriteSeafoodName }: Props) => {

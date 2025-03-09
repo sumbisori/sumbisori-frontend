@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import Matter from 'matter-js';
 import { SeafoodCollected } from '@/api/home/types';
 import { IMAGE_PATHS } from '@/constant';
+import { SeafoodImage } from '@/components/SeafoodImage';
 
 export const useAquarium = (
   containerRef: React.RefObject<HTMLDivElement>,
@@ -191,7 +192,10 @@ export const useAquarium = (
     ) => {
       seafoods.forEach((seafood) => {
         const seafoodImage = new Image();
-        seafoodImage.src = `${IMAGE_PATHS.SEAFOOD}/${seafood.englishName}.svg`;
+        seafoodImage.src = SeafoodImage({
+          seafoodName: seafood.englishName,
+          variant: 'text',
+        }) as string;
 
         seafoodImage.onload = () => {
           for (let i = 0; i < seafood.count; i++) {

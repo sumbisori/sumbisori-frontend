@@ -1,6 +1,6 @@
 import { DictionarySeafood } from '@/api/dictionary/types';
-import { Dialog } from '../../../../components/Dialog';
-import { IMAGE_PATHS } from '@/constant';
+import { Dialog } from '@/components/Dialog';
+import { SeafoodImage } from '@/components/SeafoodImage';
 
 interface Props {
   selectedSeafood: DictionarySeafood;
@@ -10,14 +10,11 @@ export const DictionaryDialog = ({ selectedSeafood }: Props) => {
   return (
     <Dialog id={`seafood-${selectedSeafood.koreanName}`}>
       <div className="flex h-full flex-col justify-between">
-        <div
-          className={clsx(
-            'relative size-[9.375rem] self-center bg-cover bg-center bg-no-repeat',
-            selectedSeafood.count > 0 ? '' : 'grayscale',
-          )}
-          style={{
-            backgroundImage: `url(${IMAGE_PATHS.SEAFOOD}/${selectedSeafood.englishName}.svg)`,
-          }}
+        <SeafoodImage
+          className="size-[9.375rem]"
+          seafoodName={selectedSeafood.englishName}
+          grayscale={selectedSeafood.count === 0}
+          variant="div"
         />
         <div
           className={clsx(

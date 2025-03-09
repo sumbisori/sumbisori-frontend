@@ -1,7 +1,9 @@
+import { SeafoodType } from '../types';
+
 export interface SeafoodCollected {
   seafoodId: number;
   koreanName: string;
-  englishName: string;
+  englishName: SeafoodType;
   count: number;
 }
 

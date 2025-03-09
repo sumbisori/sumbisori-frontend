@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import Matter from 'matter-js';
 import { IMAGE_PATHS } from '@/constant';
-
+import { SeafoodImage } from '@/components/SeafoodImage';
+import { SeafoodType } from '@/api/types';
 export const useDictionaryAquarium = (
   containerRef: React.RefObject<HTMLDivElement>,
   canvasRef: React.RefObject<HTMLCanvasElement>,
-  seafoods: string,
+  seafoods: SeafoodType,
 ) => {
   useEffect(() => {
     // 1. 엔진 및 렌더 초기화
@@ -186,10 +187,13 @@ export const useDictionaryAquarium = (
       engine: Matter.Engine,
       width: number,
       height: number,
-      seafoods: string,
+      seafoods: SeafoodType,
     ) => {
       const seafoodImage = new Image();
-      seafoodImage.src = `${IMAGE_PATHS.SEAFOOD}/${seafoods}.svg`;
+      seafoodImage.src = SeafoodImage({
+        seafoodName: seafoods,
+        variant: 'text',
+      }) as string;
 
       seafoodImage.onload = () => {
         const body = Matter.Bodies.circle(width / 2, height / 2, 30, {

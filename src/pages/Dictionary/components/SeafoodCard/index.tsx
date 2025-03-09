@@ -1,7 +1,11 @@
+import { useState, useRef } from 'react';
 import { IMAGE_PATHS } from '@/constant';
+import Skeleton from '@/components/Skeleton';
+import { SeafoodImage } from '@/components/SeafoodImage';
+import { SeafoodType } from '@/api/types';
 
 interface Props {
-  seafoodName: string;
+  seafoodName: SeafoodType;
   isNew: boolean;
   counts: number;
   name: string;
@@ -19,11 +23,13 @@ export const SeafoodCard = (props: Props) => {
           : 'border-gray-300 bg-gray-100',
       )}
     >
-      <img
-        src={`${IMAGE_PATHS.SEAFOOD}/${props.seafoodName}.svg`}
-        alt={props.name}
-        className={clsx('size-full', props.counts > 0 ? '' : 'grayscale')}
+      <SeafoodImage
+        className="size-full"
+        seafoodName={props.seafoodName}
+        grayscale={props.counts === 0}
+        variant="img"
       />
+
       <div
         className={clsx(
           'absolute bottom-1 right-1 text-xs font-bold',
@@ -37,13 +43,9 @@ export const SeafoodCard = (props: Props) => {
           {props.counts}개
         </div>
       )}
-      <div
-        className={
-          props.isNew
-            ? 'relative left-[5.125rem] top-2.5 size-2 rounded-full bg-red-500'
-            : ''
-        }
-      ></div>
+      {props.isNew && (
+        <div className="relative left-[5.125rem] top-2.5 size-2 rounded-full bg-red-500"></div>
+      )}
     </div>
   );
 };
