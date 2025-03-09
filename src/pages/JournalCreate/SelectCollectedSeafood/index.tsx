@@ -9,11 +9,12 @@ import AddAPhotoIcon2 from '@/icons/journal/add-a-photo2.svg?react';
 import CloseIcon from '@/icons/journal/close.svg?react';
 import { IconButton } from '@/components/IconButton';
 import { useJournalStore } from '@/stores';
-import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
+
 import { CollectedSeafoodCard } from '../CollectedSeafoodCard';
 import { RoundedButton } from '@/components/RoundedButton';
 import InformationOutlineIcon from '@/icons/information-outline.svg?react';
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 import { Controller } from 'swiper/modules';
 
 interface Props {
@@ -48,13 +49,6 @@ export const SelectCollectedSeafood = ({
     }));
     const updatedSeafoods = [...collectedSeafoods, ...newCollectedSeafoods];
     onCollectedSeafoodsChange(updatedSeafoods);
-
-    // 새로운 이미지의 마지막 항목을 활성화
-    if (newCollectedSeafoods.length > 0) {
-      const lastNewSeafood =
-        newCollectedSeafoods[newCollectedSeafoods.length - 1];
-      setActiveObjectKey(lastNewSeafood.objectKey);
-    }
   };
 
   const handleSeafoodImageDelete = (objectKey: string) => {
@@ -113,8 +107,15 @@ export const SelectCollectedSeafood = ({
 
   useEffect(() => {
     if (collectedSeafoods.length > prevCollectedSeafoodsLengthRef.current) {
+      const lastSeafood = collectedSeafoods[collectedSeafoods.length - 1];
+      setActiveObjectKey(lastSeafood.objectKey);
+
+      // 스와이퍼 인스턴스가 있다면 마지막 슬라이드로 이동
       if (imageSwiperInstance) {
-        handleSlideChange(imageSwiperInstance);
+        imageSwiperInstance.slideTo(collectedSeafoods.length - 1);
+      }
+      if (cardSwiperInstance) {
+        cardSwiperInstance.slideTo(collectedSeafoods.length - 1);
       }
     }
     prevCollectedSeafoodsLengthRef.current = collectedSeafoods.length;
