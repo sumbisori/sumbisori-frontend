@@ -16,6 +16,7 @@ import InformationOutlineIcon from '@/icons/information-outline.svg?react';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Controller } from 'swiper/modules';
+import { BottomSheet } from 'react-spring-bottom-sheet';
 
 interface Props {
   collectedSeafoods: JournalCollectedSeafood[];
@@ -34,6 +35,7 @@ export const SelectCollectedSeafood = ({
     useState<SwiperClass | null>(null);
   const [cardSwiperInstance, setCardSwiperInstance] =
     useState<SwiperClass | null>(null);
+  const [seafoodPickerOpen, setSeafoodPickerOpen] = useState(false);
 
   useEffect(() => {
     if (collectedSeafoods.length > 0 && !activeObjectKey) {
@@ -157,7 +159,7 @@ export const SelectCollectedSeafood = ({
                   className="size-full rounded-xl border border-gray-200 object-cover"
                 />
                 {activeObjectKey !== collectedSeafood.objectKey && (
-                  <div className="absolute inset-0 rounded-xl bg-black/45" />
+                  <div className="absolute inset-0 cursor-pointer rounded-xl bg-black/45" />
                 )}
                 <IconButton
                   className="absolute -right-1 -top-1 z-10"
@@ -199,12 +201,26 @@ export const SelectCollectedSeafood = ({
                 <p>정확하지 않나요?</p>
               </div>
             )}
-            <RoundedButton buttonType="gray" className="!py-2" type="button">
+            <RoundedButton
+              buttonType="gray"
+              className="!py-2"
+              type="button"
+              onClick={() => setSeafoodPickerOpen(true)}
+            >
               직접 입력하기
             </RoundedButton>
           </div>
         </div>
       </motion.div>
+
+      {/* 직업 입력 BottomSheet */}
+      <BottomSheet
+        open={seafoodPickerOpen}
+        onDismiss={() => setSeafoodPickerOpen(false)}
+        header={<div>직업 입력</div>}
+      >
+        <div>직업 입력</div>
+      </BottomSheet>
     </>
   );
 };

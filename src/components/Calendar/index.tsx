@@ -6,7 +6,7 @@ import { BottomSheet } from 'react-spring-bottom-sheet';
 import '@/styles/bottomSheet.css';
 import ArrowDownFullIcon from '@/icons/arrow-down-full.svg?react';
 import clsx from 'clsx';
-import { DatePicker } from '../DatePicker';
+import { Picker } from '../Picker';
 
 dayjs.extend(weekOfYear);
 
@@ -58,8 +58,14 @@ export const Calendar = ({
     setPickerOpen(true);
   };
 
-  const handlePickerSelect = (year: number, month: number) => {
-    setCurrentMonth(currentMonth.year(year).month(month - 1));
+  // const handlePickerSelect = (year: number, month: number) => {
+  //   setCurrentMonth(currentMonth.year(year).month(month - 1));
+  // };
+  const handleMonthPickerSelect = (month: number) => {
+    setCurrentMonth(currentMonth.month(month - 1));
+  };
+  const handleYearPickerSelect = (year: number) => {
+    setCurrentMonth(currentMonth.year(year));
   };
 
   const generateCalendar = () => {
@@ -196,10 +202,8 @@ export const Calendar = ({
               className="text-sm hover:text-gray-600 active:text-gray-600"
               type="button"
               onClick={() => {
-                handlePickerSelect(
-                  currentMonth.year(),
-                  currentMonth.month() + 1,
-                );
+                handleYearPickerSelect(currentMonth.year());
+                handleMonthPickerSelect(currentMonth.month() + 1);
                 setPickerOpen(false);
               }}
             >
@@ -209,13 +213,18 @@ export const Calendar = ({
         }
         scrollLocking={false}
       >
-        <DatePicker
-          currentMonth={currentMonth}
-          onSelect={handlePickerSelect}
-          isOpen={pickerOpen}
-          years={years}
-          months={months}
-        />
+        <div className="flex">
+          <Picker
+            options={years}
+            selectedOption={currentMonth.year()}
+            onSelect={handleYearPickerSelect}
+          />
+          <Picker
+            options={months}
+            selectedOption={currentMonth.month() + 1}
+            onSelect={handleMonthPickerSelect}
+          />
+        </div>
       </BottomSheet>
     </div>
   );
