@@ -1,5 +1,6 @@
 import { JournalCollectedSeafood } from '@/api/journalCreate/types';
 import { Divider } from '@/components/Divider';
+import { ProgressBar } from '@/components/ProgressBar';
 import SparkIcon from '@/icons/journal/spark.svg?react';
 interface Props {
   collectedSeafood: JournalCollectedSeafood;
@@ -21,10 +22,7 @@ export const CollectedSeafoodCard = ({ collectedSeafood }: Props) => {
             <SparkIcon />
             <p className="text-sm font-medium">AI 분석 중...</p>
           </div>
-          <div className="flex flex-col items-center gap-2">
-            <progress value="35" max="100" className="h-1 w-full" />
-            <p>100%</p>
-          </div>
+          <ProgressBar value={35} max={100} />
         </div>
       </div>
       <Divider />
