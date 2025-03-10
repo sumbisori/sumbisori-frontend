@@ -11,6 +11,8 @@ export const ProgressBar = ({
   percentageText = true,
   percentageAlign = 'bottom',
 }: Props) => {
+  const percentage = Math.round((value / max) * 100);
+
   return (
     <div
       className={clsx(
@@ -21,7 +23,7 @@ export const ProgressBar = ({
       <div id="progress" className="h-1 w-full rounded-[1.25rem] bg-gray-100">
         <div
           className="h-1 rounded-[1.25rem] bg-blue-700"
-          style={{ width: `${value}%` }}
+          style={{ width: `${percentage}%` }}
         />
       </div>
       {percentageText && (
@@ -31,7 +33,7 @@ export const ProgressBar = ({
             value === 0 ? 'text-gray-400' : 'text-blue-700',
           )}
         >
-          {value}%
+          {percentage}%
         </p>
       )}
     </div>
