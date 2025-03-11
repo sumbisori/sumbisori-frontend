@@ -48,7 +48,11 @@ export const Complete = () => {
           </motion.div>
         </div>
         <motion.div className="mt-40" {...animationY(0.8)}>
-          <SmallButton selected onClick={handleReviewClick}>
+          <SmallButton
+            selected
+            onClick={handleReviewClick}
+            className="px-5 py-3.5"
+          >
             <div className="flex items-center gap-2">
               <p>리뷰 작성하러가기</p>
               <ArrowRightIcon className="size-6 text-blue-700" />
