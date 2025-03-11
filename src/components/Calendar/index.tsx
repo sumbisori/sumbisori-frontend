@@ -195,6 +195,7 @@ export const Calendar = ({
               className="text-sm hover:text-gray-600 active:text-gray-600"
               type="button"
               onClick={() => setPickerOpen(false)}
+              tabIndex={pickerOpen ? 0 : -1}
             >
               취소
             </button>
@@ -206,6 +207,7 @@ export const Calendar = ({
                 handleMonthPickerSelect(currentMonth.month() + 1);
                 setPickerOpen(false);
               }}
+              tabIndex={pickerOpen ? 0 : -1}
             >
               저장
             </button>

@@ -6,5 +6,6 @@ export const queryKeys = {
   haenyeoPlaceDetail: 'haenyeoPlaceDetail',
   seafoods: 'seafoods',
   seafoodsCollected: 'seafoodsCollected',
+  seafoodsType: 'seafoodsType',
   journalCreatePlace: 'journalCreatePlace',
 };

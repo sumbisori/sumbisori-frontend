@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { SeafoodType } from '../types';
 
 export type JournalStep =
   | 'calendar'
@@ -28,9 +29,18 @@ export interface JournalCollectedSeafood {
   objectKey: string;
   file: File;
   seafoods: {
-    name: string;
+    englishName: SeafoodType;
+    koreanName: string;
+    seafoodId: number;
     count: number;
   }[];
+}
+
+export interface SeafoodsListType {
+  englishName: SeafoodType;
+  koreanName: string;
+  seafoodId: number;
+  description: string;
 }
 
 export interface JournalCreatePlace {

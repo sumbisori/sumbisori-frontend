@@ -2,7 +2,10 @@ import { JOURNAL_CREATE_INPUT_TITLE } from '@/constant/src/journalCreateInputTit
 import { InputTitle } from '../InputTitle';
 import { motion } from 'framer-motion';
 import { animationY } from '@/util/animationY';
-import { JournalCollectedSeafood } from '@/api/journalCreate/types';
+import {
+  JournalCollectedSeafood,
+  SeafoodsListType,
+} from '@/api/journalCreate/types';
 import { useEffect, useState, useRef } from 'react';
 import { UploadImageButton } from '../UploadImageButton';
 import AddAPhotoIcon2 from '@/icons/journal/add-a-photo2.svg?react';
@@ -17,6 +20,10 @@ import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Controller } from 'swiper/modules';
 import { BottomSheet } from 'react-spring-bottom-sheet';
+import { CollectedSeafoodCardBottomSheet } from '../CollectedSeafoodCardBottomSheet';
+import { useQuery } from '@tanstack/react-query';
+import { queryKeys } from '@/query';
+import { getSeafoodsType } from '@/api/journalCreate';
 
 interface Props {
   collectedSeafoods: JournalCollectedSeafood[];
@@ -35,7 +42,14 @@ export const SelectCollectedSeafood = ({
     useState<SwiperClass | null>(null);
   const [cardSwiperInstance, setCardSwiperInstance] =
     useState<SwiperClass | null>(null);
+  const [seafoodEditMode, setSeafoodEditMode] = useState(false);
   const [seafoodPickerOpen, setSeafoodPickerOpen] = useState(false);
+
+  const { data: seafoodsType } = useQuery<SeafoodsListType[]>({
+    queryKey: [queryKeys.seafoodsType],
+    queryFn: () => getSeafoodsType(),
+    initialData: [],
+  });
 
   useEffect(() => {
     if (collectedSeafoods.length > 0 && !activeObjectKey) {
@@ -44,11 +58,38 @@ export const SelectCollectedSeafood = ({
   }, [collectedSeafoods]);
 
   const handleSeafoodImageUpload = async (files: File[]) => {
-    const newCollectedSeafoods = files.map((file) => ({
-      objectKey: `seafood-${file.name}`,
-      file,
-      seafoods: [],
-    }));
+    const newCollectedSeafoods: JournalCollectedSeafood[] = files.map(
+      (file) => ({
+        objectKey: `seafood-${file.name}`,
+        file,
+        seafoods: [
+          {
+            seafoodId: 6,
+            koreanName: '뿔소라',
+            englishName: 'Murex',
+            count: 5,
+          },
+          {
+            seafoodId: 2,
+            koreanName: '성게',
+            englishName: 'SeaUrchin',
+            count: 1,
+          },
+          {
+            seafoodId: 5,
+            koreanName: '소라',
+            englishName: 'Conch',
+            count: 3,
+          },
+          {
+            seafoodId: 1,
+            koreanName: '문어',
+            englishName: 'Octopus',
+            count: 2,
+          },
+        ],
+      }),
+    );
     const updatedSeafoods = [...collectedSeafoods, ...newCollectedSeafoods];
     onCollectedSeafoodsChange(updatedSeafoods);
   };
@@ -103,6 +144,14 @@ export const SelectCollectedSeafood = ({
       imageSwiperInstance?.slideTo(index);
       cardSwiperInstance?.slideTo(index);
     }
+  };
+
+  // collectedSeafoods의 activeObjectKey의 seafoods에 해산물을 추가하는 함수
+  const handleSeafoodUpdate = (updatedSeafood: JournalCollectedSeafood) => {
+    const updatedSeafoods = collectedSeafoods.map((seafood) =>
+      seafood.objectKey === activeObjectKey ? updatedSeafood : seafood,
+    );
+    onCollectedSeafoodsChange(updatedSeafoods);
   };
 
   const prevCollectedSeafoodsLengthRef = useRef(collectedSeafoods.length);
@@ -214,13 +263,17 @@ export const SelectCollectedSeafood = ({
       </motion.div>
 
       {/* 직업 입력 BottomSheet */}
-      <BottomSheet
+      <CollectedSeafoodCardBottomSheet
         open={seafoodPickerOpen}
         onDismiss={() => setSeafoodPickerOpen(false)}
-        header={<div>직업 입력</div>}
-      >
-        <div>직업 입력</div>
-      </BottomSheet>
+        seafoods={seafoodsType}
+        onSeafoodsChange={handleSeafoodUpdate}
+        collectedSeafood={
+          collectedSeafoods.find(
+            (seafood) => seafood.objectKey === activeObjectKey,
+          )!
+        }
+      />
     </>
   );
 };

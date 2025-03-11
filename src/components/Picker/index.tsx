@@ -5,8 +5,8 @@ interface Props {
   options: any[];
   optionKey?: string;
   optionValue?: string;
-  selectedOption: any;
-  onSelect: (option: any) => void;
+  selectedOption?: any;
+  onSelect?: (option: any) => void;
   emptyText?: string;
   className?: string;
 }
@@ -38,7 +38,7 @@ export const Picker = ({
           <button
             key={optionKey ? option[optionKey] : option}
             ref={selectedOption === option ? selectedOptionRef : null}
-            onClick={() => onSelect(option)}
+            onClick={() => onSelect?.(option)}
             className={clsx(
               'w-full p-4 text-center hover:bg-gray-100 active:bg-gray-100',
               selectedOption === option ? 'bg-gray-100 font-semibold' : '',
