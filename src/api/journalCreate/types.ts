@@ -11,7 +11,10 @@ export type JournalStep =
 
 export interface JournalForm {
   date: dayjs.Dayjs;
-  placeId: number | null;
+  place: {
+    id: number;
+    name: string;
+  } | null;
   weather: string;
   companion: string;
   experience: string;

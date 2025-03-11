@@ -11,6 +11,8 @@ import { SelectWeather } from './SelectWeather';
 import { SelectPhoto } from './SelectPhoto';
 import { SelectCollectedSeafood } from './SelectCollectedSeafood';
 import { Register } from './Register';
+import { Complete } from './Complete';
+
 export const JournalCreate = () => {
   const { step } = useParams();
   const { journalForm, updateJournal, resetJournal } = useJournalStore();
@@ -51,7 +53,7 @@ export const JournalCreate = () => {
 
   const handleCompleteClick = (e: MouseEvent) => {
     e.preventDefault();
-    navigate(routes.home);
+    navigate(routes.journalCreate('complete'));
   };
 
   useEffect(() => {
@@ -59,6 +61,10 @@ export const JournalCreate = () => {
       resetJournal();
     };
   }, []);
+
+  if (step === 'complete') {
+    return <Complete />;
+  }
 
   if (!step || !stepList.includes(step as JournalStep)) {
     return <Navigate to="/not-found" replace />;
@@ -70,11 +76,15 @@ export const JournalCreate = () => {
         title="체험 일지"
         onBackClick={step === 'calendar' ? undefined : handleBackClick}
         onCloseClick={handleCloseClick}
-        className="bg-white"
-        stepBar={{
-          current: stepList.indexOf(step as JournalStep) + 1,
-          total: stepList.length,
-        }}
+        stepBar={
+          step === 'complete'
+            ? undefined
+            : {
+                current: stepList.indexOf(step as JournalStep) + 1,
+                total: stepList.length - 1,
+              }
+        }
+        className={step === 'register' ? 'bg-gray-100' : 'bg-white'}
       />
       <form className="flex flex-1 flex-col bg-gray-050 pb-[4.5rem]">
         <div className="flex-1">
@@ -90,10 +100,10 @@ export const JournalCreate = () => {
           )}
           {step === 'place' && (
             <SelectPlace
-              selectedPlace={journalForm.placeId}
+              selectedPlace={journalForm.place}
               onPlaceChange={(place) =>
                 updateJournal({
-                  placeId: place,
+                  place: place,
                 })
               }
             />

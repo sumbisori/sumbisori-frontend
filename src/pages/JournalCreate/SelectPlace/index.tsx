@@ -14,8 +14,8 @@ import { getJournalCreatePlace } from '@/api/journalCreate';
 import { useEffect } from 'react';
 
 interface Props {
-  selectedPlace?: number | null;
-  onPlaceChange?: (selectedPlace: number | null) => void;
+  selectedPlace?: { id: number; name: string } | null;
+  onPlaceChange?: (selectedPlace: { id: number; name: string } | null) => void;
 }
 
 export const SelectPlace = ({ selectedPlace, onPlaceChange }: Props) => {
@@ -29,7 +29,7 @@ export const SelectPlace = ({ selectedPlace, onPlaceChange }: Props) => {
 
   useEffect(() => {
     if (places && places.length > 0) {
-      onPlaceChange?.(places[0].placeId);
+      onPlaceChange?.({ id: places[0].placeId, name: places[0].name });
     }
   }, [places]);
 
@@ -60,11 +60,15 @@ export const SelectPlace = ({ selectedPlace, onPlaceChange }: Props) => {
               <motion.div
                 key={place.placeId}
                 className="flex cursor-pointer items-center gap-2"
-                onClick={() => onPlaceChange?.(place.placeId)}
+                onClick={() =>
+                  onPlaceChange?.({ id: place.placeId, name: place.name })
+                }
               >
                 <RadioButton
-                  selected={place.placeId === selectedPlace}
-                  onClick={() => onPlaceChange?.(place.placeId)}
+                  selected={place.placeId === selectedPlace?.id}
+                  onClick={() =>
+                    onPlaceChange?.({ id: place.placeId, name: place.name })
+                  }
                 />
                 <img
                   src={place.imageUrl}

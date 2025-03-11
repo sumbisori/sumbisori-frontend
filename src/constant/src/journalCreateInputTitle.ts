@@ -30,6 +30,11 @@ export const JOURNAL_CREATE_INPUT_TITLE = (step: string) => {
         title: '어떤 해산물을 수확하셨나요?',
         subtitle: '직접 채취한 해산물의 사진을 올려주세요!',
       };
+    case 'register':
+      return {
+        title: '해당 내용이 맞으신가요?',
+        subtitle: '다시 한 번 확인해주세요',
+      };
     default:
       return {
         title: '',

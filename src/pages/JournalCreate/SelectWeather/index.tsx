@@ -2,7 +2,7 @@ import { JOURNAL_CREATE_INPUT_TITLE } from '@/constant/src/journalCreateInputTit
 import { InputTitle } from '../InputTitle';
 import { motion } from 'framer-motion';
 import { animationY } from '@/util/animationY';
-import { SmallButton } from '@/pages/Home/components/SmallButton';
+import { SmallButton } from '@/components/SmallButton';
 import { WeatherIcon } from '@/components/WeatherIcon';
 
 interface Props {

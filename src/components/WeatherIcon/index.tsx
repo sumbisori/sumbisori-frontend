@@ -12,7 +12,7 @@ import MistIcon from '@/icons/home/weather/mist.svg?react';
 
 interface Props {
   type: string;
-  className: string;
+  className?: string;
 }
 
 export const WeatherIcon = ({ type, className }: Props) => {

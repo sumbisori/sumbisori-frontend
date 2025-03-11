@@ -19,7 +19,6 @@ import InformationOutlineIcon from '@/icons/information-outline.svg?react';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Controller } from 'swiper/modules';
-import { BottomSheet } from 'react-spring-bottom-sheet';
 import { CollectedSeafoodCardBottomSheet } from '../CollectedSeafoodCardBottomSheet';
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/query';
