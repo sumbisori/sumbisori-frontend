@@ -27,7 +27,7 @@ export const HaenyeoPlacesDetail = () => {
 
   const {
     data: selectedPlace,
-    isLoading,
+    isPending,
     isError,
   } = useQuery<HaenyeoPlaceDetail | null>({
     queryKey: [queryKeys.haenyeoPlaceDetail, placeId],
@@ -61,7 +61,7 @@ export const HaenyeoPlacesDetail = () => {
     openModal('reservation-method');
   };
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <div className="relative flex h-screen items-center justify-center">
         <div

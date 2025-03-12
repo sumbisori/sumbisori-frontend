@@ -23,7 +23,7 @@ export const Dictionary = () => {
     useState<DictionarySeafood | null>(null);
   const {
     data: seafoods,
-    isLoading,
+    isPending,
     isError,
   } = useQuery<DictionarySeafood[]>({
     queryKey: [queryKeys.seafoods],
@@ -49,10 +49,10 @@ export const Dictionary = () => {
       <DictionaryAquarium favoriteSeafoodName="SeaUrchin" />
       <div className="flex flex-col p-4 pb-[4.5rem]">
         <DictionaryTitle seafoodPercentage={seafoodPercentage} />
-        <DictionarySubtitle seafoodCount={seafoodCount} isLoading={isLoading} />
+        <DictionarySubtitle seafoodCount={seafoodCount} isLoading={isPending} />
         {!isError && (
           <div className="grid grid-cols-3 gap-3 p-3">
-            {isLoading &&
+            {isPending &&
               Array.from({ length: 18 }).map((_, index) => (
                 <Skeleton
                   key={index}
@@ -62,7 +62,7 @@ export const Dictionary = () => {
                 />
               ))}
 
-            {!isLoading &&
+            {!isPending &&
               seafoods &&
               seafoods.map((seafood) => (
                 <SeafoodCard

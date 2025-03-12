@@ -19,7 +19,7 @@ interface Props {
 }
 
 export const SelectPlace = ({ selectedPlace, onPlaceChange }: Props) => {
-  const { data: places, isLoading: isPlacesLoading } = useQuery<
+  const { data: places, isPending: isPlacesPending } = useQuery<
     JournalCreatePlace[]
   >({
     queryKey: [queryKeys.journalCreatePlace],
@@ -39,7 +39,7 @@ export const SelectPlace = ({ selectedPlace, onPlaceChange }: Props) => {
         title={JOURNAL_CREATE_INPUT_TITLE('place').title}
         subtitle={JOURNAL_CREATE_INPUT_TITLE('place').subtitle}
       />
-      {isPlacesLoading && (
+      {isPlacesPending && (
         <div className="flex flex-col gap-4 p-4">
           {Array.from({ length: 5 }).map((_, index) => (
             <div key={index} className="flex items-center gap-2">
@@ -53,7 +53,7 @@ export const SelectPlace = ({ selectedPlace, onPlaceChange }: Props) => {
           ))}
         </div>
       )}
-      {places && !isPlacesLoading && (
+      {places && !isPlacesPending && (
         <motion.div className="p-4" {...animationY(0.6)}>
           <div className="flex flex-col gap-4">
             {places.map((place) => (
@@ -86,7 +86,7 @@ export const SelectPlace = ({ selectedPlace, onPlaceChange }: Props) => {
           </div>
         </motion.div>
       )}
-      {!places && !isPlacesLoading && (
+      {!places && !isPlacesPending && (
         <div className="p-4">
           <ImageWithTextAlert
             src={`${IMAGE_PATHS.ROOT}/haenyeo_sad.png`}
