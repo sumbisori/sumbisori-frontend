@@ -88,7 +88,7 @@ export const SelectPhoto = ({
       );
 
       const newPhotos: JournalPhoto[] = files.map((file, index) => ({
-        objectKey: presignedData[index].objectKey,
+        imageIdentifier: presignedData[index].imageIdentifier,
         file: file,
       }));
 
@@ -98,8 +98,10 @@ export const SelectPhoto = ({
     }
   };
 
-  const handleImageDelete = (objectKey: string) => {
-    onPhotosChange(photos.filter((photo) => photo.objectKey !== objectKey));
+  const handleImageDelete = (imageIdentifier: string) => {
+    onPhotosChange(
+      photos.filter((photo) => photo.imageIdentifier !== imageIdentifier),
+    );
   };
 
   useEffect(() => {
@@ -142,7 +144,7 @@ export const SelectPhoto = ({
           >
             {photos.map((photo, index) => (
               <SwiperSlide
-                key={photo.objectKey}
+                key={photo.imageIdentifier}
                 className="size-24 select-none"
               >
                 <img
@@ -154,7 +156,7 @@ export const SelectPhoto = ({
                   className="absolute -right-1 -top-1 z-10"
                   variant="black"
                   type="button"
-                  onClick={() => handleImageDelete(photo.objectKey)}
+                  onClick={() => handleImageDelete(photo.imageIdentifier)}
                 >
                   <CloseIcon />
                 </IconButton>

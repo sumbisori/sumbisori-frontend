@@ -64,10 +64,10 @@ export const Register = () => {
             value={
               <div className="flex items-center gap-3">
                 {journalForm.photos.slice(0, 2).map((photo, index) => (
-                  <div key={photo.objectKey} className="relative">
+                  <div key={photo.imageIdentifier} className="relative">
                     <img
                       src={URL.createObjectURL(photo.file)}
-                      alt={photo.objectKey}
+                      alt={photo.imageIdentifier}
                       className="size-24 rounded-xl border border-gray-200 object-cover"
                     />
                     {index === 1 && journalForm.photos.length > 2 && (

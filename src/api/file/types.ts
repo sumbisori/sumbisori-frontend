@@ -9,5 +9,5 @@ export interface PresignedUrlFileInfo {
 
 export interface PresignedUrlResponse {
   url: string;
-  objectKey: string;
+  imageIdentifier: string;
 }

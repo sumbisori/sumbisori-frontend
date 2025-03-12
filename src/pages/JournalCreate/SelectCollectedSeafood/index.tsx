@@ -52,14 +52,14 @@ export const SelectCollectedSeafood = ({
 
   useEffect(() => {
     if (collectedSeafoods.length > 0 && !activeObjectKey) {
-      setActiveObjectKey(collectedSeafoods[0].objectKey);
+      setActiveObjectKey(collectedSeafoods[0].imageIdentifier);
     }
   }, [collectedSeafoods]);
 
   const handleSeafoodImageUpload = async (files: File[]) => {
     const newCollectedSeafoods: JournalCollectedSeafood[] = files.map(
       (file) => ({
-        objectKey: `seafood-${file.name}`,
+        imageIdentifier: `seafood-${file.name}`,
         file,
         seafoods: [
           {
@@ -93,15 +93,16 @@ export const SelectCollectedSeafood = ({
     onCollectedSeafoodsChange(updatedSeafoods);
   };
 
-  const handleSeafoodImageDelete = (objectKey: string) => {
+  const handleSeafoodImageDelete = (imageIdentifier: string) => {
     const updatedSeafoods = collectedSeafoods.filter(
-      (collectedSeafood) => collectedSeafood.objectKey !== objectKey,
+      (collectedSeafood) =>
+        collectedSeafood.imageIdentifier !== imageIdentifier,
     );
     onCollectedSeafoodsChange(updatedSeafoods);
 
-    if (objectKey === activeObjectKey) {
+    if (imageIdentifier === activeObjectKey) {
       if (updatedSeafoods.length > 0) {
-        handleSlideChange(updatedSeafoods[0].objectKey);
+        handleSlideChange(updatedSeafoods[0].imageIdentifier);
       } else {
         setActiveObjectKey('');
       }
@@ -112,7 +113,7 @@ export const SelectCollectedSeafood = ({
     if (typeof swiperOrKey === 'string') {
       setActiveObjectKey(swiperOrKey);
       const index = collectedSeafoods.findIndex(
-        (seafood) => seafood.objectKey === swiperOrKey,
+        (seafood) => seafood.imageIdentifier === swiperOrKey,
       );
       if (index !== -1) {
         imageSwiperInstance?.slideTo(index);
@@ -121,7 +122,7 @@ export const SelectCollectedSeafood = ({
     } else {
       const currentSeafood = collectedSeafoods[swiperOrKey.activeIndex];
       if (currentSeafood) {
-        setActiveObjectKey(currentSeafood.objectKey);
+        setActiveObjectKey(currentSeafood.imageIdentifier);
 
         if (swiperOrKey === imageSwiperInstance && cardSwiperInstance) {
           cardSwiperInstance.slideTo(swiperOrKey.activeIndex);
@@ -136,10 +137,10 @@ export const SelectCollectedSeafood = ({
     collectedSeafood: JournalCollectedSeafood,
   ) => {
     const index = collectedSeafoods.findIndex(
-      (seafood) => seafood.objectKey === collectedSeafood.objectKey,
+      (seafood) => seafood.imageIdentifier === collectedSeafood.imageIdentifier,
     );
     if (index !== -1) {
-      setActiveObjectKey(collectedSeafood.objectKey);
+      setActiveObjectKey(collectedSeafood.imageIdentifier);
       imageSwiperInstance?.slideTo(index);
       cardSwiperInstance?.slideTo(index);
     }
@@ -148,7 +149,7 @@ export const SelectCollectedSeafood = ({
   // collectedSeafoods의 activeObjectKey의 seafoods에 해산물을 추가하는 함수
   const handleSeafoodUpdate = (updatedSeafood: JournalCollectedSeafood) => {
     const updatedSeafoods = collectedSeafoods.map((seafood) =>
-      seafood.objectKey === activeObjectKey ? updatedSeafood : seafood,
+      seafood.imageIdentifier === activeObjectKey ? updatedSeafood : seafood,
     );
     onCollectedSeafoodsChange(updatedSeafoods);
   };
@@ -158,7 +159,7 @@ export const SelectCollectedSeafood = ({
   useEffect(() => {
     if (collectedSeafoods.length > prevCollectedSeafoodsLengthRef.current) {
       const lastSeafood = collectedSeafoods[collectedSeafoods.length - 1];
-      setActiveObjectKey(lastSeafood.objectKey);
+      setActiveObjectKey(lastSeafood.imageIdentifier);
 
       // 스와이퍼 인스턴스가 있다면 마지막 슬라이드로 이동
       if (imageSwiperInstance) {
@@ -197,7 +198,7 @@ export const SelectCollectedSeafood = ({
           >
             {collectedSeafoods.map((collectedSeafood) => (
               <SwiperSlide
-                key={collectedSeafood.objectKey}
+                key={collectedSeafood.imageIdentifier}
                 className="size-24 select-none"
                 onClick={() => handleCollectedSeafoodClick(collectedSeafood)}
               >
@@ -206,7 +207,7 @@ export const SelectCollectedSeafood = ({
                   alt="업로드된 이미지"
                   className="size-full rounded-xl border border-gray-200 object-cover"
                 />
-                {activeObjectKey !== collectedSeafood.objectKey && (
+                {activeObjectKey !== collectedSeafood.imageIdentifier && (
                   <div className="absolute inset-0 cursor-pointer rounded-xl bg-black/45" />
                 )}
                 <IconButton
@@ -215,7 +216,7 @@ export const SelectCollectedSeafood = ({
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleSeafoodImageDelete(collectedSeafood.objectKey);
+                    handleSeafoodImageDelete(collectedSeafood.imageIdentifier);
                   }}
                 >
                   <CloseIcon />
@@ -235,14 +236,14 @@ export const SelectCollectedSeafood = ({
             onSlideChange={(swiper) => handleSlideChange(swiper)}
           >
             {collectedSeafoods.map((collectedSeafood) => (
-              <SwiperSlide key={collectedSeafood.objectKey}>
+              <SwiperSlide key={collectedSeafood.imageIdentifier}>
                 <CollectedSeafoodCard collectedSeafood={collectedSeafood} />
               </SwiperSlide>
             ))}
           </Swiper>
           <div className="flex items-center justify-between gap-2 px-4">
             {collectedSeafoods.find(
-              (seafood) => seafood.objectKey === activeObjectKey,
+              (seafood) => seafood.imageIdentifier === activeObjectKey,
             ) && (
               <div className="flex items-center gap-2">
                 <InformationOutlineIcon className="text-gray-500" />
@@ -269,7 +270,7 @@ export const SelectCollectedSeafood = ({
         onSeafoodsChange={handleSeafoodUpdate}
         collectedSeafood={
           collectedSeafoods.find(
-            (seafood) => seafood.objectKey === activeObjectKey,
+            (seafood) => seafood.imageIdentifier === activeObjectKey,
           )!
         }
       />

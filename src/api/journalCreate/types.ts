@@ -24,12 +24,12 @@ export interface JournalForm {
 }
 
 export interface JournalPhoto {
-  objectKey: string;
+  imageIdentifier: string;
   file: File;
 }
 
 export interface JournalCollectedSeafood {
-  objectKey: string;
+  imageIdentifier: string;
   file: File;
   seafoods: {
     englishName: SeafoodType;
