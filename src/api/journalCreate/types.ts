@@ -32,6 +32,7 @@ export interface JournalCollectedSeafood {
   imageIdentifier: string;
   file: File;
   seafoods: CollectedSeafood[];
+  analysisStatus?: string;
 }
 
 export interface CollectedSeafood {

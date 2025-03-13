@@ -3,7 +3,6 @@ import dayjs from '@/util/dayjs';
 import { RegisterInfo } from '../RegisterInfo';
 import { WeatherIcon } from '@/components/WeatherIcon';
 import { Divider } from '@/components/Divider';
-import { JOURNAL_CREATE_INPUT_TITLE } from '@/constant/src/journalCreateInputTitle';
 import { RegisterTitle } from '../RegisterTitle';
 export const Register = () => {
   const { journalForm } = useJournalStore();

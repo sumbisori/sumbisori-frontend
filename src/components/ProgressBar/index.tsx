@@ -3,6 +3,7 @@ interface Props {
   max: number;
   percentageText?: boolean;
   percentageAlign?: 'bottom' | 'right';
+  className?: string;
 }
 
 export const ProgressBar = ({
@@ -10,14 +11,16 @@ export const ProgressBar = ({
   max,
   percentageText = true,
   percentageAlign = 'bottom',
+  className,
 }: Props) => {
   const percentage = Math.round((value / max) * 100);
 
   return (
     <div
       className={clsx(
-        'flex items-center gap-2',
+        'flex w-full items-center gap-2',
         percentageAlign === 'right' ? '' : 'flex-col',
+        className,
       )}
     >
       <div id="progress" className="h-1 w-full rounded-[1.25rem] bg-gray-100">

@@ -79,6 +79,27 @@ export const SelectCollectedSeafood = ({
     },
   });
 
+  const analysisMutation = useMutation({
+    mutationFn: (imageIdentifier: string) =>
+      analyzeSeafoodImage(imageIdentifier),
+    onSuccess: (data, imageIdentifier) => {
+      const updatedSeafoods = collectedSeafoods.map((item) =>
+        item.imageIdentifier === imageIdentifier
+          ? { ...item, seafoods: data, analysisStatus: 'success' }
+          : item,
+      );
+      onCollectedSeafoodsChange(updatedSeafoods);
+    },
+    onError: (error, imageIdentifier) => {
+      const updatedSeafoods = collectedSeafoods.map((item) =>
+        item.imageIdentifier === imageIdentifier
+          ? { ...item, analysisStatus: 'failed' }
+          : item,
+      );
+      onCollectedSeafoodsChange(updatedSeafoods);
+    },
+  });
+
   useEffect(() => {
     if (collectedSeafoods.length > 0 && !activeImageIdentifier) {
       setActiveImageIdentifier(collectedSeafoods[0].imageIdentifier);
@@ -108,24 +129,21 @@ export const SelectCollectedSeafood = ({
         ),
       );
 
-      const analyzedSeafoods = await Promise.all(
-        files.map((file, index) =>
-          analyzeSeafoodImage(presignedData[index].imageIdentifier),
-        ),
-      );
-
-      const newCollectedSeafoods: JournalCollectedSeafood[] = files.map(
+      // 이미지 업로드가 끝나면, 새로운 항목을 'pending' 상태로 추가
+      const newSeafoods: JournalCollectedSeafood[] = files.map(
         (file, index) => ({
           imageIdentifier: presignedData[index].imageIdentifier,
-          file: file,
-          seafoods: analyzedSeafoods[index],
+          file,
+          seafoods: [],
+          analysisStatus: 'pending',
         }),
       );
+      onCollectedSeafoodsChange([...collectedSeafoods, ...newSeafoods]);
 
-      onCollectedSeafoodsChange([
-        ...collectedSeafoods,
-        ...newCollectedSeafoods,
-      ]);
+      // 각 파일에 대해 분석 API를 호출하여 결과 업데이트
+      files.forEach((file, index) => {
+        analysisMutation.mutate(presignedData[index].imageIdentifier);
+      });
     } catch (error) {
       console.error(error);
     }
@@ -264,7 +282,7 @@ export const SelectCollectedSeafood = ({
             ))}
           </Swiper>
         </div>
-        <div className="flex flex-col gap-9">
+        <div className="flex flex-col gap-6">
           <Swiper
             modules={[Controller]}
             onSwiper={setCardSwiperInstance}
@@ -284,19 +302,21 @@ export const SelectCollectedSeafood = ({
             {collectedSeafoods.find(
               (seafood) => seafood.imageIdentifier === activeImageIdentifier,
             ) && (
-              <div className="flex items-center gap-2">
-                <InformationOutlineIcon className="text-gray-500" />
-                <p>정확하지 않나요?</p>
-              </div>
+              <>
+                <div className="flex items-center gap-2">
+                  <InformationOutlineIcon className="text-gray-500" />
+                  <p>정확하지 않나요?</p>
+                </div>
+                <RoundedButton
+                  buttonType="gray"
+                  className="!py-2"
+                  type="button"
+                  onClick={() => setSeafoodPickerOpen(true)}
+                >
+                  직접 입력하기
+                </RoundedButton>
+              </>
             )}
-            <RoundedButton
-              buttonType="gray"
-              className="!py-2"
-              type="button"
-              onClick={() => setSeafoodPickerOpen(true)}
-            >
-              직접 입력하기
-            </RoundedButton>
           </div>
         </div>
       </motion.div>
