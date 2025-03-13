@@ -137,12 +137,13 @@ export const SelectCollectedSeafood = ({
           analysisStatus: 'pending',
         }),
       );
-      onCollectedSeafoodsChange([...collectedSeafoods, ...newSeafoods]);
+      const updatedSeafoods = [...collectedSeafoods, ...newSeafoods];
+      onCollectedSeafoodsChange(updatedSeafoods);
 
-      // 각 파일에 대해 분석 API를 호출하여 결과 업데이트
-      files.forEach((file, index) => {
-        analysisMutation.mutate(presignedData[index].imageIdentifier);
-      });
+      // 상태 업데이트 후에 분석 API 호출 (각 이미지별로 순차 처리)
+      for (let i = 0; i < files.length; i++) {
+        await analysisMutation.mutateAsync(presignedData[i].imageIdentifier);
+      }
     } catch (error) {
       console.error(error);
     }
