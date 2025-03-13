@@ -1,6 +1,6 @@
 import {
   JournalCollectedSeafood,
-  SeafoodsListType,
+  SeafoodsTypeList,
 } from '@/api/journalCreate/types';
 import { Picker } from '@/components/Picker';
 import { useState, useEffect } from 'react';
@@ -8,7 +8,7 @@ import { BottomSheet } from 'react-spring-bottom-sheet';
 
 interface Props {
   collectedSeafood: JournalCollectedSeafood;
-  seafoods: SeafoodsListType[];
+  seafoods: SeafoodsTypeList[];
   onSeafoodsChange: (seafoods: JournalCollectedSeafood) => void;
   open: boolean;
   onDismiss: () => void;
@@ -22,7 +22,7 @@ export const CollectedSeafoodCardBottomSheet = ({
   onDismiss,
 }: Props) => {
   const [selectedSeafood, setSelectedSeafood] =
-    useState<SeafoodsListType | null>(null);
+    useState<SeafoodsTypeList | null>(null);
   const [selectedCount, setSelectedCount] = useState<number>(1);
 
   const filteredSeafoods = seafoods.filter(

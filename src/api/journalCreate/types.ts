@@ -31,15 +31,17 @@ export interface JournalPhoto {
 export interface JournalCollectedSeafood {
   imageIdentifier: string;
   file: File;
-  seafoods: {
-    englishName: SeafoodType;
-    koreanName: string;
-    seafoodId: number;
-    count: number;
-  }[];
+  seafoods: CollectedSeafood[];
 }
 
-export interface SeafoodsListType {
+export interface CollectedSeafood {
+  englishName: SeafoodType;
+  koreanName: string;
+  seafoodId: number;
+  count: number;
+}
+
+export interface SeafoodsTypeList {
   englishName: SeafoodType;
   koreanName: string;
   seafoodId: number;

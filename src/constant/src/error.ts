@@ -12,5 +12,7 @@ export const ERROR_MESSAGE = {
    */
   MAX_PHOTO_SIZE: '이미지 파일 크기가 너무 큽니다',
   DEFAULT_ERROR: '알 수 없는 오류가 발생했습니다',
-  MAX_PHOTO_COUNT: '이미지는 최대 10개까지 추가할 수 있습니다.',
+  MAX_PHOTO_COUNT: '이미지는 최대 10개까지 추가할 수 있습니다',
+  MAX_COLLECTED_SEAFOOD_COUNT:
+    '해산물 이미지는 최대 5개까지 추가할 수 있습니다',
 };

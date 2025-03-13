@@ -8,4 +8,5 @@ export const queryKeys = {
   seafoodsCollected: 'seafoodsCollected',
   seafoodsType: 'seafoodsType',
   journalCreatePlace: 'journalCreatePlace',
+  analyzedSeafoodImage: 'analyzedSeafoodImage',
 };

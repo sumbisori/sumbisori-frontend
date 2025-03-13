@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { animationY } from '@/util/animationY';
 import {
   JournalCollectedSeafood,
-  SeafoodsListType,
+  SeafoodsTypeList,
 } from '@/api/journalCreate/types';
 import { useEffect, useState, useRef } from 'react';
 import { UploadImageButton } from '../UploadImageButton';
@@ -20,9 +20,15 @@ import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Controller } from 'swiper/modules';
 import { CollectedSeafoodCardBottomSheet } from '../CollectedSeafoodCardBottomSheet';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/query';
-import { getSeafoodsType } from '@/api/journalCreate';
+import { analyzeSeafoodImage, getSeafoodsType } from '@/api/journalCreate';
+import { toast } from '@/components/Toast';
+import { ERROR_MESSAGE } from '@/constant/src/error';
+import { getPresignedUrl, putAmazonS3 } from '@/api/file';
+import { AxiosError } from 'axios';
+import { PresignedUrlRequest } from '@/api/file/types';
+import { ErrorResponse } from '@/api/types';
 
 interface Props {
   collectedSeafoods: JournalCollectedSeafood[];
@@ -36,7 +42,9 @@ export const SelectCollectedSeafood = ({
   onCollectedSeafoodsChange,
 }: Props) => {
   const { journalForm } = useJournalStore();
-  const [activeObjectKey, setActiveObjectKey] = useState<string>('');
+  const [activeImageIdentifier, setActiveImageIdentifier] = useState<
+    string | null
+  >(null);
   const [imageSwiperInstance, setImageSwiperInstance] =
     useState<SwiperClass | null>(null);
   const [cardSwiperInstance, setCardSwiperInstance] =
@@ -44,53 +52,83 @@ export const SelectCollectedSeafood = ({
   const [seafoodEditMode, setSeafoodEditMode] = useState(false);
   const [seafoodPickerOpen, setSeafoodPickerOpen] = useState(false);
 
-  const { data: seafoodsType } = useQuery<SeafoodsListType[]>({
+  const { data: seafoodsType } = useQuery<SeafoodsTypeList[]>({
     queryKey: [queryKeys.seafoodsType],
     queryFn: () => getSeafoodsType(),
     initialData: [],
   });
 
+  const mutation = useMutation({
+    mutationFn: getPresignedUrl,
+    onError: (error: AxiosError<ErrorResponse>) => {
+      if (error.response?.data.name === 'INVALID_IMAGE_CONTENT_TYPE') {
+        toast.error(ERROR_MESSAGE.INVALID_IMAGE_CONTENT_TYPE);
+        return;
+      }
+      if (error.response?.data.name === 'VALIDATION_FAILED') {
+        toast.error(ERROR_MESSAGE.IMAGE_VALIDATION_FAILED);
+        return;
+      }
+    },
+  });
+
+  const putMutation = useMutation({
+    mutationFn: putAmazonS3,
+    onError: () => {
+      toast.error(ERROR_MESSAGE.IMAGE_UPLOAD_FAILED);
+    },
+  });
+
   useEffect(() => {
-    if (collectedSeafoods.length > 0 && !activeObjectKey) {
-      setActiveObjectKey(collectedSeafoods[0].imageIdentifier);
+    if (collectedSeafoods.length > 0 && !activeImageIdentifier) {
+      setActiveImageIdentifier(collectedSeafoods[0].imageIdentifier);
     }
   }, [collectedSeafoods]);
 
   const handleSeafoodImageUpload = async (files: File[]) => {
-    const newCollectedSeafoods: JournalCollectedSeafood[] = files.map(
-      (file) => ({
-        imageIdentifier: `seafood-${file.name}`,
-        file,
-        seafoods: [
-          {
-            seafoodId: 6,
-            koreanName: '뿔소라',
-            englishName: 'Murex',
-            count: 5,
-          },
-          {
-            seafoodId: 2,
-            koreanName: '성게',
-            englishName: 'SeaUrchin',
-            count: 1,
-          },
-          {
-            seafoodId: 5,
-            koreanName: '소라',
-            englishName: 'Conch',
-            count: 3,
-          },
-          {
-            seafoodId: 1,
-            koreanName: '문어',
-            englishName: 'Octopus',
-            count: 2,
-          },
-        ],
-      }),
-    );
-    const updatedSeafoods = [...collectedSeafoods, ...newCollectedSeafoods];
-    onCollectedSeafoodsChange(updatedSeafoods);
+    if (collectedSeafoods.length + files.length > 5) {
+      toast.warning(ERROR_MESSAGE.MAX_COLLECTED_SEAFOOD_COUNT);
+      return;
+    }
+    try {
+      const req: PresignedUrlRequest = {
+        fileInfos: files.map((file) => ({
+          contentType: file.type,
+          size: file.size,
+        })),
+      };
+      const presignedData = await mutation.mutateAsync(req);
+
+      await Promise.all(
+        files.map((file, index) =>
+          putMutation.mutateAsync({
+            presignedUrl: presignedData[index].url,
+            image: file,
+          }),
+        ),
+      );
+
+      const analyzedSeafoods = await Promise.all(
+        files.map((file, index) =>
+          analyzeSeafoodImage(presignedData[index].imageIdentifier),
+        ),
+      );
+
+      const newCollectedSeafoods: JournalCollectedSeafood[] = files.map(
+        (file, index) => ({
+          imageIdentifier: presignedData[index].imageIdentifier,
+          file: file,
+          seafoods: analyzedSeafoods[index],
+        }),
+      );
+
+      onCollectedSeafoodsChange([
+        ...collectedSeafoods,
+        ...newCollectedSeafoods,
+      ]);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleSeafoodImageDelete = (imageIdentifier: string) => {
@@ -100,18 +138,18 @@ export const SelectCollectedSeafood = ({
     );
     onCollectedSeafoodsChange(updatedSeafoods);
 
-    if (imageIdentifier === activeObjectKey) {
+    if (imageIdentifier === activeImageIdentifier) {
       if (updatedSeafoods.length > 0) {
         handleSlideChange(updatedSeafoods[0].imageIdentifier);
       } else {
-        setActiveObjectKey('');
+        setActiveImageIdentifier(null);
       }
     }
   };
 
   const handleSlideChange = (swiperOrKey: SwiperClass | string) => {
     if (typeof swiperOrKey === 'string') {
-      setActiveObjectKey(swiperOrKey);
+      setActiveImageIdentifier(swiperOrKey);
       const index = collectedSeafoods.findIndex(
         (seafood) => seafood.imageIdentifier === swiperOrKey,
       );
@@ -122,7 +160,7 @@ export const SelectCollectedSeafood = ({
     } else {
       const currentSeafood = collectedSeafoods[swiperOrKey.activeIndex];
       if (currentSeafood) {
-        setActiveObjectKey(currentSeafood.imageIdentifier);
+        setActiveImageIdentifier(currentSeafood.imageIdentifier);
 
         if (swiperOrKey === imageSwiperInstance && cardSwiperInstance) {
           cardSwiperInstance.slideTo(swiperOrKey.activeIndex);
@@ -140,16 +178,17 @@ export const SelectCollectedSeafood = ({
       (seafood) => seafood.imageIdentifier === collectedSeafood.imageIdentifier,
     );
     if (index !== -1) {
-      setActiveObjectKey(collectedSeafood.imageIdentifier);
+      setActiveImageIdentifier(collectedSeafood.imageIdentifier);
       imageSwiperInstance?.slideTo(index);
       cardSwiperInstance?.slideTo(index);
     }
   };
 
-  // collectedSeafoods의 activeObjectKey의 seafoods에 해산물을 추가하는 함수
   const handleSeafoodUpdate = (updatedSeafood: JournalCollectedSeafood) => {
     const updatedSeafoods = collectedSeafoods.map((seafood) =>
-      seafood.imageIdentifier === activeObjectKey ? updatedSeafood : seafood,
+      seafood.imageIdentifier === activeImageIdentifier
+        ? updatedSeafood
+        : seafood,
     );
     onCollectedSeafoodsChange(updatedSeafoods);
   };
@@ -159,7 +198,7 @@ export const SelectCollectedSeafood = ({
   useEffect(() => {
     if (collectedSeafoods.length > prevCollectedSeafoodsLengthRef.current) {
       const lastSeafood = collectedSeafoods[collectedSeafoods.length - 1];
-      setActiveObjectKey(lastSeafood.imageIdentifier);
+      setActiveImageIdentifier(lastSeafood.imageIdentifier);
 
       // 스와이퍼 인스턴스가 있다면 마지막 슬라이드로 이동
       if (imageSwiperInstance) {
@@ -186,7 +225,7 @@ export const SelectCollectedSeafood = ({
             icon={<AddAPhotoIcon2 />}
             className="mt-2"
             text={<span className="text-xs">추가</span>}
-            multiple={false}
+            multiple={true}
           />
           <Swiper
             modules={[Controller]}
@@ -207,7 +246,7 @@ export const SelectCollectedSeafood = ({
                   alt="업로드된 이미지"
                   className="size-full rounded-xl border border-gray-200 object-cover"
                 />
-                {activeObjectKey !== collectedSeafood.imageIdentifier && (
+                {activeImageIdentifier !== collectedSeafood.imageIdentifier && (
                   <div className="absolute inset-0 cursor-pointer rounded-xl bg-black/45" />
                 )}
                 <IconButton
@@ -243,7 +282,7 @@ export const SelectCollectedSeafood = ({
           </Swiper>
           <div className="flex items-center justify-between gap-2 px-4">
             {collectedSeafoods.find(
-              (seafood) => seafood.imageIdentifier === activeObjectKey,
+              (seafood) => seafood.imageIdentifier === activeImageIdentifier,
             ) && (
               <div className="flex items-center gap-2">
                 <InformationOutlineIcon className="text-gray-500" />
@@ -270,7 +309,7 @@ export const SelectCollectedSeafood = ({
         onSeafoodsChange={handleSeafoodUpdate}
         collectedSeafood={
           collectedSeafoods.find(
-            (seafood) => seafood.imageIdentifier === activeObjectKey,
+            (seafood) => seafood.imageIdentifier === activeImageIdentifier,
           )!
         }
       />

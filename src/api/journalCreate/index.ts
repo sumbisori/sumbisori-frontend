@@ -1,5 +1,5 @@
 import { https } from '../instance';
-import { SeafoodsListType } from './types';
+import { CollectedSeafood, SeafoodsTypeList } from './types';
 
 export const getJournalCreatePlace = async () => {
   const response = await https.get('/places');
@@ -11,7 +11,16 @@ export const getSeafoodCountByAi = async (seafood: string) => {
   return response.data;
 };
 
-export const getSeafoodsType = async (): Promise<SeafoodsListType[]> => {
+export const getSeafoodsType = async (): Promise<SeafoodsTypeList[]> => {
   const response = await https.get('/seafoods/types');
+  return response.data;
+};
+
+export const analyzeSeafoodImage = async (
+  imageIdentifier: string,
+): Promise<CollectedSeafood[]> => {
+  const response = await https.get(
+    `/files/analyze?imageIdentifier=${imageIdentifier}`,
+  );
   return response.data;
 };
