@@ -76,6 +76,11 @@ export const Register = () => {
                     )}
                   </div>
                 ))}
+                {journalForm.photos.length === 0 && (
+                  <div className="flex size-24 items-center justify-center rounded-xl border border-gray-200 bg-gray-50">
+                    <p className="text-xs text-gray-500">사진이 없습니다</p>
+                  </div>
+                )}
               </div>
             }
           />

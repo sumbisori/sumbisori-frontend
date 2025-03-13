@@ -1,15 +1,26 @@
 import { JournalCollectedSeafood } from '@/api/journalCreate/types';
 import { Divider } from '@/components/Divider';
+import { IconButton } from '@/components/IconButton';
 import { ProgressBar } from '@/components/ProgressBar';
 import { SeafoodImage } from '@/components/SeafoodImage';
+import CharmPlusIcon from '@/icons/journal/charm-plus.svg?react';
 import SparkIcon from '@/icons/journal/spark.svg?react';
 import { useState, useEffect } from 'react';
+import CloseIcon from '@/icons/journal/close.svg?react';
 
 interface Props {
   collectedSeafood: JournalCollectedSeafood;
+  editMode: boolean;
+  onPlusClick: () => void;
+  onSeafoodDelete: (imageIdentifier: string, seafoodId: number) => void;
 }
 
-export const CollectedSeafoodCard = ({ collectedSeafood }: Props) => {
+export const CollectedSeafoodCard = ({
+  collectedSeafood,
+  editMode,
+  onPlusClick,
+  onSeafoodDelete,
+}: Props) => {
   const { analysisStatus, seafoods } = collectedSeafood;
   const [progressPercentage, setProgressPercentage] = useState(0);
 
@@ -78,22 +89,47 @@ export const CollectedSeafoodCard = ({ collectedSeafood }: Props) => {
           <Divider />
           <div className="flex flex-col gap-1.5">
             <h5 className="font-medium">분석 결과</h5>
-            <div className="grid grid-cols-3 gap-x-[1.313rem] gap-y-1">
+            <div className="grid grid-cols-3 gap-x-[1.313rem] gap-y-4">
               {seafoods.map((seafood) => (
                 <div
                   key={seafood.englishName}
                   className="flex flex-col items-center justify-center"
                 >
-                  <SeafoodImage
-                    seafoodName={seafood.englishName}
-                    variant="img"
-                    className="size-[5.625rem]"
-                  />
+                  <div className="relative size-[5.625rem]">
+                    <SeafoodImage
+                      seafoodName={seafood.englishName}
+                      variant="img"
+                      className="size-full"
+                    />
+                    <IconButton
+                      className="absolute -right-1 -top-1 z-10"
+                      variant="black"
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onSeafoodDelete(
+                          collectedSeafood.imageIdentifier,
+                          seafood.seafoodId,
+                        );
+                      }}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  </div>
                   <p className="w-full rounded border border-gray-300 bg-gray-50 px-2.5 py-[0.313rem] text-center text-sm font-medium">
                     {seafood.koreanName} x {seafood.count}
                   </p>
                 </div>
               ))}
+              {editMode && (
+                <button
+                  onClick={onPlusClick}
+                  type="button"
+                  className="flex h-[7.625rem] w-full items-center justify-center"
+                >
+                  <CharmPlusIcon />
+                </button>
+              )}
             </div>
           </div>
         </>
@@ -101,7 +137,18 @@ export const CollectedSeafoodCard = ({ collectedSeafood }: Props) => {
       {analysisStatus === 'success' && seafoods.length === 0 && (
         <div className="flex flex-col gap-1.5">
           <h5 className="font-medium">분석 결과</h5>
-          <p className="text-sm text-gray-500">해산물이 없습니다.</p>
+          <p className="text-sm text-gray-500">해산물이 없습니다</p>
+          <div className="grid grid-cols-3 gap-x-[1.313rem] gap-y-4">
+            {editMode && (
+              <button
+                onClick={onPlusClick}
+                type="button"
+                className="flex h-[7.625rem] w-full items-center justify-center"
+              >
+                <CharmPlusIcon />
+              </button>
+            )}
+          </div>
         </div>
       )}
     </div>

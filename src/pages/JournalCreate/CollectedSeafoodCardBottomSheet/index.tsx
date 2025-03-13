@@ -70,7 +70,7 @@ export const CollectedSeafoodCardBottomSheet = ({
       header={
         <div className="flex items-center justify-between px-6 py-4">
           <button
-            className="text-sm hover:text-gray-600 active:text-gray-600"
+            className="text-sm hover:text-gray-600 focus:outline-none active:text-gray-600"
             type="button"
             onClick={onDismiss}
             tabIndex={open ? 0 : -1}
@@ -78,7 +78,7 @@ export const CollectedSeafoodCardBottomSheet = ({
             취소
           </button>
           <button
-            className="text-sm hover:text-gray-600 active:text-gray-600"
+            className="text-sm hover:text-gray-600 focus:outline-none active:text-gray-600"
             type="button"
             onClick={handleSave}
             tabIndex={open ? 0 : -1}

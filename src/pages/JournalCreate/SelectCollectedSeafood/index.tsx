@@ -12,7 +12,6 @@ import AddAPhotoIcon2 from '@/icons/journal/add-a-photo2.svg?react';
 import CloseIcon from '@/icons/journal/close.svg?react';
 import { IconButton } from '@/components/IconButton';
 import { useJournalStore } from '@/stores';
-
 import { CollectedSeafoodCard } from '../CollectedSeafoodCard';
 import { RoundedButton } from '@/components/RoundedButton';
 import InformationOutlineIcon from '@/icons/information-outline.svg?react';
@@ -165,6 +164,19 @@ export const SelectCollectedSeafood = ({
     }
   };
 
+  // activeImageIdentifier의 해당되는 seafood를 삭제
+  const handleSeafoodDelete = (imageIdentifier: string, seafoodId: number) => {
+    const updatedSeafoods = collectedSeafoods.map((seafood) =>
+      seafood.imageIdentifier === imageIdentifier
+        ? {
+            ...seafood,
+            seafoods: seafood.seafoods.filter((s) => s.seafoodId !== seafoodId),
+          }
+        : seafood,
+    );
+    onCollectedSeafoodsChange(updatedSeafoods);
+  };
+
   const handleSlideChange = (swiperOrKey: SwiperClass | string) => {
     if (typeof swiperOrKey === 'string') {
       setActiveImageIdentifier(swiperOrKey);
@@ -242,7 +254,15 @@ export const SelectCollectedSeafood = ({
             onImageUpload={handleSeafoodImageUpload}
             icon={<AddAPhotoIcon2 />}
             className="mt-2"
-            text={<span className="text-xs">추가</span>}
+            text={
+              <span className="text-xs">
+                <span className="text-blue-700">
+                  {collectedSeafoods.length}
+                </span>
+                <span>/</span>
+                <span>5</span>
+              </span>
+            }
             multiple={true}
           />
           <Swiper
@@ -294,7 +314,12 @@ export const SelectCollectedSeafood = ({
           >
             {collectedSeafoods.map((collectedSeafood) => (
               <SwiperSlide key={collectedSeafood.imageIdentifier}>
-                <CollectedSeafoodCard collectedSeafood={collectedSeafood} />
+                <CollectedSeafoodCard
+                  collectedSeafood={collectedSeafood}
+                  editMode={seafoodEditMode}
+                  onPlusClick={() => setSeafoodPickerOpen(true)}
+                  onSeafoodDelete={handleSeafoodDelete}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -307,13 +332,14 @@ export const SelectCollectedSeafood = ({
                   <InformationOutlineIcon className="text-gray-500" />
                   <p>정확하지 않나요?</p>
                 </div>
+
                 <RoundedButton
-                  buttonType="gray"
+                  buttonType={seafoodEditMode ? 'secondary' : 'gray'}
                   className="!py-2"
                   type="button"
-                  onClick={() => setSeafoodPickerOpen(true)}
+                  onClick={() => setSeafoodEditMode(!seafoodEditMode)}
                 >
-                  직접 입력하기
+                  {seafoodEditMode ? '입력 완료' : '직접 입력하기'}
                 </RoundedButton>
               </>
             )}
