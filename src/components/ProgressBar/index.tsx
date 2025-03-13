@@ -1,3 +1,5 @@
+import { AnimatedNumber } from '@/components/AnimatedNumber';
+
 interface Props {
   value: number;
   max: number;
@@ -29,15 +31,19 @@ export const ProgressBar = ({
           style={{ width: `${percentage}%` }}
         />
       </div>
+
       {percentageText && (
-        <p
+        <div
           className={clsx(
-            'text-sm font-medium',
+            'flex text-center text-sm font-medium',
             value === 0 ? 'text-gray-400' : 'text-blue-700',
           )}
         >
-          {percentage}%
-        </p>
+          <div className="w-6">
+            <AnimatedNumber value={percentage} />
+          </div>
+          <div>%</div>
+        </div>
       )}
     </div>
   );

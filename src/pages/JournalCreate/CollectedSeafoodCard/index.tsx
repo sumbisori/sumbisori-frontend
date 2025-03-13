@@ -25,16 +25,23 @@ export const CollectedSeafoodCard = ({ collectedSeafood }: Props) => {
     }
 
     if (analysisStatus === 'pending') {
-      const timer1 = setTimeout(() => setProgressPercentage(20), 1000);
-      const timer2 = setTimeout(() => setProgressPercentage(40), 2000);
-      const timer3 = setTimeout(() => setProgressPercentage(60), 3000);
-      const timer4 = setTimeout(() => setProgressPercentage(80), 4000);
+      let progress = 0;
+      const step = 5; // 5%씩 증가
+      const maxProgress = 95; // 최대 95%까지만
+      const stepCount = maxProgress / step; // 19단계 (0% -> 95%)
+      const intervalTime = 5000 / stepCount; // 5초를 19단계로 나눔 (약 263ms)
+
+      const timer = setInterval(() => {
+        if (progress < maxProgress) {
+          progress += step;
+          setProgressPercentage(progress);
+        } else {
+          clearInterval(timer);
+        }
+      }, intervalTime);
 
       return () => {
-        clearTimeout(timer1);
-        clearTimeout(timer2);
-        clearTimeout(timer3);
-        clearTimeout(timer4);
+        clearInterval(timer);
       };
     }
   }, [analysisStatus]);
