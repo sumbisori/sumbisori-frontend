@@ -3,14 +3,12 @@ import {
   ContentWaveInfo,
   ContentWeatherInfo,
   SeafoodCollected,
-  SuitabilityStatus,
   WaveSpotCode,
-  WeatherType,
   YoutubeVideoType,
 } from './types';
 
-export const getSeafoodCollected = async (): Promise<SeafoodCollected[]> => {
-  const response = await https.get('/seafoods/collected');
+export const getSeafoodCollections = async (): Promise<SeafoodCollected[]> => {
+  const response = await https.get('/collections');
   return response.data;
 };
 

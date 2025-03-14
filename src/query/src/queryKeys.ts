@@ -4,9 +4,9 @@ export const queryKeys = {
   youtubeContents: 'youtubeContents',
   haenyeoPlacesLocations: 'haenyeoPlacesLocations',
   haenyeoPlaceDetail: 'haenyeoPlaceDetail',
+  seafoodsCollectionsStatus: 'seafoodsCollectionsStatus',
+  seafoodsCollections: 'seafoodsCollections',
   seafoods: 'seafoods',
-  seafoodsCollected: 'seafoodsCollected',
-  seafoodsType: 'seafoodsType',
   journalCreatePlace: 'journalCreatePlace',
   analyzedSeafoodImage: 'analyzedSeafoodImage',
 };

@@ -21,7 +21,7 @@ import { Controller } from 'swiper/modules';
 import { CollectedSeafoodCardBottomSheet } from '../CollectedSeafoodCardBottomSheet';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/query';
-import { analyzeSeafoodImage, getSeafoodsType } from '@/api/journalCreate';
+import { analyzeSeafoodImage, getSeafoods } from '@/api/journalCreate';
 import { toast } from '@/components/Toast';
 import { ERROR_MESSAGE } from '@/constant/src/error';
 import { getPresignedUrl, putAmazonS3 } from '@/api/file';
@@ -40,7 +40,6 @@ export const SelectCollectedSeafood = ({
   collectedSeafoods,
   onCollectedSeafoodsChange,
 }: Props) => {
-  const { journalForm } = useJournalStore();
   const [activeImageIdentifier, setActiveImageIdentifier] = useState<
     string | null
   >(null);
@@ -52,8 +51,8 @@ export const SelectCollectedSeafood = ({
   const [seafoodPickerOpen, setSeafoodPickerOpen] = useState(false);
 
   const { data: seafoodsType } = useQuery<SeafoodsTypeList[]>({
-    queryKey: [queryKeys.seafoodsType],
-    queryFn: () => getSeafoodsType(),
+    queryKey: [queryKeys.seafoods],
+    queryFn: () => getSeafoods(),
     initialData: [],
   });
 
@@ -339,6 +338,11 @@ export const SelectCollectedSeafood = ({
                   className="!py-2"
                   type="button"
                   onClick={() => setSeafoodEditMode(!seafoodEditMode)}
+                  disabled={
+                    mutation.isPending ||
+                    putMutation.isPending ||
+                    analysisMutation.isPending
+                  }
                 >
                   {seafoodEditMode ? '입력 완료' : '직접 입력하기'}
                 </RoundedButton>

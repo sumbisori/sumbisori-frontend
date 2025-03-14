@@ -14,7 +14,9 @@ export const RoundedButton = ({
     <button
       className={clsx(
         'whitespace-nowrap rounded-[1.25rem] border px-4 py-2.5 leading-none',
-        BUTTON_VARIANTS[buttonType],
+        props.disabled
+          ? 'pointer-events-none bg-gray-100 text-gray-400'
+          : BUTTON_VARIANTS[buttonType],
         className,
       )}
       {...props}

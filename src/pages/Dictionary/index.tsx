@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { SeafoodCard } from '@/pages/Dictionary/components/SeafoodCard';
-import { getSeafoods } from '@/api/dictionary';
+import { getSeafoodsCollectionsStatus } from '@/api/dictionary';
 import { DictionarySeafood } from '@/api/dictionary/types';
 import { useModalController } from '@/contexts/src/ModalContext';
 import { IMAGE_PATHS } from '@/constant';
@@ -21,13 +21,14 @@ export const Dictionary = () => {
   const navigate = useNavigate();
   const [selectedSeafood, setSelectedSeafood] =
     useState<DictionarySeafood | null>(null);
+
   const {
     data: seafoods,
     isPending,
     isError,
   } = useQuery<DictionarySeafood[]>({
-    queryKey: [queryKeys.seafoods],
-    queryFn: getSeafoods,
+    queryKey: [queryKeys.seafoodsCollectionsStatus],
+    queryFn: getSeafoodsCollectionsStatus,
   });
 
   const handleSeafoodClick = (seafood: DictionarySeafood) => {

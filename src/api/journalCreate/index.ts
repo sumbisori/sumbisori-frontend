@@ -11,8 +11,8 @@ export const getSeafoodCountByAi = async (seafood: string) => {
   return response.data;
 };
 
-export const getSeafoodsType = async (): Promise<SeafoodsTypeList[]> => {
-  const response = await https.get('/seafoods/types');
+export const getSeafoods = async (): Promise<SeafoodsTypeList[]> => {
+  const response = await https.get('/seafoods');
   return response.data;
 };
 

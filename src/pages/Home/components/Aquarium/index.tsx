@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { SeafoodCollected } from '@/api/home/types';
-import { getSeafoodCollected } from '@/api/home';
+import { getSeafoodCollections } from '@/api/home';
 import { useAquarium } from '@/hooks/useAquarium';
 import DictionaryIcon from '@/icons/dictionary.svg?react';
 import { useNavigate } from 'react-router-dom';
@@ -14,8 +14,8 @@ export const Aquarium = () => {
   const navigate = useNavigate();
 
   const { data: seafoods } = useQuery<SeafoodCollected[]>({
-    queryKey: [queryKeys.seafoodsCollected],
-    queryFn: getSeafoodCollected,
+    queryKey: [queryKeys.seafoodsCollections],
+    queryFn: getSeafoodCollections,
     initialData: [],
   });
 
