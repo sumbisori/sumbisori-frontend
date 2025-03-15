@@ -27,12 +27,6 @@ export const SelectPlace = ({ selectedPlace, onPlaceChange }: Props) => {
     initialData: [],
   });
 
-  useEffect(() => {
-    if (places && places.length > 0) {
-      onPlaceChange?.({ id: places[0].placeId, name: places[0].name });
-    }
-  }, [places]);
-
   return (
     <>
       <InputTitle

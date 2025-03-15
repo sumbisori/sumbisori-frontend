@@ -51,9 +51,56 @@ export const JournalCreate = () => {
     }
   };
 
+  // 한단계 건너뛰는 함수 최종 전 단계면 'register' 단계로 감
+  const handleSkipClick = (e: MouseEvent) => {
+    e.preventDefault();
+    const currentStep = params.step as JournalStep;
+    const currentIndex = stepList.indexOf(currentStep);
+
+    // 현재 단계가 최종 전 단계(seafood)인 경우 register로 이동
+    if (currentIndex === stepList.length - 2) {
+      navigate(routes.journalCreate('register'));
+      return;
+    }
+
+    // 그 외의 경우 다음다음 단계로 이동
+    if (currentIndex < stepList.length - 2) {
+      const skipToStep = stepList[currentIndex + 2];
+      navigate(routes.journalCreate(skipToStep));
+    }
+  };
+
   const handleCompleteClick = (e: MouseEvent) => {
     e.preventDefault();
     navigate(routes.journalCreate('complete'));
+  };
+
+  const handleNextDisabled = () => {
+    if (step === 'calendar') {
+      return !journalForm.date;
+    }
+    // 장소 선택 최초값 null 이고 필수값
+    if (step === 'place') {
+      return !journalForm.place;
+    }
+    // 날씨 선택 최초값 null 이고 필수값
+    if (step === 'weather') {
+      return !journalForm.weather || !journalForm.companion;
+    }
+    // 체험 사진은 빈 배열 허용, 체험 만족도는 1 이상 5 이하 필수값, 체험 후기는 최소 10글자 이상
+    if (step === 'photo') {
+      const isSatisfactionValid =
+        journalForm.satisfaction &&
+        journalForm.satisfaction >= 1 &&
+        journalForm.satisfaction <= 5;
+      const isExperienceValid = journalForm.experience.length >= 10;
+      return !isSatisfactionValid || !isExperienceValid;
+    }
+    // 해산물 사진은 빈 배열 불가 but 입력하지 않으면 건너뛰기 버튼
+    if (step === 'seafood') {
+      return journalForm.collectedSeafoods.length === 0;
+    }
+    return false;
   };
 
   useEffect(() => {
@@ -81,7 +128,7 @@ export const JournalCreate = () => {
             ? undefined
             : {
                 current: stepList.indexOf(step as JournalStep) + 1,
-                total: stepList.length - 1,
+                total: stepList.length,
               }
         }
         className={step === 'register' ? 'bg-gray-100' : 'bg-white'}
@@ -158,12 +205,24 @@ export const JournalCreate = () => {
           )}
           {step === 'register' && <Register />}
         </div>
+        {step === 'seafood' && (
+          <div className="fixed inset-x-0 bottom-[4.5rem] z-10 m-auto flex w-full min-w-full-layout max-w-full-layout items-center justify-center">
+            <button
+              className="text-gray-600 underline"
+              type="button"
+              onClick={handleSkipClick}
+            >
+              건너뛰기
+            </button>
+          </div>
+        )}
         <div className="fixed inset-x-0 bottom-0 z-10 m-auto flex w-full min-w-full-layout max-w-full-layout px-5 pb-5 pt-3">
           <LargeButton
             onClick={
               step === 'register' ? handleCompleteClick : handleNextClick
             }
             type={step === 'register' ? 'submit' : 'button'}
+            disabled={handleNextDisabled()}
           >
             {step === 'register' ? '등록' : '다음'}
           </LargeButton>

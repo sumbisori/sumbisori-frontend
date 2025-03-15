@@ -4,6 +4,8 @@ import { RegisterInfo } from '../RegisterInfo';
 import { WeatherIcon } from '@/components/WeatherIcon';
 import { Divider } from '@/components/Divider';
 import { RegisterTitle } from '../RegisterTitle';
+import { useMemo } from 'react';
+
 export const Register = () => {
   const { journalForm } = useJournalStore();
   // 날짜, 장소, 날씨, 동반 인원, 사진, 내용, 수확물
@@ -13,23 +15,30 @@ export const Register = () => {
     .format('YY년 MM월 DD일 (ddd)');
 
   // koreanName 과 count를 모두 합친 배열
-  const seafoodSummary = journalForm.collectedSeafoods?.reduce(
-    (acc, curr) => {
-      curr.seafoods.forEach((seafood) => {
-        const existingSeafood = acc.find(
-          (item) => item.koreanName === seafood.koreanName,
-        );
+  const seafoodSummary = useMemo(
+    () =>
+      journalForm.collectedSeafoods?.reduce(
+        (acc, curr) => {
+          curr.seafoods.forEach((seafood) => {
+            const existingSeafood = acc.find(
+              (item) => item.koreanName === seafood.koreanName,
+            );
 
-        if (existingSeafood) {
-          existingSeafood.count += seafood.count;
-        } else {
-          acc.push({ koreanName: seafood.koreanName, count: seafood.count });
-        }
-      });
+            if (existingSeafood) {
+              existingSeafood.count += seafood.count;
+            } else {
+              acc.push({
+                koreanName: seafood.koreanName,
+                count: seafood.count,
+              });
+            }
+          });
 
-      return acc;
-    },
-    [] as { koreanName: string; count: number }[],
+          return acc;
+        },
+        [] as { koreanName: string; count: number }[],
+      ) ?? [],
+    [journalForm.collectedSeafoods],
   );
 
   return (
@@ -47,12 +56,16 @@ export const Register = () => {
           <RegisterInfo
             title="날씨"
             value={
-              <div className="rounded-lg border border-gray-400 p-2.5">
-                <WeatherIcon
-                  type={journalForm.weather}
-                  className="text-gray-500"
-                ></WeatherIcon>
-              </div>
+              journalForm.weather ? (
+                <div className="rounded-lg border border-gray-400 p-2.5">
+                  <WeatherIcon
+                    type={journalForm.weather}
+                    className="text-gray-500"
+                  ></WeatherIcon>
+                </div>
+              ) : (
+                <span>-</span>
+              )
             }
           />
           <Divider color="bg-gray-100" />
@@ -99,14 +112,18 @@ export const Register = () => {
           <RegisterInfo
             title="수확물"
             value={
-              <div className="flex flex-col gap-5">
-                {seafoodSummary.map((seafood) => (
-                  <div key={seafood.koreanName}>
-                    <span>{seafood.koreanName} </span>
-                    <span>x {seafood.count}</span>
-                  </div>
-                ))}
-              </div>
+              seafoodSummary.length > 0 ? (
+                <div className="flex flex-col gap-5">
+                  {seafoodSummary.map((seafood) => (
+                    <div key={seafood.koreanName}>
+                      <span>{seafood.koreanName} </span>
+                      <span>x {seafood.count}</span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <span>수확물이 없습니다</span>
+              )
             }
           />
         </div>

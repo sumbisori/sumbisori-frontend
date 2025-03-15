@@ -11,11 +11,11 @@ interface JournalStore {
 const initialJournalForm: JournalForm = {
   date: dayjs(),
   place: null,
-  weather: 'CLEAR_SKY',
-  companion: '혼자',
+  weather: null,
+  companion: null,
   experience: '',
   photos: [],
-  satisfaction: 0,
+  satisfaction: null,
   collectedSeafoods: [],
 };
 

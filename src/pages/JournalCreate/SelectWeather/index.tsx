@@ -6,9 +6,9 @@ import { SmallButton } from '@/components/SmallButton';
 import { WeatherIcon } from '@/components/WeatherIcon';
 
 interface Props {
-  selectedWeather: string;
+  selectedWeather: string | null;
   onWeatherChange: (weather: string) => void;
-  selectedCompanion: string;
+  selectedCompanion: string | null;
   onCompanionChange: (companion: string) => void;
 }
 

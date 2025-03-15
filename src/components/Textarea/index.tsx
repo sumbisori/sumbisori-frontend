@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 
 interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   placeholder: string;
+  minLength?: number;
   maxLength?: number;
   className?: string;
 }
@@ -11,13 +12,18 @@ export const Textarea = ({
   value = '',
   onChange,
   maxLength = 150,
+  minLength = 0,
   className,
   ...props
 }: Props) => {
   const [textLength, setTextLength] = useState(0);
   const isOverMaxLength = useMemo(
-    () => textLength >= maxLength,
+    () => textLength > maxLength,
     [textLength, maxLength],
+  );
+  const isOverMinLength = useMemo(
+    () => textLength >= minLength,
+    [textLength, minLength],
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -47,8 +53,9 @@ export const Textarea = ({
       <div className="w-full pb-4 pr-4 text-end text-xs">
         <span
           className={clsx(
-            'text-gray-900',
-            isOverMaxLength ? 'text-red-500' : 'text-gray-900',
+            isOverMaxLength || !isOverMinLength
+              ? 'text-red-500'
+              : 'text-blue-700',
           )}
         >
           {textLength}

@@ -27,7 +27,7 @@ interface Props {
   onPhotosChange: (photos: JournalPhoto[]) => void;
   experience: string;
   onExperienceChange: (experience: string) => void;
-  satisfaction: number;
+  satisfaction: number | null;
   onSatisfactionChange: (satisfaction: number) => void;
 }
 
@@ -171,9 +171,11 @@ export const SelectPhoto = ({
         </div>
         <div className="flex flex-col gap-6 px-4">
           <Textarea
-            placeholder="체험하며 느낀 점들을 자유롭게 남겨주세요."
+            placeholder="체험하며 느낀 점들을 최소 10자 이상 작성해주세요."
             value={experience}
             onChange={(e) => onExperienceChange(e.target.value)}
+            maxLength={150}
+            minLength={10}
           />
           <Divider />
           <div
@@ -182,7 +184,7 @@ export const SelectPhoto = ({
           >
             <p className="text-lg font-medium">체험 만족도</p>
             <SatisfactionStars
-              satisfaction={satisfaction}
+              satisfaction={satisfaction ?? 0}
               onSatisfactionChange={onSatisfactionChange}
             />
           </div>

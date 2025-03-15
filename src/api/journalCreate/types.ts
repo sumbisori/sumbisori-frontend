@@ -15,11 +15,11 @@ export interface JournalForm {
     id: number;
     name: string;
   } | null;
-  weather: string;
-  companion: string;
+  weather: string | null;
+  companion: string | null;
   experience: string;
   photos: JournalPhoto[];
-  satisfaction: number;
+  satisfaction: number | null;
   collectedSeafoods: JournalCollectedSeafood[];
 }
 
