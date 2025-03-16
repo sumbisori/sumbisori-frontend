@@ -9,14 +9,14 @@ interface JournalStore {
 }
 
 const initialJournalForm: JournalForm = {
-  date: dayjs(),
+  experienceDate: dayjs(),
   place: null,
   weather: null,
-  companion: null,
-  experience: '',
-  photos: [],
+  companionType: null,
+  impression: '',
+  files: [],
   satisfaction: null,
-  collectedSeafoods: [],
+  collections: [],
 };
 
 export const useJournalStore = create<JournalStore>((set) => ({

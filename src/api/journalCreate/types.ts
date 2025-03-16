@@ -10,17 +10,17 @@ export type JournalStep =
   | 'register';
 
 export interface JournalForm {
-  date: dayjs.Dayjs;
+  experienceDate: dayjs.Dayjs;
   place: {
     id: number;
     name: string;
   } | null;
   weather: string | null;
-  companion: string | null;
-  experience: string;
-  photos: JournalPhoto[];
+  companionType: string | null;
+  impression: string;
   satisfaction: number | null;
-  collectedSeafoods: JournalCollectedSeafood[];
+  files: JournalPhoto[];
+  collections: JournalCollectedSeafood[];
 }
 
 export interface JournalPhoto {
@@ -54,4 +54,31 @@ export interface JournalCreatePlace {
   name: string;
   city: string;
   imageUrl: string;
+}
+
+// 체험일지 생성 요청 타입
+export interface JournalRequest {
+  experienceDate: string; // 2025-03-15
+  placeId: number;
+  weather: string;
+  companionType: string;
+  files: JournalRequestFile[];
+  impression: string;
+  satisfaction: number;
+  collections: JournalRequestCollection[];
+}
+
+interface JournalRequestFile {
+  imageIdentifier: string;
+  sequence: number;
+}
+
+interface JournalRequestCollection {
+  imageIdentifier: string;
+  collectionInfos: CollectionInfo[];
+}
+
+interface CollectionInfo {
+  seafoodId: number;
+  quantity: number;
 }

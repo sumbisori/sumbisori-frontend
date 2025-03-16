@@ -1,5 +1,5 @@
 import { https } from '../instance';
-import { CollectedSeafood, SeafoodsTypeList } from './types';
+import { CollectedSeafood, JournalRequest, SeafoodsTypeList } from './types';
 
 export const getJournalCreatePlace = async () => {
   const response = await https.get('/places');
@@ -22,5 +22,10 @@ export const analyzeSeafoodImage = async (
   const response = await https.get(
     `/files/analyze?imageIdentifier=${imageIdentifier}`,
   );
+  return response.data;
+};
+
+export const createJournal = async (journal: JournalRequest) => {
+  const response = await https.post('/journals', journal);
   return response.data;
 };

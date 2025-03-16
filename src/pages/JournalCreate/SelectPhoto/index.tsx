@@ -23,8 +23,8 @@ import { Divider } from '@/components/Divider';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 interface Props {
-  photos: JournalPhoto[];
-  onPhotosChange: (photos: JournalPhoto[]) => void;
+  files: JournalPhoto[];
+  onFilesChange: (files: JournalPhoto[]) => void;
   experience: string;
   onExperienceChange: (experience: string) => void;
   satisfaction: number | null;
@@ -32,8 +32,8 @@ interface Props {
 }
 
 export const SelectPhoto = ({
-  photos,
-  onPhotosChange,
+  files,
+  onFilesChange,
   experience,
   onExperienceChange,
   satisfaction,
@@ -41,7 +41,7 @@ export const SelectPhoto = ({
 }: Props) => {
   const { journalForm } = useJournalStore();
   const [swiperInstance, setSwiperInstance] = useState<any>(null);
-  const prevPhotoLengthRef = useRef(photos.length);
+  const prevPhotoLengthRef = useRef(files.length);
 
   const mutation = useMutation({
     mutationFn: getPresignedUrl,
@@ -64,14 +64,14 @@ export const SelectPhoto = ({
     },
   });
 
-  const handleImageUpload = async (files: File[]) => {
-    if (journalForm.photos.length + files.length > 10) {
+  const handleImageUpload = async (newPhoto: File[]) => {
+    if (journalForm.files.length + newPhoto.length > 10) {
       toast.warning(ERROR_MESSAGE.MAX_PHOTO_COUNT);
       return;
     }
     try {
       const req: PresignedUrlRequest = {
-        fileInfos: files.map((file) => ({
+        fileInfos: newPhoto.map((file) => ({
           contentType: file.type,
           size: file.size,
         })),
@@ -79,7 +79,7 @@ export const SelectPhoto = ({
       const presignedData = await mutation.mutateAsync(req);
 
       await Promise.all(
-        files.map((file, index) =>
+        newPhoto.map((file, index) =>
           putMutation.mutateAsync({
             presignedUrl: presignedData[index].url,
             image: file,
@@ -87,31 +87,31 @@ export const SelectPhoto = ({
         ),
       );
 
-      const newPhotos: JournalPhoto[] = files.map((file, index) => ({
+      const newPhotos: JournalPhoto[] = newPhoto.map((file, index) => ({
         imageIdentifier: presignedData[index].imageIdentifier,
         file: file,
       }));
 
-      onPhotosChange([...photos, ...newPhotos]);
+      onFilesChange([...files, ...newPhotos]);
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleImageDelete = (imageIdentifier: string) => {
-    onPhotosChange(
-      photos.filter((photo) => photo.imageIdentifier !== imageIdentifier),
+    onFilesChange(
+      files.filter((photo) => photo.imageIdentifier !== imageIdentifier),
     );
   };
 
   useEffect(() => {
-    if (photos.length > 0 && swiperInstance) {
-      if (photos.length > prevPhotoLengthRef.current) {
-        swiperInstance.slideTo(photos.length);
+    if (files.length > 0 && swiperInstance) {
+      if (files.length > prevPhotoLengthRef.current) {
+        swiperInstance.slideTo(files.length);
       }
-      prevPhotoLengthRef.current = photos.length;
+      prevPhotoLengthRef.current = files.length;
     }
-  }, [swiperInstance, photos]);
+  }, [swiperInstance, files]);
 
   return (
     <>
@@ -130,7 +130,7 @@ export const SelectPhoto = ({
             className="mt-2"
             text={
               <span className="text-xs">
-                <span className="text-blue-700">{photos.length}</span>
+                <span className="text-blue-700">{files.length}</span>
                 <span>/</span>
                 <span>10</span>
               </span>
@@ -142,7 +142,7 @@ export const SelectPhoto = ({
             spaceBetween={12}
             className="w-full pr-4 pt-2"
           >
-            {photos.map((photo, index) => (
+            {files.map((photo, index) => (
               <SwiperSlide
                 key={photo.imageIdentifier}
                 className="size-24 select-none"

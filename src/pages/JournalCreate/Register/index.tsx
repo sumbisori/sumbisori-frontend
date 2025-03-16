@@ -10,14 +10,14 @@ export const Register = () => {
   const { journalForm } = useJournalStore();
   // 날짜, 장소, 날씨, 동반 인원, 사진, 내용, 수확물
   // 날짜 형식 변경 25년 3월 16일 (일)
-  const date = dayjs(journalForm.date)
+  const date = dayjs(journalForm.experienceDate)
     .locale('ko')
     .format('YY년 MM월 DD일 (ddd)');
 
   // koreanName 과 count를 모두 합친 배열
   const seafoodSummary = useMemo(
     () =>
-      journalForm.collectedSeafoods?.reduce(
+      journalForm.collections?.reduce(
         (acc, curr) => {
           curr.seafoods.forEach((seafood) => {
             const existingSeafood = acc.find(
@@ -38,7 +38,7 @@ export const Register = () => {
         },
         [] as { koreanName: string; count: number }[],
       ) ?? [],
-    [journalForm.collectedSeafoods],
+    [journalForm.collections],
   );
 
   return (
@@ -69,27 +69,27 @@ export const Register = () => {
             }
           />
           <Divider color="bg-gray-100" />
-          <RegisterInfo title="동반 인원" value={journalForm.companion} />
+          <RegisterInfo title="동반 인원" value={journalForm.companionType} />
           <Divider color="bg-gray-100" />
           <RegisterInfo
             title="사진"
             value={
               <div className="flex items-center gap-3">
-                {journalForm.photos.slice(0, 2).map((photo, index) => (
+                {journalForm.files.slice(0, 2).map((photo, index) => (
                   <div key={photo.imageIdentifier} className="relative">
                     <img
                       src={URL.createObjectURL(photo.file)}
                       alt={photo.imageIdentifier}
                       className="size-24 rounded-xl border border-gray-200 object-cover"
                     />
-                    {index === 1 && journalForm.photos.length > 2 && (
+                    {index === 1 && journalForm.files.length > 2 && (
                       <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-black/45 text-sm text-white">
-                        +{journalForm.photos.length - 2}
+                        +{journalForm.files.length - 2}
                       </div>
                     )}
                   </div>
                 ))}
-                {journalForm.photos.length === 0 && (
+                {journalForm.files.length === 0 && (
                   <div className="flex size-24 items-center justify-center rounded-xl border border-gray-200 bg-gray-50">
                     <p className="text-xs text-gray-500">사진이 없습니다</p>
                   </div>
@@ -101,8 +101,8 @@ export const Register = () => {
           <RegisterInfo
             title="내용"
             value={
-              journalForm.experience ? (
-                <span>{journalForm.experience}</span>
+              journalForm.impression ? (
+                <span>{journalForm.impression}</span>
               ) : (
                 <span>-</span>
               )

@@ -30,15 +30,13 @@ import { PresignedUrlRequest } from '@/api/file/types';
 import { ErrorResponse } from '@/api/types';
 
 interface Props {
-  collectedSeafoods: JournalCollectedSeafood[];
-  onCollectedSeafoodsChange: (
-    collectedSeafoods: JournalCollectedSeafood[],
-  ) => void;
+  collections: JournalCollectedSeafood[];
+  onCollectionsChange: (collections: JournalCollectedSeafood[]) => void;
 }
 
 export const SelectCollectedSeafood = ({
-  collectedSeafoods,
-  onCollectedSeafoodsChange,
+  collections,
+  onCollectionsChange,
 }: Props) => {
   const [activeImageIdentifier, setActiveImageIdentifier] = useState<
     string | null
@@ -81,31 +79,31 @@ export const SelectCollectedSeafood = ({
     mutationFn: (imageIdentifier: string) =>
       analyzeSeafoodImage(imageIdentifier),
     onSuccess: (data, imageIdentifier) => {
-      const updatedSeafoods = collectedSeafoods.map((item) =>
+      const updatedSeafoods = collections.map((item) =>
         item.imageIdentifier === imageIdentifier
           ? { ...item, seafoods: data, analysisStatus: 'success' }
           : item,
       );
-      onCollectedSeafoodsChange(updatedSeafoods);
+      onCollectionsChange(updatedSeafoods);
     },
     onError: (error, imageIdentifier) => {
-      const updatedSeafoods = collectedSeafoods.map((item) =>
+      const updatedSeafoods = collections.map((item) =>
         item.imageIdentifier === imageIdentifier
           ? { ...item, analysisStatus: 'failed' }
           : item,
       );
-      onCollectedSeafoodsChange(updatedSeafoods);
+      onCollectionsChange(updatedSeafoods);
     },
   });
 
   useEffect(() => {
-    if (collectedSeafoods.length > 0 && !activeImageIdentifier) {
-      setActiveImageIdentifier(collectedSeafoods[0].imageIdentifier);
+    if (collections.length > 0 && !activeImageIdentifier) {
+      setActiveImageIdentifier(collections[0].imageIdentifier);
     }
-  }, [collectedSeafoods]);
+  }, [collections]);
 
   const handleSeafoodImageUpload = async (files: File[]) => {
-    if (collectedSeafoods.length + files.length > 5) {
+    if (collections.length + files.length > 5) {
       toast.warning(ERROR_MESSAGE.MAX_COLLECTED_SEAFOOD_COUNT);
       return;
     }
@@ -136,8 +134,8 @@ export const SelectCollectedSeafood = ({
           analysisStatus: 'pending',
         }),
       );
-      const updatedSeafoods = [...collectedSeafoods, ...newSeafoods];
-      onCollectedSeafoodsChange(updatedSeafoods);
+      const updatedSeafoods = [...collections, ...newSeafoods];
+      onCollectionsChange(updatedSeafoods);
 
       // 상태 업데이트 후에 분석 API 호출 (각 이미지별로 순차 처리)
       for (let i = 0; i < files.length; i++) {
@@ -149,11 +147,11 @@ export const SelectCollectedSeafood = ({
   };
 
   const handleSeafoodImageDelete = (imageIdentifier: string) => {
-    const updatedSeafoods = collectedSeafoods.filter(
+    const updatedSeafoods = collections.filter(
       (collectedSeafood) =>
         collectedSeafood.imageIdentifier !== imageIdentifier,
     );
-    onCollectedSeafoodsChange(updatedSeafoods);
+    onCollectionsChange(updatedSeafoods);
 
     if (imageIdentifier === activeImageIdentifier) {
       if (updatedSeafoods.length > 0) {
@@ -166,7 +164,7 @@ export const SelectCollectedSeafood = ({
 
   // activeImageIdentifier의 해당되는 seafood를 삭제
   const handleSeafoodDelete = (imageIdentifier: string, seafoodId: number) => {
-    const updatedSeafoods = collectedSeafoods.map((seafood) =>
+    const updatedSeafoods = collections.map((seafood) =>
       seafood.imageIdentifier === imageIdentifier
         ? {
             ...seafood,
@@ -174,13 +172,13 @@ export const SelectCollectedSeafood = ({
           }
         : seafood,
     );
-    onCollectedSeafoodsChange(updatedSeafoods);
+    onCollectionsChange(updatedSeafoods);
   };
 
   const handleSlideChange = (swiperOrKey: SwiperClass | string) => {
     if (typeof swiperOrKey === 'string') {
       setActiveImageIdentifier(swiperOrKey);
-      const index = collectedSeafoods.findIndex(
+      const index = collections.findIndex(
         (seafood) => seafood.imageIdentifier === swiperOrKey,
       );
       if (index !== -1) {
@@ -188,7 +186,7 @@ export const SelectCollectedSeafood = ({
         cardSwiperInstance?.slideTo(index);
       }
     } else {
-      const currentSeafood = collectedSeafoods[swiperOrKey.activeIndex];
+      const currentSeafood = collections[swiperOrKey.activeIndex];
       if (currentSeafood) {
         setActiveImageIdentifier(currentSeafood.imageIdentifier);
 
@@ -204,7 +202,7 @@ export const SelectCollectedSeafood = ({
   const handleCollectedSeafoodClick = (
     collectedSeafood: JournalCollectedSeafood,
   ) => {
-    const index = collectedSeafoods.findIndex(
+    const index = collections.findIndex(
       (seafood) => seafood.imageIdentifier === collectedSeafood.imageIdentifier,
     );
     if (index !== -1) {
@@ -215,31 +213,31 @@ export const SelectCollectedSeafood = ({
   };
 
   const handleSeafoodUpdate = (updatedSeafood: JournalCollectedSeafood) => {
-    const updatedSeafoods = collectedSeafoods.map((seafood) =>
+    const updatedSeafoods = collections.map((seafood) =>
       seafood.imageIdentifier === activeImageIdentifier
         ? updatedSeafood
         : seafood,
     );
-    onCollectedSeafoodsChange(updatedSeafoods);
+    onCollectionsChange(updatedSeafoods);
   };
 
-  const prevCollectedSeafoodsLengthRef = useRef(collectedSeafoods.length);
+  const prevcollectionsLengthRef = useRef(collections.length);
 
   useEffect(() => {
-    if (collectedSeafoods.length > prevCollectedSeafoodsLengthRef.current) {
-      const lastSeafood = collectedSeafoods[collectedSeafoods.length - 1];
+    if (collections.length > prevcollectionsLengthRef.current) {
+      const lastSeafood = collections[collections.length - 1];
       setActiveImageIdentifier(lastSeafood.imageIdentifier);
 
       // 스와이퍼 인스턴스가 있다면 마지막 슬라이드로 이동
       if (imageSwiperInstance) {
-        imageSwiperInstance.slideTo(collectedSeafoods.length - 1);
+        imageSwiperInstance.slideTo(collections.length - 1);
       }
       if (cardSwiperInstance) {
-        cardSwiperInstance.slideTo(collectedSeafoods.length - 1);
+        cardSwiperInstance.slideTo(collections.length - 1);
       }
     }
-    prevCollectedSeafoodsLengthRef.current = collectedSeafoods.length;
-  }, [collectedSeafoods]);
+    prevcollectionsLengthRef.current = collections.length;
+  }, [collections]);
 
   return (
     <>
@@ -256,9 +254,7 @@ export const SelectCollectedSeafood = ({
             className="mt-2"
             text={
               <span className="text-xs">
-                <span className="text-blue-700">
-                  {collectedSeafoods.length}
-                </span>
+                <span className="text-blue-700">{collections.length}</span>
                 <span>/</span>
                 <span>5</span>
               </span>
@@ -273,7 +269,7 @@ export const SelectCollectedSeafood = ({
             className="w-full pr-4 pt-2"
             onSlideChange={(swiper) => handleSlideChange(swiper)}
           >
-            {collectedSeafoods.map((collectedSeafood) => (
+            {collections.map((collectedSeafood) => (
               <SwiperSlide
                 key={collectedSeafood.imageIdentifier}
                 className="size-24 select-none"
@@ -312,7 +308,7 @@ export const SelectCollectedSeafood = ({
             spaceBetween={8}
             onSlideChange={(swiper) => handleSlideChange(swiper)}
           >
-            {collectedSeafoods.map((collectedSeafood) => (
+            {collections.map((collectedSeafood) => (
               <SwiperSlide key={collectedSeafood.imageIdentifier}>
                 <CollectedSeafoodCard
                   collectedSeafood={collectedSeafood}
@@ -324,7 +320,7 @@ export const SelectCollectedSeafood = ({
             ))}
           </Swiper>
           <div className="flex items-center justify-between gap-2 px-4">
-            {collectedSeafoods.find(
+            {collections.find(
               (seafood) => seafood.imageIdentifier === activeImageIdentifier,
             ) && (
               <>
@@ -359,7 +355,7 @@ export const SelectCollectedSeafood = ({
         seafoods={seafoodsType}
         onSeafoodsChange={handleSeafoodUpdate}
         collectedSeafood={
-          collectedSeafoods.find(
+          collections.find(
             (seafood) => seafood.imageIdentifier === activeImageIdentifier,
           )!
         }
