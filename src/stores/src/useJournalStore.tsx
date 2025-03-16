@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import dayjs from 'dayjs';
 import { JournalForm } from '@/api/journalCreate/types';
 
 interface JournalStore {
@@ -9,7 +8,7 @@ interface JournalStore {
 }
 
 const initialJournalForm: JournalForm = {
-  experienceDate: dayjs(),
+  experienceDate: null,
   place: null,
   weather: null,
   companionType: null,

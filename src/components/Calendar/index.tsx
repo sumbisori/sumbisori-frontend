@@ -11,7 +11,7 @@ import { Picker } from '../Picker';
 dayjs.extend(weekOfYear);
 
 interface CalendarProps {
-  value?: Dayjs;
+  value?: Dayjs | null;
   onChange?: (date: Dayjs) => void;
   maxDate?: Dayjs;
   minDate?: Dayjs;

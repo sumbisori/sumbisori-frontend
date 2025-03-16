@@ -81,7 +81,7 @@ export const SelectCollectedSeafood = ({
     onSuccess: (data, imageIdentifier) => {
       const updatedSeafoods = collections.map((item) =>
         item.imageIdentifier === imageIdentifier
-          ? { ...item, seafoods: data, analysisStatus: 'success' }
+          ? { ...item, collectionInfos: data, analysisStatus: 'success' }
           : item,
       );
       onCollectionsChange(updatedSeafoods);
@@ -130,7 +130,7 @@ export const SelectCollectedSeafood = ({
         (file, index) => ({
           imageIdentifier: presignedData[index].imageIdentifier,
           file,
-          seafoods: [],
+          collectionInfos: [],
           analysisStatus: 'pending',
         }),
       );
@@ -168,7 +168,9 @@ export const SelectCollectedSeafood = ({
       seafood.imageIdentifier === imageIdentifier
         ? {
             ...seafood,
-            seafoods: seafood.seafoods.filter((s) => s.seafoodId !== seafoodId),
+            collectionInfos: seafood.collectionInfos.filter(
+              (s) => s.seafoodId !== seafoodId,
+            ),
           }
         : seafood,
     );

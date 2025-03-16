@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { animationY } from '@/util/animationY';
 import { SmallButton } from '@/components/SmallButton';
 import { WeatherIcon } from '@/components/WeatherIcon';
+import { parseCompanionType } from '@/util/parseCompanionType';
 
 interface Props {
   selectedWeather: string | null;
@@ -30,7 +31,14 @@ export const SelectWeather = ({
     'MIST',
   ];
 
-  const companions = ['혼자', '친구', '연인', '가족', '직장동료', '친척'];
+  const companions = [
+    'ALONE',
+    'FRIEND',
+    'LOVER',
+    'FAMILY',
+    'COLLEAGUE',
+    'RELATIVE',
+  ];
 
   return (
     <>
@@ -66,7 +74,7 @@ export const SelectWeather = ({
               onClick={() => onCompanionChange(companion)}
               className="w-full px-3 py-2"
             >
-              {companion}
+              {parseCompanionType(companion)}
             </SmallButton>
           ))}
         </div>

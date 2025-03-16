@@ -54,7 +54,7 @@ export const Complete = () => {
             className="px-5 py-3.5"
           >
             <div className="flex items-center gap-2">
-              <p>리뷰 작성하러가기</p>
+              <p className="w-[8.25rem] text-center">체험일지 보기</p>
               <ArrowRightIcon className="size-6 text-blue-700" />
             </div>
           </SmallButton>

@@ -27,7 +27,7 @@ export const CollectedSeafoodCardBottomSheet = ({
 
   const filteredSeafoods = seafoods.filter(
     (seafood) =>
-      !collectedSeafood?.seafoods?.some(
+      !collectedSeafood?.collectionInfos?.some(
         (selected) => selected.seafoodId === seafood.seafoodId,
       ),
   );
@@ -37,7 +37,7 @@ export const CollectedSeafoodCardBottomSheet = ({
       const updatedSeafoods = {
         ...collectedSeafood,
         seafoods: [
-          ...(collectedSeafood.seafoods || []),
+          ...(collectedSeafood.collectionInfos || []),
           {
             seafoodId: selectedSeafood.seafoodId,
             koreanName: selectedSeafood.koreanName,

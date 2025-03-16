@@ -27,6 +27,8 @@ export const useErrorHandler = () => {
         toast.error(ERROR_MESSAGE.DEFAULT_ERROR);
         return;
       }
+
+      toast.error(ERROR_MESSAGE.DEFAULT_ERROR);
     }
   };
 

@@ -90,6 +90,7 @@ export const SelectPhoto = ({
       const newPhotos: JournalPhoto[] = newPhoto.map((file, index) => ({
         imageIdentifier: presignedData[index].imageIdentifier,
         file: file,
+        sequence: files.length + index + 1,
       }));
 
       onFilesChange([...files, ...newPhotos]);

@@ -2,7 +2,7 @@ import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { LargeButton } from '@/components/LargeButton';
 import { NavigatorHeader } from '@/layouts/NavigatorHeader';
 import { routes } from '@/routes/src/routes';
-import { JournalStep } from '@/api/journalCreate/types';
+import { JournalRequest, JournalStep } from '@/api/journalCreate/types';
 import { useJournalStore } from '@/stores';
 import { MouseEvent, useEffect } from 'react';
 import { SelectCalendar } from './SelectCalendar';
@@ -12,12 +12,45 @@ import { SelectPhoto } from './SelectPhoto';
 import { SelectCollectedSeafood } from './SelectCollectedSeafood';
 import { Register } from './Register';
 import { Complete } from './Complete';
+import { useMutation } from '@tanstack/react-query';
+import { createJournal } from '@/api/journalCreate';
+import { toast } from '@/components/Toast';
+import { ERROR_MESSAGE } from '@/constant/src/error';
+import { AxiosError } from 'axios';
+import { ErrorResponse } from '@/api/types';
+import { Spinner } from '@/components/Spinner';
 
 export const JournalCreate = () => {
   const { step } = useParams();
   const { journalForm, updateJournal, resetJournal } = useJournalStore();
   const navigate = useNavigate();
   const params = useParams();
+  const mutation = useMutation({
+    mutationFn: createJournal,
+    onSuccess: () => {
+      resetJournal();
+      navigate(routes.journalCreate('complete'), { replace: true });
+    },
+    onError: (error: AxiosError<ErrorResponse>) => {
+      const errorMessage = error.response?.data.name;
+      if (errorMessage === 'INVALID_IMAGE_CONTENT_TYPE') {
+        toast.error(ERROR_MESSAGE.INVALID_IMAGE_CONTENT_TYPE);
+      }
+      if (errorMessage === 'VALIDATION_FAILED') {
+        toast.error(ERROR_MESSAGE.IMAGE_VALIDATION_FAILED);
+      }
+      if (errorMessage === 'PLACE_NOT_FOUND') {
+        toast.error(ERROR_MESSAGE.PLACE_NOT_FOUND);
+      }
+      if (errorMessage === 'SEAFOOD_NOT_FOUND') {
+        toast.error(ERROR_MESSAGE.SEAFOOD_NOT_FOUND);
+      }
+      if (errorMessage === 'S3_ERROR') {
+        toast.error(ERROR_MESSAGE.S3_ERROR);
+      }
+      throw error;
+    },
+  });
 
   const stepList: JournalStep[] = [
     'calendar',
@@ -72,7 +105,39 @@ export const JournalCreate = () => {
 
   const handleCompleteClick = (e: MouseEvent) => {
     e.preventDefault();
-    navigate(routes.journalCreate('complete'));
+
+    // 필수 값들이 없으면 제출하지 않음
+    if (
+      !journalForm.experienceDate ||
+      !journalForm.place ||
+      !journalForm.weather ||
+      !journalForm.companionType ||
+      !journalForm.satisfaction
+    ) {
+      return;
+    }
+
+    const journal: JournalRequest = {
+      experienceDate: journalForm.experienceDate.format('YYYY-MM-DD'),
+      placeId: journalForm.place.id,
+      weather: journalForm.weather,
+      companionType: journalForm.companionType,
+      files: journalForm.files.map((file) => ({
+        imageIdentifier: file.imageIdentifier,
+        sequence: file.sequence,
+      })),
+      impression: journalForm.impression,
+      satisfaction: journalForm.satisfaction,
+      collections: journalForm.collections.map((collection) => ({
+        imageIdentifier: collection.imageIdentifier,
+        collectionInfos: collection.collectionInfos.map((info) => ({
+          seafoodId: info.seafoodId,
+          quantity: info.count,
+        })),
+      })),
+    };
+
+    mutation.mutate(journal);
   };
 
   const handleNextDisabled = () => {
@@ -98,7 +163,11 @@ export const JournalCreate = () => {
     }
     // 해산물 사진은 빈 배열 불가 but 입력하지 않으면 건너뛰기 버튼
     if (step === 'seafood') {
-      return journalForm.collections.length === 0;
+      // 해산물 사진의 분석이 pending 상태면 버튼 비활성화
+      const isPending = journalForm.collections.some(
+        (collection) => collection.analysisStatus === 'pending',
+      );
+      return journalForm.collections.length === 0 || isPending;
     }
     return false;
   };
@@ -108,6 +177,46 @@ export const JournalCreate = () => {
       resetJournal();
     };
   }, []);
+
+  // 전단계 모든 단계에서 disabled 이면 첫 단계로 이동
+  const isStepValid = (stepToCheck: JournalStep) => {
+    switch (stepToCheck) {
+      case 'calendar':
+        return !!journalForm.experienceDate;
+      case 'place':
+        return !!journalForm.place;
+      case 'weather':
+        return !!journalForm.weather && !!journalForm.companionType;
+      case 'photo':
+        return (
+          journalForm.satisfaction &&
+          journalForm.satisfaction >= 1 &&
+          journalForm.satisfaction <= 5 &&
+          journalForm.impression.length >= 10
+        );
+      case 'seafood':
+        return true; // seafood는 선택사항이므로 항상 true
+      case 'register':
+        return true;
+      default:
+        return false;
+    }
+  };
+
+  useEffect(() => {
+    if (!step || step === 'complete') return;
+
+    // 현재 단계의 인덱스
+    const currentStepIndex = stepList.indexOf(step as JournalStep);
+
+    // 이전 단계들 중 미완료된 첫 단계 찾기
+    for (let i = 0; i < currentStepIndex; i++) {
+      if (!isStepValid(stepList[i])) {
+        navigate(routes.journalCreate(stepList[i]));
+        return;
+      }
+    }
+  }, [step]);
 
   if (step === 'complete') {
     return <Complete />;
@@ -119,6 +228,9 @@ export const JournalCreate = () => {
 
   return (
     <div className="relative flex h-full min-h-screen flex-col pt-[4.5rem]">
+      {mutation.isPending && (
+        <Spinner className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2" />
+      )}
       <NavigatorHeader
         title="체험 일지"
         onBackClick={step === 'calendar' ? undefined : handleBackClick}

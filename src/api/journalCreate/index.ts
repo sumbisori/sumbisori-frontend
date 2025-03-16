@@ -26,6 +26,6 @@ export const analyzeSeafoodImage = async (
 };
 
 export const createJournal = async (journal: JournalRequest) => {
-  const response = await https.post('/journals', journal);
+  const response = await https.post('/experiences', journal);
   return response.data;
 };

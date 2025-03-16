@@ -21,7 +21,7 @@ export const CollectedSeafoodCard = ({
   onPlusClick,
   onSeafoodDelete,
 }: Props) => {
-  const { analysisStatus, seafoods } = collectedSeafood;
+  const { analysisStatus, collectionInfos: seafoods } = collectedSeafood;
   const [progressPercentage, setProgressPercentage] = useState(0);
 
   useEffect(() => {

@@ -10,7 +10,7 @@ export type JournalStep =
   | 'register';
 
 export interface JournalForm {
-  experienceDate: dayjs.Dayjs;
+  experienceDate: dayjs.Dayjs | null;
   place: {
     id: number;
     name: string;
@@ -26,12 +26,13 @@ export interface JournalForm {
 export interface JournalPhoto {
   imageIdentifier: string;
   file: File;
+  sequence: number;
 }
 
 export interface JournalCollectedSeafood {
   imageIdentifier: string;
   file: File;
-  seafoods: CollectedSeafood[];
+  collectionInfos: CollectedSeafood[];
   analysisStatus?: string;
 }
 
@@ -75,10 +76,10 @@ interface JournalRequestFile {
 
 interface JournalRequestCollection {
   imageIdentifier: string;
-  collectionInfos: CollectionInfo[];
+  collectionInfos: JournalRequestCollectionInfo[];
 }
 
-interface CollectionInfo {
+interface JournalRequestCollectionInfo {
   seafoodId: number;
   quantity: number;
 }

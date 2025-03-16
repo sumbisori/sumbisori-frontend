@@ -5,6 +5,7 @@ import { WeatherIcon } from '@/components/WeatherIcon';
 import { Divider } from '@/components/Divider';
 import { RegisterTitle } from '../RegisterTitle';
 import { useMemo } from 'react';
+import { parseCompanionType } from '@/util/parseCompanionType';
 
 export const Register = () => {
   const { journalForm } = useJournalStore();
@@ -19,7 +20,7 @@ export const Register = () => {
     () =>
       journalForm.collections?.reduce(
         (acc, curr) => {
-          curr.seafoods.forEach((seafood) => {
+          curr.collectionInfos.forEach((seafood) => {
             const existingSeafood = acc.find(
               (item) => item.koreanName === seafood.koreanName,
             );
@@ -69,7 +70,10 @@ export const Register = () => {
             }
           />
           <Divider color="bg-gray-100" />
-          <RegisterInfo title="동반 인원" value={journalForm.companionType} />
+          <RegisterInfo
+            title="동반 인원"
+            value={parseCompanionType(journalForm.companionType || '')}
+          />
           <Divider color="bg-gray-100" />
           <RegisterInfo
             title="사진"

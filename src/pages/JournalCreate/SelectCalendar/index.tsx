@@ -6,13 +6,20 @@ import { JOURNAL_CREATE_INPUT_TITLE } from '@/constant/src/journalCreateInputTit
 import { motion } from 'framer-motion';
 import { animationY } from '@/util/animationY';
 import dayjs from '@/util/dayjs';
+import { useEffect } from 'react';
 
 interface SelectCalendarProps {
-  value: Dayjs;
+  value: Dayjs | null;
   onChange: (date: Dayjs) => void;
 }
 
 export const SelectCalendar = ({ value, onChange }: SelectCalendarProps) => {
+  useEffect(() => {
+    if (!value) {
+      onChange(dayjs());
+    }
+  }, []);
+
   return (
     <>
       <InputTitle

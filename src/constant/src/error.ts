@@ -15,4 +15,10 @@ export const ERROR_MESSAGE = {
   MAX_PHOTO_COUNT: '이미지는 최대 10개까지 추가할 수 있습니다',
   MAX_COLLECTED_SEAFOOD_COUNT:
     '해산물 이미지는 최대 5개까지 추가할 수 있습니다',
+  // 체험일지
+  EXPERIENCE_DATE_INVALID: '체험 일자를 확인해주세요',
+  INVALID_FILE: '체험 이미지 파일이 유효하지 않습니다',
+  PLACE_NOT_FOUND: '체험 장소를 확인해주세요',
+  SEAFOOD_NOT_FOUND: '해산물 정보를 확인해주세요',
+  S3_ERROR: '업로드 중 오류가 발생했습니다',
 };
