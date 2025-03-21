@@ -198,25 +198,23 @@ export const useAquarium = (
         }) as string;
 
         seafoodImage.onload = () => {
-          for (let i = 0; i < seafood.count; i++) {
-            const body = Matter.Bodies.circle(
-              Math.random() * (width - 100) + 50,
-              Math.random() * (height - 100) + 50,
-              30,
-              {
-                restitution: 0.3,
-                friction: 0.1,
-                render: {
-                  sprite: {
-                    texture: seafoodImage.src,
-                    xScale: 0.6,
-                    yScale: 0.6,
-                  },
+          const body = Matter.Bodies.circle(
+            Math.random() * (width - 100) + 50,
+            Math.random() * (height - 100) + 50,
+            30,
+            {
+              restitution: 0.3,
+              friction: 0.1,
+              render: {
+                sprite: {
+                  texture: seafoodImage.src,
+                  xScale: 0.6,
+                  yScale: 0.6,
                 },
               },
-            );
-            Matter.World.add(engine.world, body);
-          }
+            },
+          );
+          Matter.World.add(engine.world, body);
         };
       });
     };
