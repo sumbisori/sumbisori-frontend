@@ -39,7 +39,7 @@ export const Aquarium = () => {
           <span className="text-blue-300">/18</span>
         </div>
       </div>
-      <div className="absolute inset-x-0 bottom-0 z-10 h-1/5 bg-gradient-to-t from-[rgba(55,63,97,0.8)] to-[rgba(116,122,150,0.00)] bg-blend-multiply"></div>
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-1/5 bg-gradient-to-t from-[rgba(55,63,97,0.8)] to-[rgba(116,122,150,0.00)] bg-blend-multiply"></div>
     </div>
   );
 };
