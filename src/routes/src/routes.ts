@@ -36,10 +36,15 @@ export const routes = {
    */
   myPage: '/my-page',
   /**
-   * "/my-page/reservation"
-   * 마이 페이지 예약정보 조회
+   * "/journals"
+   * 체험 일지 목록 페이지
    */
-  myPageReservation: '/my-page/reservation',
+  journals: '/journals',
+  /**
+   * "/journals/:journalId"
+   * 체험 일지 상세 페이지
+   */
+  journalsDetail: (journalId: string) => `/journals/${journalId}`,
   /**
    * "/journal/create/:step"
    * 체험 일지 작성 페이지

@@ -27,7 +27,7 @@ export const JOURNAL_CREATE_INPUT_TITLE = (step: string) => {
       };
     case 'seafood':
       return {
-        title: '어떤 해산물을 수확하셨나요?',
+        title: '어떤 해산물을 채취하셨나요?',
         subtitle: '직접 채취한 해산물의 사진을 올려주세요!',
       };
     case 'register':

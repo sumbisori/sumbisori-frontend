@@ -7,7 +7,7 @@ import ReservationListIcon from '@/icons/my_page/reservation_list.svg?react';
 import ReviewListIcon from '@/icons/my_page/review_list.svg?react';
 import SettingIcon from '@/icons/my_page/setting.svg?react';
 import LogoutIcon from '@/icons/my_page/logout.svg?react';
-import { ImageWithTextAlert } from '../../../../components/ImageWithTextAlert';
+import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
 import { IMAGE_PATHS } from '@/constant';
 import { routes } from '@/routes/src/routes';
 
@@ -22,10 +22,10 @@ export const MyPageContent = () => {
       <MyPageButton
         icon={<ReservationListIcon />}
         onClick={() => {
-          navigate(routes.myPageReservation);
+          navigate(routes.journals);
         }}
       >
-        예약 정보 조회
+        체험 일지
       </MyPageButton>
       <MyPageButton
         icon={<ReviewListIcon />}

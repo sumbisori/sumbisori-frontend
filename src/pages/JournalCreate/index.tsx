@@ -233,8 +233,8 @@ export const JournalCreate = () => {
       )}
       <NavigatorHeader
         title="체험 일지"
-        onBackClick={step === 'calendar' ? undefined : handleBackClick}
-        onCloseClick={handleCloseClick}
+        onLeftClick={step === 'calendar' ? undefined : handleBackClick}
+        onRightClick={handleCloseClick}
         stepBar={
           step === 'complete'
             ? undefined

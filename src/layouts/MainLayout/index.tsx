@@ -50,12 +50,6 @@ export default function MainLayout({
           caption: '마이',
           absolute: false,
         };
-      case routes.myPageReservation:
-        return {
-          type: 'dark',
-          caption: '예약정보 조회',
-          absolute: false,
-        };
       default:
         return {
           type: 'dark',

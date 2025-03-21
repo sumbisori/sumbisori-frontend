@@ -5,13 +5,14 @@ import MainLayout from '@/layouts/MainLayout';
 import { HaenyeoPlaces } from '@/pages/HaenyeoPlaces';
 import { Dictionary } from '@/pages/Dictionary';
 import { MyPage } from '@/pages/MyPage';
-import { MyPageReservation } from '@/pages/MyPageReservation';
+import { Journals } from '@/pages/Journals';
 import { MobileLayout } from '@/layouts/MobileLayout';
 import ScrollToTop from './src/ScrollToTop';
 import { HaenyeoPlacesDetail } from '@/pages/HaenyeoPlacesDetail';
 import { ErrorPage } from '@/pages/ErrorPage';
 import { routes } from './src/routes';
 import { JournalCreate } from '@/pages/JournalCreate';
+import { JournalDetail } from '@/pages/JournalDetail';
 
 export const Router = () => {
   return (
@@ -30,16 +31,17 @@ export const Router = () => {
             <Route path={routes.haenyeoPlaces} element={<HaenyeoPlaces />} />
             <Route path={routes.dictionary} element={<Dictionary />} />
             <Route path={routes.myPage} element={<MyPage />} />
-            <Route
-              path={routes.myPageReservation}
-              element={<MyPageReservation />}
-            />
           </Route>
           {/* Nav 보유 Header 미보유 */}
           <Route element={<MainLayout hasHeader={false} />}>
             <Route
               path={routes.haenyeoPlacesDetail(':placeId')}
               element={<HaenyeoPlacesDetail />}
+            />
+            <Route path={routes.journals} element={<Journals />} />
+            <Route
+              path={routes.journalsDetail(':journalId')}
+              element={<JournalDetail />}
             />
           </Route>
           {/* Nav 미보유 Header 보유 */}

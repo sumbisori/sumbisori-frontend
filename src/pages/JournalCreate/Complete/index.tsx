@@ -20,7 +20,7 @@ export const Complete = () => {
 
   return (
     <div className="relative flex h-full min-h-screen flex-col bg-gray-050 pt-header-height">
-      <NavigatorHeader title="체험 일지" onCloseClick={handleCloseClick} />
+      <NavigatorHeader title="체험 일지" onRightClick={handleCloseClick} />
       <div className="flex flex-1 flex-col items-center justify-center">
         <div className="flex flex-col items-center justify-center">
           <motion.img

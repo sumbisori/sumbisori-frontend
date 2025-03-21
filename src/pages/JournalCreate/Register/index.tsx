@@ -114,7 +114,7 @@ export const Register = () => {
           />
           <Divider color="bg-gray-100" />
           <RegisterInfo
-            title="수확물"
+            title="채취물"
             value={
               seafoodSummary.length > 0 ? (
                 <div className="flex flex-col gap-5">
@@ -126,7 +126,7 @@ export const Register = () => {
                   ))}
                 </div>
               ) : (
-                <span>수확물이 없습니다</span>
+                <span>채취물이 없습니다</span>
               )
             }
           />

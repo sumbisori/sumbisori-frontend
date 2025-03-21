@@ -42,12 +42,3 @@ export interface HaenyeoPlaceInquiryType {
   content: string;
   iconUrl: string;
 }
-
-export interface PostReservation {
-  placeId: number;
-  personName: string;
-  selectedAvailableDate: string;
-  selectedTime: string;
-  peopleCount: string | number;
-  phone: string;
-}

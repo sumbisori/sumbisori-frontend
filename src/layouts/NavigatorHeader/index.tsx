@@ -5,8 +5,10 @@ import { StepBar } from '@/pages/JournalCreate/StepBar';
 
 interface NavigatorHeaderProps {
   title: string;
-  onBackClick?: () => void;
-  onCloseClick?: () => void;
+  onLeftClick?: () => void;
+  onRightClick?: () => void;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
   className?: string;
   stepBar?: {
     current: number;
@@ -16,8 +18,10 @@ interface NavigatorHeaderProps {
 
 export const NavigatorHeader = ({
   title,
-  onBackClick,
-  onCloseClick,
+  onLeftClick,
+  onRightClick,
+  leftIcon = <ThinLeftIcon />,
+  rightIcon = <ThinCloseIcon />,
   className,
   stepBar,
 }: NavigatorHeaderProps) => {
@@ -29,23 +33,23 @@ export const NavigatorHeader = ({
       )}
     >
       <div className="flex h-header-height items-center justify-between px-4 transition-transform duration-300 ease-in-out">
-        {onBackClick ? (
+        {onLeftClick ? (
           <button
             className="flex size-6 items-center gap-2 hover:text-gray-500 active:text-gray-500"
-            onClick={onBackClick}
+            onClick={onLeftClick}
           >
-            <ThinLeftIcon />
+            {leftIcon}
           </button>
         ) : (
           <div className="size-6" />
         )}
         <div className="flex-1 text-center text-lg font-semibold">{title}</div>
-        {onCloseClick ? (
+        {onRightClick ? (
           <button
             className="flex size-6 items-center gap-2 hover:text-gray-500 active:text-gray-500"
-            onClick={onCloseClick}
+            onClick={onRightClick}
           >
-            <ThinCloseIcon />
+            {rightIcon}
           </button>
         ) : (
           <div className="size-6" />
