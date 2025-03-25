@@ -9,4 +9,5 @@ export const queryKeys = {
   seafoods: 'seafoods',
   journalCreatePlace: 'journalCreatePlace',
   analyzedSeafoodImage: 'analyzedSeafoodImage',
+  journals: 'journals',
 };

@@ -2,15 +2,19 @@ import { NavigatorHeader } from '@/layouts/NavigatorHeader';
 import ThinLeftIcon from '@/icons/thin-left-icon.svg?react';
 import BellBlackIcon from '@/icons/Icon_bell_black.svg?react';
 import { LargeButton } from '@/components/LargeButton';
-
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { routes } from '@/routes/src/routes';
 import { toast } from '@/components/Toast';
 import { JournalsGridCategory } from './components/JournalsGridCategory';
-import { Grid1Card } from './components/Grid1Card';
 import { Grid2Card } from './components/Grid2Card';
 import { Grid3Card } from './components/Grid3Card';
+import { useQuery } from '@tanstack/react-query';
+import { getJournals } from '@/api/journals';
+import { queryKeys } from '@/query';
+import { Grid1CardList } from './components/Gird1CardList';
+import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
+import { IMAGE_PATHS } from '@/constant';
 
 export const Journals = () => {
   const navigate = useNavigate();
@@ -23,6 +27,11 @@ export const Journals = () => {
       setSearchParams({ 'view-mode': 'grid2' }, { replace: true });
     }
   }, []);
+
+  const { data: journals, isLoading } = useQuery({
+    queryKey: [queryKeys.journals],
+    queryFn: getJournals,
+  });
 
   return (
     <div className="relative flex h-full min-h-layout-nav-height flex-col pt-header-height">
@@ -42,35 +51,22 @@ export const Journals = () => {
               setSearchParams({ 'view-mode': viewMode }, { replace: true })
             }
           />
-          <div className={clsx(viewMode === 'grid1' && 'grid-rows-1')}>
-            {viewMode === 'grid1' && (
-              <>
-                <Grid1Card
-                  imageUrl="https://placehold.co/600x400"
-                  title="체험 일지 제목"
-                  date="2025-03-15"
-                  companionType="FRIEND"
-                  weather="CLEAR_SKY"
-                />
-                <Grid1Card
-                  imageUrl="https://placehold.co/600x400"
-                  title="체험 일지 제목"
-                  date="2025-03-15"
-                  companionType="ALONE"
-                  weather="BROKEN_CLOUDS"
-                />
-                <Grid1Card
-                  imageUrl="https://plac"
-                  title="체험 일지 제목"
-                  date="2025-03-15"
-                  companionType="COLLEAGUE"
-                  weather="THUNDERSTORM"
-                />
-              </>
-            )}
-            {viewMode === 'grid2' && <Grid2Card />}
-            {viewMode === 'grid3' && <Grid3Card />}
-          </div>
+          {journals && (
+            <>
+              {viewMode === 'grid1' && <Grid1CardList journals={journals} />}
+              {viewMode === 'grid2' && <Grid2Card />}
+              {viewMode === 'grid3' && <Grid3Card />}
+            </>
+          )}
+          {!isLoading && journals?.length === 0 && (
+            <div className="flex flex-1 items-center justify-center">
+              <ImageWithTextAlert
+                src={`${IMAGE_PATHS.ROOT}/haenyeo_sad.png`}
+                alt="정보없음"
+                text="체험 일지가 없습니다"
+              />
+            </div>
+          )}
         </div>
         <div className="fixed inset-x-0 bottom-nav-height z-10 m-auto flex w-full min-w-full-layout max-w-full-layout px-5 pb-5 pt-3">
           <LargeButton

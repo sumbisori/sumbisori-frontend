@@ -1,7 +1,5 @@
 import { parseCompanionType } from '@/util/parseCompanionType';
 import { parseWeather } from '@/util/parseWeather';
-import { useState } from 'react';
-import OutlinePictureIcon from '@/icons/outline-picture.svg?react';
 import { Image } from '@/components/Image';
 
 interface Props {
@@ -22,7 +20,7 @@ export const Grid1Card = ({
   onClick,
 }: Props) => {
   return (
-    <div
+    <li
       className="flex shrink-0 items-start gap-4 border-b border-gray-200 py-4"
       onClick={onClick}
     >
@@ -39,6 +37,6 @@ export const Grid1Card = ({
           #{parseCompanionType(companionType)} #{parseWeather(weather)}
         </div>
       </div>
-    </div>
+    </li>
   );
 };
