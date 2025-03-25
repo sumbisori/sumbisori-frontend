@@ -11,7 +11,6 @@ import { UploadImageButton } from '../UploadImageButton';
 import AddAPhotoIcon2 from '@/icons/journal/add-a-photo2.svg?react';
 import CloseIcon from '@/icons/journal/close.svg?react';
 import { IconButton } from '@/components/IconButton';
-import { useJournalStore } from '@/stores';
 import { CollectedSeafoodCard } from '../CollectedSeafoodCard';
 import { RoundedButton } from '@/components/RoundedButton';
 import InformationOutlineIcon from '@/icons/information-outline.svg?react';
@@ -32,11 +31,13 @@ import { ErrorResponse } from '@/api/types';
 interface Props {
   collections: JournalCollectedSeafood[];
   onCollectionsChange: (collections: JournalCollectedSeafood[]) => void;
+  onSkipClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const SelectCollectedSeafood = ({
   collections,
   onCollectionsChange,
+  onSkipClick,
 }: Props) => {
   const [activeImageIdentifier, setActiveImageIdentifier] = useState<
     string | null
@@ -349,6 +350,18 @@ export const SelectCollectedSeafood = ({
           </div>
         </div>
       </motion.div>
+
+      {collections.length === 0 && (
+        <div className="fixed inset-x-0 bottom-[4.5rem] z-10 m-auto flex w-full min-w-full-layout max-w-full-layout items-center justify-center">
+          <button
+            className="text-gray-600 underline"
+            type="button"
+            onClick={onSkipClick}
+          >
+            건너뛰기
+          </button>
+        </div>
+      )}
 
       {/* 직업 입력 BottomSheet */}
       <CollectedSeafoodCardBottomSheet

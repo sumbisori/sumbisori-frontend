@@ -313,21 +313,11 @@ export const JournalCreate = () => {
                   collections,
                 })
               }
+              onSkipClick={handleSkipClick}
             />
           )}
           {step === 'register' && <Register />}
         </div>
-        {step === 'seafood' && (
-          <div className="fixed inset-x-0 bottom-[4.5rem] z-10 m-auto flex w-full min-w-full-layout max-w-full-layout items-center justify-center">
-            <button
-              className="text-gray-600 underline"
-              type="button"
-              onClick={handleSkipClick}
-            >
-              건너뛰기
-            </button>
-          </div>
-        )}
         <div className="fixed inset-x-0 bottom-0 z-10 m-auto flex w-full min-w-full-layout max-w-full-layout px-5 pb-5 pt-3">
           <LargeButton
             onClick={
