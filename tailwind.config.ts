@@ -23,6 +23,7 @@ export default {
         'paragraph-sm': ['12px', '18px'], // .paragraph-sm
         caption: ['12px', '18px'], // .caption
         code: ['14px', '22px'], // <code>
+        xxs: ['10px'],
       },
       colors: {
         'charcoal-gray': '#525152',

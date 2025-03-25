@@ -1,5 +1,5 @@
 export interface JournalsResponse {
-  id: number;
+  id: string;
   imageUrl: string;
   title: string;
   date: string;

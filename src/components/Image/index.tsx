@@ -2,9 +2,11 @@ import { useState } from 'react';
 import OutlinePictureIcon from '@/icons/outline-picture.svg?react';
 import clsx from 'clsx';
 
-interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {}
+interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {
+  placeholderClassName?: string;
+}
 
-export const Image = ({ className, ...props }: Props) => {
+export const Image = ({ className, placeholderClassName, ...props }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
@@ -20,7 +22,13 @@ export const Image = ({ className, ...props }: Props) => {
   return (
     <>
       {(isLoading || hasError) && (
-        <div className={clsx('flex items-center justify-center', className)}>
+        <div
+          className={clsx(
+            'flex items-center justify-center',
+            className,
+            placeholderClassName,
+          )}
+        >
           <OutlinePictureIcon />
         </div>
       )}

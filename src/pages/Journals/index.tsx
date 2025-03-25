@@ -7,12 +7,12 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { routes } from '@/routes/src/routes';
 import { toast } from '@/components/Toast';
 import { JournalsGridCategory } from './components/JournalsGridCategory';
-import { Grid2Card } from './components/Grid2Card';
-import { Grid3Card } from './components/Grid3Card';
 import { useQuery } from '@tanstack/react-query';
 import { getJournals } from '@/api/journals';
 import { queryKeys } from '@/query';
 import { Grid1CardList } from './components/Gird1CardList';
+import { Grid2CardList } from './components/Grid2CardList';
+import { Grid3CardList } from './components/Grid3CardList';
 import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
 import { IMAGE_PATHS } from '@/constant';
 
@@ -22,16 +22,20 @@ export const Journals = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const viewMode = searchParams.get('view-mode') as 'grid2' | 'grid3' | 'grid1';
 
+  const { data: journals, isLoading } = useQuery({
+    queryKey: [queryKeys.journals],
+    queryFn: getJournals,
+  });
+
   useEffect(() => {
     if (!viewMode) {
       setSearchParams({ 'view-mode': 'grid2' }, { replace: true });
     }
   }, []);
 
-  const { data: journals, isLoading } = useQuery({
-    queryKey: [queryKeys.journals],
-    queryFn: getJournals,
-  });
+  const handleCardClick = (id: string) => {
+    navigate(routes.journalsDetail(id));
+  };
 
   return (
     <div className="relative flex h-full min-h-layout-nav-height flex-col pt-header-height">
@@ -53,9 +57,15 @@ export const Journals = () => {
           />
           {journals && (
             <>
-              {viewMode === 'grid1' && <Grid1CardList journals={journals} />}
-              {viewMode === 'grid2' && <Grid2Card />}
-              {viewMode === 'grid3' && <Grid3Card />}
+              {viewMode === 'grid1' && (
+                <Grid1CardList journals={journals} onClick={handleCardClick} />
+              )}
+              {viewMode === 'grid2' && (
+                <Grid2CardList journals={journals} onClick={handleCardClick} />
+              )}
+              {viewMode === 'grid3' && (
+                <Grid3CardList journals={journals} onClick={handleCardClick} />
+              )}
             </>
           )}
           {!isLoading && journals?.length === 0 && (
