@@ -36,7 +36,7 @@ export const JournalDetail = () => {
         onRightClick={() => toast.info('준비중입니다.')}
         className="bg-white shadow-[0_2px_3px_-1px_rgba(0,0,0,0.1)]"
       />
-      <div className="flex flex-1 flex-col bg-gray-050">
+      <div className="flex flex-1 flex-col">
         {journalDetail && (
           <>
             <JournalDetailTitle
@@ -44,8 +44,13 @@ export const JournalDetail = () => {
               placeName={journalDetail.placeName}
               satisfaction={journalDetail.satisfaction}
             />
-            <JournalDetailImages />
-            <JournalDetailContent />
+            <JournalDetailImages imageUrls={journalDetail.imageUrls} />
+            <JournalDetailContent
+              impression={journalDetail.impression}
+              companion={journalDetail.companion}
+              weather={journalDetail.weather}
+              experienceDate={journalDetail.experienceDate}
+            />
           </>
         )}
       </div>

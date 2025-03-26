@@ -17,15 +17,15 @@ import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
 import { IMAGE_PATHS } from '@/constant';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 
-const GRID1_PAGE_SIZE = 5;
-const GRID2_PAGE_SIZE = 8;
-const GRID3_PAGE_SIZE = 12;
-
 export const Journals = () => {
   const navigate = useNavigate();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const viewMode = searchParams.get('view-mode') as 'grid2' | 'grid3' | 'grid1';
+  const GRID1_PAGE_SIZE = 7;
+  const GRID2_PAGE_SIZE = 12;
+  const GRID3_PAGE_SIZE = 18;
+
   const changeGridSize = (viewMode: 'grid2' | 'grid3' | 'grid1') => {
     switch (viewMode) {
       case 'grid1':

@@ -1,6 +1,4 @@
 import dayjs from '@/util/dayjs';
-import { parseCompanionType } from '@/util/parseCompanionType';
-import { parseWeather } from '@/util/parseWeather';
 import { Image } from '@/components/Image';
 
 interface Props {
@@ -36,7 +34,7 @@ export const Grid1Card = ({
       <Image
         src={imageUrl}
         alt="journal-image"
-        className={`aspect-square size-[6.875rem] rounded-xl border border-gray-200`}
+        className={`aspect-square size-[6.875rem] rounded-xl border border-gray-200 object-cover`}
         placeholderClassName="bg-white"
       />
 

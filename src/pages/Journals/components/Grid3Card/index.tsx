@@ -23,7 +23,7 @@ export const Grid3Card = ({
       onClick={onClick}
     >
       <Image
-        className="size-full rounded-xl border border-gray-200"
+        className="size-full rounded-xl border border-gray-200 object-cover"
         src={imageUrl}
         alt="journal-card-3"
         placeholderClassName="bg-white"
