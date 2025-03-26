@@ -21,7 +21,7 @@ export const CollectedSeafoodCard = ({
   onPlusClick,
   onSeafoodDelete,
 }: Props) => {
-  const { analysisStatus, collectionInfos: seafoods } = collectedSeafood;
+  const { analysisStatus, collectionInfos } = collectedSeafood;
   const [progressPercentage, setProgressPercentage] = useState(0);
 
   useEffect(() => {
@@ -91,13 +91,13 @@ export const CollectedSeafoodCard = ({
           <div className="flex flex-col gap-1.5">
             <h5 className="font-medium">분석 결과</h5>
 
-            {seafoods.length === 0 ? (
+            {collectionInfos.length === 0 ? (
               <p className="text-sm text-gray-500">해산물이 없습니다</p>
             ) : null}
 
             <div className="grid grid-cols-3 gap-x-[1.313rem] gap-y-4">
-              {seafoods.length > 0 &&
-                seafoods.map((seafood) => (
+              {collectionInfos.length > 0 &&
+                collectionInfos.map((seafood) => (
                   <div
                     key={seafood.englishName}
                     className="flex flex-col items-center justify-center"
@@ -108,20 +108,22 @@ export const CollectedSeafoodCard = ({
                         variant="img"
                         className="size-full"
                       />
-                      <IconButton
-                        className="absolute -right-1 -top-1 z-10"
-                        variant="black"
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onSeafoodDelete(
-                            collectedSeafood.imageIdentifier,
-                            seafood.seafoodId,
-                          );
-                        }}
-                      >
-                        <CloseIcon />
-                      </IconButton>
+                      {editMode && (
+                        <IconButton
+                          className="absolute -right-1 -top-1 z-10"
+                          variant="black"
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onSeafoodDelete(
+                              collectedSeafood.imageIdentifier,
+                              seafood.seafoodId,
+                            );
+                          }}
+                        >
+                          <CloseIcon />
+                        </IconButton>
+                      )}
                     </div>
                     <p className="w-full rounded border border-gray-300 bg-gray-50 px-2.5 py-[0.313rem] text-center text-sm font-medium">
                       {seafood.koreanName} x {seafood.count}

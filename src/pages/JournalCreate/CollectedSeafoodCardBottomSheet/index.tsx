@@ -34,9 +34,9 @@ export const CollectedSeafoodCardBottomSheet = ({
 
   const handleSave = () => {
     if (selectedSeafood && collectedSeafood) {
-      const updatedSeafoods = {
+      const updatedSeafoods: JournalCollectedSeafood = {
         ...collectedSeafood,
-        seafoods: [
+        collectionInfos: [
           ...(collectedSeafood.collectionInfos || []),
           {
             seafoodId: selectedSeafood.seafoodId,

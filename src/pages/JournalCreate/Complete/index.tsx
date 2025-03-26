@@ -14,8 +14,7 @@ export const Complete = () => {
   };
 
   const handleReviewClick = () => {
-    // 임시로 홈으로 이동
-    navigate(routes.home);
+    navigate(routes.journals);
   };
 
   return (
