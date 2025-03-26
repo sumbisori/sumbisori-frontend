@@ -5,12 +5,16 @@ import clsx from 'clsx';
 
 interface Props {
   satisfaction: number;
-  onSatisfactionChange: (satisfaction: number) => void;
+  onSatisfactionChange?: (satisfaction: number) => void;
+  readOnly?: boolean;
+  starSize?: number;
 }
 
 export const SatisfactionStars = ({
   satisfaction,
   onSatisfactionChange,
+  readOnly = false,
+  starSize = 36,
 }: Props) => {
   const animations = [
     useAnimation(),
@@ -21,6 +25,7 @@ export const SatisfactionStars = ({
   ];
 
   useEffect(() => {
+    if (readOnly) return;
     animations.forEach((control, index) => {
       if (index < satisfaction) {
         control.start({
@@ -31,10 +36,11 @@ export const SatisfactionStars = ({
         control.start({ scale: 1 });
       }
     });
-  }, [satisfaction]);
+  }, [satisfaction, readOnly]);
 
   const handleStarClick = (index: number) => {
-    onSatisfactionChange(index + 1);
+    if (readOnly) return;
+    onSatisfactionChange && onSatisfactionChange(index + 1);
   };
 
   return (
@@ -49,11 +55,14 @@ export const SatisfactionStars = ({
           <motion.div animate={control}>
             <StarIcon
               className={clsx(
-                'size-9 transition-all duration-300',
+                'transition-all duration-300',
                 index + 1 <= satisfaction
                   ? 'fill-blue-700 stroke-blue-700'
                   : 'fill-none stroke-gray-500',
+                readOnly && 'cursor-default',
               )}
+              width={starSize}
+              height={starSize}
             />
           </motion.div>
         </motion.button>

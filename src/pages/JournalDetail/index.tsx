@@ -2,12 +2,29 @@ import { NavigatorHeader } from '@/layouts/NavigatorHeader';
 import ThinLeftIcon from '@/icons/thin-left-icon.svg?react';
 import BellBlackIcon from '@/icons/Icon_bell_black.svg?react';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { routes } from '@/routes/src/routes';
 import { toast } from '@/components/Toast';
+import { queryKeys } from '@/query';
+import { useQuery } from '@tanstack/react-query';
+import { getJournalDetail } from '@/api/journalDetail/indext';
+import { JournalDetailTitle } from './JournalDetailTitle';
+import { JournalDetailImages } from './JournalDetailImages';
+import { JournalDetailContent } from './JournalDetailContent';
 
 export const JournalDetail = () => {
   const navigate = useNavigate();
+  const { journalId } = useParams();
+  const { data: journalDetail } = useQuery({
+    queryKey: [queryKeys.journalDetail, journalId],
+    queryFn: () => {
+      if (!journalId) {
+        throw new Error('journalId is required');
+      }
+      return getJournalDetail(journalId);
+    },
+    enabled: !!journalId,
+  });
 
   return (
     <div className="relative flex h-full min-h-layout-nav-height flex-col pt-header-height">
@@ -19,8 +36,18 @@ export const JournalDetail = () => {
         onRightClick={() => toast.info('준비중입니다.')}
         className="bg-white shadow-[0_2px_3px_-1px_rgba(0,0,0,0.1)]"
       />
-      <div className="flex flex-1 flex-col bg-gray-050 pb-[4.5rem]">
-        <div className="flex flex-1 flex-col gap-4 px-4 pt-6"></div>
+      <div className="flex flex-1 flex-col bg-gray-050">
+        {journalDetail && (
+          <>
+            <JournalDetailTitle
+              experienceDate={journalDetail.experienceDate}
+              placeName={journalDetail.placeName}
+              satisfaction={journalDetail.satisfaction}
+            />
+            <JournalDetailImages />
+            <JournalDetailContent />
+          </>
+        )}
       </div>
     </div>
   );
