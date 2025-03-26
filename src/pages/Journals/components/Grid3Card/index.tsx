@@ -1,10 +1,9 @@
 import { Image } from '@/components/Image';
-import { parseCompanionType } from '@/util/parseCompanionType';
-import { parseWeather } from '@/util/parseWeather';
+import dayjs from '@/util/dayjs';
 
 interface Props {
   imageUrl: string;
-  date: string;
+  experienceDate: string;
   companionType: string;
   weather: string;
   onClick: () => void;
@@ -12,11 +11,12 @@ interface Props {
 
 export const Grid3Card = ({
   imageUrl,
-  date,
+  experienceDate,
   companionType,
   weather,
   onClick,
 }: Props) => {
+  const formattedDate = dayjs(experienceDate).locale('ko').format('YY.MM.DD');
   return (
     <li
       className="relative aspect-square size-full cursor-pointer hover:opacity-80"
@@ -31,7 +31,7 @@ export const Grid3Card = ({
       <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/60 via-transparent to-transparent" />
       <div className="absolute bottom-0 left-0 flex flex-col gap-0.5 p-2.5 text-white">
         <div className="text-xxs font-medium">#{companionType}</div>
-        <div className="text-base font-medium">{date}</div>
+        <div className="text-base font-medium">{formattedDate}</div>
       </div>
     </li>
   );

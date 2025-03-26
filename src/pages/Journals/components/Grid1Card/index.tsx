@@ -1,3 +1,4 @@
+import dayjs from '@/util/dayjs';
 import { parseCompanionType } from '@/util/parseCompanionType';
 import { parseWeather } from '@/util/parseWeather';
 import { Image } from '@/components/Image';
@@ -5,7 +6,7 @@ import { Image } from '@/components/Image';
 interface Props {
   imageUrl: string;
   title: string;
-  date: string;
+  experienceDate: string;
   companionType: string;
   weather: string;
   onClick: () => void;
@@ -15,12 +16,15 @@ interface Props {
 export const Grid1Card = ({
   imageUrl,
   title,
-  date,
+  experienceDate,
   companionType,
   weather,
   onClick,
   last,
 }: Props) => {
+  const formattedDate = dayjs(experienceDate)
+    .locale('ko')
+    .format('YY년 MM월 DD일 (ddd)');
   return (
     <li
       className={clsx(
@@ -37,11 +41,11 @@ export const Grid1Card = ({
       />
 
       <div className="flex flex-col gap-1.5">
-        <div className="text-base font-medium text-gray-500">{date}</div>
-        <div className="whitespace-nowrap text-lg font-bold">
+        <div className="text-base font-medium">{formattedDate}</div>
+        <div className="text-lg font-bold leading-normal">
           {title || '제목 없음'}
         </div>
-        <div className="text-sm text-blue-700">
+        <div className="text-base font-medium text-blue-700">
           #{companionType} #{weather}
         </div>
       </div>

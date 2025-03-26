@@ -23,7 +23,7 @@ export const Grid1CardList = ({
             key={journal.experienceId}
             imageUrl={journal.imageUrl}
             title={journal.title}
-            date={journal.experienceDate}
+            experienceDate={journal.experienceDate}
             companionType={journal.companion}
             weather={journal.weather}
             last={index === journals.length - 1}

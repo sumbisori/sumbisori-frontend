@@ -21,7 +21,7 @@ export const Grid3CardList = ({
           <Grid3Card
             key={journal.experienceId}
             imageUrl={journal.imageUrl}
-            date={journal.experienceDate}
+            experienceDate={journal.experienceDate}
             companionType={journal.companion}
             weather={journal.weather}
             onClick={() => onClick(journal.experienceId)}
