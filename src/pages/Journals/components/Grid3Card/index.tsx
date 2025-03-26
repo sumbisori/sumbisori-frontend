@@ -28,10 +28,9 @@ export const Grid3Card = ({
         alt="journal-card-3"
         placeholderClassName="bg-white"
       />
-      <div className="absolute bottom-0 left-0 flex flex-col gap-0.5 p-2.5">
-        <div className="text-xxs font-medium">
-          #{parseCompanionType(companionType)}
-        </div>
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+      <div className="absolute bottom-0 left-0 flex flex-col gap-0.5 p-2.5 text-white">
+        <div className="text-xxs font-medium">#{companionType}</div>
         <div className="text-base font-medium">{date}</div>
       </div>
     </li>
