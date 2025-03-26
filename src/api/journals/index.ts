@@ -1,46 +1,14 @@
-import { JournalsResponse } from './types';
+import { https } from '../instance';
+import { JournalsRequest, JournalsResponse, Pagination } from './types';
 
-export const getJournals = async (): Promise<JournalsResponse[]> => {
-  return [
-    {
-      id: '1',
-      imageUrl: 'https://placehold.co/600x400',
-      title: '체험 일지 제목',
-      date: '2025-03-15',
-      companionType: 'FRIEND',
-      weather: 'CLEAR_SKY',
-    },
-    {
-      id: '2',
-      imageUrl: 'https://placehold.co/600x400',
-      title: '체험 일지 제목',
-      date: '2025-03-15',
-      companionType: 'ALONE',
-      weather: 'BROKEN_CLOUDS',
-    },
-    {
-      id: '3',
-      imageUrl: '',
-      title: '체험 일지 제목',
-      date: '2025-03-15',
-      companionType: 'COLLEAGUE',
-      weather: 'RAIN',
-    },
-    {
-      id: '4',
-      imageUrl: '',
-      title: '체험 일지 제목',
-      date: '2025-03-15',
-      companionType: 'FRIEND',
-      weather: 'CLEAR_SKY',
-    },
-    {
-      id: '5',
-      imageUrl: '',
-      title: '체험 일지 제목',
-      date: '2025-03-15',
-      companionType: 'ALONE',
-      weather: 'BROKEN_CLOUDS',
-    },
-  ];
+export const getJournals = async ({
+  page,
+  size,
+  sort,
+}: JournalsRequest): Promise<Pagination<JournalsResponse[]>> => {
+  const response = await https.get('/experiences', {
+    params: { page, size, sort },
+  });
+
+  return response.data;
 };

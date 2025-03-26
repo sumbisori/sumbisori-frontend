@@ -38,9 +38,11 @@ export const Grid1Card = ({
 
       <div className="flex flex-col gap-1.5">
         <div className="text-base font-medium text-gray-500">{date}</div>
-        <div className="whitespace-nowrap text-lg font-bold">{title}</div>
+        <div className="whitespace-nowrap text-lg font-bold">
+          {title || '제목 없음'}
+        </div>
         <div className="text-sm text-blue-700">
-          #{parseCompanionType(companionType)} #{parseWeather(weather)}
+          #{companionType} #{weather}
         </div>
       </div>
     </li>

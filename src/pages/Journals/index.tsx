@@ -7,7 +7,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { routes } from '@/routes/src/routes';
 import { toast } from '@/components/Toast';
 import { JournalsGridCategory } from './components/JournalsGridCategory';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { getJournals } from '@/api/journals';
 import { queryKeys } from '@/query';
 import { Grid1CardList } from './components/Gird1CardList';
@@ -15,27 +15,64 @@ import { Grid2CardList } from './components/Grid2CardList';
 import { Grid3CardList } from './components/Grid3CardList';
 import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
 import { IMAGE_PATHS } from '@/constant';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
+
+const GRID1_PAGE_SIZE = 5;
+const GRID2_PAGE_SIZE = 8;
+const GRID3_PAGE_SIZE = 12;
 
 export const Journals = () => {
   const navigate = useNavigate();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const viewMode = searchParams.get('view-mode') as 'grid2' | 'grid3' | 'grid1';
+  const changeGridSize = (viewMode: 'grid2' | 'grid3' | 'grid1') => {
+    switch (viewMode) {
+      case 'grid1':
+        return GRID1_PAGE_SIZE;
+      case 'grid2':
+        return GRID2_PAGE_SIZE;
+      case 'grid3':
+        return GRID3_PAGE_SIZE;
+    }
+  };
 
-  const { data: journals, isLoading } = useQuery({
-    queryKey: [queryKeys.journals],
-    queryFn: getJournals,
+  const {
+    data: journals,
+    isPending,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: [queryKeys.journals, viewMode],
+    queryFn: ({ pageParam }) =>
+      getJournals({
+        page: pageParam,
+        size: changeGridSize(viewMode),
+        sort: 'asc',
+      }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) =>
+      lastPage.hasNext ? lastPage.page + 1 : undefined,
   });
+
+  const bottomRef = useInfiniteScroll({
+    hasNextPage,
+    fetchNextPage,
+  });
+
+  const flattenedJournals =
+    journals?.pages.flatMap((page) => page.content) ?? [];
+
+  const handleCardClick = (id: string) => {
+    navigate(routes.journalsDetail(id));
+  };
 
   useEffect(() => {
     if (!viewMode) {
       setSearchParams({ 'view-mode': 'grid2' }, { replace: true });
     }
   }, []);
-
-  const handleCardClick = (id: string) => {
-    navigate(routes.journalsDetail(id));
-  };
 
   return (
     <div className="relative flex h-full min-h-layout-nav-height flex-col pt-header-height">
@@ -58,17 +95,32 @@ export const Journals = () => {
           {journals && (
             <>
               {viewMode === 'grid1' && (
-                <Grid1CardList journals={journals} onClick={handleCardClick} />
+                <Grid1CardList
+                  journals={flattenedJournals}
+                  onClick={handleCardClick}
+                  isPending={isPending}
+                  pageSize={GRID1_PAGE_SIZE}
+                />
               )}
               {viewMode === 'grid2' && (
-                <Grid2CardList journals={journals} onClick={handleCardClick} />
+                <Grid2CardList
+                  journals={flattenedJournals}
+                  onClick={handleCardClick}
+                  isPending={isPending}
+                  pageSize={GRID2_PAGE_SIZE}
+                />
               )}
               {viewMode === 'grid3' && (
-                <Grid3CardList journals={journals} onClick={handleCardClick} />
+                <Grid3CardList
+                  journals={flattenedJournals}
+                  onClick={handleCardClick}
+                  isPending={isPending}
+                  pageSize={GRID3_PAGE_SIZE}
+                />
               )}
             </>
           )}
-          {!isLoading && journals?.length === 0 && (
+          {!isPending && flattenedJournals.length === 0 && (
             <div className="flex flex-1 items-center justify-center">
               <ImageWithTextAlert
                 src={`${IMAGE_PATHS.ROOT}/haenyeo_sad.png`}
@@ -77,6 +129,7 @@ export const Journals = () => {
               />
             </div>
           )}
+          <div ref={bottomRef} />
         </div>
         <div className="fixed inset-x-0 bottom-nav-height z-10 m-auto flex w-full min-w-full-layout max-w-full-layout px-5 pb-5 pt-3">
           <LargeButton

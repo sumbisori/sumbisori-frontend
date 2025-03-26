@@ -1,8 +1,24 @@
+export interface JournalsRequest {
+  page: number;
+  size: number;
+  sort?: 'asc' | 'desc';
+}
+
+export interface Pagination<T> {
+  content: T;
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  hasNext: boolean;
+  hasPrevious: boolean;
+}
+
 export interface JournalsResponse {
-  id: string;
+  experienceId: string;
   imageUrl: string;
   title: string;
-  date: string;
-  companionType: string;
+  experienceDate: string;
+  companion: string;
   weather: string;
 }
