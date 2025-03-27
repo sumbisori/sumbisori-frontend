@@ -11,7 +11,7 @@ export const DictionaryDialog = ({ selectedSeafood }: Props) => {
     <Dialog id={`seafood-${selectedSeafood.koreanName}`}>
       <div className="flex h-full flex-col justify-between">
         <SeafoodImage
-          className="size-[9.375rem]"
+          className="size-32"
           seafoodName={selectedSeafood.englishName}
           grayscale={selectedSeafood.count === 0}
           variant="div"

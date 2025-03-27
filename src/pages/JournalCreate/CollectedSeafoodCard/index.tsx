@@ -102,11 +102,11 @@ export const CollectedSeafoodCard = ({
                     key={seafood.englishName}
                     className="flex flex-col items-center justify-center"
                   >
-                    <div className="relative size-[5.625rem]">
+                    <div className="relative flex size-[5.625rem] items-center justify-center">
                       <SeafoodImage
                         seafoodName={seafood.englishName}
                         variant="img"
-                        className="size-full"
+                        className="size-3/5"
                       />
                       {editMode && (
                         <IconButton

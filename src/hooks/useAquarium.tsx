@@ -198,18 +198,20 @@ export const useAquarium = (
         }) as string;
 
         seafoodImage.onload = () => {
+          const newWidth = 60;
+          const scale = newWidth / seafoodImage.naturalWidth;
           const body = Matter.Bodies.circle(
             Math.random() * (width - 100) + 50,
             Math.random() * (height - 100) + 50,
-            30,
+            newWidth / 2,
             {
               restitution: 0.3,
               friction: 0.1,
               render: {
                 sprite: {
                   texture: seafoodImage.src,
-                  xScale: 0.6,
-                  yScale: 0.6,
+                  xScale: scale,
+                  yScale: scale,
                 },
               },
             },

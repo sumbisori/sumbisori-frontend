@@ -24,7 +24,7 @@ export const SeafoodCard = (props: Props) => {
       )}
     >
       <SeafoodImage
-        className="size-full"
+        className="size-3/5"
         seafoodName={props.seafoodName}
         grayscale={props.counts === 0}
         variant="img"

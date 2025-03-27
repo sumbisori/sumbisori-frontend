@@ -196,17 +196,24 @@ export const useDictionaryAquarium = (
       }) as string;
 
       seafoodImage.onload = () => {
-        const body = Matter.Bodies.circle(width / 2, height / 2, 30, {
-          restitution: 0.3,
-          friction: 0.1,
-          render: {
-            sprite: {
-              texture: seafoodImage.src,
-              xScale: 0.6,
-              yScale: 0.6,
+        const desiredWidth = 60;
+        const scale = desiredWidth / seafoodImage.naturalWidth;
+        const body = Matter.Bodies.circle(
+          width / 2,
+          height / 2,
+          desiredWidth / 2,
+          {
+            restitution: 0.3,
+            friction: 0.1,
+            render: {
+              sprite: {
+                texture: seafoodImage.src,
+                xScale: scale,
+                yScale: scale,
+              },
             },
           },
-        });
+        );
         Matter.World.add(engine.world, body);
       };
     };

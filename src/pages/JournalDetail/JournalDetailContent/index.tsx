@@ -40,11 +40,13 @@ export const JournalDetailContent = ({
               id="seafood-item"
               className="flex flex-col items-center justify-center"
             >
-              <SeafoodImage
-                seafoodName="Clam"
-                variant="img"
-                className="size-14"
-              />
+              <div className="relative flex size-[5.625rem] items-center justify-center">
+                <SeafoodImage
+                  seafoodName="Clam"
+                  variant="img"
+                  className="size-3/5"
+                />
+              </div>
               <p
                 id="seafood-count"
                 className="w-full min-w-[4.188rem] rounded border border-gray-300 bg-gray-050 px-2 py-1 text-center text-xs font-medium"
