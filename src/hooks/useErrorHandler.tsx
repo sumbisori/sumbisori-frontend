@@ -12,22 +12,23 @@ export const useErrorHandler = () => {
     if (isAxiosError<ErrorResponse>(err)) {
       const { name, status, message } = err.response?.data || {};
 
+      if (status === 500) {
+        toast.error(ERROR_MESSAGE.DEFAULT_ERROR);
+        return;
+      }
       if (err.code === 'ERR_NETWORK') {
         toast.error(ERROR_MESSAGE.ERR_NETWORK);
         return;
       }
-
       if (name === 'AUTHENTICATION_REQUIRED') {
         toast.warning(ERROR_MESSAGE.AUTHENTICATION_REQUIRED);
         navigate(routes.login, { replace: true });
         return;
       }
-
-      if (status === 500) {
-        toast.error(ERROR_MESSAGE.DEFAULT_ERROR);
+      if (name === 'WAVE_DATA_NOT_FOUND') {
+        toast.warning(ERROR_MESSAGE.WAVE_DATA_NOT_FOUND);
         return;
       }
-
       toast.error(ERROR_MESSAGE.DEFAULT_ERROR);
     }
   };

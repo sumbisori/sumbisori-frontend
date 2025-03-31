@@ -22,6 +22,10 @@ import { HomeCategoryBar, HomeCategoryLabel } from '../HomeCategory';
 import { HomeSectionTitle } from '../HomeSectionTitle';
 import { HomeContentsWeather } from '../HomeContentsWeather';
 import { HomeContentsTraining } from '../HomeContentsTraining';
+import { toast } from '@/components/Toast';
+import { ERROR_MESSAGE } from '@/constant/src/error';
+import { AxiosError } from 'axios';
+import { ErrorResponse } from '@/api/types';
 
 export const HomeContents = () => {
   const [rotationCount, setRotationCount] = useState(0);

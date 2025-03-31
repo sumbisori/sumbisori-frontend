@@ -196,7 +196,7 @@ export const useDictionaryAquarium = (
       }) as string;
 
       seafoodImage.onload = () => {
-        const desiredWidth = 60;
+        const desiredWidth = 65;
         const scale = desiredWidth / seafoodImage.naturalWidth;
         const body = Matter.Bodies.circle(
           width / 2,

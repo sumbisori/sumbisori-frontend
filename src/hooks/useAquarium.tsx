@@ -198,7 +198,7 @@ export const useAquarium = (
         }) as string;
 
         seafoodImage.onload = () => {
-          const newWidth = 60;
+          const newWidth = 65;
           const scale = newWidth / seafoodImage.naturalWidth;
           const body = Matter.Bodies.circle(
             Math.random() * (width - 100) + 50,
