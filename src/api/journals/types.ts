@@ -21,4 +21,5 @@ export interface JournalsResponse {
   experienceDate: string;
   companion: string;
   weather: string;
+  placeName: string;
 }

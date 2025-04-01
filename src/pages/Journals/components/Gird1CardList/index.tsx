@@ -21,7 +21,7 @@ export const Grid1CardList = ({
           <Grid1Card
             key={journal.experienceId}
             imageUrl={journal.imageUrl}
-            title={journal.title}
+            placeName={journal.placeName}
             experienceDate={journal.experienceDate}
             companionType={journal.companion}
             weather={journal.weather}

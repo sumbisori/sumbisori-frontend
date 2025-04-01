@@ -3,7 +3,7 @@ import { Image } from '@/components/Image';
 
 interface Props {
   imageUrl: string;
-  title: string;
+  placeName: string;
   experienceDate: string;
   companionType: string;
   weather: string;
@@ -13,7 +13,7 @@ interface Props {
 
 export const Grid1Card = ({
   imageUrl,
-  title,
+  placeName,
   experienceDate,
   companionType,
   weather,
@@ -40,9 +40,7 @@ export const Grid1Card = ({
 
       <div className="flex flex-col gap-1.5">
         <div className="text-base font-medium">{formattedDate}</div>
-        <div className="text-lg font-bold leading-normal">
-          {title || '제목 없음'}
-        </div>
+        <div className="text-lg font-bold leading-normal">{placeName}</div>
         <div className="text-base font-medium text-blue-700">
           #{companionType} #{weather}
         </div>
