@@ -14,7 +14,6 @@ export const Grid1CardList = ({
   isPending,
   pageSize,
 }: Props) => {
-  console.log(isPending);
   return (
     <ul className="grid grid-cols-1">
       {!isPending &&

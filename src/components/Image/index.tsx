@@ -4,9 +4,19 @@ import clsx from 'clsx';
 
 interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {
   placeholderClassName?: string;
+  errorIcon?: React.ReactNode;
+  errorIconSize?: number | string;
 }
 
-export const Image = ({ className, placeholderClassName, ...props }: Props) => {
+export const Image = ({
+  className,
+  placeholderClassName,
+  errorIconSize = '60%',
+  errorIcon = (
+    <OutlinePictureIcon width={errorIconSize} height={errorIconSize} />
+  ),
+  ...props
+}: Props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
@@ -29,7 +39,7 @@ export const Image = ({ className, placeholderClassName, ...props }: Props) => {
             placeholderClassName,
           )}
         >
-          <OutlinePictureIcon />
+          {errorIcon}
         </div>
       )}
 
