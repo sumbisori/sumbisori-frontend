@@ -27,6 +27,7 @@ import { getPresignedUrl, putAmazonS3 } from '@/api/file';
 import { AxiosError } from 'axios';
 import { PresignedUrlRequest } from '@/api/file/types';
 import { ErrorResponse } from '@/api/types';
+import { Image } from '@/components/Image';
 
 interface Props {
   collections: JournalCollectedSeafood[];
@@ -80,18 +81,20 @@ export const SelectCollectedSeafood = ({
     mutationFn: (imageIdentifier: string) =>
       analyzeSeafoodImage(imageIdentifier),
     onSuccess: (data, imageIdentifier) => {
-      const updatedSeafoods = collections.map((item) =>
-        item.imageIdentifier === imageIdentifier
-          ? { ...item, collectionInfos: data, analysisStatus: 'success' }
-          : item,
+      const updatedSeafoods: JournalCollectedSeafood[] = collections.map(
+        (item) =>
+          item.imageIdentifier === imageIdentifier
+            ? { ...item, collectionInfos: data, analysisStatus: 'success' }
+            : item,
       );
       onCollectionsChange(updatedSeafoods);
     },
     onError: (error, imageIdentifier) => {
-      const updatedSeafoods = collections.map((item) =>
-        item.imageIdentifier === imageIdentifier
-          ? { ...item, analysisStatus: 'failed' }
-          : item,
+      const updatedSeafoods: JournalCollectedSeafood[] = collections.map(
+        (item) =>
+          item.imageIdentifier === imageIdentifier
+            ? { ...item, analysisStatus: 'failed' }
+            : item,
       );
       onCollectionsChange(updatedSeafoods);
     },
@@ -278,7 +281,7 @@ export const SelectCollectedSeafood = ({
                 className="size-24 select-none"
                 onClick={() => handleCollectedSeafoodClick(collectedSeafood)}
               >
-                <img
+                <Image
                   src={URL.createObjectURL(collectedSeafood.file)}
                   alt="업로드된 이미지"
                   className="size-full rounded-xl border border-gray-200 object-cover"

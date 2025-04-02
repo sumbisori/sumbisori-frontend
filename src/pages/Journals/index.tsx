@@ -91,6 +91,7 @@ export const Journals = () => {
             onViewModeChange={(viewMode) =>
               setSearchParams({ 'view-mode': viewMode }, { replace: true })
             }
+            totalElements={journals?.pages[0]?.totalElements ?? 0}
           />
           {journals && (
             <>

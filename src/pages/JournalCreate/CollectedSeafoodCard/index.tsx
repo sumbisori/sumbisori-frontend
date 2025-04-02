@@ -7,6 +7,8 @@ import CharmPlusIcon from '@/icons/journal/charm-plus.svg?react';
 import SparkIcon from '@/icons/journal/spark.svg?react';
 import { useState, useEffect } from 'react';
 import CloseIcon from '@/icons/journal/close.svg?react';
+import { Image } from '@/components/Image';
+import { motion } from 'framer-motion';
 
 interface Props {
   collectedSeafood: JournalCollectedSeafood;
@@ -60,12 +62,31 @@ export const CollectedSeafoodCard = ({
   return (
     <div className="flex h-full flex-col gap-5 rounded-2xl bg-white p-4">
       <div className="flex items-center gap-5">
-        <div className="flex-1">
-          <img
+        <div className="relative flex-1">
+          <Image
             src={URL.createObjectURL(collectedSeafood.file)}
             alt={collectedSeafood.file.name}
             className="aspect-square size-full rounded-xl object-cover"
           />
+
+          {analysisStatus === 'pending' && (
+            <motion.div
+              className="absolute inset-0 overflow-hidden rounded-xl bg-black/10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/75 to-transparent"
+                initial={{ x: '-100%' }}
+                animate={{ x: '100%' }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 1.5,
+                  ease: 'linear',
+                }}
+              />
+            </motion.div>
+          )}
         </div>
         <div className="flex flex-col items-center justify-center gap-4 px-2">
           <div className="flex items-center gap-1">

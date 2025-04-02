@@ -5,9 +5,14 @@ import GridIcon3 from '@/icons/journal/grid3.svg?react';
 interface Props {
   viewMode: 'grid2' | 'grid3' | 'grid1';
   onViewModeChange: (mode: 'grid2' | 'grid3' | 'grid1') => void;
+  totalElements: number;
 }
 
-export const JournalsGridCategory = ({ viewMode, onViewModeChange }: Props) => {
+export const JournalsGridCategory = ({
+  viewMode,
+  onViewModeChange,
+  totalElements,
+}: Props) => {
   const activeGridStyle = (mode: 'grid2' | 'grid3' | 'grid1') => {
     return clsx(
       viewMode === mode ? 'text-gray-600' : 'text-gray-300',
@@ -16,7 +21,7 @@ export const JournalsGridCategory = ({ viewMode, onViewModeChange }: Props) => {
   };
   return (
     <div id="journal-title" className="flex items-center justify-between">
-      <h3 className="text-xl font-bold">체험 일지(5건)</h3>
+      <h3 className="text-xl font-bold">체험 일지({totalElements}건)</h3>
       <div className="flex items-center gap-0.5">
         <GridIcon2
           className={activeGridStyle('grid2')}

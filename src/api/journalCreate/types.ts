@@ -33,7 +33,7 @@ export interface JournalCollectedSeafood {
   imageIdentifier: string;
   file: File;
   collectionInfos: CollectedSeafood[];
-  analysisStatus?: string;
+  analysisStatus?: 'pending' | 'success' | 'failed';
 }
 
 export interface CollectedSeafood {

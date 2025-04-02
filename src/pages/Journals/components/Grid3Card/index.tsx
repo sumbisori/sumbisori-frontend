@@ -16,7 +16,7 @@ export const Grid3Card = ({
   weather,
   onClick,
 }: Props) => {
-  const formattedDate = dayjs(experienceDate).locale('ko').format('YY.MM.DD');
+  const formattedDate = dayjs(experienceDate).locale('ko').format('MM.DD');
   return (
     <li
       className="group relative aspect-square size-full cursor-pointer overflow-hidden rounded-xl"
