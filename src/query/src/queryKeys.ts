@@ -11,4 +11,5 @@ export const queryKeys = {
   analyzedSeafoodImage: 'analyzedSeafoodImage',
   journals: 'journals',
   journalDetail: 'journalDetail',
+  journalDetailCollections: 'journalDetailCollections',
 };

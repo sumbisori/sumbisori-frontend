@@ -7,7 +7,7 @@ import { useModalController } from '@/contexts/src/ModalContext';
 interface Props {
   id: string;
   children: ReactNode;
-  type?: 'alert' | 'list';
+  type?: 'alert' | 'list' | 'empty';
 }
 
 export function Dialog({ id, children, type = 'alert' }: Props) {
@@ -66,6 +66,21 @@ export function Dialog({ id, children, type = 'alert' }: Props) {
                       >
                         취소
                       </button>
+                    </motion.div>
+                  </motion.div>
+                );
+              case 'empty':
+                return (
+                  <motion.div
+                    onClick={handleBackgroundClick}
+                    className="fixed inset-0 z-200 flex items-center justify-center bg-black/30"
+                    {...backDropAnimation}
+                  >
+                    <motion.div
+                      {...modalAnimation}
+                      className="flex w-full max-w-[20.75rem] flex-col gap-9 rounded-2xl bg-gray-050 shadow-lg"
+                    >
+                      <div>{children}</div>
                     </motion.div>
                   </motion.div>
                 );

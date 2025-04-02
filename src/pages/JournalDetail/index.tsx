@@ -7,15 +7,16 @@ import { routes } from '@/routes/src/routes';
 import { toast } from '@/components/Toast';
 import { queryKeys } from '@/query';
 import { useQuery } from '@tanstack/react-query';
-import { getJournalDetail } from '@/api/journalDetail/indext';
+import { getJournalDetail } from '@/api/journalDetail';
 import { JournalDetailTitle } from './JournalDetailTitle';
 import { JournalDetailImages } from './JournalDetailImages';
 import { JournalDetailContent } from './JournalDetailContent';
+import { JournalDetailType } from '@/api/journalDetail/types';
 
 export const JournalDetail = () => {
   const navigate = useNavigate();
   const { journalId } = useParams();
-  const { data: journalDetail } = useQuery({
+  const { data: journalDetail } = useQuery<JournalDetailType>({
     queryKey: [queryKeys.journalDetail, journalId],
     queryFn: () => {
       if (!journalId) {
@@ -50,6 +51,7 @@ export const JournalDetail = () => {
               companion={journalDetail.companion}
               weather={journalDetail.weather}
               experienceDate={journalDetail.experienceDate}
+              experienceId={journalDetail.experienceId}
             />
           </>
         )}
