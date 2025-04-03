@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { MyPageContent } from '@/components/MyPageContent';
-import { Profile } from '@/components/Profile';
-import { UserInfo, getUserInfo } from '@/api/myPage';
+import { MyPageContent } from '@/pages/MyPage/components/MyPageContent';
+import { Profile } from '@/pages/MyPage/components/Profile';
+import { getUserInfo } from '@/api/myPage';
+import { UserInfo } from '@/api/myPage/types';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 
 export const MyPage = () => {
@@ -30,7 +31,7 @@ export const MyPage = () => {
   return (
     <div className="flex flex-col">
       <Profile userInfo={userInfo} />
-      <div className="h-[0.313rem] w-full bg-[#F7F7FA]"></div>
+      <div className="h-[0.313rem] w-full bg-gray-050"></div>
       <MyPageContent />
     </div>
   );

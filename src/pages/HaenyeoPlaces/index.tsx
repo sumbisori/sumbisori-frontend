@@ -1,14 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
-  ReservationHaenyeoPlace,
-  ReservationHaenyeoPlaces,
-  getReservationHaenyeoPlace,
-  getReservationHaenyeoPlaces,
-} from '@/api/haenyeoPlaces';
+  HaenyeoPlaceDetail,
+  HaenyeoPlacesLocations,
+} from '@/api/haenyeoPlaces/types';
+import { getHaenyeoPlaceDetail, getPlacesLocations } from '@/api/haenyeoPlaces';
 import { queryKeys } from '@/query';
 import { HaenyeoPlaceDetailSheet } from '@/pages/HaenyeoPlaces/components/HaenyeoPlaceDetailSheet';
-import { NaverMap } from '@/components/NaverMap';
+import { NaverMap } from '@/pages/HaenyeoPlaces/components/NaverMap';
+import { routes } from '@/routes/src/routes';
 
 export const HaenyeoPlaces = () => {
   const navigate = useNavigate();
@@ -16,17 +16,17 @@ export const HaenyeoPlaces = () => {
   const placeIdParam = searchParams.get('placeId');
   const selectedPlaceId = placeIdParam ? parseInt(placeIdParam, 10) : null;
 
-  const { data: haenyeoPlaces } = useQuery<ReservationHaenyeoPlaces[]>({
-    queryKey: [queryKeys.haenyeoPlaces],
-    queryFn: getReservationHaenyeoPlaces,
+  const { data: haenyeoPlaces } = useQuery<HaenyeoPlacesLocations[]>({
+    queryKey: [queryKeys.haenyeoPlacesLocations],
+    queryFn: getPlacesLocations,
     initialData: [],
   });
 
-  const { data: selectedPlace } = useQuery<ReservationHaenyeoPlace | null>({
-    queryKey: [queryKeys.selectedHaenyeoPlace, selectedPlaceId],
+  const { data: selectedPlace } = useQuery<HaenyeoPlaceDetail | null>({
+    queryKey: [queryKeys.haenyeoPlaceDetail, selectedPlaceId],
     queryFn: () => {
       if (!selectedPlaceId) return Promise.resolve(null);
-      return getReservationHaenyeoPlace(selectedPlaceId);
+      return getHaenyeoPlaceDetail(selectedPlaceId);
     },
     enabled: !!selectedPlaceId,
   });
@@ -38,7 +38,7 @@ export const HaenyeoPlaces = () => {
     });
   };
 
-  const handleClose = () => {
+  const handleBack = () => {
     setSearchParams(
       Object.fromEntries(
         Object.entries(searchParams).filter(([key]) => key !== 'placeId'),
@@ -46,13 +46,9 @@ export const HaenyeoPlaces = () => {
     );
   };
 
-  const handleBack = () => {
-    handleClose();
-  };
-
   const handleMoreInfo = () => {
     if (!selectedPlaceId) return;
-    navigate(`/haenyeo-places/${selectedPlaceId}`);
+    navigate(routes.haenyeoPlacesDetail(selectedPlaceId));
   };
 
   return (
@@ -62,7 +58,6 @@ export const HaenyeoPlaces = () => {
         places={haenyeoPlaces}
         onPinClick={handlePinClick}
         onBack={handleBack}
-        onClose={handleClose}
       />
       {selectedPlace && (
         <HaenyeoPlaceDetailSheet

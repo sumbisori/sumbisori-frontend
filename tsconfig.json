@@ -25,6 +25,7 @@
     "src",
     "postcss.config.js",
     "tailwind.config.ts",
-    "vite.config.ts"
+    "vite.config.ts",
+    "auto-imports.d.ts"
   ]
 }

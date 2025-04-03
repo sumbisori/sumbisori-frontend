@@ -2,34 +2,63 @@ import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import {
   YoutubeVideoType,
-  getContentsWave,
-  getYoutubeContents,
   ContentWaveInfo,
   WaveSpot,
   ContentWeatherInfo,
+} from '@/api/home/types';
+import {
+  getContentsWave,
+  getYoutubeContents,
   getContentsWeather,
 } from '@/api/home';
-import { HomeSpotHeader } from './HomeSpotHeader';
-import { HomeYoutubeList } from '../../../../components/HomeYoutubeList';
+import { HomeYoutubeList } from '../HomeYoutubeList';
 import { motion } from 'framer-motion';
-import { HomeYoutubeVideoIframe } from '../../../../components/HomeYoutubeList/HomeYoutubeVideoIframe';
-import { HomeContentsBox } from './HomeContentsBox';
-import { HomeContentsWeather } from './HomeContentsWeather';
-import RefreshIcon from '@/icons/refresh.svg?react';
-import { HomeCategoryLabel, HomeCategoryBar } from './HomeCategory';
-import { HomeContentsTraining } from './HomeContentsTraining';
-import { HomeSectionTitle } from '@/pages/Home/components/HomeContents/HomeSectionTitle';
+import { HomeYoutubeVideoIframe } from '../HomeYoutubeVideoIframe';
+import RefreshIcon from '@/icons/home/refresh.svg?react';
 import { queryKeys } from '@/query';
+import { HomeContentsBox } from '../HomeContentsBox';
+import { HomeSpotHeader } from '../HomeSpotHeader';
+import { HomeCategoryBar, HomeCategoryLabel } from '../HomeCategory';
+import { HomeSectionTitle } from '../HomeSectionTitle';
+import { HomeContentsWeather } from '../HomeContentsWeather';
+import { HomeContentsTraining } from '../HomeContentsTraining';
+import { toast } from '@/components/Toast';
+import { ERROR_MESSAGE } from '@/constant/src/error';
+import { AxiosError } from 'axios';
+import { ErrorResponse } from '@/api/types';
 
 export const HomeContents = () => {
   const [rotationCount, setRotationCount] = useState(0);
   const [selectedCategory, setSelectedCategory] =
     useState<HomeCategoryLabel>('home');
-
   const homeRef = useRef<HTMLDivElement>(null);
   const trainingRef = useRef<HTMLDivElement>(null);
   const tvRef = useRef<HTMLDivElement>(null);
   const seaRef = useRef<HTMLDivElement>(null);
+
+  // const layoutMargin = `-119px 0px -71px 0px`;
+
+  // const homeView = useInView(homeRef, {
+  //   amount: 'all',
+  //   margin: layoutMargin,
+  // });
+
+  // const trainingView = useInView(trainingRef, {
+  //   amount: 'all',
+  //   margin: layoutMargin,
+  // });
+
+  // const tvView = useInView(tvRef, {
+  //   amount: 0.7,
+  //   margin: layoutMargin,
+  // });
+
+  // const seaView = useInView(seaRef, {
+  //   amount: 'all',
+  //   margin: layoutMargin,
+  // });
+
+  const YOUTUBE_COUNT = 2;
 
   const scrollToRef = (ref: React.RefObject<HTMLDivElement>) => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
@@ -55,6 +84,7 @@ export const HomeContents = () => {
       waveHeightSuitability: 'DEFAULT',
       observationTime: '',
     },
+    retry: false,
   });
 
   const {
@@ -78,8 +108,10 @@ export const HomeContents = () => {
     isError: youtubeError,
     refetch: refetchYoutube,
   } = useQuery<YoutubeVideoType[]>({
-    queryKey: [queryKeys.youtubeContents],
-    queryFn: () => getYoutubeContents(),
+    queryKey: [queryKeys.youtubeContents, YOUTUBE_COUNT],
+    queryFn: () => {
+      return getYoutubeContents(YOUTUBE_COUNT);
+    },
     initialData: [],
   });
 

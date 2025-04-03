@@ -2,9 +2,13 @@ import {
   QueryCache,
   QueryClient,
   QueryClientProvider,
+  QueryErrorResetBoundary,
+  MutationCache,
 } from '@tanstack/react-query';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorPage } from '@/pages/ErrorPage';
 
 export const QueryProvider = ({ children }: { children: React.ReactNode }) => {
   const { handleError } = useErrorHandler();
@@ -14,10 +18,25 @@ export const QueryProvider = ({ children }: { children: React.ReactNode }) => {
         handleError(error);
       },
     }),
+    mutationCache: new MutationCache({
+      onError: (error) => {
+        handleError(error);
+      },
+    }),
   });
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            resetKeys={[queryClient]}
+            FallbackComponent={ErrorPage}
+          >
+            {children}
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
       <ReactQueryDevtools />
     </QueryClientProvider>
   );

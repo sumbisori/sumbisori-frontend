@@ -1,7 +1,7 @@
-import { ReservationHaenyeoPlace } from '@/api/haenyeoPlaces';
-import { Dialog } from '../../../../components/Dialog';
+import { HaenyeoPlaceDetail } from '@/api/haenyeoPlaces/types';
+import { Dialog } from '@/components/Dialog';
 interface Props {
-  selectedPlace: ReservationHaenyeoPlace;
+  selectedPlace: HaenyeoPlaceDetail;
   onPhoneClick: (phoneNumber: string) => void;
   onLinkClick: (link: string | null) => void;
 }
@@ -18,7 +18,7 @@ export const HaenyeoPlaceReservationMethodModal = ({
         <ul className="flex flex-col gap-4 text-center">
           <li>
             <button
-              className="hover:text-blue-500"
+              className="hover:text-blue-500 active:text-blue-500"
               onClick={() => onPhoneClick(selectedPlace.phoneNumber)}
             >
               전화 예약
@@ -27,7 +27,7 @@ export const HaenyeoPlaceReservationMethodModal = ({
           {selectedPlace.reservationLink && (
             <li>
               <button
-                className="hover:text-blue-500"
+                className="hover:text-blue-500 active:text-blue-500"
                 onClick={() => onLinkClick(selectedPlace.reservationLink)}
               >
                 예약 페이지 이동

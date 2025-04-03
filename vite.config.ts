@@ -4,7 +4,8 @@ import { VitePWA } from 'vite-plugin-pwa';
 import pluginChecker from 'vite-plugin-checker';
 import svgr from 'vite-plugin-svgr';
 import path from 'path';
-// https://vite.dev/config/
+import AutoImport from 'unplugin-auto-import/vite';
+
 export default defineConfig({
   base: '/',
   plugins: [
@@ -12,6 +13,15 @@ export default defineConfig({
     // PWA 설정
     svgr(),
     pluginChecker({ typescript: true }),
+    AutoImport({
+      imports: [
+        {
+          clsx: [['default', 'clsx']],
+        },
+      ],
+
+      dts: true,
+    }),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],

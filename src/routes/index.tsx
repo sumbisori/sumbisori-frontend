@@ -5,13 +5,14 @@ import MainLayout from '@/layouts/MainLayout';
 import { HaenyeoPlaces } from '@/pages/HaenyeoPlaces';
 import { Dictionary } from '@/pages/Dictionary';
 import { MyPage } from '@/pages/MyPage';
-import { MyPageReservation } from '@/pages/MyPageReservation';
-import { DictionaryRegistration } from '@/pages/DictionaryRegistration';
-import { DictionaryConfirm } from '@/pages/DictionaryConfirm';
+import { Journals } from '@/pages/Journals';
 import { MobileLayout } from '@/layouts/MobileLayout';
-import ScrollToTop from './ScrollToTop';
+import ScrollToTop from './src/ScrollToTop';
 import { HaenyeoPlacesDetail } from '@/pages/HaenyeoPlacesDetail';
-import { NotFound } from '@/pages/NotFound';
+import { ErrorPage } from '@/pages/ErrorPage';
+import { routes } from './src/routes';
+import { JournalCreate } from '@/pages/JournalCreate';
+import { JournalDetail } from '@/pages/JournalDetail';
 
 export const Router = () => {
   return (
@@ -19,33 +20,28 @@ export const Router = () => {
       <ScrollToTop />
       <Routes>
         <Route element={<MobileLayout />}>
-          <Route path="/login" element={<Login />} />
+          <Route path={routes.login} element={<Login />} />
           {/* Nav 와 Header 보유 */}
           <Route element={<MainLayout />}>
-            <Route path="/" element={<Navigate to="/home" />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/haenyeo-places" element={<HaenyeoPlaces />} />
-
-            <Route path="/dictionary" element={<Dictionary />} />
             <Route
-              path="/dictionary/registration"
-              element={<DictionaryRegistration />}
+              path={routes.default}
+              element={<Navigate to={routes.home} />}
             />
-            <Route
-              path="/dictionary/confirm/:seafood/:koreanName"
-              element={<DictionaryConfirm />}
-            />
-            <Route path="/my-page" element={<MyPage />} />
-            <Route
-              path="/my-page/reservation"
-              element={<MyPageReservation />}
-            />
+            <Route path={routes.home} element={<Home />} />
+            <Route path={routes.haenyeoPlaces} element={<HaenyeoPlaces />} />
+            <Route path={routes.dictionary} element={<Dictionary />} />
+            <Route path={routes.myPage} element={<MyPage />} />
           </Route>
           {/* Nav 보유 Header 미보유 */}
           <Route element={<MainLayout hasHeader={false} />}>
             <Route
-              path="/haenyeo-places/:placeId"
+              path={routes.haenyeoPlacesDetail(':placeId')}
               element={<HaenyeoPlacesDetail />}
+            />
+            <Route path={routes.journals} element={<Journals />} />
+            <Route
+              path={routes.journalsDetail(':journalId')}
+              element={<JournalDetail />}
             />
           </Route>
           {/* Nav 미보유 Header 보유 */}
@@ -54,8 +50,13 @@ export const Router = () => {
           <Route
             element={<MainLayout hasHeader={false} hasNavigation={false} />}
           >
-            <Route path="*" element={<NotFound />} />
+            <Route
+              path={routes.journalCreate(':step')}
+              element={<JournalCreate />}
+            />
           </Route>
+          {/* 에러 페이지 */}
+          <Route path="*" element={<ErrorPage type="not-found" />} />
         </Route>
       </Routes>
     </>

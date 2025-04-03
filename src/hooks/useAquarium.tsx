@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import Matter from 'matter-js';
-import { SeafoodCollected } from '@/api/home';
+import { SeafoodCollected } from '@/api/home/types';
 import { IMAGE_PATHS } from '@/constant';
+import { SeafoodImage } from '@/components/SeafoodImage';
 
 export const useAquarium = (
   containerRef: React.RefObject<HTMLDivElement>,
@@ -191,28 +192,31 @@ export const useAquarium = (
     ) => {
       seafoods.forEach((seafood) => {
         const seafoodImage = new Image();
-        seafoodImage.src = `${IMAGE_PATHS.SEAFOOD}/${seafood.englishName}.svg`;
+        seafoodImage.src = SeafoodImage({
+          seafoodName: seafood.englishName,
+          variant: 'text',
+        }) as string;
 
         seafoodImage.onload = () => {
-          for (let i = 0; i < seafood.count; i++) {
-            const body = Matter.Bodies.circle(
-              Math.random() * (width - 100) + 50,
-              Math.random() * (height - 100) + 50,
-              30,
-              {
-                restitution: 0.3,
-                friction: 0.1,
-                render: {
-                  sprite: {
-                    texture: seafoodImage.src,
-                    xScale: 0.6,
-                    yScale: 0.6,
-                  },
+          const newWidth = 65;
+          const scale = newWidth / seafoodImage.naturalWidth;
+          const body = Matter.Bodies.circle(
+            Math.random() * (width - 100) + 50,
+            Math.random() * (height - 100) + 50,
+            newWidth / 2,
+            {
+              restitution: 0.3,
+              friction: 0.1,
+              render: {
+                sprite: {
+                  texture: seafoodImage.src,
+                  xScale: scale,
+                  yScale: scale,
                 },
               },
-            );
-            Matter.World.add(engine.world, body);
-          }
+            },
+          );
+          Matter.World.add(engine.world, body);
         };
       });
     };

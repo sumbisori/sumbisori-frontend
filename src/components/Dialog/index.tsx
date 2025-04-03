@@ -7,7 +7,7 @@ import { useModalController } from '@/contexts/src/ModalContext';
 interface Props {
   id: string;
   children: ReactNode;
-  type?: 'alert' | 'list';
+  type?: 'alert' | 'list' | 'empty';
 }
 
 export function Dialog({ id, children, type = 'alert' }: Props) {
@@ -40,7 +40,7 @@ export function Dialog({ id, children, type = 'alert' }: Props) {
                     >
                       <button
                         onClick={() => closeModal(id)}
-                        className="absolute right-3 top-3 flex size-6 items-center justify-center rounded hover:bg-gray-300"
+                        className="absolute right-3 top-3 flex size-6 items-center justify-center rounded hover:bg-gray-300 active:bg-gray-300"
                       >
                         ✕
                       </button>
@@ -62,10 +62,25 @@ export function Dialog({ id, children, type = 'alert' }: Props) {
                       <div>{children}</div>
                       <button
                         onClick={() => closeModal(id)}
-                        className="flex items-center justify-center rounded text-lg font-medium hover:text-gray-500"
+                        className="flex items-center justify-center rounded text-lg font-medium hover:text-gray-500 active:text-gray-500"
                       >
                         취소
                       </button>
+                    </motion.div>
+                  </motion.div>
+                );
+              case 'empty':
+                return (
+                  <motion.div
+                    onClick={handleBackgroundClick}
+                    className="fixed inset-0 z-200 flex items-center justify-center bg-black/30"
+                    {...backDropAnimation}
+                  >
+                    <motion.div
+                      {...modalAnimation}
+                      className="flex w-full max-w-[20.75rem] flex-col gap-9 rounded-2xl bg-gray-050 shadow-lg"
+                    >
+                      <div>{children}</div>
                     </motion.div>
                   </motion.div>
                 );

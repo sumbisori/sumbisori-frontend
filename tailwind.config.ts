@@ -23,6 +23,7 @@ export default {
         'paragraph-sm': ['12px', '18px'], // .paragraph-sm
         caption: ['12px', '18px'], // .caption
         code: ['14px', '22px'], // <code>
+        xxs: ['10px'],
       },
       colors: {
         'charcoal-gray': '#525152',
@@ -180,12 +181,16 @@ export default {
         lg: '1.5rem', // $spacer-lg
         xl: '3rem', // $spacer-xl
         'layout-nav-height': 'calc(100vh - 4.438rem)', // $layout-nav-height
+        'header-height': '3.75rem', // $header-height
         'nav-height': '4.438rem', // $nav-height
       },
       aspectRatio: {
         '3/2': '3 / 2',
         '10/7': '10 / 7',
         '7/3': '7 / 3',
+      },
+      size: {
+        '50': '200px',
       },
       minWidth: {
         'full-layout': '20rem',

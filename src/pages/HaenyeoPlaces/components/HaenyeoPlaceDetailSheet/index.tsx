@@ -1,51 +1,57 @@
 import { motion } from 'framer-motion';
-import { ReservationHaenyeoPlace } from '@/api/haenyeoPlaces';
+import { HaenyeoPlaceDetail } from '@/api/haenyeoPlaces/types';
 import PhoneIcon from '@/icons/phone.svg?react';
 import MarkLinkIcon from '@/icons/mark-link.svg?react';
-import { RoundedButton } from '../../../../components/RoundedButton';
-import { useRef } from 'react';
+import { RoundedButton } from '@/components/RoundedButton';
 import { getPlacePrice } from '@/util/getPlacePrice';
 import { useModalController } from '@/contexts/src/ModalContext';
 import { HaenyeoPlaceReservationMethodModal } from '../../../HaenyeoPlacesDetail/components/HaenyeoPlaceReservationMethodModal';
 import DownArrowIcon from '@/icons/down-arrow.svg?react';
 
 interface Props {
-  selectedPlace: ReservationHaenyeoPlace;
+  selectedPlace: HaenyeoPlaceDetail;
   onMoreInfo: () => void;
 }
 
 export function HaenyeoPlaceDetailSheet({ selectedPlace, onMoreInfo }: Props) {
-  const { openModal } = useModalController();
+  const { openModal, closeModal } = useModalController();
+
   const handlePhoneClick = (phoneNumber: string) => {
-    window.open(`tel:${phoneNumber}`);
+    closeModal('reservation-method');
+    setTimeout(() => {
+      if (window.confirm(`${phoneNumber}로 전화를 거시겠습니까?`)) {
+        window.open(`tel:${phoneNumber}`);
+      }
+    }, 100);
   };
 
   const handleLinkClick = (link: string | null) => {
     if (!link) return;
-    window.open(link, '_blank');
+    closeModal('reservation-method');
+    setTimeout(() => {
+      if (window.confirm('네이버 지도를 열겠습니까?')) {
+        window.open(link, '_blank');
+      }
+    }, 100);
   };
 
   const handleOpenReservation = () => {
     openModal('reservation-method');
   };
 
-  const mainContainerRef = useRef<HTMLDivElement>(null);
-
   return (
     <>
       <div className="absolute bottom-0 left-0 z-100 w-full min-w-full-layout max-w-full-layout">
         <motion.div
           {...animation}
-          ref={mainContainerRef}
           className="relative flex flex-col justify-between rounded-t-xl bg-white px-5 pb-4 pt-11 shadow-lg"
         >
-          <div className="absolute -top-14 left-4 rounded-2xl border border-[#F6F6F6] bg-white p-1">
-            <img
-              src={selectedPlace.imageUrl}
-              alt="place-image"
-              className="size-[4.813rem] rounded-2xl"
-            />
-          </div>
+          <img
+            src={selectedPlace.imageUrl}
+            alt="place-image"
+            className="absolute -top-14 left-4 size-[4.813rem] rounded-[1.25rem] border-[5px] border-white object-cover shadow-sm"
+          />
+
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-3">
               <div>
@@ -77,8 +83,8 @@ export function HaenyeoPlaceDetailSheet({ selectedPlace, onMoreInfo }: Props) {
               className="flex w-full flex-nowrap gap-2"
             >
               <RoundedButton
-                buttonType="secondary"
-                styleClass="flex-1 flex justify-center items-center gap-1"
+                buttonType="white"
+                className="flex flex-1 items-center justify-center gap-1"
                 onClick={onMoreInfo}
               >
                 기본정보 더보기

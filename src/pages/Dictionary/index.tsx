@@ -1,7 +1,7 @@
-import { useMemo, useRef, useState } from 'react';
-import { SeafoodCard } from '@/components/SeafoodCard';
-import { Dialog } from '@/components/Dialog';
-import { DictionarySeafood, getSeafoods } from '@/api/dictionary';
+import { useMemo, useState } from 'react';
+import { SeafoodCard } from '@/pages/Dictionary/components/SeafoodCard';
+import { getSeafoodsCollectionsStatus } from '@/api/dictionary';
+import { DictionarySeafood } from '@/api/dictionary/types';
 import { useModalController } from '@/contexts/src/ModalContext';
 import { IMAGE_PATHS } from '@/constant';
 import Skeleton from '@/components/Skeleton';
@@ -12,18 +12,23 @@ import { DictionaryTitle } from '@/pages/Dictionary/components/DictionaryTitle';
 import { DictionarySubtitle } from '@/pages/Dictionary/components/DictionarySubtitle';
 import { DictionaryDialog } from '@/pages/Dictionary/components/DictionaryDialog';
 import { DictionaryAquarium } from './components/DictionaryAquarium';
+import { LargeButton } from '@/components/LargeButton';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '@/routes/src/routes';
 
 export const Dictionary = () => {
   const { openModal } = useModalController();
+  const navigate = useNavigate();
   const [selectedSeafood, setSelectedSeafood] =
     useState<DictionarySeafood | null>(null);
+
   const {
     data: seafoods,
-    isLoading,
+    isPending,
     isError,
   } = useQuery<DictionarySeafood[]>({
-    queryKey: [queryKeys.seafoods],
-    queryFn: getSeafoods,
+    queryKey: [queryKeys.seafoodsCollectionsStatus],
+    queryFn: getSeafoodsCollectionsStatus,
   });
 
   const handleSeafoodClick = (seafood: DictionarySeafood) => {
@@ -43,12 +48,12 @@ export const Dictionary = () => {
   return (
     <div>
       <DictionaryAquarium favoriteSeafoodName="SeaUrchin" />
-      <div className="flex flex-col p-4">
+      <div className="flex flex-col p-4 pb-[4.5rem]">
         <DictionaryTitle seafoodPercentage={seafoodPercentage} />
-        <DictionarySubtitle seafoodCount={seafoodCount} isLoading={isLoading} />
+        <DictionarySubtitle seafoodCount={seafoodCount} isLoading={isPending} />
         {!isError && (
           <div className="grid grid-cols-3 gap-3 p-3">
-            {isLoading &&
+            {isPending &&
               Array.from({ length: 18 }).map((_, index) => (
                 <Skeleton
                   key={index}
@@ -58,7 +63,7 @@ export const Dictionary = () => {
                 />
               ))}
 
-            {!isLoading &&
+            {!isPending &&
               seafoods &&
               seafoods.map((seafood) => (
                 <SeafoodCard
@@ -86,6 +91,12 @@ export const Dictionary = () => {
       {selectedSeafood && (
         <DictionaryDialog selectedSeafood={selectedSeafood} />
       )}
+
+      <div className="fixed inset-x-0 bottom-nav-height z-10 m-auto flex w-full min-w-full-layout max-w-full-layout px-5 pb-5 pt-3">
+        <LargeButton onClick={() => navigate(routes.journalCreate('calendar'))}>
+          일지 작성 및 도감등록
+        </LargeButton>
+      </div>
     </div>
   );
 };
