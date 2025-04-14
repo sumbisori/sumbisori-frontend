@@ -3,6 +3,7 @@ export const ERROR_MESSAGE = {
    * 공통
    */
   DEFAULT_ERROR: '알 수 없는 오류가 발생했습니다',
+  SIGNATURE_EXCEPTION: '올바르지 않은 접근입니다',
   /**
    * mutation  오류
    */

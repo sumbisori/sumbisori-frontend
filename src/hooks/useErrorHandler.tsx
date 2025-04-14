@@ -25,6 +25,11 @@ export const useErrorHandler = () => {
         navigate(routes.login, { replace: true });
         return;
       }
+      if (name === 'SIGNATURE_EXCEPTION') {
+        toast.warning(ERROR_MESSAGE.SIGNATURE_EXCEPTION);
+        // 로그아웃 시켜야함
+        return;
+      }
       if (name === 'WAVE_DATA_NOT_FOUND') {
         toast.warning(ERROR_MESSAGE.WAVE_DATA_NOT_FOUND);
         return;
