@@ -17,14 +17,14 @@ export const ProfileBadgeSection = ({ imageUrl }: Props) => {
         />
         <p className="text-center text-xs font-semibold">숨비 님</p>
       </div>
-      <div className="flex flex-1 flex-col gap-4">
-        <div className="flex justify-between">
-          <div className="flex flex-col gap-1 pl-2">
+      <div className="flex flex-1 flex-col justify-center gap-4">
+        <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-2 pl-2">
             <Chip type="secondary">대표배지</Chip>
-            <div className="flex items-center gap-1">
+            <div className="flex flex-col gap-1">
               <h5 className="text-xl font-semibold text-black">혼저옵서예</h5>
+              <p className="text-sm text-black">해녀의 초대장이 도착했어요</p>
             </div>
-            <p className="text-sm text-black">해녀의 초대장이 도착했어요</p>
           </div>
           <SumbiBadge type="gold" />
         </div>

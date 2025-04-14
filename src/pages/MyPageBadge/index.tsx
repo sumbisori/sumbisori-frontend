@@ -11,6 +11,7 @@ import { SumbiBadge } from '@/components/SumbiBadge';
 
 export const MyPageBadge = () => {
   const navigate = useNavigate();
+
   const { data: badgeList } = useQuery({
     queryKey: [queryKeys.myPageBadge],
     queryFn: getMyPageBadge,
@@ -19,7 +20,7 @@ export const MyPageBadge = () => {
   return (
     <div className="relative flex h-full min-h-layout-nav-height flex-col pt-header-height">
       <NavigatorHeader
-        title="체험 일지"
+        title="활동"
         onLeftClick={() => navigate(-1)}
         onRightClick={() => toast.info('준비중입니다.')}
         className="bg-gray-100 shadow-[0_2px_3px_-1px_rgba(0,0,0,0.1)]"
