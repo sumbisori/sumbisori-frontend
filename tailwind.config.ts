@@ -166,7 +166,9 @@ export default {
         },
         redbrown: {
           '050': '#FAF6F2', // $redbrown-050
+          200: '#F5E6D9', // $redbrown-200
           600: '#BD936F', // $redbrown-600
+          900: '#8C6345', // $redbrown-900
         },
         primary: '#1D6CE0', // $primary
         secondary: '#FAA55C', // $secondary

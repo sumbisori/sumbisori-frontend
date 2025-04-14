@@ -3,7 +3,7 @@ import dayjs from '@/util/dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import { Dayjs } from 'dayjs';
 import { BottomSheet } from 'react-spring-bottom-sheet';
-import '@/styles/bottomSheet.css';
+
 import ArrowDownFullIcon from '@/icons/arrow-down-full.svg?react';
 import clsx from 'clsx';
 import { Picker } from '../Picker';

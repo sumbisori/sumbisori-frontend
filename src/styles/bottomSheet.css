@@ -2,8 +2,8 @@
   display: flex;
   background: #fff;
   background: var(--rsbs-bg, #fff);
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
   flex-direction: column;
   height: 0px;
   height: var(--rsbs-overlay-h, 0px);
