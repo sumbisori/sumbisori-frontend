@@ -18,7 +18,7 @@ export const MyPageContent = () => {
     window.location.href = `${API_URL}/oauth2/authorization/kakao/logout`;
   };
   return (
-    <div className="p-[1.125rem]">
+    <div className="px-4 py-3">
       <MyPageButton
         icon={<ReservationListIcon />}
         onClick={() => {

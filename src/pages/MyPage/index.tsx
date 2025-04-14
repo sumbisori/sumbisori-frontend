@@ -4,6 +4,8 @@ import { Profile } from '@/pages/MyPage/components/Profile';
 import { getUserInfo } from '@/api/myPage';
 import { UserInfo } from '@/api/myPage/types';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
+import { Divider } from '@/components/Divider';
+import { MyPageBadge } from './components/MyPageBadge';
 
 export const MyPage = () => {
   const { handleError } = useErrorHandler();
@@ -11,8 +13,7 @@ export const MyPage = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>({
     nickname: '',
     count: 0,
-    profileImageUrl:
-      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+    profileImageUrl: '/assets/images/default-profile.webp',
   });
 
   const fetchUserInfo = async () => {
@@ -31,7 +32,9 @@ export const MyPage = () => {
   return (
     <div className="flex flex-col">
       <Profile userInfo={userInfo} />
-      <div className="h-[0.313rem] w-full bg-gray-050"></div>
+      <Divider height={3} color="bg-gray-050" />
+      <MyPageBadge />
+      <Divider height={3} color="bg-gray-050" />
       <MyPageContent />
     </div>
   );

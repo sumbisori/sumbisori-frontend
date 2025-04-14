@@ -6,7 +6,7 @@ interface Props {
 
 export const Profile = ({ userInfo }: Props) => {
   return (
-    <div className="flex gap-3 p-[1.125rem]">
+    <div className="flex gap-3 px-4 py-2.5">
       <img
         src={userInfo.profileImageUrl}
         alt="profile"
