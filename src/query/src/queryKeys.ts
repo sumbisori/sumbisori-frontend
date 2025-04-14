@@ -12,4 +12,5 @@ export const queryKeys = {
   journals: 'journals',
   journalDetail: 'journalDetail',
   journalDetailCollections: 'journalDetailCollections',
+  myPageBadge: 'myPageBadge',
 };

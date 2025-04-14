@@ -1,7 +1,9 @@
 import { Chip } from '@/components/Chip';
 import { SumbiBadge } from '@/components/SumbiBadge';
+import { routes } from '@/routes/src/routes';
 import { useNavigate } from 'react-router-dom';
-export const MyPageBadge = () => {
+
+export const MyPageBadgeSection = () => {
   const navigate = useNavigate();
   return (
     <div className="px-4 py-5">
@@ -16,7 +18,10 @@ export const MyPageBadge = () => {
           </div>
           <SumbiBadge type="gold" />
         </div>
-        <button className="flex items-center justify-between rounded-lg bg-gray-050 px-4 py-3">
+        <button
+          onClick={() => navigate(routes.myPageBadge)}
+          className="flex items-center justify-between rounded-lg bg-gray-050 px-4 py-3"
+        >
           <p className="text-base font-medium text-black">나의 뱃지</p>
           <p className="text-base font-semibold text-black">
             <span className="text-blue-700">5</span>

@@ -1,6 +1,8 @@
+import { BadgeColorType } from '@/api/myPageBadge/types';
+
 interface Props {
   size?: number;
-  type: 'gold' | 'silver' | 'bronze' | 'green' | 'purple' | 'default';
+  type: BadgeColorType;
 }
 
 export const SumbiBadge = ({ size = 64, type }: Props) => {

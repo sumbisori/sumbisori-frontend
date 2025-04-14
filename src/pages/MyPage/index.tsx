@@ -5,7 +5,7 @@ import { getUserInfo } from '@/api/myPage';
 import { UserInfo } from '@/api/myPage/types';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import { Divider } from '@/components/Divider';
-import { MyPageBadge } from './components/MyPageBadge';
+import { MyPageBadgeSection } from './components/MyPageBadgeSection';
 
 export const MyPage = () => {
   const { handleError } = useErrorHandler();
@@ -33,7 +33,7 @@ export const MyPage = () => {
     <div className="flex flex-col">
       <Profile userInfo={userInfo} />
       <Divider height={3} color="bg-gray-050" />
-      <MyPageBadge />
+      <MyPageBadgeSection />
       <Divider height={3} color="bg-gray-050" />
       <MyPageContent />
     </div>

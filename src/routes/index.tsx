@@ -13,6 +13,7 @@ import { ErrorPage } from '@/pages/ErrorPage';
 import { routes } from './src/routes';
 import { JournalCreate } from '@/pages/JournalCreate';
 import { JournalDetail } from '@/pages/JournalDetail';
+import { MyPageBadge } from '@/pages/MyPageBadge';
 
 export const Router = () => {
   return (
@@ -43,6 +44,7 @@ export const Router = () => {
               path={routes.journalsDetail(':journalId')}
               element={<JournalDetail />}
             />
+            <Route path={routes.myPageBadge} element={<MyPageBadge />} />
           </Route>
           {/* Nav 미보유 Header 보유 */}
           <Route element={<MainLayout hasNavigation={false} />}></Route>

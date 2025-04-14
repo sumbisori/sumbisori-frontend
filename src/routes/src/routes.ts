@@ -35,6 +35,7 @@ export const routes = {
    * 마이 페이지
    */
   myPage: '/my-page',
+  myPageBadge: '/my-page/badge',
   /**
    * "/journals"
    * 체험 일지 목록 페이지
