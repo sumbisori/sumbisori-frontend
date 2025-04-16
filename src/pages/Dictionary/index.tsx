@@ -94,7 +94,7 @@ export const Dictionary = () => {
 
       <div className="fixed inset-x-0 bottom-nav-height z-10 m-auto flex w-full min-w-full-layout max-w-full-layout px-5 pb-5 pt-3">
         <LargeButton onClick={() => navigate(routes.journalCreate('calendar'))}>
-          일지 작성 및 도감등록
+          일지 작성 및 도감 등록
         </LargeButton>
       </div>
     </div>
