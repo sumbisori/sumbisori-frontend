@@ -6,6 +6,7 @@ import BellWhiteIcon from '@/icons/Icon_bell_white.svg?react';
 import ContourIcon from '@/icons/contour.svg?react';
 import { useHeaderVisibility } from '@/contexts/src/HeaderVisibilityContext';
 import { routes } from '@/routes/src/routes';
+import { toast } from '@/components/Toast';
 
 interface Props {
   type: 'dark' | 'light';
@@ -49,13 +50,16 @@ export const Header = ({ type, caption, absolute }: Props) => {
         )}
       </div>
 
-      <div className="flex items-center">
+      <button
+        className="flex items-center"
+        onClick={() => toast.info('준비중입니다.')}
+      >
         {type === 'dark' ? (
           <BellBlackIcon className="cursor-pointer" />
         ) : (
           <BellWhiteIcon className="cursor-pointer" />
         )}
-      </div>
+      </button>
     </header>
   );
 };

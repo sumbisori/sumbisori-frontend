@@ -28,9 +28,8 @@ export const MyPageBadge = () => {
   return (
     <>
       <NavigatorHeader
-        title="활동"
+        title="배지"
         onLeftClick={() => navigate(-1)}
-        onRightClick={() => toast.info('준비중입니다.')}
         className="bg-gray-100 shadow-[0_2px_3px_-1px_rgba(0,0,0,0.1)]"
       />
       <div className="relative flex h-full min-h-layout-nav-height flex-col pt-header-height">
