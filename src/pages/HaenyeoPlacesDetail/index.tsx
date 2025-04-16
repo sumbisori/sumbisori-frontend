@@ -141,7 +141,7 @@ export const HaenyeoPlacesDetail = () => {
         </div>
 
         {/* 체험 상세정보 */}
-        <div className="bg-gray-200 px-4 pb-[4.5rem] pt-6">
+        <div className="bg-gray-200 px-4 pb-custom-72px-spacer pt-6">
           <motion.div
             className="flex w-full flex-col gap-6 rounded-2xl bg-white p-6"
             initial="hidden"

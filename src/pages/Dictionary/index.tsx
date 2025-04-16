@@ -42,19 +42,19 @@ export const Dictionary = () => {
   );
 
   const seafoodPercentage = useMemo(() => {
-    return ((seafoodCount / 18) * 100).toFixed(2);
+    return ((seafoodCount / 16) * 100).toFixed(2);
   }, [seafoodCount]);
 
   return (
     <div>
       <DictionaryAquarium favoriteSeafoodName="SeaUrchin" />
-      <div className="flex flex-col p-4 pb-[4.5rem]">
+      <div className="flex flex-col p-4 pb-custom-72px-spacer">
         <DictionaryTitle seafoodPercentage={seafoodPercentage} />
         <DictionarySubtitle seafoodCount={seafoodCount} isLoading={isPending} />
         {!isError && (
           <div className="grid grid-cols-3 gap-3 p-3">
             {isPending &&
-              Array.from({ length: 18 }).map((_, index) => (
+              Array.from({ length: 16 }).map((_, index) => (
                 <Skeleton
                   key={index}
                   className="aspect-square"

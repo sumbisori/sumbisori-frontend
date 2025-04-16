@@ -189,6 +189,7 @@ export default {
         'layout-nav-height': 'calc(100vh - 4.438rem)', // $layout-nav-height
         'header-height': '3.75rem', // $header-height
         'nav-height': '4.438rem', // $nav-height
+        'custom-72px-spacer': '4.5rem', // $custom-72px-spacer fixed 버튼 또는 상단 고정 요소에 사용
       },
       aspectRatio: {
         '3/2': '3 / 2',

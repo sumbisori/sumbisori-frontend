@@ -13,7 +13,7 @@ export const ProfileBadgeSection = ({ imageUrl }: Props) => {
         <Image
           src={imageUrl}
           alt="profile"
-          className="size-[4.5rem] rounded-full border-2 border-gray-500"
+          className="size-custom-72px-spacer rounded-full border-2 border-gray-500"
         />
         <p className="text-center text-xs font-semibold">숨비 님</p>
       </div>

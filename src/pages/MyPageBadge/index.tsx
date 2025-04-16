@@ -25,17 +25,17 @@ export const MyPageBadge = () => {
 
   return (
     <>
+      <NavigatorHeader
+        title="활동"
+        onLeftClick={() => navigate(-1)}
+        onRightClick={() => toast.info('준비중입니다.')}
+        className="bg-gray-100 shadow-[0_2px_3px_-1px_rgba(0,0,0,0.1)]"
+      />
       <div className="relative flex h-full min-h-layout-nav-height flex-col pt-header-height">
-        <NavigatorHeader
-          title="활동"
-          onLeftClick={() => navigate(-1)}
-          onRightClick={() => toast.info('준비중입니다.')}
-          className="bg-gray-100 shadow-[0_2px_3px_-1px_rgba(0,0,0,0.1)]"
-        />
         <div className="flex flex-1 flex-col gap-3 bg-gray-100 p-5">
           <div className="flex flex-col gap-8">
             <ProfileBadgeSection imageUrl="" />
-            <BadgeCount />
+            <BadgeCount count={5} total={19} />
           </div>
           <div className="grid grid-cols-3 gap-y-12 rounded-lg bg-white p-6">
             {badgeList?.map((badge) => (

@@ -227,10 +227,7 @@ export const JournalCreate = () => {
   }
 
   return (
-    <div className="relative flex h-full min-h-screen flex-col pt-[4.5rem]">
-      {mutation.isPending && (
-        <Spinner className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2" />
-      )}
+    <>
       <NavigatorHeader
         title="체험 일지"
         onLeftClick={step === 'calendar' ? undefined : handleBackClick}
@@ -245,91 +242,96 @@ export const JournalCreate = () => {
         }
         className={step === 'register' ? 'bg-gray-100' : 'bg-white'}
       />
-      <form className="flex flex-1 flex-col bg-gray-050 pb-[4.5rem]">
-        <div className="flex-1">
-          {step === 'calendar' && (
-            <SelectCalendar
-              value={journalForm.experienceDate}
-              onChange={(date) =>
-                updateJournal({
-                  experienceDate: date,
-                })
+      <div className="relative flex h-full min-h-screen flex-col pt-custom-72px-spacer">
+        {mutation.isPending && (
+          <Spinner className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2" />
+        )}
+        <form className="flex flex-1 flex-col bg-gray-050 pb-custom-72px-spacer">
+          <div className="flex-1">
+            {step === 'calendar' && (
+              <SelectCalendar
+                value={journalForm.experienceDate}
+                onChange={(date) =>
+                  updateJournal({
+                    experienceDate: date,
+                  })
+                }
+              />
+            )}
+            {step === 'place' && (
+              <SelectPlace
+                selectedPlace={journalForm.place}
+                onPlaceChange={(place) =>
+                  updateJournal({
+                    place: place,
+                  })
+                }
+              />
+            )}
+            {step === 'weather' && (
+              <SelectWeather
+                selectedWeather={journalForm.weather}
+                onWeatherChange={(weather) =>
+                  updateJournal({
+                    weather,
+                  })
+                }
+                selectedCompanion={journalForm.companionType}
+                onCompanionChange={(companion) =>
+                  updateJournal({
+                    companionType: companion,
+                  })
+                }
+              />
+            )}
+            {step === 'photo' && (
+              <SelectPhoto
+                files={journalForm.files}
+                onFilesChange={(files) =>
+                  updateJournal({
+                    files: files,
+                  })
+                }
+                experience={journalForm.impression}
+                onExperienceChange={(experience) =>
+                  updateJournal({
+                    impression: experience,
+                  })
+                }
+                satisfaction={journalForm.satisfaction}
+                onSatisfactionChange={(satisfaction) =>
+                  updateJournal({
+                    satisfaction,
+                  })
+                }
+              />
+            )}
+            {step === 'seafood' && (
+              <SelectCollectedSeafood
+                collections={journalForm.collections}
+                onCollectionsChange={(collections) =>
+                  updateJournal({
+                    collections,
+                  })
+                }
+                onSkipClick={handleSkipClick}
+              />
+            )}
+            {step === 'register' && <Register />}
+          </div>
+          <div className="fixed inset-x-0 bottom-0 z-10 m-auto flex w-full min-w-full-layout max-w-full-layout px-5 pb-5 pt-3">
+            <LargeButton
+              onClick={
+                step === 'register' ? handleCompleteClick : handleNextClick
               }
-            />
-          )}
-          {step === 'place' && (
-            <SelectPlace
-              selectedPlace={journalForm.place}
-              onPlaceChange={(place) =>
-                updateJournal({
-                  place: place,
-                })
-              }
-            />
-          )}
-          {step === 'weather' && (
-            <SelectWeather
-              selectedWeather={journalForm.weather}
-              onWeatherChange={(weather) =>
-                updateJournal({
-                  weather,
-                })
-              }
-              selectedCompanion={journalForm.companionType}
-              onCompanionChange={(companion) =>
-                updateJournal({
-                  companionType: companion,
-                })
-              }
-            />
-          )}
-          {step === 'photo' && (
-            <SelectPhoto
-              files={journalForm.files}
-              onFilesChange={(files) =>
-                updateJournal({
-                  files: files,
-                })
-              }
-              experience={journalForm.impression}
-              onExperienceChange={(experience) =>
-                updateJournal({
-                  impression: experience,
-                })
-              }
-              satisfaction={journalForm.satisfaction}
-              onSatisfactionChange={(satisfaction) =>
-                updateJournal({
-                  satisfaction,
-                })
-              }
-            />
-          )}
-          {step === 'seafood' && (
-            <SelectCollectedSeafood
-              collections={journalForm.collections}
-              onCollectionsChange={(collections) =>
-                updateJournal({
-                  collections,
-                })
-              }
-              onSkipClick={handleSkipClick}
-            />
-          )}
-          {step === 'register' && <Register />}
-        </div>
-        <div className="fixed inset-x-0 bottom-0 z-10 m-auto flex w-full min-w-full-layout max-w-full-layout px-5 pb-5 pt-3">
-          <LargeButton
-            onClick={
-              step === 'register' ? handleCompleteClick : handleNextClick
-            }
-            type={step === 'register' ? 'submit' : 'button'}
-            disabled={handleNextDisabled()}
-          >
-            {step === 'register' ? '등록' : '다음'}
-          </LargeButton>
-        </div>
-      </form>
-    </div>
+              type={step === 'register' ? 'submit' : 'button'}
+              disabled={handleNextDisabled()}
+            >
+              {step === 'register' ? '등록' : '다음'}
+            </LargeButton>
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
