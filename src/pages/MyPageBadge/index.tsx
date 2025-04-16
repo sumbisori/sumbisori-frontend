@@ -6,19 +6,21 @@ import { toast } from '@/components/Toast';
 import { getMyPageBadge } from '@/api/myPageBadge';
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/query';
-import { parseBadgeType } from '@/util/parseBadgeType';
-import { SumbiBadge } from '@/components/SumbiBadge';
-import { BottomSheet } from 'react-spring-bottom-sheet';
 import { useState } from 'react';
 import { Badge } from '@/api/myPageBadge/types';
 import { BadgeInfoBottomSheet } from './components/BadgeInfoBottomSheet';
+import { BadgeList } from './components/BadgeList';
 
 export const MyPageBadge = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
 
-  const { data: badgeList } = useQuery<Badge[]>({
+  const {
+    data: badgeList,
+    isPending,
+    isError,
+  } = useQuery<Badge[]>({
     queryKey: [queryKeys.myPageBadge],
     queryFn: getMyPageBadge,
   });
@@ -37,29 +39,16 @@ export const MyPageBadge = () => {
             <ProfileBadgeSection imageUrl="" />
             <BadgeCount count={5} total={19} />
           </div>
-          <div className="grid grid-cols-3 gap-y-12 rounded-lg bg-white p-6">
-            {badgeList?.map((badge) => (
-              <button
-                key={badge.badgeType}
-                className={clsx(
-                  'flex flex-col items-center gap-4',
-                  !badge.isAcquired && 'cursor-default',
-                )}
-                onClick={() => {
-                  setSelectedBadge(badge);
-                  setOpen(true);
-                }}
-              >
-                <SumbiBadge
-                  type={
-                    badge.isAcquired
-                      ? parseBadgeType(badge.badgeType)
-                      : 'default'
-                  }
-                />
-                <p className="text-sm">{badge.badgeName}</p>
-              </button>
-            ))}
+          <div className="flex-1 rounded-lg bg-white p-6">
+            <BadgeList
+              badgeList={badgeList || []}
+              onBadgeClick={(badge) => {
+                setSelectedBadge(badge);
+                setOpen(true);
+              }}
+              isPending={isPending}
+              isError={isError}
+            />
           </div>
         </div>
       </div>
