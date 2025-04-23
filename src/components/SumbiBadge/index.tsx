@@ -112,7 +112,7 @@ export const SumbiBadge = ({
           }}
         >
           <div className="flex flex-col items-center gap-1">
-            <p className="text-center text-lg font-semibold">
+            <p className="text-center text-base font-semibold">
               {backLevelDescriptionText}
             </p>
             <p className="text-center text-sm font-medium">

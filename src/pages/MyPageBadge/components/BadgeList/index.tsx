@@ -62,7 +62,7 @@ export const BadgeList = ({
         <button
           key={badge.badgeId}
           className={clsx(
-            'flex flex-col items-center gap-4',
+            'flex flex-col items-center gap-4 focus:outline-none',
             !badge.isAcquired && 'cursor-default',
           )}
           onClick={() => {

@@ -15,7 +15,7 @@ export const LargeButton = ({
   return (
     <button
       className={clsx(
-        'flex w-full justify-center rounded-md py-2 text-base',
+        'flex w-full justify-center rounded-md py-2 text-base focus:outline-none',
         props.disabled
           ? 'w-full cursor-not-allowed rounded-md border border-gray-500 bg-gray-100 py-2 text-base text-gray-500'
           : BUTTON_VARIANTS[buttonType],
