@@ -80,6 +80,9 @@ export const BadgeInfoBottomSheet = ({
           return '아직 획득하지 못했어요';
       }
     }
+    if (isAllAcquired && totalBadgeCount === 1) {
+      return '배지를 획득하셨네요!';
+    }
     if (isAllAcquired) {
       return <span className="text-blue-700">모든 배지를 획득하셨네요!</span>;
     }
@@ -180,7 +183,7 @@ export const BadgeInfoBottomSheet = ({
                 </h3>
                 <p
                   className={clsx(
-                    'text-base',
+                    'text-center text-base',
                     isSomeAcquired ? 'text-black' : 'text-gray-500',
                   )}
                 >
