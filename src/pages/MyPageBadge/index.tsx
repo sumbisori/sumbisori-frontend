@@ -15,7 +15,7 @@ import { getUserInfo } from '@/api/myPage';
 export const MyPageBadge = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
+  const [selectedBadgeId, setSelectedBadgeId] = useState<number | null>(null);
 
   const {
     data: userInfo,
@@ -58,9 +58,9 @@ export const MyPageBadge = () => {
           <div className="flex-1 rounded-lg bg-white p-6">
             <BadgeList
               badgeList={badgeList || []}
-              onBadgeClick={(badge) => {
-                setSelectedBadge(badge);
+              onBadgeClick={(badgeId) => {
                 setOpen(true);
+                setSelectedBadgeId(badgeId);
               }}
               isPending={badgeListPending}
               isError={badgeListError}
@@ -68,11 +68,11 @@ export const MyPageBadge = () => {
           </div>
         </div>
       </div>
-      {selectedBadge && (
+      {selectedBadgeId && (
         <BadgeInfoBottomSheet
           open={open}
           setOpen={setOpen}
-          selectedBadge={selectedBadge}
+          selectedBadgeId={selectedBadgeId}
         />
       )}
     </>

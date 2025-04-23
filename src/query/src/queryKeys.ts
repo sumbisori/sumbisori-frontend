@@ -14,4 +14,5 @@ export const queryKeys = {
   journalDetailCollections: 'journalDetailCollections',
   myPage: 'myPage',
   myPageBadge: 'myPageBadge',
+  myPageBadgeDetail: 'myPageBadgeDetail',
 };

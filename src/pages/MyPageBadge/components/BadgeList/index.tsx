@@ -9,7 +9,7 @@ interface Props {
   isPending: boolean;
   isError: boolean;
   badgeList: Badge[];
-  onBadgeClick: (badge: Badge) => void;
+  onBadgeClick: (badgeId: number) => void;
 }
 
 export const BadgeList = ({
@@ -66,8 +66,7 @@ export const BadgeList = ({
             !badge.isAcquired && 'cursor-default',
           )}
           onClick={() => {
-            if (!badge.isAcquired) return;
-            onBadgeClick(badge);
+            onBadgeClick(badge.badgeId);
           }}
         >
           <SumbiBadge

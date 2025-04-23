@@ -7,6 +7,8 @@ export const parseBadgeType = (
   switch (badgeType) {
     case 'BASIC':
       switch (badgeLevel) {
+        case 0:
+          return 'default';
         case 1:
           return 'green';
         default:
@@ -25,6 +27,8 @@ export const parseBadgeType = (
       }
     case 'SPECIAL':
       switch (badgeLevel) {
+        case 0:
+          return 'default';
         case 1:
           return 'purple';
         default:
