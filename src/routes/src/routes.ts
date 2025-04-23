@@ -15,6 +15,11 @@ export const routes = {
    */
   home: '/home',
   /**
+   * "/not-found"
+   * 404 페이지
+   */
+  'not-found': '/not-found',
+  /**
    * "/haenyeo-places"
    * 해녀체험장 지도 페이지
    */

@@ -85,7 +85,7 @@ export const HaenyeoPlacesDetail = () => {
   }
 
   if (isError || !selectedPlace) {
-    return <Navigate to="/not-found" replace />;
+    return <Navigate to={routes['not-found']} replace />;
   }
 
   return (

@@ -36,7 +36,7 @@ export const BadgeList = ({
     );
   }
 
-  if (isError) {
+  if (isError || !badgeList) {
     return (
       <ImageWithTextAlert
         src={`${IMAGE_PATHS.ROOT}/haenyeo_sad.png`}
@@ -58,14 +58,15 @@ export const BadgeList = ({
 
   return (
     <div className="grid grid-cols-3 gap-y-12">
-      {badgeList?.map((badge) => (
+      {badgeList.map((badge) => (
         <button
-          key={badge.badgeType}
+          key={badge.badgeId}
           className={clsx(
             'flex flex-col items-center gap-4',
             !badge.isAcquired && 'cursor-default',
           )}
           onClick={() => {
+            if (!badge.isAcquired) return;
             onBadgeClick(badge);
           }}
         >

@@ -1,38 +1,33 @@
-import { useEffect, useState } from 'react';
 import { MyPageContent } from '@/pages/MyPage/components/MyPageContent';
 import { Profile } from '@/pages/MyPage/components/Profile';
 import { getUserInfo } from '@/api/myPage';
 import { UserInfo } from '@/api/myPage/types';
-import { useErrorHandler } from '@/hooks/useErrorHandler';
 import { Divider } from '@/components/Divider';
 import { MyPageBadgeSection } from './components/MyPageBadgeSection';
+import { useQuery } from '@tanstack/react-query';
+import { queryKeys } from '@/query';
+import { Navigate } from 'react-router-dom';
+import { routes } from '@/routes/src/routes';
+import { Spinner } from '@/components/Spinner';
+import { MyPageSkeleton } from './components/MyPageSkeleton';
 
 export const MyPage = () => {
-  const { handleError } = useErrorHandler();
-
-  const [userInfo, setUserInfo] = useState<UserInfo>({
-    nickname: '',
-    profileImageUrl: '/assets/images/default-profile.webp',
-    badgeName: '',
-    badgeType: 'BASIC',
-    badgeDescription: '',
-    level: 0,
-    totalBadgeCount: 0,
-    acquiredBadgeCount: 0,
+  const {
+    data: userInfo,
+    isPending,
+    isError,
+  } = useQuery<UserInfo>({
+    queryKey: [queryKeys.myPage],
+    queryFn: getUserInfo,
   });
 
-  const fetchUserInfo = async () => {
-    try {
-      const response = await getUserInfo();
-      setUserInfo(response);
-    } catch (error) {
-      handleError(error);
-    }
-  };
+  if (isPending) {
+    return <MyPageSkeleton />;
+  }
 
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
+  if (isError) {
+    return <Navigate to={routes['not-found']} replace />;
+  }
 
   return (
     <div className="flex flex-col">

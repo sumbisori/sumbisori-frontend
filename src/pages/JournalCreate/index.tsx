@@ -223,7 +223,7 @@ export const JournalCreate = () => {
   }
 
   if (!step || !stepList.includes(step as JournalStep)) {
-    return <Navigate to="/not-found" replace />;
+    return <Navigate to={routes['not-found']} replace />;
   }
 
   return (
