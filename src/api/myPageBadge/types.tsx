@@ -1,9 +1,15 @@
 export interface Badge {
-  badgeType: string;
+  badgeId: number;
+  badgeLevel: BadgeLevel;
   badgeName: string;
-  badgeDescription: string;
+  badgeType: BadgeType;
   isAcquired: boolean;
+  isRepresentative: boolean;
 }
+
+export type BadgeType = 'BASIC' | 'RANKED' | 'SPECIAL';
+
+export type BadgeLevel = 0 | 1 | 2 | 3;
 
 export type BadgeColorType =
   | 'gold'

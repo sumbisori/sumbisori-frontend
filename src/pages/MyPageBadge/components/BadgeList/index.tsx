@@ -71,7 +71,9 @@ export const BadgeList = ({
         >
           <SumbiBadge
             type={
-              badge.isAcquired ? parseBadgeType(badge.badgeType) : 'default'
+              badge.isAcquired
+                ? parseBadgeType(badge.badgeType, badge.badgeLevel)
+                : 'default'
             }
           />
           <p className="text-sm">{badge.badgeName}</p>

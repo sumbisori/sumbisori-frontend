@@ -97,7 +97,7 @@ export const BadgeInfoBottomSheet = ({
                 selectedBadge.isAcquired ? 'text-black' : 'text-gray-500',
               )}
             >
-              {selectedBadge.badgeDescription}
+              {/* {selectedBadge.badgeDescription} */}
             </p>
           </div>
         </div>

@@ -14,7 +14,6 @@ export const Profile = ({ userInfo }: Props) => {
       />
       <div className="flex flex-col items-start self-center">
         <div className="text-xl font-semibold">{userInfo.nickname} 님</div>
-        <div className="text-sm">채취 횟수 : {userInfo.count}</div>
       </div>
     </div>
   );

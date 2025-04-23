@@ -12,8 +12,13 @@ export const MyPage = () => {
 
   const [userInfo, setUserInfo] = useState<UserInfo>({
     nickname: '',
-    count: 0,
     profileImageUrl: '/assets/images/default-profile.webp',
+    badgeName: '',
+    badgeType: 'BASIC',
+    badgeDescription: '',
+    level: 0,
+    totalBadgeCount: 0,
+    acquiredBadgeCount: 0,
   });
 
   const fetchUserInfo = async () => {
@@ -33,7 +38,14 @@ export const MyPage = () => {
     <div className="flex flex-col">
       <Profile userInfo={userInfo} />
       <Divider height={3} color="bg-gray-050" />
-      <MyPageBadgeSection />
+      <MyPageBadgeSection
+        badgeName={userInfo.badgeName}
+        badgeType={userInfo.badgeType}
+        badgeDescription={userInfo.badgeDescription}
+        level={userInfo.level}
+        totalBadgeCount={userInfo.totalBadgeCount}
+        acquiredBadgeCount={userInfo.acquiredBadgeCount}
+      />
       <Divider height={3} color="bg-gray-050" />
       <MyPageContent />
     </div>

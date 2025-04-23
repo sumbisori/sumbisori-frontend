@@ -1,12 +1,35 @@
-import { BadgeColorType } from '@/api/myPageBadge/types';
+import { BadgeColorType, BadgeType } from '@/api/myPageBadge/types';
 
-export const parseBadgeType = (badgeType: string): BadgeColorType => {
+export const parseBadgeType = (
+  badgeType: BadgeType,
+  badgeLevel: number,
+): BadgeColorType => {
   switch (badgeType) {
-    case 'FIRST_LOGIN':
-    case 'FIRST_EXPERIENCE':
-    case 'THIRD_EXPERIENCE':
-    case 'FIRST_COLLECTION':
-      return 'green';
+    case 'BASIC':
+      switch (badgeLevel) {
+        case 1:
+          return 'green';
+        default:
+          return 'default';
+      }
+    case 'RANKED':
+      switch (badgeLevel) {
+        case 1:
+          return 'bronze';
+        case 2:
+          return 'silver';
+        case 3:
+          return 'gold';
+        default:
+          return 'default';
+      }
+    case 'SPECIAL':
+      switch (badgeLevel) {
+        case 1:
+          return 'purple';
+        default:
+          return 'default';
+      }
     default:
       return 'default';
   }
