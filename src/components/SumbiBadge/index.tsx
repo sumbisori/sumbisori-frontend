@@ -143,15 +143,11 @@ const BadgeIcon = ({ type }: { type: BadgeColorType }) => {
 };
 
 const TYPE_VARIANTS = {
-  gold: 'border-yellow-600 text-yellow-600 bg-[linear-gradient(180deg,rgba(255,248,225,0.20)_0%,rgba(245,172,0,0.20)_100%)] bg-[#FFF8E1]',
-  silver:
-    'border-gray-600 text-gray-600 bg-[linear-gradient(143deg,rgba(133,136,153,0.18)_2.28%,rgba(255,255,255,0.30)_41.47%,rgba(255,255,255,0.30)_58.12%,rgba(133,136,153,0.18)_103.28%)] bg-[#F7F7FA]',
-  bronze:
-    'border-redbrown-600 text-redbrown-600 bg-[linear-gradient(155deg,rgba(250,246,242,0.00)_14.16%,rgba(189,147,111,0.20)_88.8%)] bg-[#FAF6F2]',
-  green:
-    'border-green-600 text-green-600 bg-[linear-gradient(180deg,rgba(236,253,245,0.20)_0%,rgba(52,211,153,0.20)_100%)] bg-[#ECFDF5]',
-  purple:
-    'border-purple-600 text-purple-600 bg-[linear-gradient(180deg,rgba(250,245,255,0.20)_0%,rgba(168,85,247,0.20)_100%)] bg-[#FAF5FF]',
+  gold: 'border-yellow-600 bg-yellow-050 text-yellow-600',
+  silver: 'border-gray-600 bg-gray-050 text-gray-600',
+  bronze: 'border-redbrown-600 bg-redbrown-050 text-redbrown-600',
+  green: 'border-green-600 bg-green-050 text-green-600',
+  purple: 'border-purple-600 bg-purple-050 text-purple-600',
   default:
     'border-gray-300 bg-gray-050 flex items-center justify-center text-2xl font-medium text-gray-400',
 };

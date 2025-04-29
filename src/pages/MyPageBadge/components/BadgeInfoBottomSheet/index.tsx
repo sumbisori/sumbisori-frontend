@@ -141,9 +141,8 @@ export const BadgeInfoBottomSheet = ({
           <div className="flex w-full flex-col items-center gap-6">
             <div className="flex w-full flex-col items-center gap-8">
               <div id="badge-animation-container" className="flex items-center">
-                {[...badgeDetail.badgeLevelDetails]
-                  .reverse()
-                  .map((badgeLevelDetail, index) => (
+                {badgeDetail.badgeLevelDetails.map(
+                  (badgeLevelDetail, index) => (
                     <SumbiBadge
                       key={badgeLevelDetail.badgeLevelId}
                       type={
@@ -170,7 +169,8 @@ export const BadgeInfoBottomSheet = ({
                       initialFlip={showInitialAnimation}
                       open={open}
                     />
-                  ))}
+                  ),
+                )}
               </div>
               <div className="flex flex-col items-center gap-2">
                 <h3
