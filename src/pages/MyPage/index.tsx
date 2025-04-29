@@ -6,9 +6,6 @@ import { Divider } from '@/components/Divider';
 import { MyPageBadgeSection } from './components/MyPageBadgeSection';
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/query';
-import { Navigate } from 'react-router-dom';
-import { routes } from '@/routes/src/routes';
-import { Spinner } from '@/components/Spinner';
 import { MyPageSkeleton } from './components/MyPageSkeleton';
 
 export const MyPage = () => {
@@ -19,6 +16,7 @@ export const MyPage = () => {
   } = useQuery<UserInfo>({
     queryKey: [queryKeys.myPage],
     queryFn: getUserInfo,
+    retry: false,
   });
 
   if (isPending) {
@@ -26,7 +24,8 @@ export const MyPage = () => {
   }
 
   if (isError) {
-    return <Navigate to={routes['not-found']} replace />;
+    // 로그인 페이지로 이동하는 경우 다른 에러 처리 되고 있음음
+    return null;
   }
 
   return (
