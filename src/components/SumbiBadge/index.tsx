@@ -6,8 +6,7 @@ import GreenBadgeIcon from '@/icons/badges/green-badge.svg?react';
 import PurpleBadgeIcon from '@/icons/badges/purple-badge.svg?react';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
-import { useState, useEffect } from 'react';
-
+import BadgeCheckIcon from '@/icons/badges/check.svg?react';
 interface Props {
   size?: 'small' | 'large';
   type: BadgeColorType;
@@ -16,7 +15,9 @@ interface Props {
   backLevelDescriptionText?: string;
   backAcquisitionDateText?: string;
   initialFlip?: boolean;
-  open?: boolean;
+  isFlipped?: boolean;
+  onFlip?: () => void;
+  isRepresentative?: boolean;
 }
 
 export const SumbiBadge = ({
@@ -27,26 +28,23 @@ export const SumbiBadge = ({
   backLevelDescriptionText = '0개 채취',
   backAcquisitionDateText = '2025-01-01',
   initialFlip = false,
-  open = true,
+  isFlipped = false,
+  onFlip,
+  isRepresentative = false,
 }: Props) => {
-  const [isFlipped, setIsFlipped] = useState(false);
-
-  useEffect(() => {
-    if (!open) {
-      setIsFlipped(false);
-    }
-  }, [open]);
-
   const handleClick = () => {
-    if (!initialFlip && type !== 'default') {
-      setIsFlipped(!isFlipped);
+    if (!initialFlip && type !== 'default' && onFlip) {
+      onFlip();
     }
   };
 
   const BadgeContent = (
-    <div className="flex size-4/6 items-center justify-center">
+    <div className="relative flex size-4/6 items-center justify-center">
       {type === 'default' && '?'}
       {type !== 'default' && <BadgeIcon type={type} />}
+      {isRepresentative && !['default'].includes(type) && (
+        <BadgeCheckIcon className="absolute -right-4 -top-4 size-6 text-blue-700" />
+      )}
     </div>
   );
 
@@ -57,7 +55,9 @@ export const SumbiBadge = ({
           'flex shrink-0 items-center justify-center rounded-full',
           SIZE_VARIANTS[size],
           BORDER_SIZE_VARIANTS[size],
-          TYPE_VARIANTS[type],
+          isRepresentative && !['default'].includes(type)
+            ? 'border-blue-700'
+            : TYPE_VARIANTS[type],
           className,
         )}
       >
@@ -68,7 +68,11 @@ export const SumbiBadge = ({
 
   return (
     <div
-      style={{ perspective: 1000 }}
+      style={{
+        perspective: 1000,
+        position: 'relative',
+        zIndex: isFlipped ? 100 : '',
+      }}
       className={clsx(className, initialFlip ? '' : 'cursor-pointer')}
       onClick={handleClick}
     >
@@ -77,12 +81,15 @@ export const SumbiBadge = ({
         style={{
           transformStyle: 'preserve-3d',
         }}
-        animate={{ rotateY: isFlipped || initialFlip ? 180 : 0 }}
+        animate={{
+          rotateY: isFlipped || initialFlip ? 180 : 0,
+          scale: isFlipped ? 1.2 : 1,
+        }}
         transition={{
           type: 'spring',
-          stiffness: 100,
-          damping: 15,
-          duration: 2,
+          stiffness: 150,
+          damping: 20,
+          duration: 0.8,
         }}
       >
         {/* 앞면 */}
@@ -90,7 +97,9 @@ export const SumbiBadge = ({
           className={clsx(
             'absolute flex size-full items-center justify-center rounded-full',
             BORDER_SIZE_VARIANTS[size],
-            TYPE_VARIANTS[type],
+            isRepresentative && !['default'].includes(type)
+              ? 'border-blue-700'
+              : TYPE_VARIANTS[type],
           )}
           style={{
             backfaceVisibility: 'hidden',
@@ -104,7 +113,9 @@ export const SumbiBadge = ({
           className={clsx(
             'absolute flex size-full items-center justify-center rounded-full',
             BORDER_SIZE_VARIANTS[size],
-            BACK_TYPE_VARIANTS[type],
+            isRepresentative && !['default'].includes(type)
+              ? 'border-blue-700'
+              : BACK_TYPE_VARIANTS[type],
           )}
           style={{
             backfaceVisibility: 'hidden',

@@ -75,6 +75,7 @@ export const BadgeList = ({
                 ? parseBadgeType(badge.badgeType, badge.badgeLevel)
                 : 'default'
             }
+            isRepresentative={badge.isRepresentative}
           />
           <p className="text-sm">{badge.badgeName}</p>
         </button>

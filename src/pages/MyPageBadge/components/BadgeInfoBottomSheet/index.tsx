@@ -24,6 +24,7 @@ export const BadgeInfoBottomSheet = ({
   selectedBadgeId,
 }: BadgeInfoBottomSheetProps) => {
   const [showInitialAnimation, setShowInitialAnimation] = useState(false);
+  const [flippedBadgeId, setFlippedBadgeId] = useState<number | null>(null);
 
   const {
     data: badgeDetail,
@@ -111,6 +112,12 @@ export const BadgeInfoBottomSheet = ({
     }
   }, [open]);
 
+  useEffect(() => {
+    if (!open) {
+      setFlippedBadgeId(null);
+    }
+  }, [open]);
+
   if (isPending) {
     return <BadgeInfoBottomSheetSkeleton />;
   }
@@ -128,7 +135,10 @@ export const BadgeInfoBottomSheet = ({
   return (
     <BottomSheet
       open={open}
-      onDismiss={() => setOpen(false)}
+      onDismiss={() => {
+        setFlippedBadgeId(null);
+        setOpen(false);
+      }}
       scrollLocking={false}
       header={<div></div>}
     >
@@ -167,7 +177,18 @@ export const BadgeInfoBottomSheet = ({
                       }
                       backAcquisitionDateText={badgeLevelDetail.acquisitionDate}
                       initialFlip={showInitialAnimation}
-                      open={open}
+                      isFlipped={
+                        flippedBadgeId === badgeLevelDetail.badgeLevelId
+                      }
+                      onFlip={() => {
+                        if (badgeLevelDetail.isAcquired) {
+                          setFlippedBadgeId(
+                            flippedBadgeId === badgeLevelDetail.badgeLevelId
+                              ? null
+                              : badgeLevelDetail.badgeLevelId,
+                          );
+                        }
+                      }}
                     />
                   ),
                 )}
