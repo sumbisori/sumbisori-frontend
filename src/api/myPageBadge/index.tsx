@@ -10,3 +10,8 @@ export const getBadgeDetail = async (badgeId: number) => {
   const response = await https.get<BadgeDetail>(`/badges/${badgeId}`);
   return response.data;
 };
+
+export const postRepresentativeBadge = async (badgeId: number) => {
+  const response = await https.post(`/badges/${badgeId}/representative`);
+  return response.data;
+};

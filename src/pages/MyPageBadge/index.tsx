@@ -21,6 +21,7 @@ export const MyPageBadge = () => {
     data: userInfo,
     isPending: userInfoPending,
     isError: userInfoError,
+    refetch: refetchUserInfo,
   } = useQuery<UserInfo>({
     queryKey: [queryKeys.myPage],
     queryFn: getUserInfo,
@@ -30,6 +31,7 @@ export const MyPageBadge = () => {
     data: badgeList,
     isPending: badgeListPending,
     isError: badgeListError,
+    refetch: refetchBadgeList,
   } = useQuery<Badge[]>({
     queryKey: [queryKeys.myPageBadge],
     queryFn: getMyPageBadge,
@@ -73,6 +75,8 @@ export const MyPageBadge = () => {
           open={open}
           setOpen={setOpen}
           selectedBadgeId={selectedBadgeId}
+          refetchBadgeList={refetchBadgeList}
+          refetchUserInfo={refetchUserInfo}
         />
       )}
     </>

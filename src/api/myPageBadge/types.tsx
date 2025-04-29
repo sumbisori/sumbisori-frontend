@@ -22,6 +22,7 @@ export interface BadgeLevelDetail {
   level: number;
   isAcquired: boolean;
   levelDescription: string;
+  isRepresentative: boolean;
 }
 
 export type BadgeType = 'BASIC' | 'RANKED' | 'SPECIAL';

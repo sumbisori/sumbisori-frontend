@@ -4,24 +4,32 @@ import { SumbiBadge } from '@/components/SumbiBadge';
 import { LargeButton } from '@/components/LargeButton';
 import clsx from 'clsx';
 import { useEffect, useMemo, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/query/src/queryKeys';
-import { getBadgeDetail } from '@/api/myPageBadge';
+import { getBadgeDetail, postRepresentativeBadge } from '@/api/myPageBadge';
 import { BadgeInfoBottomSheetSkeleton } from '../BadgeInfoBottomSheetSkeleton';
 import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
 import { IMAGE_PATHS } from '@/constant';
 import { parseBadgeType } from '@/util/parseBadgeType';
+import { AxiosError } from 'axios';
+import { ErrorResponse } from '@/api/types';
+import { toast } from '@/components/Toast';
+import { ERROR_MESSAGE } from '@/constant/src/error';
 
 interface BadgeInfoBottomSheetProps {
   open: boolean;
   setOpen: (open: boolean) => void;
   selectedBadgeId: number;
+  refetchBadgeList: () => void;
+  refetchUserInfo: () => void;
 }
 
 export const BadgeInfoBottomSheet = ({
   open,
   setOpen,
   selectedBadgeId,
+  refetchBadgeList,
+  refetchUserInfo,
 }: BadgeInfoBottomSheetProps) => {
   const [showInitialAnimation, setShowInitialAnimation] = useState(false);
   const [flippedBadgeId, setFlippedBadgeId] = useState<number | null>(null);
@@ -38,6 +46,35 @@ export const BadgeInfoBottomSheet = ({
     },
     enabled: !!selectedBadgeId,
   });
+
+  const { mutate: postRepresentativeBadgeMutation } = useMutation({
+    mutationFn: () => {
+      if (!selectedBadgeId) throw new Error();
+      return postRepresentativeBadge(selectedBadgeId);
+    },
+    onSuccess: () => {
+      toast.success('대표배지 설정에 성공했어요!');
+      setOpen(false);
+      refetchBadgeList();
+      refetchUserInfo();
+    },
+    onError: (error: AxiosError<ErrorResponse>) => {
+      const errorMessage = error.response?.data.name;
+      if (errorMessage === 'BADGE_NOT_FOUND') {
+        toast.warning(ERROR_MESSAGE.BADGE_NOT_FOUND);
+        return;
+      }
+      if (errorMessage === 'BADGE_NOT_OWNED') {
+        toast.warning(ERROR_MESSAGE.BADGE_NOT_OWNED);
+        return;
+      }
+      throw error;
+    },
+  });
+
+  const handleRepresentativeBadgeClick = () => {
+    postRepresentativeBadgeMutation();
+  };
 
   const acquiredBadgeCount = useMemo(() => {
     return (
@@ -64,6 +101,13 @@ export const BadgeInfoBottomSheet = ({
   const isNotAcquired = useMemo(() => {
     return acquiredBadgeCount === 0;
   }, [acquiredBadgeCount]);
+
+  // badgeLevelDetails 목록 중 isRepresentative 가 하나라도 true 인 경우
+  const isSomeRepresentative = useMemo(() => {
+    return badgeDetail?.badgeLevelDetails.some(
+      (detail) => detail.isRepresentative,
+    );
+  }, [badgeDetail?.badgeLevelDetails]);
 
   const parseBadgeNotice = () => {
     if (isNotAcquired) {
@@ -219,7 +263,8 @@ export const BadgeInfoBottomSheet = ({
           <LargeButton
             buttonType="secondary"
             className="!py-4 font-semibold"
-            disabled={isNotAcquired}
+            disabled={isNotAcquired || isSomeRepresentative}
+            onClick={handleRepresentativeBadgeClick}
           >
             대표배지 설정하기
           </LargeButton>
