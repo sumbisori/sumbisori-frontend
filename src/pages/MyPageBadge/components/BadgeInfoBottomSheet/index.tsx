@@ -187,7 +187,6 @@ export const BadgeInfoBottomSheet = ({
         setFlippedBadgeId(null);
         setOpen(false);
       }}
-      scrollLocking={false}
       header={<div></div>}
     >
       <div className="relative flex flex-col items-center gap-9 px-6 py-9">
