@@ -7,6 +7,8 @@ import PurpleBadgeIcon from '@/icons/badges/purple-badge.svg?react';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import BadgeCheckIcon from '@/icons/badges/check.svg?react';
+import { Image } from '../Image';
+import { useMemo } from 'react';
 interface Props {
   size?: 'small' | 'large';
   type: BadgeColorType;
@@ -32,6 +34,10 @@ export const SumbiBadge = ({
   onFlip,
   isRepresentative = false,
 }: Props) => {
+  const RANKED = useMemo(() => {
+    return type === 'gold' || type === 'silver' || type === 'bronze';
+  }, [type]);
+
   const handleClick = () => {
     if (!initialFlip && type !== 'default' && onFlip) {
       onFlip();
@@ -39,9 +45,14 @@ export const SumbiBadge = ({
   };
 
   const BadgeContent = (
-    <div className="relative flex size-4/6 items-center justify-center">
+    <div
+      className={clsx(
+        'relative flex items-center justify-center',
+        RANKED && size === 'large' ? 'size-full' : 'size-4/6',
+      )}
+    >
       {type === 'default' && '?'}
-      {type !== 'default' && <BadgeIcon type={type} />}
+      {type !== 'default' && <BadgeIcon type={type} size={size} />}
       {isRepresentative && !['default'].includes(type) && (
         <BadgeCheckIcon className="absolute -right-4 -top-4 size-6 text-blue-700" />
       )}
@@ -96,7 +107,7 @@ export const SumbiBadge = ({
         <div
           className={clsx(
             'absolute flex size-full items-center justify-center rounded-full',
-            BORDER_SIZE_VARIANTS[size],
+            RANKED && size === 'large' ? '' : BORDER_SIZE_VARIANTS[size],
             isRepresentative && !['default'].includes(type)
               ? 'border-blue-700'
               : TYPE_VARIANTS[type],
@@ -136,14 +147,29 @@ export const SumbiBadge = ({
   );
 };
 
-const BadgeIcon = ({ type }: { type: BadgeColorType }) => {
+const BadgeIcon = ({
+  type,
+  size,
+}: {
+  type: BadgeColorType;
+  size: 'small' | 'large';
+}) => {
   switch (type) {
     case 'gold':
-      return <GoldBadgeIcon className="size-full" />;
+      if (size === 'small') {
+        return <GoldBadgeIcon className="size-full" />;
+      }
+      return <Image src="/assets/images/badges/Medal_Gold.gif" />;
     case 'silver':
-      return <SilverBadgeIcon className="size-full" />;
+      if (size === 'small') {
+        return <SilverBadgeIcon className="size-full" />;
+      }
+      return <Image src="/assets/images/badges/Medal_Silver.gif" />;
     case 'bronze':
-      return <BronzeBadgeIcon className="size-full" />;
+      if (size === 'small') {
+        return <BronzeBadgeIcon className="size-full" />;
+      }
+      return <Image src="/assets/images/badges/Medal_Bronze.gif" />;
     case 'green':
       return <GreenBadgeIcon className="size-full" />;
     case 'purple':
@@ -154,23 +180,23 @@ const BadgeIcon = ({ type }: { type: BadgeColorType }) => {
 };
 
 const TYPE_VARIANTS = {
-  gold: 'border-yellow-600 bg-yellow-050 text-yellow-600',
-  silver: 'border-gray-600 bg-gray-050 text-gray-600',
-  bronze: 'border-redbrown-600 bg-redbrown-050 text-redbrown-600',
-  green: 'border-green-600 bg-green-050 text-green-600',
-  purple: 'border-purple-600 bg-purple-050 text-purple-600',
+  gold: 'border-yellow-500 bg-yellow-050 text-yellow-500',
+  silver: 'border-gray-500 bg-gray-050 text-gray-500',
+  bronze: 'border-redbrown-500 bg-redbrown-050 text-redbrown-500',
+  green: 'border-green-500 bg-green-050 text-green-500',
+  purple: 'border-violet-500 bg-violet-050 text-violet-500',
   default:
     'border-gray-300 bg-gray-050 flex items-center justify-center text-2xl font-medium text-gray-400',
 };
 
 const BACK_TYPE_VARIANTS = {
-  gold: 'border-yellow-600 bg-yellow-200 text-yellow-900',
-  silver: 'border-gray-600 bg-gray-200 text-gray-900',
-  bronze: 'border-redbrown-600 bg-redbrown-200 text-redbrown-900',
-  green: 'border-green-600 bg-green-200 text-green-900',
-  purple: 'border-purple-600 bg-purple-200 text-purple-900',
+  gold: 'border-yellow-500 bg-yellow-050 text-yellow-900',
+  silver: 'border-gray-500 bg-gray-050 text-gray-900',
+  bronze: 'border-redbrown-500 bg-redbrown-050 text-redbrown-900',
+  green: 'border-green-500 bg-green-050 text-green-900',
+  purple: 'border-violet-500 bg-violet-050 text-violet-900',
   default:
-    'border-gray-300 bg-gray-200 flex items-center justify-center text-2xl font-medium text-gray-900',
+    'border-gray-300 bg-gray-050 flex items-center justify-center text-2xl font-medium text-gray-900',
 };
 
 const SIZE_VARIANTS = {

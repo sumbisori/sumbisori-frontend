@@ -167,6 +167,7 @@ export default {
         redbrown: {
           '050': '#FAF6F2', // $redbrown-050
           200: '#F5E6D9', // $redbrown-200
+          500: '#D0A17A', // $redbrown-500
           600: '#BD936F', // $redbrown-600
           900: '#8C6345', // $redbrown-900
         },

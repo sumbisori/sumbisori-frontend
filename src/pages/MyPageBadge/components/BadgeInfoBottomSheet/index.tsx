@@ -116,22 +116,26 @@ export const BadgeInfoBottomSheet = ({
     if (badgeDetail?.badgeType === 'RANKED') {
       switch (acquiredBadgeCount) {
         case 1:
-          return '동배지를 획득하셨네요!';
+          return <span className="text-blue-700">동배지를 획득하셨네요!</span>;
         case 2:
-          return '은배지를 추가 획득하셨네요!';
+          return (
+            <span className="text-blue-700">은배지를 추가 획득하셨네요!</span>
+          );
         case 3:
-          return '모든 배지를 획득하셨네요!';
+          return (
+            <span className="text-blue-700">모든 배지를 획득하셨네요!</span>
+          );
         default:
           return '아직 획득하지 못했어요';
       }
     }
     if (isAllAcquired && totalBadgeCount === 1) {
-      return '배지를 획득하셨네요!';
+      return <span className="text-blue-700">배지를 획득하셨네요!</span>;
     }
     if (isAllAcquired) {
       return <span className="text-blue-700">모든 배지를 획득하셨네요!</span>;
     }
-    return '배지를 획득하셨네요';
+    return <span className="text-blue-700">배지를 획득하셨네요!</span>;
   };
 
   useEffect(() => {
@@ -248,7 +252,7 @@ export const BadgeInfoBottomSheet = ({
                 </h3>
                 <p
                   className={clsx(
-                    'text-center text-base',
+                    'whitespace-pre-line text-center text-base',
                     isSomeAcquired ? 'text-black' : 'text-gray-500',
                   )}
                 >
