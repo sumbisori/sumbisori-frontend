@@ -190,88 +190,105 @@ export const BadgeInfoBottomSheet = ({
       scrollLocking={false}
       header={<div></div>}
     >
-      <div className="flex flex-col items-center gap-9 px-6 py-9">
-        <h3 className="text-xl font-semibold text-gray-700">
-          {parseBadgeNotice()}
-        </h3>
+      <div className="relative flex flex-col items-center gap-9 px-6 py-9">
+        {badgeDetail?.badgeType === 'RANKED' && acquiredBadgeCount === 3 && (
+          <div
+            id="particle-background"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url(/assets/images/badges/Particle.gif)`,
+              zIndex: 0,
+            }}
+          />
+        )}
+        <div className="relative z-10 flex w-full flex-col items-center gap-9">
+          <h3 className="text-xl font-semibold text-gray-700">
+            {parseBadgeNotice()}
+          </h3>
 
-        <div className="flex w-full flex-col items-center gap-4">
-          <div className="flex w-full flex-col items-center gap-6">
-            <div className="flex w-full flex-col items-center gap-8">
-              <div id="badge-animation-container" className="flex items-center">
-                {badgeDetail.badgeLevelDetails.map(
-                  (badgeLevelDetail, index) => (
-                    <SumbiBadge
-                      key={badgeLevelDetail.badgeLevelId}
-                      type={
-                        badgeLevelDetail.isAcquired
-                          ? parseBadgeType(
-                              badgeDetail.badgeType,
-                              badgeLevelDetail.level,
-                            )
-                          : 'default'
-                      }
-                      size={'large'}
-                      className={clsx(
-                        'relative',
-                        index > 0 && '-ml-8',
-                        index === 0 && 'z-30',
-                        index === 1 && 'z-20',
-                        index === 2 && 'z-10',
-                      )}
-                      enableAnimation={true}
-                      backLevelDescriptionText={
-                        badgeLevelDetail.levelDescription
-                      }
-                      backAcquisitionDateText={badgeLevelDetail.acquisitionDate}
-                      initialFlip={showInitialAnimation}
-                      isFlipped={
-                        flippedBadgeId === badgeLevelDetail.badgeLevelId
-                      }
-                      onFlip={() => {
-                        if (badgeLevelDetail.isAcquired) {
-                          setFlippedBadgeId(
-                            flippedBadgeId === badgeLevelDetail.badgeLevelId
-                              ? null
-                              : badgeLevelDetail.badgeLevelId,
-                          );
+          <div className="flex w-full flex-col items-center gap-4">
+            <div className="flex w-full flex-col items-center gap-6">
+              <div className="flex w-full flex-col items-center gap-8">
+                <div
+                  id="badge-animation-container"
+                  className="flex items-center"
+                >
+                  {badgeDetail.badgeLevelDetails.map(
+                    (badgeLevelDetail, index) => (
+                      <SumbiBadge
+                        key={badgeLevelDetail.badgeLevelId}
+                        type={
+                          badgeLevelDetail.isAcquired
+                            ? parseBadgeType(
+                                badgeDetail.badgeType,
+                                badgeLevelDetail.level,
+                              )
+                            : 'default'
                         }
-                      }}
-                    />
-                  ),
-                )}
+                        size={'large'}
+                        className={clsx(
+                          'relative',
+                          index > 0 && '-ml-8',
+                          index === 0 && 'z-30',
+                          index === 1 && 'z-20',
+                          index === 2 && 'z-10',
+                        )}
+                        enableAnimation={true}
+                        backLevelDescriptionText={
+                          badgeLevelDetail.levelDescription
+                        }
+                        backAcquisitionDateText={
+                          badgeLevelDetail.acquisitionDate
+                        }
+                        initialFlip={showInitialAnimation}
+                        isFlipped={
+                          flippedBadgeId === badgeLevelDetail.badgeLevelId
+                        }
+                        onFlip={() => {
+                          if (badgeLevelDetail.isAcquired) {
+                            setFlippedBadgeId(
+                              flippedBadgeId === badgeLevelDetail.badgeLevelId
+                                ? null
+                                : badgeLevelDetail.badgeLevelId,
+                            );
+                          }
+                        }}
+                      />
+                    ),
+                  )}
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <h3
+                    className={clsx(
+                      'text-3xl font-medium',
+                      isSomeAcquired ? 'text-black' : 'text-gray-500',
+                    )}
+                  >
+                    {badgeDetail.name}
+                  </h3>
+                  <p
+                    className={clsx(
+                      'whitespace-pre-line text-center text-base',
+                      isSomeAcquired ? 'text-black' : 'text-gray-500',
+                    )}
+                  >
+                    {badgeDetail.description}
+                  </p>
+                </div>
               </div>
-              <div className="flex flex-col items-center gap-2">
-                <h3
-                  className={clsx(
-                    'text-3xl font-medium',
-                    isSomeAcquired ? 'text-black' : 'text-gray-500',
-                  )}
-                >
-                  {badgeDetail.name}
-                </h3>
-                <p
-                  className={clsx(
-                    'whitespace-pre-line text-center text-base',
-                    isSomeAcquired ? 'text-black' : 'text-gray-500',
-                  )}
-                >
-                  {badgeDetail.description}
-                </p>
+              <div className="flex w-full flex-col items-center rounded bg-gray-050 py-1 text-gray-800">
+                획득방법: {badgeDetail.acquisition}
               </div>
             </div>
-            <div className="flex w-full flex-col items-center rounded bg-gray-050 py-1 text-gray-800">
-              획득방법: {badgeDetail.acquisition}
-            </div>
+            <LargeButton
+              buttonType="secondary"
+              className="!py-4 font-semibold"
+              disabled={isNotAcquired || isSomeRepresentative}
+              onClick={handleRepresentativeBadgeClick}
+            >
+              대표배지 설정하기
+            </LargeButton>
           </div>
-          <LargeButton
-            buttonType="secondary"
-            className="!py-4 font-semibold"
-            disabled={isNotAcquired || isSomeRepresentative}
-            onClick={handleRepresentativeBadgeClick}
-          >
-            대표배지 설정하기
-          </LargeButton>
         </div>
       </div>
     </BottomSheet>
