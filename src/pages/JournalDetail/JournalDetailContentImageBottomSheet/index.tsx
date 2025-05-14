@@ -4,23 +4,31 @@ import { Image } from '@/components/Image';
 import { SeafoodImage } from '@/components/SeafoodImage';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
+import { BottomSheet } from 'react-spring-bottom-sheet';
+import { RoundedButton } from '@/components/RoundedButton';
+import { LargeButton } from '@/components/LargeButton';
+import 'react-spring-bottom-sheet/dist/style.css';
 
 interface Props {
   result: CollectionResultType;
+  open: boolean;
+  onClose: () => void;
 }
 
-export const JournalDetailContentImageDialog = ({ result }: Props) => {
+export const JournalDetailContentImageBottomSheet = ({
+  result,
+  open,
+  onClose,
+}: Props) => {
   return (
-    <Dialog
-      id={`journal-detail-content-image-dialog-${result.imageUrl}`}
-      type="empty"
-    >
+    <BottomSheet open={open} onDismiss={onClose}>
       <div className="flex flex-col gap-4 p-4">
         <Image
           src={result.imageUrl}
           alt="분석 이미지"
-          className="size-[18.75rem]"
+          className="aspect-square rounded-lg object-cover"
         />
+
         <div className="flex flex-col gap-2">
           <p className="font-medium text-black">
             채취물({result.seafoodCollectionInfos.length})
@@ -50,7 +58,10 @@ export const JournalDetailContentImageDialog = ({ result }: Props) => {
             ))}
           </Swiper>
         </div>
+        <LargeButton buttonType="gray" onClick={onClose}>
+          닫기
+        </LargeButton>
       </div>
-    </Dialog>
+    </BottomSheet>
   );
 };

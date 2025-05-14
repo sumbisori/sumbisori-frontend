@@ -3,7 +3,10 @@ import ArrowBottomIcon from '@/icons/arrow_bottom.svg?react';
 import { SeafoodImage } from '@/components/SeafoodImage';
 import { useQuery } from '@tanstack/react-query';
 import { getJournalDetailCollections } from '@/api/journalDetail';
-import { JournalDetailCollectionsType } from '@/api/journalDetail/types';
+import {
+  CollectionResultType,
+  JournalDetailCollectionsType,
+} from '@/api/journalDetail/types';
 import { queryKeys } from '@/query';
 import Skeleton from '@/components/Skeleton';
 import { useState, Fragment } from 'react';
@@ -12,7 +15,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import ExpandIcon from '@/icons/journal/expand.svg?react';
 import { useModalController } from '@/contexts/src/ModalContext';
-import { JournalDetailContentImageDialog } from '../JournalDetailContentImageDialog';
+import { JournalDetailContentImageBottomSheet } from '../JournalDetailContentImageBottomSheet';
 
 interface Props {
   impression: string;
@@ -31,7 +34,9 @@ export const JournalDetailContent = ({
 }: Props) => {
   const daysAgo = Math.abs(dayjs(experienceDate).diff(dayjs(), 'day'));
   const [showAnalysis, setShowAnalysis] = useState(false);
-  const { openModal } = useModalController();
+  const [openBottomSheet, setOpenBottomSheet] = useState(false);
+  const [selectedResult, setSelectedResult] =
+    useState<CollectionResultType | null>(null);
 
   const { data: journalDetailCollections, isPending } =
     useQuery<JournalDetailCollectionsType>({
@@ -69,44 +74,6 @@ export const JournalDetailContent = ({
                 />
               </button>
             </div>
-            {/* <div id="seafood-list" className="grid grid-cols-4 gap-2 px-4">
-              {journalDetailCollections?.seafoodCollectionInfos.map(
-                (seafood) => (
-                  <div
-                    id="seafood-item"
-                    className="flex size-full flex-col items-center justify-center"
-                    key={seafood.seafoodId}
-                  >
-                    <div className="relative flex size-[5.625rem] items-center justify-center">
-                      <SeafoodImage
-                        seafoodName={seafood.englishName}
-                        variant="img"
-                        className="size-3/5"
-                      />
-                    </div>
-                    <p
-                      id="seafood-count"
-                      className="w-full min-w-[4.188rem] rounded border border-gray-300 bg-gray-050 px-2 py-1 text-center text-xs font-medium"
-                    >
-                      <span className="text-gray-700">
-                        {seafood.koreanName}
-                      </span>{' '}
-                      x {seafood.count}
-                    </p>
-                  </div>
-                ),
-              )}
-              {isPending && (
-                <>
-                  {Array.from({ length: 3 }).map((_, index) => (
-                    <div className="flex flex-col gap-1" key={index}>
-                      <Skeleton width="5.625rem" height="5.625rem" />
-                      <Skeleton width="5.625rem" height="1.5rem" />
-                    </div>
-                  ))}
-                </>
-              )}
-            </div> */}
             <Swiper
               slidesPerView="auto"
               spaceBetween={12}
@@ -142,37 +109,43 @@ export const JournalDetailContent = ({
             {showAnalysis && (
               <div className="flex flex-col gap-2">
                 <p className="px-4 text-base font-medium">분석 이미지</p>
-                <Swiper
-                  slidesPerView="auto"
-                  spaceBetween={8}
-                  className="w-full px-4"
-                >
-                  {journalDetailCollections?.collectionResult.map((result) => (
-                    <SwiperSlide
-                      key={result.imageUrl}
-                      className={'size-[8.5rem]'}
-                    >
-                      <Image
-                        src={result.imageUrl}
-                        alt="분석 이미지"
-                        className="size-full rounded-xl border border-gray-200 object-cover"
-                        placeholderClassName="bg-white"
-                      />
-                      <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                      <button
-                        className="absolute bottom-2.5 right-2.5 z-10"
-                        onClick={() =>
-                          openModal(
-                            `journal-detail-content-image-dialog-${result.imageUrl}`,
-                          )
-                        }
-                      >
-                        <ExpandIcon />
-                      </button>
-                      <JournalDetailContentImageDialog result={result} />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
+                {journalDetailCollections?.collectionResult.length === 0 ? (
+                  <p className="px-4 text-sm text-gray-500">
+                    분석 이미지가 없습니다.
+                  </p>
+                ) : (
+                  <Swiper
+                    slidesPerView="auto"
+                    spaceBetween={8}
+                    className="w-full px-4"
+                  >
+                    {journalDetailCollections?.collectionResult.map(
+                      (result) => (
+                        <SwiperSlide
+                          key={result.imageUrl}
+                          className={'size-[8.5rem]'}
+                        >
+                          <Image
+                            src={result.imageUrl}
+                            alt="분석 이미지"
+                            className="size-full rounded-xl border border-gray-200 object-cover"
+                            placeholderClassName="bg-white"
+                          />
+                          <div className="absolute inset-0 rounded-xl bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                          <button
+                            className="absolute bottom-2.5 right-2.5 z-10"
+                            onClick={() => {
+                              setSelectedResult(result);
+                              setOpenBottomSheet(true);
+                            }}
+                          >
+                            <ExpandIcon />
+                          </button>
+                        </SwiperSlide>
+                      ),
+                    )}
+                  </Swiper>
+                )}
               </div>
             )}
           </div>
@@ -197,6 +170,16 @@ export const JournalDetailContent = ({
           </div>
         </div>
       </div>
+      {selectedResult && (
+        <JournalDetailContentImageBottomSheet
+          result={selectedResult}
+          open={openBottomSheet}
+          onClose={() => {
+            setOpenBottomSheet(false);
+            setSelectedResult(null);
+          }}
+        />
+      )}
     </>
   );
 };
