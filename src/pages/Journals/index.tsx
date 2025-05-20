@@ -81,7 +81,7 @@ export const Journals = () => {
         leftIcon={<ThinLeftIcon />}
         rightIcon={<BellBlackIcon />}
         onLeftClick={() => navigate(routes.myPage)}
-        onRightClick={() => toast.info('준비중입니다.')}
+        onRightClick={() => navigate(routes.alarm)}
         className="bg-white shadow-[0_2px_3px_-1px_rgba(0,0,0,0.1)]"
       />
       <div className="relative flex h-full min-h-layout-nav-height flex-col pt-header-height">

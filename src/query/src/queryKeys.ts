@@ -15,4 +15,5 @@ export const queryKeys = {
   myPage: 'myPage',
   myPageBadge: 'myPageBadge',
   myPageBadgeDetail: 'myPageBadgeDetail',
+  alarms: 'alarms',
 };

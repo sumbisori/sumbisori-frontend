@@ -52,7 +52,7 @@ export const Header = ({ type, caption, absolute }: Props) => {
 
       <button
         className="flex items-center"
-        onClick={() => toast.info('준비중입니다.')}
+        onClick={() => navigate(routes.alarm)}
       >
         {type === 'dark' ? (
           <BellBlackIcon className="cursor-pointer" />

@@ -15,6 +15,11 @@ export const routes = {
    */
   home: '/home',
   /**
+   * "/alarm"
+   * 알림 페이지
+   */
+  alarm: '/alarm',
+  /**
    * "/not-found"
    * 404 페이지
    */

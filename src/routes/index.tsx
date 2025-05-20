@@ -14,6 +14,7 @@ import { routes } from './src/routes';
 import { JournalCreate } from '@/pages/JournalCreate';
 import { JournalDetail } from '@/pages/JournalDetail';
 import { MyPageBadge } from '@/pages/MyPageBadge';
+import { Alarm } from '@/pages/Alarm';
 
 export const Router = () => {
   return (
@@ -39,6 +40,7 @@ export const Router = () => {
               path={routes.haenyeoPlacesDetail(':placeId')}
               element={<HaenyeoPlacesDetail />}
             />
+            <Route path={routes.alarm} element={<Alarm />} />
             <Route path={routes.journals} element={<Journals />} />
             <Route
               path={routes.journalsDetail(':journalId')}

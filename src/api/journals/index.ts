@@ -1,5 +1,6 @@
 import { https } from '../instance';
-import { JournalsRequest, JournalsResponse, Pagination } from './types';
+import { JournalsRequest, JournalsResponse } from './types';
+import { Pagination } from '../types';
 
 export const getJournals = async ({
   page,
