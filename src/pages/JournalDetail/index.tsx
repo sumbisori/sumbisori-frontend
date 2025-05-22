@@ -28,34 +28,36 @@ export const JournalDetail = () => {
   });
 
   return (
-    <div className="relative flex h-full min-h-layout-nav-height flex-col pt-header-height">
+    <>
       <NavigatorHeader
         title="체험 일지"
         leftIcon={<ThinLeftIcon />}
         rightIcon={<BellBlackIcon />}
-        onLeftClick={() => navigate(-1)}
-        onRightClick={() => toast.info('준비중입니다.')}
+        onLeftClick={() => navigate(routes.journals)}
+        onRightClick={() => navigate(routes.alarm)}
         className="bg-white shadow-[0_2px_3px_-1px_rgba(0,0,0,0.1)]"
       />
-      <div className="flex flex-1 flex-col">
-        {journalDetail && (
-          <>
-            <JournalDetailTitle
-              experienceDate={journalDetail.experienceDate}
-              placeName={journalDetail.placeName}
-              satisfaction={journalDetail.satisfaction}
-            />
-            <JournalDetailImages imageUrls={journalDetail.imageUrls} />
-            <JournalDetailContent
-              impression={journalDetail.impression}
-              companion={journalDetail.companion}
-              weather={journalDetail.weather}
-              experienceDate={journalDetail.experienceDate}
-              experienceId={journalDetail.experienceId}
-            />
-          </>
-        )}
+      <div className="relative flex h-full min-h-layout-nav-height flex-col pt-header-height">
+        <div className="flex flex-1 flex-col">
+          {journalDetail && (
+            <>
+              <JournalDetailTitle
+                experienceDate={journalDetail.experienceDate}
+                placeName={journalDetail.placeName}
+                satisfaction={journalDetail.satisfaction}
+              />
+              <JournalDetailImages imageUrls={journalDetail.imageUrls} />
+              <JournalDetailContent
+                impression={journalDetail.impression}
+                companion={journalDetail.companion}
+                weather={journalDetail.weather}
+                experienceDate={journalDetail.experienceDate}
+                experienceId={journalDetail.experienceId}
+              />
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };

@@ -355,7 +355,7 @@ export const SelectCollectedSeafood = ({
       </motion.div>
 
       {collections.length === 0 && (
-        <div className="fixed inset-x-0 bottom-[4.5rem] z-10 m-auto flex w-full min-w-full-layout max-w-full-layout items-center justify-center">
+        <div className="fixed inset-x-0 bottom-custom-72px-spacer z-10 m-auto flex w-full min-w-full-layout max-w-full-layout items-center justify-center">
           <button
             className="text-gray-600 underline"
             type="button"

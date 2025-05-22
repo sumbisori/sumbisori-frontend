@@ -19,6 +19,7 @@ export const JournalsGridCategory = ({
       'cursor-pointer hover:text-gray-600',
     );
   };
+
   return (
     <div id="journal-title" className="flex items-center justify-between">
       <h3 className="text-xl font-bold">체험 일지({totalElements}건)</h3>

@@ -164,6 +164,13 @@ export default {
           800: '#984A06', // $orange-800
           900: '#7A3C05', // $orange-900
         },
+        redbrown: {
+          '050': '#FAF6F2', // $redbrown-050
+          200: '#F5E6D9', // $redbrown-200
+          500: '#D0A17A', // $redbrown-500
+          600: '#BD936F', // $redbrown-600
+          900: '#8C6345', // $redbrown-900
+        },
         primary: '#1D6CE0', // $primary
         secondary: '#FAA55C', // $secondary
       },
@@ -183,6 +190,7 @@ export default {
         'layout-nav-height': 'calc(100vh - 4.438rem)', // $layout-nav-height
         'header-height': '3.75rem', // $header-height
         'nav-height': '4.438rem', // $nav-height
+        'custom-72px-spacer': '4.5rem', // $custom-72px-spacer fixed 버튼 또는 상단 고정 요소에 사용
       },
       aspectRatio: {
         '3/2': '3 / 2',

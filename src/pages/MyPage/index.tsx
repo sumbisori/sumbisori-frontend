@@ -1,37 +1,46 @@
-import { useEffect, useState } from 'react';
 import { MyPageContent } from '@/pages/MyPage/components/MyPageContent';
 import { Profile } from '@/pages/MyPage/components/Profile';
 import { getUserInfo } from '@/api/myPage';
 import { UserInfo } from '@/api/myPage/types';
-import { useErrorHandler } from '@/hooks/useErrorHandler';
+import { Divider } from '@/components/Divider';
+import { MyPageBadgeSection } from './components/MyPageBadgeSection';
+import { useQuery } from '@tanstack/react-query';
+import { queryKeys } from '@/query';
+import { MyPageSkeleton } from './components/MyPageSkeleton';
 
 export const MyPage = () => {
-  const { handleError } = useErrorHandler();
-
-  const [userInfo, setUserInfo] = useState<UserInfo>({
-    nickname: '',
-    count: 0,
-    profileImageUrl:
-      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+  const {
+    data: userInfo,
+    isPending,
+    isError,
+  } = useQuery<UserInfo>({
+    queryKey: [queryKeys.myPage],
+    queryFn: getUserInfo,
+    retry: false,
   });
 
-  const fetchUserInfo = async () => {
-    try {
-      const response = await getUserInfo();
-      setUserInfo(response);
-    } catch (error) {
-      handleError(error);
-    }
-  };
+  if (isPending) {
+    return <MyPageSkeleton />;
+  }
 
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
+  if (isError) {
+    // 로그인 페이지로 이동하는 경우 다른 에러 처리 되고 있음음
+    return null;
+  }
 
   return (
     <div className="flex flex-col">
       <Profile userInfo={userInfo} />
-      <div className="h-[0.313rem] w-full bg-gray-050"></div>
+      <Divider height={3} color="bg-gray-050" />
+      <MyPageBadgeSection
+        badgeName={userInfo.badgeName}
+        badgeType={userInfo.badgeType}
+        badgeDescription={userInfo.badgeDescription}
+        level={userInfo.level}
+        totalBadgeCount={userInfo.totalBadgeCount}
+        acquiredBadgeCount={userInfo.acquiredBadgeCount}
+      />
+      <Divider height={3} color="bg-gray-050" />
       <MyPageContent />
     </div>
   );

@@ -6,6 +6,7 @@ import BellWhiteIcon from '@/icons/Icon_bell_white.svg?react';
 import ContourIcon from '@/icons/contour.svg?react';
 import { useHeaderVisibility } from '@/contexts/src/HeaderVisibilityContext';
 import { routes } from '@/routes/src/routes';
+import { toast } from '@/components/Toast';
 
 interface Props {
   type: 'dark' | 'light';
@@ -23,7 +24,7 @@ export const Header = ({ type, caption, absolute }: Props) => {
   return (
     <header
       className={clsx(
-        'z-100 flex h-header-height w-full min-w-full-layout max-w-full-layout justify-between px-5',
+        'z-100 flex h-header-height w-full min-w-full-layout max-w-full-layout justify-between px-4',
         {
           'absolute inset-x-0 top-0 m-auto': absolute,
           'fixed inset-x-0 top-0 m-auto bg-white transition-transform duration-300 ease-in-out':
@@ -49,13 +50,16 @@ export const Header = ({ type, caption, absolute }: Props) => {
         )}
       </div>
 
-      <div className="flex items-center">
+      <button
+        className="flex items-center"
+        onClick={() => navigate(routes.alarm)}
+      >
         {type === 'dark' ? (
           <BellBlackIcon className="cursor-pointer" />
         ) : (
           <BellWhiteIcon className="cursor-pointer" />
         )}
-      </div>
+      </button>
     </header>
   );
 };

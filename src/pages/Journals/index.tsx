@@ -75,72 +75,74 @@ export const Journals = () => {
   }, []);
 
   return (
-    <div className="relative flex h-full min-h-layout-nav-height flex-col pt-header-height">
+    <>
       <NavigatorHeader
         title="체험 일지"
         leftIcon={<ThinLeftIcon />}
         rightIcon={<BellBlackIcon />}
         onLeftClick={() => navigate(routes.myPage)}
-        onRightClick={() => toast.info('준비중입니다.')}
+        onRightClick={() => navigate(routes.alarm)}
         className="bg-white shadow-[0_2px_3px_-1px_rgba(0,0,0,0.1)]"
       />
-      <div className="flex flex-1 flex-col bg-gray-050 pb-[4.5rem]">
-        <div className="flex flex-1 flex-col gap-4 px-4 pt-6">
-          <JournalsGridCategory
-            viewMode={viewMode}
-            onViewModeChange={(viewMode) =>
-              setSearchParams({ 'view-mode': viewMode }, { replace: true })
-            }
-            totalElements={journals?.pages[0]?.totalElements ?? 0}
-          />
-          {journals && (
-            <>
-              {viewMode === 'grid1' && (
-                <Grid1CardList
-                  journals={flattenedJournals}
-                  onClick={handleCardClick}
-                  isPending={isPending}
-                  pageSize={GRID1_PAGE_SIZE}
+      <div className="relative flex h-full min-h-layout-nav-height flex-col pt-header-height">
+        <div className="flex flex-1 flex-col bg-gray-050 pb-custom-72px-spacer">
+          <div className="flex flex-1 flex-col gap-4 px-4 pt-6">
+            <JournalsGridCategory
+              viewMode={viewMode}
+              onViewModeChange={(viewMode) =>
+                setSearchParams({ 'view-mode': viewMode }, { replace: true })
+              }
+              totalElements={journals?.pages[0]?.totalElements ?? 0}
+            />
+            {journals && (
+              <>
+                {viewMode === 'grid1' && (
+                  <Grid1CardList
+                    journals={flattenedJournals}
+                    onClick={handleCardClick}
+                    isPending={isPending}
+                    pageSize={GRID1_PAGE_SIZE}
+                  />
+                )}
+                {viewMode === 'grid2' && (
+                  <Grid2CardList
+                    journals={flattenedJournals}
+                    onClick={handleCardClick}
+                    isPending={isPending}
+                    pageSize={GRID2_PAGE_SIZE}
+                  />
+                )}
+                {viewMode === 'grid3' && (
+                  <Grid3CardList
+                    journals={flattenedJournals}
+                    onClick={handleCardClick}
+                    isPending={isPending}
+                    pageSize={GRID3_PAGE_SIZE}
+                  />
+                )}
+              </>
+            )}
+            {!isPending && flattenedJournals.length === 0 && (
+              <div className="flex flex-1 items-center justify-center">
+                <ImageWithTextAlert
+                  src={`${IMAGE_PATHS.ROOT}/haenyeo_sad.png`}
+                  alt="정보없음"
+                  text="체험 일지가 없습니다"
                 />
-              )}
-              {viewMode === 'grid2' && (
-                <Grid2CardList
-                  journals={flattenedJournals}
-                  onClick={handleCardClick}
-                  isPending={isPending}
-                  pageSize={GRID2_PAGE_SIZE}
-                />
-              )}
-              {viewMode === 'grid3' && (
-                <Grid3CardList
-                  journals={flattenedJournals}
-                  onClick={handleCardClick}
-                  isPending={isPending}
-                  pageSize={GRID3_PAGE_SIZE}
-                />
-              )}
-            </>
-          )}
-          {!isPending && flattenedJournals.length === 0 && (
-            <div className="flex flex-1 items-center justify-center">
-              <ImageWithTextAlert
-                src={`${IMAGE_PATHS.ROOT}/haenyeo_sad.png`}
-                alt="정보없음"
-                text="체험 일지가 없습니다"
-              />
-            </div>
-          )}
-          <div ref={bottomRef} />
-        </div>
-        <div className="fixed inset-x-0 bottom-nav-height z-10 m-auto flex w-full min-w-full-layout max-w-full-layout px-5 pb-5 pt-3">
-          <LargeButton
-            onClick={() => navigate(routes.journalCreate('calendar'))}
-            type="button"
-          >
-            일지 작성 및 도감 등록
-          </LargeButton>
+              </div>
+            )}
+            <div ref={bottomRef} />
+          </div>
+          <div className="fixed inset-x-0 bottom-nav-height z-10 m-auto flex w-full min-w-full-layout max-w-full-layout px-5 pb-5 pt-3">
+            <LargeButton
+              onClick={() => navigate(routes.journalCreate('calendar'))}
+              type="button"
+            >
+              일지 작성 및 도감 등록
+            </LargeButton>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };

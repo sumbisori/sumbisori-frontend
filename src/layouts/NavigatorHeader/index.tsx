@@ -1,6 +1,5 @@
 import ThinLeftIcon from '@/icons/thin-left-icon.svg?react';
 import ThinCloseIcon from '@/icons/thin-close-icon.svg?react';
-import { useHeaderVisibility } from '@/contexts/src/HeaderVisibilityContext';
 import { StepBar } from '@/pages/JournalCreate/StepBar';
 
 interface NavigatorHeaderProps {

@@ -3,6 +3,7 @@ export const ERROR_MESSAGE = {
    * 공통
    */
   DEFAULT_ERROR: '알 수 없는 오류가 발생했습니다',
+  SIGNATURE_EXCEPTION: '올바르지 않은 접근입니다',
   /**
    * mutation  오류
    */
@@ -27,4 +28,7 @@ export const ERROR_MESSAGE = {
   AUTHENTICATION_REQUIRED: '로그인이 필요합니다',
   // 홈
   WAVE_DATA_NOT_FOUND: '해당 지역의 파도 정보를 찾을 수 없습니다',
+  // 배지
+  BADGE_NOT_OWNED: '소유하지 않은 배지입니다',
+  BADGE_NOT_FOUND: '배지 정보를 찾을 수 없습니다',
 };

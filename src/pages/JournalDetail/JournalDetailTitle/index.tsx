@@ -2,6 +2,7 @@ import { SatisfactionStars } from '@/pages/JournalCreate/SatisfactionStars';
 import dayjs from '@/util/dayjs';
 import EditIcon from '@/icons/edit.svg?react';
 import ShareIcon from '@/icons/share.svg?react';
+import { toast } from '@/components/Toast';
 interface Props {
   experienceDate: string;
   placeName: string;
@@ -22,8 +23,12 @@ export const JournalDetailTitle = ({
       <div className="flex items-center justify-between">
         <p className="text-base font-medium">{date}</p>
         <div className="flex items-center gap-2">
-          <EditIcon className="cursor-pointer text-gray-700 hover:text-gray-500 active:text-gray-500" />
-          <ShareIcon className="cursor-pointer text-gray-700 hover:text-gray-500 active:text-gray-500" />
+          <button onClick={() => toast.info('준비중입니다.')}>
+            <EditIcon className="text-gray-700 hover:text-gray-500 active:text-gray-500" />
+          </button>
+          <button onClick={() => toast.info('준비중입니다.')}>
+            <ShareIcon className="text-gray-700 hover:text-gray-500 active:text-gray-500" />
+          </button>
         </div>
       </div>
       <div className="flex flex-col">

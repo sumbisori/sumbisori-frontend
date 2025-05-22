@@ -87,7 +87,6 @@ export const CollectedSeafoodCardBottomSheet = ({
           </button>
         </div>
       }
-      scrollLocking={false}
     >
       <div className="flex">
         <Picker

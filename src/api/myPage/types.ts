@@ -1,7 +1,14 @@
+import { BadgeLevel, BadgeType } from '@/api/myPageBadge/types';
+
 export interface UserInfo {
   nickname: string;
-  count: number;
   profileImageUrl: string;
+  badgeName: string;
+  badgeType: BadgeType;
+  badgeDescription: string;
+  level: BadgeLevel;
+  totalBadgeCount: number;
+  acquiredBadgeCount: number;
 }
 
 export interface ReservationCount {
