@@ -50,7 +50,15 @@ export const AlarmList = ({
   }
 
   if (isError) {
-    return <div>Error</div>;
+    return (
+      <div className="flex flex-1 items-center justify-center">
+        <ImageWithTextAlert
+          src={`${IMAGE_PATHS.ROOT}/haenyeo.png`}
+          alt="정보없음"
+          text="알림을 불러오지 못했어요"
+        />
+      </div>
+    );
   }
 
   if (alarms.length === 0) {
