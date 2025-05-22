@@ -33,7 +33,7 @@ export const JournalDetail = () => {
         title="체험 일지"
         leftIcon={<ThinLeftIcon />}
         rightIcon={<BellBlackIcon />}
-        onLeftClick={() => navigate(-1)}
+        onLeftClick={() => navigate(routes.journals)}
         onRightClick={() => navigate(routes.alarm)}
         className="bg-white shadow-[0_2px_3px_-1px_rgba(0,0,0,0.1)]"
       />

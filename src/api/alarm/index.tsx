@@ -1,10 +1,10 @@
 import { https } from '../instance';
-import { AlarmListRequest, Alarm } from './types';
+import { AlarmListRequest, AlarmType } from './types';
 import { Pagination } from '../types';
 
 export const getAlarmList = async (
   request: AlarmListRequest,
-): Promise<Pagination<Alarm[]>> => {
+): Promise<Pagination<AlarmType[]>> => {
   const response = await https.get('/alarms', {
     params: request,
   });

@@ -26,7 +26,7 @@ export const JournalDetailContentImageBottomSheet = ({
         <Image
           src={result.imageUrl}
           alt="분석 이미지"
-          className="aspect-square rounded-lg object-cover"
+          className="aspect-square size-80 self-center rounded-lg object-cover"
         />
 
         <div className="flex flex-col gap-2">

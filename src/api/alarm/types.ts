@@ -3,7 +3,7 @@ export interface AlarmListRequest {
   size: number;
 }
 
-export interface Alarm {
+export interface AlarmType {
   alarmId: number;
   type: 'BADGE_ACQUIRED' | 'EXPERIENCE_COMPLETED';
   content: string;

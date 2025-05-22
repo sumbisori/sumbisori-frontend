@@ -24,7 +24,7 @@ export const Header = ({ type, caption, absolute }: Props) => {
   return (
     <header
       className={clsx(
-        'z-100 flex h-header-height w-full min-w-full-layout max-w-full-layout justify-between px-5',
+        'z-100 flex h-header-height w-full min-w-full-layout max-w-full-layout justify-between px-4',
         {
           'absolute inset-x-0 top-0 m-auto': absolute,
           'fixed inset-x-0 top-0 m-auto bg-white transition-transform duration-300 ease-in-out':

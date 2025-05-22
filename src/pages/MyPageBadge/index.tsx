@@ -1,9 +1,9 @@
 import { ProfileBadgeSection } from './components/ProfileBadgeSection';
 import { BadgeCount } from './components/BadgeCount';
 import { NavigatorHeader } from '@/layouts/NavigatorHeader';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getMyPageBadge } from '@/api/myPageBadge';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Badge } from '@/api/myPageBadge/types';
 import { BadgeInfoBottomSheet } from './components/BadgeInfoBottomSheet';
 import { BadgeList } from './components/BadgeList';
@@ -11,11 +11,19 @@ import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/query';
 import { UserInfo } from '@/api/myPage/types';
 import { getUserInfo } from '@/api/myPage';
+import { routes } from '@/routes/src/routes';
 
 export const MyPageBadge = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [selectedBadgeId, setSelectedBadgeId] = useState<number | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activatedBadgeId = searchParams.get('badge-id');
+
+  useEffect(() => {
+    if (activatedBadgeId) {
+      setOpen(true);
+    }
+  }, [activatedBadgeId]);
 
   const {
     data: userInfo,
@@ -37,11 +45,21 @@ export const MyPageBadge = () => {
     queryFn: getMyPageBadge,
   });
 
+  const handleBadgeClick = (badgeId: number) => {
+    setOpen(true);
+    setSearchParams({ 'badge-id': String(badgeId) });
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSearchParams({});
+  };
+
   return (
     <>
       <NavigatorHeader
         title="배지"
-        onLeftClick={() => navigate(-1)}
+        onLeftClick={() => navigate(routes.myPage)}
         className="bg-gray-100 shadow-[0_2px_3px_-1px_rgba(0,0,0,0.1)]"
       />
       <div className="relative flex h-full min-h-layout-nav-height flex-col pt-header-height">
@@ -60,21 +78,18 @@ export const MyPageBadge = () => {
           <div className="flex-1 rounded-lg bg-white p-6">
             <BadgeList
               badgeList={badgeList || []}
-              onBadgeClick={(badgeId) => {
-                setOpen(true);
-                setSelectedBadgeId(badgeId);
-              }}
+              onBadgeClick={handleBadgeClick}
               isPending={badgeListPending}
               isError={badgeListError}
             />
           </div>
         </div>
       </div>
-      {selectedBadgeId && (
+      {activatedBadgeId && (
         <BadgeInfoBottomSheet
           open={open}
-          setOpen={setOpen}
-          selectedBadgeId={selectedBadgeId}
+          setOpen={handleClose}
+          selectedBadgeId={Number(activatedBadgeId)}
           refetchBadgeList={refetchBadgeList}
           refetchUserInfo={refetchUserInfo}
         />

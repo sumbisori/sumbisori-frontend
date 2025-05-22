@@ -1,80 +1,43 @@
-import Skeleton from '@/components/Skeleton';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
-import { getAlarmList, readAlarm, deleteAlarm } from '@/api/alarm';
-import { queryKeys } from '@/query';
 import { AlarmBox } from '../AlarmBox';
+import Skeleton from '@/components/Skeleton';
 import { ImageWithTextAlert } from '@/components/ImageWithTextAlert';
 import { IMAGE_PATHS } from '@/constant';
-import { useMutation } from '@tanstack/react-query';
-import { forwardRef, useImperativeHandle } from 'react';
 import { Spinner } from '@/components/Spinner';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
+import { AlarmType } from '@/api/alarm/types';
+import { InfiniteQueryObserverResult } from '@tanstack/react-query';
 
-interface AlarmListProps {
-  onDelete?: () => void;
+interface Props {
+  alarms: AlarmType[];
+  isPending: boolean;
+  isError: boolean;
+  isDeleting: boolean;
+  fetchNextPage: () => Promise<InfiniteQueryObserverResult>;
+  hasNextPage: boolean;
+  isFetchingNextPage: boolean;
+  onAlarmClick: (alarm: AlarmType) => void;
+  onDropdownToggle: (alarmId: number) => void;
+  onAlarmDelete: (alarmId: number) => void;
+  openDropdownId: number | null;
 }
 
-export const AlarmList = forwardRef<
-  { handleDeleteAll: () => void },
-  AlarmListProps
->((props, ref) => {
-  const {
-    data: alarms,
-    isPending,
-    isError,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    refetch: refetchAlarms,
-  } = useInfiniteQuery({
-    queryKey: [queryKeys.alarms],
-    queryFn: ({ pageParam }) =>
-      getAlarmList({
-        page: pageParam,
-        size: 10,
-      }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage) =>
-      lastPage.hasNext ? lastPage.page + 1 : undefined,
-    retry: false,
-  });
-
-  const { mutate: readAlarmMutation } = useMutation({
-    mutationFn: (alarmId: number) => readAlarm(alarmId),
-    onSuccess: () => {
-      refetchAlarms();
-    },
-  });
-
-  const { mutate: deleteAlarmMutation, isPending: isDeleting } = useMutation({
-    mutationFn: (alarmId: number) => deleteAlarm(alarmId),
-    onSuccess: () => {
-      refetchAlarms();
-    },
-  });
-
-  const handleAlarmClick = (alarmId: number, isRead: boolean) => {
-    if (isRead) return;
-    readAlarmMutation(alarmId);
-  };
-
-  const handleDeleteAll = () => {
-    const flattenedAlarms = alarms?.pages.flatMap((page) => page.content) ?? [];
-    flattenedAlarms.forEach((alarm) => {
-      deleteAlarmMutation(alarm.alarmId);
-    });
-  };
-
-  useImperativeHandle(ref, () => ({
-    handleDeleteAll,
-  }));
-
+export const AlarmList = ({
+  alarms,
+  isPending,
+  isError,
+  isDeleting,
+  fetchNextPage,
+  hasNextPage,
+  isFetchingNextPage,
+  onAlarmClick,
+  onDropdownToggle,
+  onAlarmDelete,
+  openDropdownId,
+}: Props) => {
   const bottomRef = useInfiniteScroll({
     hasNextPage,
     fetchNextPage,
   });
-
-  const flattenedAlarms = alarms?.pages.flatMap((page) => page.content) ?? [];
 
   if (isPending) {
     return (
@@ -90,7 +53,7 @@ export const AlarmList = forwardRef<
     return <div>Error</div>;
   }
 
-  if (flattenedAlarms.length === 0) {
+  if (alarms.length === 0) {
     return (
       <div className="flex flex-1 items-center justify-center">
         <ImageWithTextAlert
@@ -107,11 +70,14 @@ export const AlarmList = forwardRef<
       {isDeleting && (
         <Spinner className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2" />
       )}
-      {flattenedAlarms.map((alarm) => (
+      {alarms.map((alarm) => (
         <AlarmBox
           key={alarm.alarmId}
           alarm={alarm}
-          onClick={handleAlarmClick}
+          onClick={onAlarmClick}
+          onDelete={onAlarmDelete}
+          isDropdownOpen={openDropdownId === alarm.alarmId}
+          onDropdownToggle={onDropdownToggle}
         />
       ))}
       {isFetchingNextPage && (
@@ -124,4 +90,4 @@ export const AlarmList = forwardRef<
       <div ref={bottomRef} />
     </div>
   );
-});
+};
