@@ -206,7 +206,7 @@ export const HomeContents = () => {
           ref={seaRef}
           view={
             <HomeYoutubeVideoIframe
-              src="https://www.youtube.com/embed/yoa08FUE768?autoplay=1&mute=1"
+              src="https://www.youtube.com/embed/1X6yawjvVss?autoplay=1&mute=1"
               allow="autoplay; encrypted-media"
               allowFullScreen
             />
